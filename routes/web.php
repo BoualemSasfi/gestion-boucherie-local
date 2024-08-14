@@ -33,3 +33,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+
+// les route de la caisse 
+
+Route::get('/caisse', function () {
+    return view('caisse/index');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/test', function () {
+    return view('caisse/test');
+})->middleware(['auth', 'verified'])->name('dashboard');
