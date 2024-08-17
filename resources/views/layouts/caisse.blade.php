@@ -25,7 +25,8 @@
 
     <!-- Slick CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
 
     <!-- css caisse -->
@@ -99,20 +100,40 @@
 
                 </nav>
 
-                @yield('content')
 
 
 
             </div>
+            @yield('content')
+
+            <!-- new footer  -->
+
+
+            <!-- end new footer  -->
+
+
+ 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Gestion Entreprise 2024</span>
+                        <div class="row">
+                            <div class="col-6">
+                            <button type="submit" class="btn btn-primary border-0 border-secondary py-3 px-4 position-absolute rounded-pill text-white" style="top: 0; right: 0;">Subscribe Now</button>
+                            b1
+                            </div>
+                            <div class="col-6">
+B2
+                            </div>
+                        </div>
+                        <!-- <span>Copyright &copy; Gestion Entreprise 2024</span> -->
                     </div>
                 </div>
             </footer>
             <!-- End of Footer -->
+
+
+
             <!-- End of Content Wrapper -->
 
         </div>
@@ -171,7 +192,7 @@
 
 
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('.your-carousel').slick({
                 slidesToShow: 6,
                 slidesToScroll: 1,
@@ -196,8 +217,9 @@
                 ]
             });
         });
-        </script>
-        
+    </script>
+
+
 </body>
 
 </html>

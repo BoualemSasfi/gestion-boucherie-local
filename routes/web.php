@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Serial_controller;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,9 +40,12 @@ require __DIR__.'/auth.php';
 // les route de la caisse 
 
 Route::get('/caisse', function () {
-    return view('caisse/index');
+    return view('caisse.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/test', function () {
-    return view('caisse/test');
+    return view('caisse.test');
 })->middleware(['auth', 'verified'])->name('dashboard');
+// balance
+
+Route::get('/test1', [Serial_controller::class, 'showBalance']);
