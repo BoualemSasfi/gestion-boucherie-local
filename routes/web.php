@@ -43,9 +43,10 @@ Route::get('/caisse', function () {
     return view('caisse.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/test', function () {
-    return view('caisse.test');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/test', function () {
+//     return view('caisse.test');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 // balance
 
-Route::get('/test1', [Serial_controller::class, 'showBalance']);
+// Route::get('/test1', [Serial_controller::class, 'showBalance']);
+Route::get('/test', [Serial_controller::class, 'showBalance']);
