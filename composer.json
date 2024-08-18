@@ -12,7 +12,10 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
-        "laravel/tinker": "^2.8"
+        "laravel/tinker": "^2.8",
+        "lepiaf/serialport": "^1.1",
+        "symfony/property-access": "^7.1",
+        "symfony/serializer": "^7.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

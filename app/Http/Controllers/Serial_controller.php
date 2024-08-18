@@ -4,39 +4,42 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 // use Fawno\PhpSerial\Serial;
-use Tvelu77\Src\PhpSerial; 
+// use Tvelu77\Src\PhpSerial; 
+// use Gregwar\Serial\Serial;
+// use PhpSerial;
+// use App\Services\SerializationService;
+
+// use Lepiaf\SerialPort\SerialPort; 
 class Serial_controller extends Controller
 {
-    // public function getWeight()
-    // {
-    //     $serial1 = new Serial();
-    //     $serial1->deviceSet('/dev/ttyUSB0'); // Chemin du port série
-    //     $serial1->confBaudRate(9600);
-    //     $serial1->deviceOpen();
-
-    //     $weight = $serial1->readPort();
-    //     $serial1->deviceClose();
-
-    //     // return response()->json(['weight' => trim($weight)]);
-    //     return view('caisse.balance', ['weight' => trim($weight)]);
-    // }
-
-        public function showBalance()
-        {
-            // Instancier la classe PhpSerial
-            $serial = new PhpSerial();
+    public function showBalance()
+    {
+        $port = 'COM8'; // Remplacez par le port approprié
+        $baudRate = 9600; // Remplacez par le baud rate approprié
     
-            // Configurer le port série
-            $serial->deviceSet('COM8'); // Chemin du port série
-            $serial->confBaudRate(9600);
-            $serial->deviceOpen();
-    
-            // Lire les données du port série
-            $weight = $serial->readPort();
-            $serial->deviceClose();
-    
-            // Retourner la vue avec les données du poids
-            return view('caisse.balance', ['weight' => trim($weight)]);
+        // Ouvrir le port série
+        $fp = fopen("com{$port}", 'w+');
+        if (!$fp) {
+            return view('caisse.test')->with('data', 'Impossible d\'ouvrir le port série.');
         }
+    
+        // Configurer le port série
+        exec("mode {$port} baud={$baudRate} data=8 parity=n stop=1");
+    
+        // Écrire des données sur le port série
+        fwrite($fp, "Test data\n");
+    
+        // Lire les données depuis le port série
+        $data = fread($fp, 1024);
+    
+        // Fermer le port série
+        fclose($fp);
+    
+        // return view('caisse.balance')->with('data', $data);
+        return view('caisse.test')->with('data', $data);
+    }
 
 }
+
+
+

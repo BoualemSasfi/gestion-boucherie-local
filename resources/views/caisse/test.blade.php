@@ -1,30 +1,34 @@
 @extends('layouts.caisse')
 
 @section('content')
+<!-- <pre id="output"></pre> -->
+
 <div class="container-fluid m-0 p-0">
 
     <!-- End of Topbar -->
     <!-- numerique -->
 
+    <!-- script pour affiche la valuer de la balance  -->
+    
 
 
+    <!--  fin script pour affiche la valuer de la balance  -->
 
     <div class="row afficheur p-1">
         <div class="col-8">
             <div class="row text-center">
                 <div class="col-3">
-                    <h6 class="objet-titre">POULET</h6>
-                    <p class="objet-titre">Cuisses</p>
+                    <h6 class="objet-titre digital">POULET</h6>
+                    <p class="objet-titre digital">Cuisses</p>
                 </div>
                 <div class="col-3">
-                    <h6 class="afficheur-titre">QTE:</h6>
-                    <p class="digital">
-                        @if ($data)
-                            <pre>{{ $data }}</pre>
-                        @else
-                            <p>Aucune donnée disponible.</p>
-                        @endif
-                    </p>
+                    <h6 class="afficheur-titre ">QTE / Kg:</h6>
+                    <!-- <p class="digital" ><span id="output"></span> </p> -->
+                    <div class="digital">
+                        <p  id="balance"></p>
+                        
+                    </div>
+
                 </div>
                 <div class="col-3">
                     <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
@@ -36,7 +40,6 @@
                 </div>
             </div>
 
-
         </div>
         <div class="col-4 text-center">
             <h6 class="afficheur-titre">TOTAL FACTURE :</h6>
@@ -46,10 +49,6 @@
 
     <div class="row">
         <div class="col-8">
-
-
-
-
 
             <div class="container mt-2">
                 <div class="your-carousel">
@@ -229,14 +228,8 @@
                     height: 90px;
                 }
 
-
-
                 /*  */
             </style>
-
-
-
-
 
         </div>
         <div class="col-4 bg-dark">
@@ -245,9 +238,6 @@
                 <div class="card-header py-1">
                     <h6 class="m-0 font-weight-bold text-center text-primary">Lise des achats</h6>
                 </div>
-
-
-
 
                 <!-- script datatable  -->
 
@@ -374,15 +364,11 @@
     </div>
 
 
-
-
-
 </div>
 
 
 <!-- Slick JS -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -412,6 +398,54 @@
 </script>
 
 </div>
+
+<script>
+    const connectButton = document.getElementById('connect');
+    // const output = document.getElementById('output');
+    const balance = document.getElementById('balance');
+
+    connectButton.addEventListener('click', async () => {
+        try {
+            // Demander à l'utilisateur de sélectionner un port série
+            const port = await navigator.serial.requestPort();
+
+            // Ouvrir une connexion au port série
+            await port.open({ baudRate: 9600 });
+
+            // Créer un lecteur de flux pour lire les données du port série
+            const reader = port.readable.getReader();
+
+            // Lire les données du port série
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+
+                // Convertir les données en texte
+                const data = new TextDecoder().decode(value);
+
+                // Extraire uniquement le nombre (poids) avant 'kg'
+                const numberMatch = data.match(/(\d+(\.\d+)?)(?=kg)/);
+
+                if (numberMatch) {
+                    const number = numberMatch[1]; // Extraire le nombre
+
+                    // Mettre à jour le contenu de <h1 id="balance">
+                    balance.textContent = `${number}`;
+                }
+
+                // Afficher les données complètes dans le <pre id="output"> pour débogage (optionnel)
+                // output.textContent = data;
+            }
+
+            // Fermer la connexion au port série
+            await port.close();
+        } catch (error) {
+            console.error('Erreur de communication série :', error);
+        }
+    });
+</script>
+
+
 
 
 
