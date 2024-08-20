@@ -12611,18 +12611,17 @@ form.user .btn-user {
   animation: noise-anim-2 3s infinite linear alternate-reverse;
 }
 
-footer.sticky-footer {
+.sticky-footer-caisse {
   position: fixed;
   left: 0;
+  right: 0;
   bottom: 0;
   width: 100%;
   background-color: #f1f1f1;
-  text-align: center;
-
-
-
-  padding: 2rem 0;
-  flex-shrink: 0;
+  /* text-align: center; */
+  padding: 5px 5px 5px 5px;
+  /* flex-shrink: 0; */
+  height: 70px;
 }
 
 footer.sticky-footer .copyright {
