@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Serial_controller;
+
+use App\Http\Controllers\InformationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,7 +36,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+
+//--------------------------------------------------------------------------
+// ---------                Information                           ----------
+// --------------------------------------------------------------------------
+Route::controller(InformationController::class)->group(function(){
+    Route::get('/admin/information','index');
+    Route::get('/admin/dossier_ajax', 'index_ajax');
+    Route::put('/admin/information/{id}/update','update');
+    
+    // Route::post('/admin/dossier/{titre}/save', 'store');
+    // Route::put('/admin/dossier/{id}/{titre}update', 'update_ajax');
+    // Route::delete('/admin/dossier_ajax/{id}/delete', 'supp_ajax');
+});
+
 require __DIR__.'/auth.php';
+
 
 
 // les route de la caisse 

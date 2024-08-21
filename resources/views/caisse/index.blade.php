@@ -40,7 +40,7 @@
     </div>
 
     <div class="row"  >
-        <div class="col-8">
+        <div class="col-7">
 
 
 
@@ -237,7 +237,7 @@
 
 
         </div>
-        <div class="col-4 bg-dark">
+        <div class="col-5 bg-dark">
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-1">
@@ -340,20 +340,7 @@
 
                                 </tr>
 
-                                <tr>
-                                    <td>Michael Silva</td>
-                                    <td>Marketing Designer</td>
-                                    <td>London</td>
-                                    <td>6</td>
-
-                                </tr>
-                                <tr>
-                                    <td>Paul Byrd</td>
-                                    <td>Chief Financial Officer (CFO)</td>
-                                    <td>New York</td>
-                                    <td>64</td>
-
-                                </tr>
+                       
 
                             </tbody>
                         </table>
