@@ -1,46 +1,42 @@
 @extends('layouts.caisse')
 
 @section('content')
-<div class="container-fluid m-0 p-0">
-
-    <!-- End of Topbar -->
-    <!-- numerique -->
+    {{-- AFFICHEUR  --------------------------------------------------------- --}}
+    <div class="container-fluid m-0 p-0">
 
 
+        <div class="row afficheur text-center pt-1 pb-1 pr-0 pl-0">
 
-
-    <div class="row afficheur p-1">
-        <div class="col-8">
-            <div class="row text-center">
-                <div class="col-3">
-                    <h6 class="objet-titre">POULET</h6>
-                    <p class="objet-titre">Cuisses</p>
-                </div>
-                <div class="col-3">
-                    <h6 class="afficheur-titre">QTE / Kg:</h6>
-                    <p class="digital">00,000 </p>
-
-                </div>
-                <div class="col-3">
-                    <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
-                    <p class="digital">750.00</p>
-                </div>
-                <div class="col-3">
-                    <h6 class="afficheur-titre">PRIX TOTAL :</h6>
-                    <p class="digital">00.00</p>
-                </div>
+            <div class="col-2 align-content-center">
+                <h6 class="objet-titre">POULET</h6>
+                <p class="objet-titre">Cuisses</p>
             </div>
+            <div class="col-3 align-content-center">
+                <h6 class="afficheur-titre">QTE:</h6>
+                <p class="digital">00,000 </p>
 
+            </div>
+            <div class="col-3 align-content-center">
+                <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
+                <p class="digital">750.00</p>
+            </div>
+            <div class="col-3 align-content-center">
+                <h6 class="afficheur-titre">PRIX TOTAL:</h6>
+                <p class="digital">00.00</p>
+            </div>
+            <div class="col-1 mt-3 pl-0">
+                <button class="btn btn-primary pt-3 pb-3" style="color: white;">
+                    <i class="fas fa-check-circle fa-lg"></i>
+                    <br>
+                    Valider
+                </button>
+            </div>
+        </div>
 
-        </div>
-        <div class="col-4 text-center">
-            <h6 class="afficheur-titre">TOTAL FACTURE :</h6>
-            <p class="digital">0.00</p>
-        </div>
     </div>
 
     <div class="row"  >
-        <div class="col-7">
+        <div class="col-8">
 
 
 
@@ -203,45 +199,33 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-12 zyada" style="height: 1800px;">
+                        CAISSE ESPACE
+                    </div>
                     {{-- morceau --}}
-                    <div class="zyada col-12" style="height: 80px;"></div>
 
                 </div>
+
             </div>
 
-            <style>
-                .cat {
-                    margin: 3px;
-                }
 
-                .scat {
-                    height: 160px;
-                    width: 100%;
-                }
-
-                .card-img-top {
-                    height: 90px;
-                }
-
-
-
-                /*  */
-
-
-                
-            </style>
 
 
 
 
 
         </div>
-        <div class="col-5 bg-dark">
+        <div class="col-4 bg-dark">
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-1">
-                    <h6 class="m-0 font-weight-bold text-center text-primary">Lise des achats</h6>
+                    <div class="row afficheur text-center">
+                        <div class="col-12 p-1 m-0 align-content-center">
+                            <h6 class="afficheur-titre">TOTAL FACTURE :</h6>
+                            <p class="digital">0.00</p>
+                        </div>
+                    </div>
+                    {{-- <h6 class="m-0 font-weight-bold text-center text-primary">Lise des achats</h6> --}}
                 </div>
 
 
@@ -254,23 +238,23 @@
 
                     <!-- new script table  -->
 
-      
+
 
                     <!-- script datatable  -->
 
 
-                    <div class="card-body " style="max-height: 550px; overflow-y: auto;  ">
+                    <div class="card-body m-0 p-1" style="max-height: 550px; overflow-y: auto;  ">
 
                         <table id="example" class="display" style="width:100% ">
                             <thead>
                                 <tr>
-                                    <th>Disigniation</th>
-                                    <th>PRIX/Kg</th>
-                                    <th>Poid</th>
-                                    <th>Total</th>
+                                    <th>Designation:</th>
+                                    <th>Prix:</th>
+                                    <th>QTE:</th>
+                                    <th>Total:</th>
                                 </tr>
                             </thead>
-
+                            
                             <tbody>
                                 <tr>
                                     <td>cuisse de poulet</td>
@@ -340,64 +324,164 @@
 
                                 </tr>
 
-                       
+                                <tr>
+                                    <td>Michael Silva</td>
+                                    <td>Marketing Designer</td>
+                                    <td>London</td>
+                                    <td>6</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Paul Byrd</td>
+                                    <td>Chief Financial Officer (CFO)</td>
+                                    <td>New York</td>
+                                    <td>64</td>
+
+                                </tr>
 
                             </tbody>
                         </table>
-
+                        <div class="col-12 zyada" style="height: 500px;">
+                            CAISSE ESPACE
+                        </div>
                     </div>
                     <!-- end new script table  -->
 
 
                 </div>
             </div>
+
+
+
+
+
+
         </div>
 
-        <div class="cole-12">
-            test
-        </div>
+        {{-- FIN FACTURE  ----------------------------------------------------- --}}
+
     </div>
+    {{-- FIN SELECTION PRODUIT ET FACTURE  -------------------------------------------------------}}
 
 
 
 
 
-</div>
 
 
-<!-- Slick JS -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.your-carousel').slick({
-            slidesToShow: 6,
-            slidesToScroll: 1,
-            arrows: true,
-            dots: false,
-            infinite: false,
-            responsive: [{
-                breakpoint: 768,
-                settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 2
-                }
-            },
-            {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 1
-                }
-            }
-            ]
+
+    <!-- Footer -->
+    <footer class="sticky-footer-caisse bg-white">
+        <div class="container-fluid m-0 p-0">
+            <div class="row align-content-center m-0 p-0">
+
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-3">
+                            <a class="btn btn-primary" href="">boutton 1</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-primary" href="">boutton 2</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-primary" href="">boutton 3</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-primary" href="">boutton 4</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-3">
+                            <a class="btn btn-warning" href="">boutton 1</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-warning" href="">boutton 2</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-warning" href="">boutton 3</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-warning" href="">boutton 4</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col-3">
+                            <a class="btn btn-success" href="">boutton 1</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-success" href="">boutton 2</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-success" href="">boutton 3</a>
+                        </div>
+                        <div class="col-3">
+                            <a class="btn btn-danger" href="">boutton 4</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+
+    <!-- Slick JS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.your-carousel').slick({
+                slidesToShow: 6,
+                slidesToScroll: 1,
+                arrows: true,
+                dots: false,
+                infinite: false,
+                responsive: [{
+                        breakpoint: 768,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2
+                        }
+                    },
+                    {
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 4,
+                            slidesToScroll: 1
+                        }
+                    }
+                ]
+            });
         });
-    });
-</script>
-
-</div>
+    </script>
 
 
+    <style>
+        .cat {
+            margin: 3px;
+        }
 
+        .scat {
+            height: 160px;
+            width: 100%;
+        }
+
+        .card-img-top {
+            height: 90px;
+        }
+
+
+
+        /*  */
+    </style>
+
+    </div>
 @endsection
