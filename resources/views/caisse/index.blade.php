@@ -11,11 +11,15 @@
                 <h6 class="objet-titre">POULET</h6>
                 <p class="objet-titre">Cuisses</p>
             </div>
-            <div class="col-3 align-content-center">
-                <h6 class="afficheur-titre">QTE:</h6>
-                <p class="digital">00,000 </p>
+            <div class="col-3">
+                    <h6 class="afficheur-titre ">QTE / Kg:</h6>
+                    <!-- <p class="digital" ><span id="output"></span> </p> -->
+                    <div class="digital">
+                        <p  id="balance"></p>
+                        
+                    </div>
 
-            </div>
+                </div>
             <div class="col-3 align-content-center">
                 <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
                 <p class="digital">750.00</p>
@@ -34,12 +38,13 @@
         </div>
 
     </div>
-    {{-- FIN AFFICHEUR  --------------------------------------------------------- --}}
 
-    {{-- SELECTION PRODUIT ET FACTURE ----------------------------------------------------- --}}
-    <div class="row">
-        {{-- SELECTION PRODUIT  ----------------------------------------------------- --}}
-        <div class="col-8 selection">
+    <div class="row"  >
+        <div class="col-8">
+
+
+
+
 
             <div class="container mt-2">
                 <div class="your-carousel">
@@ -214,11 +219,7 @@
 
 
         </div>
-        {{-- FIN SELECTION PRODUIT  ----------------------------------------------------- --}}
-
-        {{-- FACTURE  ----------------------------------------------------- --}}
-        <div class="col-4 bg-dark facture">
-
+        <div class="col-4 bg-dark">
             <!-- DataTales Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-1">
@@ -324,6 +325,21 @@
                                     <td>800 DA</td>
                                     <td>250 g</td>
                                     <td>1 200</td>
+
+                                </tr>
+
+                                <tr>
+                                    <td>Michael Silva</td>
+                                    <td>Marketing Designer</td>
+                                    <td>London</td>
+                                    <td>6</td>
+
+                                </tr>
+                                <tr>
+                                    <td>Paul Byrd</td>
+                                    <td>Chief Financial Officer (CFO)</td>
+                                    <td>New York</td>
+                                    <td>64</td>
 
                                 </tr>
 
@@ -472,4 +488,52 @@
     </style>
 
     </div>
+
+
+
+    <script>
+    const connectButton = document.getElementById('connect');
+    // const output = document.getElementById('output');
+    const balance = document.getElementById('balance');
+
+    connectButton.addEventListener('click', async () => {
+        try {
+            // Demander à l'utilisateur de sélectionner un port série
+            const port = await navigator.serial.requestPort();
+
+            // Ouvrir une connexion au port série
+            await port.open({ baudRate: 9600 });
+
+            // Créer un lecteur de flux pour lire les données du port série
+            const reader = port.readable.getReader();
+
+            // Lire les données du port série
+            while (true) {
+                const { value, done } = await reader.read();
+                if (done) break;
+
+                // Convertir les données en texte
+                const data = new TextDecoder().decode(value);
+
+                // Extraire uniquement le nombre (poids) avant 'kg'
+                const numberMatch = data.match(/(\d+(\.\d+)?)(?=kg)/);
+
+                if (numberMatch) {
+                    const number = numberMatch[1]; // Extraire le nombre
+
+                    // Mettre à jour le contenu de <h1 id="balance">
+                    balance.textContent = `${number}`;
+                }
+
+                // Afficher les données complètes dans le <pre id="output"> pour débogage (optionnel)
+                // output.textContent = data;
+            }
+
+            // Fermer la connexion au port série
+            await port.close();
+        } catch (error) {
+            console.error('Erreur de communication série :', error);
+        }
+    });
+</script>
 @endsection

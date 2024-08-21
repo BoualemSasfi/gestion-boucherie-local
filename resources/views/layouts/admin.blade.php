@@ -17,6 +17,15 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
+
+    <!-- Inclure SweetAlert2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+
+    <!-- Inclure SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
     <!-- Custom styles for this template-->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -68,7 +77,7 @@
                 <div id="collapse1" class="collapse" aria-labelledby="heading1" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion Informations:</h6>
-                        <a class="collapse-item" href="">Informations Générale</a>
+                        <a class="collapse-item" href="/admin/information">Informations Générale</a>
                         <a class="collapse-item" href="">Contacts</a>
                         <a class="collapse-item" href="">Réseaux Sociaux</a>
                     </div>
@@ -348,8 +357,10 @@
             <!-- Sidebar Message -->
             {{-- <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components,
+                    and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to
+                    Pro!</a>
             </div> --}}
 
         </ul>
@@ -373,8 +384,8 @@
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Recherche..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Recherche..."
+                                aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-danger" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -457,7 +468,8 @@
                                         Spending Alert: We've noticed unusually high spending for your account.
                                     </div> --}}
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Voir toutes les nothifications</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Voir toutes les
+                                    nothifications</a>
                             </div>
                         </li>
 
@@ -477,8 +489,7 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     {{-- <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -489,8 +500,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     {{-- <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -501,8 +511,7 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     {{-- <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
@@ -523,7 +532,8 @@
                                         <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                     </div> --}}
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Voir tout les messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Voir tout les
+                                    messages</a>
                             </div>
                         </li>
 
@@ -553,8 +563,7 @@
                                     Activity Log
                                 </a> --}}
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="" data-toggle="modal"
-                                    data-target="#logoutModal">
+                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Déconnecter
 
@@ -573,19 +582,20 @@
                     <!-- Page Heading -->
                     {{-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1> --}}
-                    {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
-                    {{-- </div> --}}
+                        {{--
+                    </div> --}}
 
                     <div class="row">
 
-                        {{-- Contenu de la page  --}}
+                        {{-- Contenu de la page --}}
 
                         @yield('content')
 
                         {{-- @include('sweetalert::alert') --}}
 
-                        {{-- Contenu de la page  --}}
+                        {{-- Contenu de la page --}}
 
                     </div>
 
@@ -945,13 +955,15 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">Selectionner "Quitter" si vous voulez fermer votre session et quitter l'application. <br> Si vous vouler rester clickez sur "Annuler".</div>
+                <div class="modal-body">Selectionner "Quitter" si vous voulez fermer votre session et quitter
+                    l'application. <br> Si vous vouler rester clickez sur "Annuler".</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                    
+
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <a class="btn btn-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" >Quitter</a>
+                        <a class="btn btn-danger" href="{{ route('logout') }}"
+                            onclick="event.preventDefault(); this.closest('form').submit();">Quitter</a>
                     </form>
                 </div>
             </div>
@@ -959,7 +971,8 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    {{-- <script src="vendor/jquery/jquery.min.js"></script>
+    {{--
+    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
