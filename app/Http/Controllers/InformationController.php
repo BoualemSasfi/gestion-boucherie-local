@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Information;
 use App\Http\Requests\InformationRequest;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
+
 
 class InformationController extends Controller
 {
@@ -38,11 +40,19 @@ class InformationController extends Controller
         $information->tel = $request->input('tel');
         $information->email = $request->input('email');
 
-        if ($request->hasFile('logo')) {
-            // $information->logo = $request->logo->store('app/images/logo');
-            $information->logo = $request->file('logo')->store('app/images/logo');
+       // Gestion du logo
+    if ($request->hasFile('logo')) {
+        // Supprimer l'ancien logo s'il existe
+        if ($information->logo) {
+            Storage::delete($information->logo);
         }
 
+        // Stocker le nouveau logo et obtenir son chemin
+        $path = $request->file('logo')->store('public/images/logo');
+
+        // Enregistrer le chemin relatif dans la base de données
+        $information->logo = str_replace('public/', '', $path);
+    }
         $information->save();
 
         // Message de succès
