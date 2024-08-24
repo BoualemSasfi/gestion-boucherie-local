@@ -42,33 +42,13 @@
 <div class="row">
     <div class="col-8">
 
-
-
-
-
         <div class="container mt-2">
             <div class="your-carousel">
-                <div class="card cat"
-                    style="width: 150px; height: 100px; background-image: url('img/animal/poulet_vif.webp');background-size: cover; background-position: center; background-repeat: no-repeat;">
-                </div>
-                <div class="card cat"
-                    style="width: 150px; height: 100px; background-image: url('img/animal/toro.jpg');background-size: cover; background-position: center; background-repeat: no-repeat;">
-                </div>
-                <div class="card cat"
-                    style="width: 150px; height: 100px; background-image: url('img/animal/dindon.jfif');background-size: cover; background-position: center; background-repeat: no-repeat;">
-                </div>
-                <div class="card cat"
-                    style="width: 150px; height: 100px; background-image: url('img/animal/mouton.webp');background-size: cover; background-position: center; background-repeat: no-repeat;">
-                </div>
-                <div class="card cat"
-                    style="width: 150px; height: 100px; background-image: url('img/animal/lapin.jpg');background-size: cover; background-position: center; background-repeat: no-repeat;">
-                </div>
-                <div class="card cat"
-                    style="width: 150px; height: 100px; background-image: url('img/animal/cheval.jpg');background-size: cover; background-position: center; background-repeat: no-repeat;">
-                </div>
-                <div class="card cat"
-                    style="width: 150px; height: 100px; background-image: url('img/animal/poisson.jpg');background-size: cover; background-position: center; background-repeat: no-repeat;">
-                </div>
+                @foreach ($categorys as $category)
+                    <div class="card cat"
+                        style="width: 150px; height: 100px; background-image: url('{{ asset('storage/' . $category->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                    </div>
+                @endforeach
 
             </div>
         </div>

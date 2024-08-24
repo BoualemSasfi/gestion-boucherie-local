@@ -16,7 +16,7 @@ class CategoryController extends Controller
     {
         $categorys = Category::all();
 
-        return view('admin.categorie.index', ['catgorys' => $categorys]);
+        return view('admin.categorie.index', ['categorys' => $categorys]);
 
         // return response()->json(['catgory'=>$category]);
 
@@ -72,24 +72,46 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        return view('admin.categorie.edit',['category'=>$category]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request,$id)
     {
-        //
+            $category = Category::find($id);
+            $category->nom  = $request->input('nom');
+
+             // Gestion du logo
+        if ($request->hasFile('photo')) {
+            // Supprimer l'ancien logo s'il existe
+            if ($category->photo) {
+                Storage::delete($category->photo);
+            }
+
+            // Stocker le nouveau logo et obtenir son chemin
+            $path = $request->file('photo')->store('public/images/category');
+
+            // Enregistrer le chemin relatif dans la base de données
+            $category->photo = str_replace('public/', '', $path);
+        }
+        $category->save();
+
+        return redirect('/admin/category');
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        //
+        $category = Category::find($id);
+        $category->delete();
+        return redirect('/admin/category');
     }
 }
