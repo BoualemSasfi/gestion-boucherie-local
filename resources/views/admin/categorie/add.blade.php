@@ -20,13 +20,13 @@
         <div class="row animate__animated animate__backInLeft">
 
 
-            <form class="edit-form" action="{{ url('/admin/category/add/save') }}" method="post"
-                enctype="multipart/form-data">
-                @csrf
-                
-
-                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mx-auto">
-                    <div class="card shadow m-1">
+            
+            
+            <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mx-auto">
+                <div class="card shadow m-1">
+                        <form class="edit-form" action="{{ url('/admin/category/add/save') }}" method="post"
+                            enctype="multipart/form-data">
+                            @csrf
 
                         <div class="card-body">
 
@@ -38,7 +38,7 @@
 
                                 <div class="form-group col-12">
                                     <img class="card-img-top" src="{{ asset('img/logo_vide/add_image.PNG') }}"
-                                        alt="" id="preview2" onclick="triggerFileInput();" style="height: 320px;">
+                                        alt="" id="preview2" onclick="triggerFileInput();" style="height: 280px;">
                                 </div>
 
 
@@ -53,13 +53,13 @@
                                     <div class="row justify-content-center text-center m-3">
                                         <div class="col-6">
                                             <button type="button" onclick="sauvegarder(this)"
-                                                class="btn btn-success alpa p-2">
-                                                <i class="fas fa-check fa-lg"></i> <br>
+                                                class="btn btn-success p-2">
+                                                <i class="fas fa-check fa-lg mr-2"></i>
                                                 <span class="btn-description">Enregistrer</span></button>
                                         </div>
                                         <div class="col-6">
-                                            <a class="btn btn-danger alpa p-2" href="{{ url ('/admin/category') }}">
-                                                <i class="fas fa-times fa-lg"></i> <br>
+                                            <a class="btn btn-danger p-2" href="{{ url ('/admin/category') }}">
+                                                <i class="fas fa-times fa-lg mr-2"></i>
                                                 <span class="btn-description">Annuler</span></a>
                                         </div>
                                     </div>

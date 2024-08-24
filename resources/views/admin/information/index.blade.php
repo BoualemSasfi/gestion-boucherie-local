@@ -142,12 +142,12 @@
                         <div class="form-group row justify-content-center text-center m-3">
                             <div class="col-6">
                                 <button type="button" onclick="sauvegarder(this)"
-                                    class="btn btn-success alpa p-2">
+                                    class="btn btn-success p-2">
                                     <i class="fas fa-check fa-lg mr-2"></i><span
                                         class="btn-description">Enregistrer</span></button>
                             </div>
                             <div class="col-6">
-                                <a class="btn btn-danger alpa p-2" href="{{ url('/home') }}">
+                                <a class="btn btn-danger p-2" href="{{ url('/home') }}">
                                     <i class="fas fa-times fa-lg mr-2"></i><span
                                         class="btn-description">Annuler</span></a>
                             </div>
