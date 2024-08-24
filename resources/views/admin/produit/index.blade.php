@@ -1,22 +1,19 @@
 @extends('layouts.admin')
 @section('content')
 
-@extends('layouts.admin')
-@section('content')
-
-<section class="my-1">
+    {{-- retour en arrière  --}}
     <div class="container" id="titre-page">
         <div class="row">
             <div class="col-2 d-flex align-items-center">
-                <a href="{{ url('/home') }}" class="btn btn-dark"><i class="bi bi-house"></i><span
-                        class="btn-description">Acceuil</span></a>
+                <a href="{{ url('/home') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
+                        class="btn-description">Retour</span></a>
             </div>
-            <div class="col-8  text-center">
-                <h2>Produits</h2>
+            <div class="col-8 d-flex align-items-center">
+                <h2>Liste des produits</h2>
             </div>
             <div class="col-2 d-flex align-items-center">
                 <a href="{{ url('/admin/produit/add') }}" class="btn btn-success"><i
-                        class="fa-solid fa-plus fa-beat-fade"></i><span class="btn-description">Ajouter </span></a>
+                        class="fas fa-plus fa-xl pr-1"></i><span class="btn-description">Ajouter</span></a>
 
             </div>
         </div>
@@ -25,69 +22,77 @@
 
 
 
+    {{-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --}}
 
-    <div class="container">
 
-        <div class="row">
+    <div class="container" style="margin-top: 10px;">
+        <div class="row animate__animated animate__backInLeft">
+
             @foreach ($produits as $produit)
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="card shadow mb-4">
 
-
-                <div class="col-m-3 col12 m-2">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="{{asset('storage/' . $produit->photo_pr)}}" alt="Card image cap">
                         <div class="card-body">
-                            <h2 class="text-center">{{$produit->nom_pr}}</h2>
-                            <h3 class="text-center">{{$produit->prix_vent}} DA</h3>
-                        </div>
-
-
-                        <div class="form-group row justify-content-center text-center">
-
-                            <!-- button modifier -->
-                            <div class="col-6">
-                                <form class="edit-form" action="" data-id="{{ $produit->id }}"
-                                    data-name="{{ $produit->nom }}" method="put">
-                                    @csrf
-                                    <button type="button" onclick="edit_confirmation(this)"
-                                        class="btn btn-outline-warning alpa shadow" style="margin-bottom: 5px;"><i
-                                            class="bi bi-pen"></i> <span class="btn-description">Modifier</span></button>
-                                </form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <img class="card-img-top" src="{{ asset('storage/' . $produit->photo_pr) }}"
+                                        alt="">
+                                </div>
+                                <div class="col-12">
+                                    <h2 class="text-center">{{ $produit->nom_pr }}</h2>
+                                    <h3 class="text-center">{{ $produit->prix_vent }}</h3>
+                                </div>
                             </div>
-                            <!-- fin -->
 
-                            <!-- bouton supprimer  -->
-                            <div class="col-6">
 
-                                {{-- delete button --}}
-                                <form class="delete-form" action="" data-id="{{ $produit->id }}"
-                                    data-name="{{ $produit->titre }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" onclick="supprimer_confirmation(this)"
-                                        class="btn btn-outline-danger alpa shadow"><i class="bi bi-trash3"></i> <span
-                                            class="btn-description">Supprimer</span></button>
-                                </form>
+
+                            <div class="row justify-content-center text-center">
+
+                                <!-- button modifier -->
+                                <div class="col-6">
+                                    <form class="edit-form" action="" data-id="{{ $produit->id }}"
+                                        data-name="{{ $produit->nom_pr }}" method="put">
+                                        @csrf
+                                        <button type="button" onclick="edit_confirmation(this)"
+                                            class="btn btn-warning p-2"><i
+                                                class="fas fa-pen fa-lg mr-2"></i> <span
+                                                class="btn-description">Modifier</span></button>
+                                    </form>
+                                </div>
+                                <!-- fin -->
+
+                                <!-- bouton supprimer  -->
+                                <div class="col-6">
+
+                                    {{-- delete button --}}
+                                    <form class="delete-form" action="" data-id="{{ $produit->id }}"
+                                        data-name="{{ $produit->nom_pr }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="supprimer_confirmation(this)"
+                                            class="btn btn-danger p-2"><i class="fas fa-times fa-lg mr-2"></i>
+                                            <span class="btn-description">Supprimer</span></button>
+                                    </form>
+
+                                </div>
+                                <!-- fin -->
 
                             </div>
-                            <!-- fin -->
-
-                        </div>
 
 
                     </div>
+                </div>
                 </div>
 
             @endforeach
 
 
+
         </div>
     </div>
 
 
-
-
-
-</section>
+{{-- ---------------------------------------------------  --}}
 
 
 
@@ -166,7 +171,7 @@
           }
       </script>
 
-@endsection
+
 
 
 @endsection

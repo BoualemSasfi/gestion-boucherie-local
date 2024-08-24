@@ -51,7 +51,7 @@
                                         data-name="{{ $category->nom }}" method="put">
                                         @csrf
                                         <button type="button" onclick="edit_confirmation(this)"
-                                            class="btn btn-warning p-2" style="margin-bottom: 5px;"><i
+                                            class="btn btn-warning p-2"><i
                                                 class="fas fa-pen fa-lg mr-2"></i> <span
                                                 class="btn-description">Modifier</span></button>
                                     </form>
