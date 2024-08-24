@@ -5,6 +5,7 @@ use App\Http\Controllers\Serial_controller;
 
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\CaisseController;
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +65,17 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('/admin/category/{id}/edit', 'edit');
     Route::put('/admin/category/{id}/update', 'update');
     Route::delete('/admin/category/{id}/delete', 'destroy');
+});
+//--------------------------------------------------------------------------
+// ---------                Produits                              ----------
+// -------------------------------------------------------------------------
+Route::controller(ProduitController::class)->group(function () {
+    Route::get('/admin/produit', 'index');
+    Route::get('/admin/produit/add', 'create');
+    Route::post('/admin/produit/add/save', 'store');
+    Route::get('/admin/produit/{id}/edit', 'edit');
+    Route::put('/admin/produit/{id}/update', 'update');
+    Route::delete('/admin/produit/{id}/delete', 'destroy');
 });
 
 require __DIR__ . '/auth.php';

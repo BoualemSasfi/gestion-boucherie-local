@@ -22,11 +22,11 @@
         </div>
         <div class="col-3 align-content-center">
             <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
-            <p class="digital">750.00</p>
+            <p class="digital" id="prix_unitaire">300</p>
         </div>
         <div class="col-3 align-content-center">
             <h6 class="afficheur-titre ">PRIX TOTAL:</h6>
-            <p class="digital">00.00</p>
+            <p class="digital" id="prix_total">00.00</p>
         </div>
         <div class="col-1 mt-3 pl-0">
             <button class="btn btn-primary pt-3 pb-3" style="color: white;">
@@ -477,6 +477,9 @@
     // const output = document.getElementById('output');
     const balance = document.getElementById('balance');
 
+    const prix_total = document.getElementById('prix_total');
+    const prixUnitaire = parseFloat(document.getElementById('prix_unitaire').textContent);
+
     connectButton.addEventListener('click', async () => {
         try {
             // Demander à l'utilisateur de sélectionner un port série
@@ -504,6 +507,15 @@
 
                     // Mettre à jour le contenu de <h1 id="balance">
                     balance.textContent = `${number}`;
+                    // mettre a jour le contenu de prix_total
+                    const total = (number * prixUnitaire).toFixed(2);
+
+                    // Mettre à jour le contenu de <p id="prix_total">
+                    prix_total.textContent = `${total}`;
+
+
+
+                    // mettre a jour le contenu  de  id="prix_total"  pour quil cera la valeur de id='balance' * id="prix_unitaire"
                 }
 
                 // Afficher les données complètes dans le <pre id="output"> pour débogage (optionnel)
