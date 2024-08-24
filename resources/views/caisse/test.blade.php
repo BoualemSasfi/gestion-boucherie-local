@@ -48,9 +48,9 @@
                 <div class="container mt-2">
                     <div class="your-carousel">
                         @foreach ($categorys as $category)
-                            <form class="filter-form" data-id="{{ $category->id }}" onclick="FiltrageProduits(this)">
-                                <div class="card cat btn" data-category-name="{{ $category->nom }}"
-                                    data-category-id="{{ $category->id }}"
+                            <form class="filter-form" data-id="{{ $category->id }}" data-nom="{{ $category->nom }}"
+                                onclick="FiltrageProduits(this)">
+                                <div class="card cat btn"
                                     style="width: 150px; height: 100px; background-image: url('{{ asset('storage/' . $category->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                                 </div>
                             </form>
@@ -364,26 +364,7 @@
         });
     </script>
 
-    <!-- pour cahnger le nom de category sur l'affichage  -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Sélectionner tous les éléments avec la classe 'btn' (les boutons des catégories)
-            const categoryButtons = document.querySelectorAll('.card.cat.btn');
 
-            // Ajouter un événement de clic à chaque bouton
-            categoryButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Récupérer le nom de la catégorie à partir de l'attribut data
-                    const categoryName = this.getAttribute('data-category-name');
-
-                    // Mettre à jour le contenu de l'élément avec l'ID 'category_text'
-                    document.getElementById('category_text').textContent = categoryName;
-                });
-            });
-        });
-    </script>
-
-    <!-- fin  -->
 
 
 
@@ -398,6 +379,7 @@
     <script>
         function FiltrageProduits(form) {
             const id = form.getAttribute('data-id');
+            const nom = form.getAttribute('data-nom');
     
             if (id !== undefined) {
                 $.ajax({
@@ -412,16 +394,18 @@
                             $('#products').append(
                                 '<div class="col-2 p-2">' +
                                     '<div class="card scat">' +
-                                        '<img src="{{ asset("storage/") }}/' + value.photo_pr + '" class="card-img-top" alt="...">' +
-                                        '<div class="card-body p-1 m-0 text-center">' +
-                                            '<h5 class="card-title">' + value.nom_pr + '</h5>' +
-                                            '<p class="card-text">' + value.prix_vent + '</p>' +
-                                        '</div>' +
+                                        '<form class="affichage-form" data-id="' + value.id + '" data-nom="' + value.nom_pr + '" data-prix="' + value.prix_vent + '" onclick="affichage(this)">' +
+                                            '<img src="{{ asset("storage/") }}/' + value.photo_pr + '" class="card-img-top" alt="...">' +
+                                            '<div class="card-body p-1 m-0 text-center">' +
+                                                '<h5 class="card-title">' + value.nom_pr + '</h5>' +
+                                                '<p class="card-text">' + value.prix_vent + '</p>' +
+                                            '</div>' +
+                                        '</form>' +
                                     '</div>' +
                                 '</div>'
                             );
                         });
-                        
+    
                         // Ajout du div "zyada" à la fin
                         $('#products').append(
                             '<div class="col-12 zyada" style="height: 500px;"></div>'
@@ -434,9 +418,36 @@
             } else {
                 console.error('ERREUR ID');
             }
+    
+            if (nom !== undefined) {
+                const afficheur_cat = document.getElementById('category_text'); // Correction ici
+                afficheur_cat.textContent = nom; // Utilisation de textContent pour définir le texte
+            } else {
+                console.error('ERREUR NOM');
+            }
         }
     </script>
     
+
+    <script>
+        function affichage(form) {
+            const id = form.getAttribute('data-id');
+            const nom = form.getAttribute('data-nom');
+            const prix = form.getAttribute('data-prix');
+            if (nom !== undefined) {
+                const nom_produit = document.getElementById('produit_text'); // Correction ici
+                nom_produit.textContent = nom; // Utilisation de textContent pour définir le texte
+            } else {
+                console.error('ERREUR NOM');
+            }
+            if (prix !== undefined) {
+                const prix_produit = document.getElementById('prix_unitaire'); // Correction ici
+                prix_produit.textContent = prix; // Utilisation de textContent pour définir le texte
+            } else {
+                console.error('ERREUR PRIX');
+            }
+        }
+    </script>
 
 
     {{-- ----------------------------------------------------- --}}
