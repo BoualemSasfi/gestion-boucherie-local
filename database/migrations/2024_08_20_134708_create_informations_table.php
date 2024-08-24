@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('N_registre')->nullable();
             $table->string('date_registre')->nullable();
             $table->string('adresse')->nullable();
-            $table->string('map')->nullable();
+            $table->text('map')->nullable();
             $table->string('tel')->nullable();
             $table->string('email')->unique();
             $table->string('logo')->nullable();

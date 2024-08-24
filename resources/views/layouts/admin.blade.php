@@ -158,7 +158,7 @@
                 <div id="collapse10" class="collapse" aria-labelledby="heading10" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Catégories viande:</h6>
-                        <a class="collapse-item" href="">Voir la liste</a>
+                        <a class="collapse-item" href="/admin/category">Voir la liste</a>
                     </div>
                 </div>
             </li>

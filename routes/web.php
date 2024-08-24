@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Serial_controller;
 
 use App\Http\Controllers\InformationController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,6 +44,20 @@ Route::middleware('auth')->group(function () {
 // --------------------------------------------------------------------------
 Route::controller(InformationController::class)->group(function(){
     Route::get('/admin/information','index');
+    Route::get('/admin/dossier_ajax', 'index_ajax');
+    Route::put('/admin/information/{id}/update','update');
+    
+    // Route::post('/admin/dossier/{titre}/save', 'store');
+    // Route::put('/admin/dossier/{id}/{titre}update', 'update_ajax');
+    // Route::delete('/admin/dossier_ajax/{id}/delete', 'supp_ajax');
+});
+//--------------------------------------------------------------------------
+// ---------                catégories                           ----------
+// --------------------------------------------------------------------------
+Route::controller(CategoryController::class)->group(function(){
+    Route::get('/admin/category','index');
+    Route::get('/admin/category/add','create');
+    Route::post('/admin/category/add/save','store');
     Route::get('/admin/dossier_ajax', 'index_ajax');
     Route::put('/admin/information/{id}/update','update');
     
