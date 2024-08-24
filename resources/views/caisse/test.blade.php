@@ -8,25 +8,24 @@
     <div class="row afficheur text-center pt-1 pb-1 pr-0 pl-0">
 
         <div class="col-2 align-content-center">
-            <h6 class="objet-titre">POULET</h6>
-            <p class="objet-titre">Cuisses</p>
+            <h5 class="objet-titre digital" id="category_text">-------</h5>
+            <h5 class="objet-titre digital" id="produit_text">Cuisses</h5>
         </div>
         <div class="col-3">
             <h6 class="afficheur-titre ">QTE / Kg:</h6>
             <!-- <p class="digital" ><span id="output"></span> </p> -->
             <div class="digital">
-                <p id="balance"></p>
-
+                <p id="balance">----</p>
             </div>
 
         </div>
         <div class="col-3 align-content-center">
             <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
-            <p class="digital" id="prix_unitaire">300</p>
+            <p class="digital" id="prix_unitaire">400</p>
         </div>
         <div class="col-3 align-content-center">
             <h6 class="afficheur-titre ">PRIX TOTAL:</h6>
-            <p class="digital" id="prix_total">00.00</p>
+            <p class="digital" id="prix_total">----</p>
         </div>
         <div class="col-1 mt-3 pl-0">
             <button class="btn btn-primary pt-3 pb-3" style="color: white;">
@@ -45,7 +44,7 @@
         <div class="container mt-2">
             <div class="your-carousel">
                 @foreach ($categorys as $category)
-                    <div class="card cat"
+                    <div class="card cat btn" data-category-name="{{ $category->nom }}" data-category-id="{{ $category->id }}"
                         style="width: 150px; height: 100px; background-image: url('{{ asset('storage/' . $category->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                     </div>
                 @endforeach
@@ -56,141 +55,85 @@
         <hr>
 
         <div class="container" style="height:75%; overflow-y: auto;">
-            <div class="row">
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_complet.jfif" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Complet</h5>
-                            <p class="card-text">350 DA</p>
+
+        <!-- new -->
+        <div class="row" id="product-list">
+                    @include('caisse.partials.produit-list', ['produits' => $produits])
+                </div>
+        <!-- fin -->
+            <!-- <div class="row">
+
+                @foreach ($produits as $produit)
+
+                    <div class="col-2 p-2">
+                        <div class="card scat">
+                            <img src=" {{asset('storage/'. $produit->photo_pr)}} " class="card-img-top" alt="...">
+                            <div class="card-body p-1 m-0 text-center">
+                                <h5 class="card-title"> {{$produit->nom_pr}} </h5>
+                                <p class="card-text"> {{$produit->prix_vent}} DA</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_poitrine.webp" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Poitrine</h5>
-                            <p class="card-text">750 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_cuisses.png" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Cuisses</h5>
-                            <p class="card-text">250 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_ail.png" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Ails</h5>
-                            <p class="card-text">150 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_foie.jfif" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Foie</h5>
-                            <p class="card-text">950 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_farci.jfif" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Farci</h5>
-                            <p class="card-text">1500 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_farci.jfif" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Farci</h5>
-                            <p class="card-text">1500 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_complet.jfif" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Complet</h5>
-                            <p class="card-text">350 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_poitrine.webp" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Poitrine</h5>
-                            <p class="card-text">750 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_cuisses.png" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Cuisses</h5>
-                            <p class="card-text">250 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_ail.png" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Ails</h5>
-                            <p class="card-text">150 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_foie.jfif" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Foie</h5>
-                            <p class="card-text">950 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_farci.jfif" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Farci</h5>
-                            <p class="card-text">1500 DA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-2 p-2">
-                    <div class="card scat">
-                        <img src="img/animal/jaja_farci.jfif" class="card-img-top" alt="...">
-                        <div class="card-body p-1 m-0 text-center">
-                            <h5 class="card-title">Farci</h5>
-                            <p class="card-text">1500 DA</p>
-                        </div>
-                    </div>
-                </div>
+
+                @endforeach
+
                 <div class="col-12 zyada" style="height: 1800px;">
                     CAISSE ESPACE
                 </div>
-                {{-- morceau --}}
+                 morceau
 
-            </div>
+            </div> -->
 
         </div>
+
+<!-- script pour produit  -->
+
+        <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Sélectionner tous les éléments avec la classe 'btn' (les boutons des catégories)
+        const categoryButtons = document.querySelectorAll('.card.cat.btn');
+
+        // Ajouter un événement de clic à chaque bouton
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Récupérer le nom de la catégorie à partir de l'attribut data
+                const categoryName = this.getAttribute('data-category-name');
+                const categoryId = this.getAttribute('data-category-id'); // Assurez-vous d'ajouter cet attribut aux boutons
+
+                // Mettre à jour le contenu de l'élément avec l'ID 'category_text'
+                document.getElementById('category_text').textContent = categoryName;
+
+                // Envoyer une demande AJAX pour obtenir les produits de la catégorie sélectionnée
+                fetch(`{{ route('caisse') }}?category_id=${categoryId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const produitsContainer = document.getElementById('produits-container');
+                        produitsContainer.innerHTML = ''; // Effacer les produits existants
+
+                        // Ajouter les nouveaux produits
+                        data.produits.forEach(produit => {
+                            produitsContainer.innerHTML += `
+                                <div class="col-2 p-2">
+                                    <div class="card scat">
+                                        <img src="${window.location.origin}/storage/${produit.photo_pr}" class="card-img-top" alt="...">
+                                        <div class="card-body p-1 m-0 text-center">
+                                            <h5 class="card-title">${produit.nom_pr}</h5>
+                                            <p class="card-text">${produit.prix_vent} DA</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        });
+                    })
+                    .catch(error => console.error('Erreur:', error));
+            });
+        });
+    });
+</script>
+
+
+
+
 
 
 
@@ -471,7 +414,7 @@
 </div>
 
 
-
+<!-- pour affiche le information de la balance sur l'affichage pus la configuraiton  -->
 <script>
     const connectButton = document.getElementById('connect');
     // const output = document.getElementById('output');
@@ -527,6 +470,65 @@
         } catch (error) {
             console.error('Erreur de communication série :', error);
         }
+    });
+</script>
+
+<!-- pour cahnger le nom de category sur l'affichage  -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Sélectionner tous les éléments avec la classe 'btn' (les boutons des catégories)
+        const categoryButtons = document.querySelectorAll('.card.cat.btn');
+
+        // Ajouter un événement de clic à chaque bouton
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Récupérer le nom de la catégorie à partir de l'attribut data
+                const categoryName = this.getAttribute('data-category-name');
+
+                // Mettre à jour le contenu de l'élément avec l'ID 'category_text'
+                document.getElementById('category_text').textContent = categoryName;
+            });
+        });
+    });
+</script>
+
+<!-- fin  -->
+
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const categoryButtons = document.querySelectorAll('.card.cat.btn');
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const categoryId = this.getAttribute('data-category-id');
+
+                fetch(`{{ route('caisse') }}?category_id=${categoryId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const productList = document.getElementById('product-list');
+                        productList.innerHTML = '';
+
+                        data.produits.forEach(produit => {
+                            const produitDiv = document.createElement('div');
+                            produitDiv.className = 'col-2 p-2';
+                            produitDiv.innerHTML = `
+                                <div class="card scat">
+                                    <img src="{{ asset('storage/') }}/${produit.photo_pr}" class="card-img-top" alt="...">
+                                    <div class="card-body p-1 m-0 text-center">
+                                        <h5 class="card-title">${produit.nom_pr}</h5>
+                                        <p class="card-text">${produit.prix_vent} DA</p>
+                                    </div>
+                                </div>
+                            `;
+                            productList.appendChild(produitDiv);
+                        });
+                    });
+            });
+        });
     });
 </script>
 @endsection
