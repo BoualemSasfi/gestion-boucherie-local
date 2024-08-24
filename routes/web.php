@@ -5,6 +5,7 @@ use App\Http\Controllers\Serial_controller;
 
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CaisseController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,44 +38,43 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//--------------------------------------------------------------------------
+// ---------               caisse                                 ----------
+// -------------------------------------------------------------------------
+Route::controller(CaisseController::class)->group(function () {
+    Route::get('/caisse', 'caisse');
 
+});
 
 //--------------------------------------------------------------------------
 // ---------                Information                           ----------
-// --------------------------------------------------------------------------
-Route::controller(InformationController::class)->group(function(){
-    Route::get('/admin/information','index');
-    Route::get('/admin/dossier_ajax', 'index_ajax');
-    Route::put('/admin/information/{id}/update','update');
-    
-    // Route::post('/admin/dossier/{titre}/save', 'store');
-    // Route::put('/admin/dossier/{id}/{titre}update', 'update_ajax');
-    // Route::delete('/admin/dossier_ajax/{id}/delete', 'supp_ajax');
-});
-//--------------------------------------------------------------------------
-// ---------                catégories                           ----------
-// --------------------------------------------------------------------------
-Route::controller(CategoryController::class)->group(function(){
-    Route::get('/admin/category','index');
-    Route::get('/admin/category/add','create');
-    Route::post('/admin/category/add/save','store');
-    Route::get('/admin/dossier_ajax', 'index_ajax');
-    Route::put('/admin/information/{id}/update','update');
-    
-    // Route::post('/admin/dossier/{titre}/save', 'store');
-    // Route::put('/admin/dossier/{id}/{titre}update', 'update_ajax');
-    // Route::delete('/admin/dossier_ajax/{id}/delete', 'supp_ajax');
+// -------------------------------------------------------------------------
+Route::controller(InformationController::class)->group(function () {
+    Route::get('/admin/information', 'index');
+    Route::put('/admin/information/{id}/update', 'update');
 });
 
-require __DIR__.'/auth.php';
+//--------------------------------------------------------------------------
+// ---------                catégories                            ----------
+// -------------------------------------------------------------------------
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/admin/category', 'index');
+    Route::get('/admin/category/add', 'create');
+    Route::post('/admin/category/add/save', 'store');
+    Route::get('/admin/category/{id}/edit', 'edit');
+    Route::put('/admin/category/{id}/update', 'update');
+    Route::delete('/admin/category/{id}/delete', 'destroy');
+});
+
+require __DIR__ . '/auth.php';
 
 
 
 // les route de la caisse 
 
-Route::get('/caisse', function () {
-    return view('caisse.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/caisse', function () {
+//     return view('caisse.index');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/test', function () {
 //     return view('caisse.test');
