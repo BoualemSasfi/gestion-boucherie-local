@@ -73,7 +73,7 @@
                     <!-- fin  -->
 
                     <!-- map  -->
-                    <div class="col-12 form-group">
+                    <div class="col-12 form-group" style="border: 1px solid #ccc; padding: 10px;">
                         <label for="">Localisation:</label>
                         <input type="text" name="map" class="form-control " placeholder="Localisation"
                             value="{{ $information->map }}"></input>
