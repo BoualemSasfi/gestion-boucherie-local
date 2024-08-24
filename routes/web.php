@@ -43,7 +43,7 @@ Route::middleware('auth')->group(function () {
 // ---------               caisse                                 ----------
 // -------------------------------------------------------------------------
 Route::controller(CaisseController::class)->group(function () {
-    Route::get('/caisse', 'caisse');
+    Route::get('/caisse', 'caisse')->name('caisse');
 
 });
 
