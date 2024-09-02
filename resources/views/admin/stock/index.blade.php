@@ -15,10 +15,10 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Mgasins</h2>
+            <h2>Stock</h2>
         </div>
         <div class="col-2 text-right">
-            <a href="{{ url('/admin/magasin/add') }}" class="btn btn-success">
+            <a href="{{ url('/admin/stock/add') }}" class="btn btn-success">
                 <i class="fas fa-plus fa-xl pr-1"></i>
                 <span class="btn-description"></span>
             </a>
@@ -42,25 +42,24 @@
                     <table id="example" class="table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Nom</th>
-                                <th>Type</th>
-                                <th>Photo</th>
+                                <th>Locla</th>
+                                <th>type stock</th>
+                               
                                 <th>Actions</th>
                             </tr>
                         </thead>
 
                         <tbody class="text-center">
-                            @foreach ($magasins as $magasin)
+                            @foreach ($stocks as $stock)
                                 <tr>
-                                    <td class=" align-middle">{{ $magasin->nom}}</td>
+                                    <td class=" align-middle">
+                                    
+                                    {{ $stock->nom}}
+                                
+                                
+                                </td>
 
-                                    <td class=" align-middle">{{ $magasin->type }}</td>
-
-                                    <td class=" align-middle" style="width:80px;">
-                                                        <div
-                                                            style="background-image:url({{ asset('storage/' . $magasin->photo) }});background-size: cover;background-position: center;background-repeat: no-repeat;  height: 80px; width: 70px; margin-left:5px; margin-right:5px;">
-                                                        </div>
-                                                    </td>
+                                    <td class=" align-middle">{{ $stock->type }}</td>
 
 
 
@@ -77,7 +76,7 @@
                                             <div class="col-1">
                                                 {{-- edit VOIR STOCK --}}
                                                 <form class="show-form"
-                                                    action="{{ url('/admin/magasin/' . $magasin->id . '/stock') }}"
+                                                    action="{{ url('/admin/stock/' . $stock->id . '/stock') }}"
                                                     method="GET">
                                                     @csrf
                                                     <button type="submit" class="btn btn-outline-info alpa shadow"><i
@@ -92,8 +91,8 @@
 
                                             <div class="col-1">
                                                 {{-- edit button --}}
-                                                <form class="edit-form" action="" data-id="{{ $magasin->id }}"
-                                                    data-name="{{ $magasin->nom }}" method="GET">
+                                                <form class="edit-form" action="" data-id="{{ $stock->id }}"
+                                                    method="GET">
                                                     @csrf
                                                     <button type="button" onclick="edit_confirmation(this)"
                                                         class="btn btn-outline-primary alpa shadow"><i
@@ -105,8 +104,8 @@
 
                                             <div class="col-1">
                                                 {{-- delete button --}}
-                                                <form class="delete-form" action="" data-id="{{ $magasin->id }}"
-                                                    data-name="{{ $magasin->nom . ' ' . $magasin->prenom }}" method="POST">
+                                                <form class="delete-form" action="" data-id="{{ $stock->id }}"
+                                                    method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="button" onclick="supprimer_confirmation(this)"
@@ -126,17 +125,7 @@
                             @endforeach
 
                         </tbody>
-                        <!-- <tfoot>
-                            <tr>
-
-                                <th>id</th>
-                                <th>adresse</th>
-                                <th>Photo</th>
-
-
-                                <th>Actions</th>
-                            </tr>
-                        </tfoot> -->
+     
                     </table>
                 </div>
 
@@ -158,7 +147,7 @@
             const name = form.dataset.name;
 
             Swal.fire({
-                title: "Êtes-vous sûr de vouloir supprimer ce magasin ?",
+                title: "Êtes-vous sûr de vouloir supprimer ce stock ?",
                 text: name,
                 icon: "warning",
                 showCancelButton: true,
@@ -169,7 +158,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Mettez à jour l'action du formulaire avec l'ID et soumettez-le
-                    form.action = `/admin/magasin/${id}/delete`;
+                    form.action = `/admin/stock/${id}/delet_add`;
                     form.submit();
 
 
@@ -214,7 +203,7 @@
 
             Swal.fire({
                 // title: "Êtes-vous sûr de vouloir modifier cet(te) stagiaire ?",
-                title: "afficher les information des magasin ..?",
+                title: "afficher les information des stock ..?",
                 text: name,
                 icon: "question",
                 showCancelButton: true,
@@ -225,7 +214,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Mettez à jour l'action du formulaire avec l'ID et soumettez-le
-                    form.action = `/admin/magasin/${id}/edit`;
+                    form.action = `/admin/stock/${id}/edit`;
                     form.submit();
                 }
             });
@@ -235,7 +224,18 @@
     }
 </script>
 
-
+<!-- pour afficher le message dialoge apre les funciton de controller  -->
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: 'Succès',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            timer: '3000', 
+            showConfirmButton: false 
+        });
+    </script>
+@endif
 
 
 

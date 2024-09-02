@@ -48,7 +48,7 @@ class ProduitController extends Controller
         $produit->save();
 
         // Message de succès
-        Alert::success('le nouveau produit a bien été enregitrier !')->position('center')->autoClose(2000);
+        session()->flash('success', 'le nouveau produit a bien été eneregistrier');
 
         return redirect('/admin/produit');
     }
@@ -85,7 +85,7 @@ class ProduitController extends Controller
             $produit->photo_pr = str_replace('public/', '', $path);
         }
         $produit->save();
-
+        session()->flash('success', 'Modification eneregistrier');
         return redirect('/admin/produit');
 
     }
@@ -94,6 +94,9 @@ class ProduitController extends Controller
     {
         $produit = Produit::find($id);
         $produit->delete();
+
+        session()->flash('success', 'le produit est supprimer ');
+
         return redirect('/admin/produit');
     }
 
