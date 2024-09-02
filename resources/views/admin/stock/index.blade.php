@@ -44,7 +44,7 @@
                             <tr>
                                 <th>Locla</th>
                                 <th>type stock</th>
-                               
+
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -53,11 +53,11 @@
                             @foreach ($stocks as $stock)
                                 <tr>
                                     <td class=" align-middle">
-                                    
-                                    {{ $stock->nom}}
-                                
-                                
-                                </td>
+
+                                        {{ $stock->nom}}
+
+
+                                    </td>
 
                                     <td class=" align-middle">{{ $stock->type }}</td>
 
@@ -91,8 +91,7 @@
 
                                             <div class="col-1">
                                                 {{-- edit button --}}
-                                                <form class="edit-form" action="" data-id="{{ $stock->id }}"
-                                                    method="GET">
+                                                <form class="edit-form" action="" data-id="{{ $stock->id }}" method="GET">
                                                     @csrf
                                                     <button type="button" onclick="edit_confirmation(this)"
                                                         class="btn btn-outline-primary alpa shadow"><i
@@ -125,7 +124,7 @@
                             @endforeach
 
                         </tbody>
-     
+
                     </table>
                 </div>
 
@@ -158,7 +157,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Mettez à jour l'action du formulaire avec l'ID et soumettez-le
-                    form.action = `/admin/stock/${id}/delet_add`;
+                    form.action = '/admin/stock/' + id + '/delet_add';
                     form.submit();
 
 
@@ -214,7 +213,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Mettez à jour l'action du formulaire avec l'ID et soumettez-le
-                    form.action = `/admin/stock/${id}/edit`;
+                    form.action = '/admin/stock/' + id + '/update_affich';
                     form.submit();
                 }
             });
@@ -231,8 +230,8 @@
             title: 'Succès',
             text: '{{ session('success') }}',
             icon: 'success',
-            timer: '3000', 
-            showConfirmButton: false 
+            timer: '3000',
+            showConfirmButton: false
         });
     </script>
 @endif

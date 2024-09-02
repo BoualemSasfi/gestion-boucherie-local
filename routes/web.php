@@ -114,6 +114,8 @@ Route::controller(StockController::class)->group(function () {
     Route::get('/admin/stock/category/{$id}', 'cat_list');
     
 
+    Route::get('/admin/stock/{id}/update_affich', 'update_affich');
+
     Route::put('/admin/stock/{id}/update', 'update');
 
 
