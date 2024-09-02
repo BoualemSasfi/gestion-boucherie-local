@@ -13,30 +13,24 @@ class StockController extends Controller
 {
     public function index()
     {
+        $stocks = Stock::join('magasins', 'stocks.magasin_id', '=', 'magasins.id')
+            ->select('stocks.id', 'magasins.nom', 'stocks.type')
+            ->get();
 
-        $stocks = Stock::all();
         return view('admin.stock.index', ['stocks' => $stocks]);
 
     }
 
     public function create()
     {
-        // $magasins = Magasin::all();
-        // $categorys = Category::all();
-
         $nv_stock = new Stock();
         $nv_stock->save();
 
-        // $last_stock = Stock::latest()->first();
-
-        // return view('admin.stock.add',['magasins'=>$magasins,'categorys'=>$categorys, 'last_stock'=>$last_stock]);
         return redirect('/admin/stock/addup');
-
     }
 
     public function addup()
     {
-
         $magasins = Magasin::all();
         $categorys = Category::all();
 
@@ -45,10 +39,19 @@ class StockController extends Controller
 
         return view('admin.stock.add', ['magasins' => $magasins, 'categorys' => $categorys, 'id' => $id]);
     }
+    public function update_affich($id)
+    {
+        $stock = Stock::find($id);
+        $magasins = Magasin::all();
+        $categorys = Category::all();
+
+        return view('admin.stock.update', ['magasins' => $magasins, 'categorys' => $categorys, 'stock' => $stock]);
+    }
 
 
-    public function update(Request $request,  $id){
-        $stock =  Stock::find($id);
+    public function update(Request $request, $id)
+    {
+        $stock = Stock::find($id);
         $stock->magasin_id = $request->input('magasin_id');
         $stock->type = $request->input('type');
 
@@ -56,17 +59,17 @@ class StockController extends Controller
 
         session()->flash('success');
 
-    return redirect('/admin/stock');
+        return redirect('/admin/stock');
 
     }
 
     public function delet_add($id)
     {
-        Lestock::where('stock_id',$id)->delete();
+        Lestock::where('stock_id', $id)->delete();
 
         Stock::find($id)->delete();
 
-        session()->flash('error','le stock a bien été srupprimer ');
+        session()->flash('error', 'le stock a bien été srupprimer ');
 
         return redirect('/admin/stock');
     }
@@ -78,10 +81,10 @@ class StockController extends Controller
             ->select('lestocks.stock_id', 'categories.nom', 'categories.photo')
             ->where('lestocks.stock_id', $id)
             ->get();
-                    
+
         return response()->json(['category_liste' => $cat_list]);
     }
-    
+
 
 
 
@@ -111,5 +114,5 @@ class StockController extends Controller
     }
 
 
-   
+
 }

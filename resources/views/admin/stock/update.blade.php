@@ -19,7 +19,7 @@
 
 
         <div class="col-8 text-center">
-            <h2>Ajouter un nouveau stock {{$id}} </h2>
+            <h2>modifier le stock {{$stock->id}} </h2>
         </div>
         <div class="col-2 text-right">
 
@@ -34,7 +34,7 @@
     <div class="row animate__animated animate__backInLeft">
 
         <div class="card shadow col-12">
-            <form class="edit-form" action="{{ url('/admin/stock/' . $id. '/update') }}" method="post"
+            <form class="edit-form" action="{{ url('/admin/stock/' . $stock->id . '/update') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -48,7 +48,8 @@
                                     <select id="magasin" name="magasin_id" class="form-control">
                                         <option value="">Sélectionnez un magasin </option>
                                         @foreach ($magasins as $magasin)
-                                            <option value="{{ $magasin->id }}">{{ $magasin->nom }}</option>
+                                            <option value="{{ $magasin->id }}" {{ $magasin->id == $stock->magasin_id ? 'selected' : '' }}> {{ $magasin->nom }} </option>
+
                                         @endforeach
                                     </select>
                                 </div>
@@ -56,18 +57,20 @@
                         </div>
 
                         <div class="form-group col-6">
-                        
-                                <div class="form-group">
-                                    <label for="">type de stock </label>
-                                    <select id="" name="type" class="form-control">
-                                        <option value="">Sélectionnez le type de stockage </option>
-                                        <option value="Frais">Frais</option>
-                                        <option value="Congele">Congele</option>
-                                    
 
-                                    </select>
-                                </div>
-                       
+                            <div class="form-group">
+                                <label for="">type de stock </label>
+                                <select id="" name="type" class="form-control">
+                                    <option value="">Sélectionnez le type de stockage </option>
+                                    <option value="Frais" {{ $stock->type == 'Frais' ? 'selected' : '' }}>Frais </option>
+                                    <option value="Congele" {{ $stock->type == 'Congele' ? 'selected' : '' }}>Congelé
+                                    </option>
+
+
+
+                                </select>
+                            </div>
+
 
                         </div>
 
@@ -83,7 +86,7 @@
                     <div class="row">
 
                         <div class="col-6 mx-auto">
-                            <form class="add_cat_form" data-id="{{$id}}">
+                            <form class="add_cat_form" data-id="{{$stock->id}}">
                                 <div class="row">
                                     <div class="form-group col-9">
 
@@ -142,12 +145,18 @@
 
                         <div class="col-6">
                             {{-- delete button --}}
-                            <form class="delete-form" action="" data-id="{{ $id }}" method="POST">
+                            <!-- <form class="delete-form" action="" data-id="{{ $stock->id }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="button" onclick="annuler_confirmation(this)"
                                     class="btn btn-danger alpa shadow"><i class="bi bi-trash3"></i>Annuler</button>
-                            </form>
+                            </form> -->
+
+                            
+                                <a type="button" href="{{ url('/admin/stock') }}" class="btn btn-danger alpa shadow">
+
+                                    <i class="bi bi-trash3"></i>Annuler
+                            </a>
                         </div>
                     </div>
 
@@ -169,7 +178,7 @@
         <script>
             $(document).ready(function () {
                 // Appeler la fonction au chargement de la page
-                afficher_category( {{$id}});
+                afficher_category( {{$stock->id}});
             });
         </script>
 
