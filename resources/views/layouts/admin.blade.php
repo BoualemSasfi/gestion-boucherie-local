@@ -9,6 +9,14 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+    <!-- Inclure jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Inclure d'autres scripts, comme Bootstrap JS si nécessaire -->
+
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Custom fonts for this template-->
@@ -133,7 +141,7 @@
                 <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion Magasins:</h6>
-                        <a class="collapse-item" href="">Liste des magasins</a>
+                        <a class="collapse-item" href="/admin/magasin">Liste des magasins</a>
                         <a class="collapse-item" href="">Vendeurs par magasin</a>
                         <a class="collapse-item" href="">Caisses par magasin</a>
 
@@ -159,7 +167,8 @@
                 <div id="collapse10" class="collapse" aria-labelledby="heading10" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Catégories viande:</h6>
-                        <a class="collapse-item" href="/admin/category">Voir la liste</a>
+                        <a class="collapse-item" href="/admin/category">Catétorié</a>
+                        <a class="collapse-item" href="/admin/produit">Produits</a>
                     </div>
                 </div>
             </li>
@@ -989,9 +998,12 @@
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
     ---------------------------------------------------------- --}}
-    <script src="{{ asset('js/jquery.js') }}"></script>
 
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    
+
+    <!-- <script src="{{ asset('js/jquery.js') }}"></script> -->
+
+    <!-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> -->
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->

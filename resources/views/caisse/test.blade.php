@@ -51,6 +51,11 @@
                     <div class="row" id="products">
                         <!-- Les produits filtrés apparaîtront ici -->
                     </div>
+
+                @endforeach
+
+                <div class="col-12 zyada" style="height: 1800px;">
+                    CAISSE ESPACE
                 </div>
             </div>
 

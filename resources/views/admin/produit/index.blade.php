@@ -34,13 +34,14 @@
 
                         <div class="card-body">
                             <div class="row">
+
                                 <div class="col-12">
                                     <img class="card-img-top" src="{{ asset('storage/' . $produit->photo_pr) }}"
                                         alt="">
                                 </div>
                                 <div class="col-12">
                                     <h2 class="text-center">{{ $produit->nom_pr }}</h2>
-                                    <h3 class="text-center">{{ $produit->prix_vent }}</h3>
+                                    <h3 class="text-center">{{ $produit->prix_vent }} DA</h3>
                                 </div>
                             </div>
 
@@ -172,6 +173,18 @@
       </script>
 
 
+<!-- pour afficher le message dialoge apre les funciton de controller  -->
+@if(session('success'))
+    <script>
+        Swal.fire({
+            title: 'Succès',
+            text: '{{ session('success') }}',
+            icon: 'success',
+            timer: '2000', 
+            showConfirmButton: false 
+        });
+    </script>
+@endif
 
 
 @endsection
