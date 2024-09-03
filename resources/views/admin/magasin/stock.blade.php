@@ -34,8 +34,8 @@
 
                         <h5>Nom : {{$magasins->nom}} </h5>
                         <h5>type : {{$magasins->type}} </h5>
-                        <h5>numéro de register : {{$magasins->N_reg}} </h5>
-                        <h5>numéro telephone : {{$magasins->tel}} </h5>
+                        <h5>N° register : {{$magasins->N_reg}} </h5>
+                        <h5>N° telephone : {{$magasins->tel}} </h5>
                         <h5>état :
                             @if ($magasins->activ = 1)
                                 active
@@ -93,6 +93,7 @@
                                             <h4 class="text-center">Frais</h4>
                                             <table class="table-striped table-bordered col-12">
                                                 <thead class="text-center">
+
                                                     <tr>
                                                         <th>categorré</th>
                                                         <th>produit</th>
@@ -102,17 +103,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Pouler</td>
-                                                        <td>Cuisse</td>
+                                                    @foreach ($stock_frais as $frais)
 
-                                                        <td>125 Kg</td>
-                                                        <td class="text-center space-x-8">
-                                                            <button type="button" class="btn btn-outline-secondary">add</button>
-                                                            <button type="button" class="btn btn-outline-danger">trasfirer</button>
-                                                            <button type="button" class="btn btn-outline-info">ajustier</button>
-                                                        </td>
-                                                    </tr>
+
+                                                        <tr>
+                                                            <td>{{$frais->categorie}}</td>
+                                                            <td>{{$frais->produit}}</td>
+                                                            <td>{{$frais->quantity}}</td>
+
+                                                            <td class="text-center space-x-8">
+                                                                <!-- <button type="button" class="btn btn-outline-secondary">add</button>
+                                                                <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
+                                                                <button type="button" class="btn btn-outline-info">ajustier</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -130,18 +135,22 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr>
-                                                        <td>Pouler</td>
-                                                        <td>Cuisse</td>
+                                                    @foreach ($stock_congele as $congele)
 
-                                                        <td>125 Kg</td>
 
-                                                        <td class="text-center space-x-8">
-                                                            <button type="button" class="btn btn-outline-secondary">add</button>
-                                                            <button type="button" class="btn btn-outline-danger">trasfirer</button>
-                                                            <button type="button" class="btn btn-outline-info">ajustier</button>
-                                                        </td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td>{{$congele->categorie}}</td>
+                                                            <td>{{$congele->produit}}</td>
+
+                                                            <td>{{$congele->quantity}}</td>
+
+                                                            <td class="text-center space-x-8">
+                                                                <!-- <button type="button" class="btn btn-outline-secondary">add</button>
+                                                                <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
+                                                                <button type="button" class="btn btn-outline-info">ajustier</button>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -155,23 +164,28 @@
                                         <tr>
                                             <th>categorré</th>
                                             <th>produit</th>
-                                            <th>type de stock</th>
+                                     
                                             <th>poid</th>
                                             <th>action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+
+                                    @foreach ($stock_frais as $frais )
+                                        
+                                  
                                         <tr>
-                                            <td>catégorie</td>
-                                            <td>produit</td>
-                                            <td>type de stock</td>
-                                            <td>poid</td>
+                                            <td>{{$frais->categorie}} </td>
+                                            <td>{{$frais->produit}} </td>
+                                            <td>{{$frais->quantity}} </td>
+                                          
                                             <td class="text-center space-x-8">
-                                                <button type="button" class="btn btn-outline-secondary">add</button>
-                                                <button type="button" class="btn btn-outline-danger">trasfirer</button>
+                                                <!-- <button type="button" class="btn btn-outline-secondary">add</button>
+                                                <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
                                                 <button type="button" class="btn btn-outline-info">ajustier</button>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
 

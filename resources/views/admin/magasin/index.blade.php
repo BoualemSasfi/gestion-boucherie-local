@@ -51,8 +51,14 @@
 
                         <tbody class="text-center">
                             @foreach ($magasins as $magasin)
-                                <tr>
-                                    <td class=" align-middle">{{ $magasin->nom}}</td>
+                            <tr>
+                                @if ($magasin->nom == 'Atelier')
+                                <td class=" align-middle" style="color: red;">{{ $magasin->nom}}</td>
+                                @else
+                                <td class=" align-middle">{{ $magasin->nom}}</td>
+                                @endif
+                                   
+                                   
 
                                     <td class=" align-middle">{{ $magasin->type }}</td>
 
@@ -123,6 +129,7 @@
 
                                     </td>
                                 </tr>
+                                
                             @endforeach
 
                         </tbody>

@@ -7,6 +7,8 @@ use App\Models\Stock;
 use App\Models\Category;
 use App\Models\Magasin;
 use App\Models\Lestock;
+use App\Models\Produit;
+
 
 
 class StockController extends Controller
@@ -99,11 +101,17 @@ class StockController extends Controller
                 return response()->json(['error' => 'La catégorie existe déjà.'], 400); // Utilisez le code d'erreur HTTP 400 pour les requêtes incorrectes
             }
 
-            $add_cat = new Lestock();
-            $add_cat->stock_id = $id_stock;
-            $add_cat->categorie_id = $category;
-            $add_cat->produit_id = 6; // Assurez-vous que cette valeur est correcte
-            $add_cat->save();
+            // Récupérer tous les produits de la catégorie spécifiée
+            $produits = Produit::where('categorie_id', $category)->get();
+
+            // Boucler sur chaque produit de la catégorie et l'ajouter dans Lestock
+            foreach ($produits as $produit) {
+                $add_cat = new Lestock();
+                $add_cat->stock_id = $id_stock;
+                $add_cat->categorie_id = $category;
+                $add_cat->produit_id = $produit->id; // Utiliser l'ID du produit
+                $add_cat->save();
+            }
 
             return response()->json(['success' => 'La catégorie a bien été ajoutée.'], 200); // Utilisez le code d'erreur HTTP 200 pour une réussite
 
@@ -112,6 +120,13 @@ class StockController extends Controller
             return response()->json(['error' => 'Erreur interne du serveur.'], 500); // Utilisez le code d'erreur HTTP 500 pour une erreur interne du serveur
         }
     }
+    public function sppcat ($id_stock, $category){
+        Lestock::where('stock_id',$id_stock)
+            ->where('categorie_id', $category)
+            ->delete();
+    }
+
+    // pas encore terminer
 
 
 

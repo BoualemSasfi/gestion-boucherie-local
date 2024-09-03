@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Magasin;
+use App\Models\Lestock;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -90,16 +91,47 @@ class MagasinController extends Controller
 
     }
 
-    public function destroy ($id){
+    public function destroy($id)
+    {
         $magasin = Magasin::find($id);
         $magasin->delete();
         session()->flash('success', 'le magasin est supprimet  !');
         return redirect('/admin/magasin');
     }
 
-    public function stock($id){
+    public function stock($id)
+    {
         $magasins = Magasin::find($id);
-        return view('/admin/magasin/stock',['magasins'=>$magasins]);
+
+        $stock_frais = Lestock::join('stocks', 'stocks.id', '=', 'lestocks.stock_id')
+            ->join('categories', 'categories.id', '=', 'lestocks.categorie_id')
+            ->join('produits', 'produits.id', '=', 'lestocks.produit_id')
+            ->join('magasins', 'stocks.magasin_id', '=', 'magasins.id')
+            ->where('stocks.magasin_id', $id)
+            ->where('stocks.type', 'frais')
+            ->select(
+                'categories.nom as categorie',
+                'produits.nom_pr as produit',
+                'quantity' 
+            )
+            ->get();
+
+            $stock_congele = Lestock::join('stocks', 'stocks.id', '=', 'lestocks.stock_id')
+            ->join('categories', 'categories.id', '=', 'lestocks.categorie_id')
+            ->join('produits', 'produits.id', '=', 'lestocks.produit_id')
+            ->join('magasins', 'stocks.magasin_id', '=', 'magasins.id')
+            ->where('stocks.magasin_id', $id)
+            ->where('stocks.type', 'congele')
+            ->select(
+                'categories.nom as categorie',
+                'produits.nom_pr as produit',
+                'quantity' 
+            )
+            ->get();
+
+
+
+        return view('/admin/magasin/stock', ['magasins' => $magasins ,  'stock_frais'=>$stock_frais , 'stock_congele'=> $stock_congele]);
     }
 
 

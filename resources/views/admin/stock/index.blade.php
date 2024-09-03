@@ -52,14 +52,23 @@
                         <tbody class="text-center">
                             @foreach ($stocks as $stock)
                                 <tr>
-                                    <td class=" align-middle">
 
-                                        {{ $stock->nom}}
+                                @if ($stock->nom ==  'Atelier')
 
+                                <td class=" align-middle" style="color: red;" >{{ $stock->nom}}</td>
+                                @else
+                                
+                                <td class=" align-middle">{{ $stock->nom}}</td>
+                                @endif
 
-                                    </td>
+                                    @if ($stock->type == 'Frais')
 
-                                    <td class=" align-middle">{{ $stock->type }}</td>
+                                    <td class=" align-middle" style="color: red" >{{ $stock->type }}</td>
+                                    @else
+                                        
+                                    <td class=" align-middle" style="color: blue">{{ $stock->type }}</td>
+                                    @endif
+
 
 
 
