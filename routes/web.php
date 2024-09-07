@@ -108,10 +108,10 @@ Route::controller(StockController::class)->group(function () {
     
     Route::post(' /admin/stock/categorie/add/{id_stock}/{category}', 'addcat');
     
-    Route::post('/admin/stock/deletcat/{$id}', 'deletcat');
+    Route::post('/admin/stock/deletcat/{id}', 'deletcat');
     
     // ajaxe pour afficher la liste des catégories 
-    Route::get('/admin/stock/category/{$id}', 'cat_list');
+    Route::get('/admin/stock/category/{id}', 'cat_list');
     
 
     Route::get('/admin/stock/{id}/update_affich', 'update_affich');

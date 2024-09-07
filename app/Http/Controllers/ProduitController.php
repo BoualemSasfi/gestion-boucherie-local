@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Storage;
 
 
 class ProduitController extends Controller
-{
+{    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $produits = Produit::all();  // Récupère tous les produits

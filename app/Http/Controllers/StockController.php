@@ -10,7 +10,10 @@ use App\Models\Lestock;
 
 
 class StockController extends Controller
-{
+{    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         $stocks = Stock::join('magasins', 'stocks.magasin_id', '=', 'magasins.id')
@@ -18,7 +21,6 @@ class StockController extends Controller
             ->get();
 
         return view('admin.stock.index', ['stocks' => $stocks]);
-
     }
 
     public function create()
@@ -60,7 +62,6 @@ class StockController extends Controller
         session()->flash('success');
 
         return redirect('/admin/stock');
-
     }
 
     public function delet_add($id)
@@ -69,7 +70,7 @@ class StockController extends Controller
 
         Stock::find($id)->delete();
 
-        session()->flash('error', 'le stock a bien été srupprimer ');
+        session()->flash('error', 'le stock a bien été supprimer ');
 
         return redirect('/admin/stock');
     }
@@ -78,11 +79,19 @@ class StockController extends Controller
     public function cat_list($id)
     {
         $cat_list = Lestock::join('categories', 'lestocks.categorie_id', '=', 'categories.id')
-            ->select('lestocks.stock_id', 'categories.nom', 'categories.photo')
+            ->select(
+                'lestocks.stock_id as stock_id',
+                'categories.nom as nom',
+                'categories.photo as photo'
+            )
             ->where('lestocks.stock_id', $id)
             ->get();
 
         return response()->json(['category_liste' => $cat_list]);
+
+
+        // $stock_lestocks = Lestock::where('stock_id', $id)->get();
+        // return response()->json(['stock_lestocks' => $stock_lestocks]);
     }
 
 
@@ -112,7 +121,4 @@ class StockController extends Controller
             return response()->json(['error' => 'Erreur interne du serveur.'], 500); // Utilisez le code d'erreur HTTP 500 pour une erreur interne du serveur
         }
     }
-
-
-
 }

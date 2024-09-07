@@ -11,11 +11,8 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
     <!-- Inclure jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Inclure d'autres scripts, comme Bootstrap JS si nécessaire -->
-
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
@@ -32,6 +29,7 @@
     <!-- Inclure SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
     <!-- Custom styles for this template-->
@@ -1001,9 +999,9 @@
 
     
 
-    <!-- <script src="{{ asset('js/jquery.js') }}"></script> -->
+    {{-- <!-- <script src="{{ asset('js/jquery.js') }}"></script> --> --}}
 
-    <!-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> -->
+    {{-- <!-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --> --}}
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
     <!-- Core plugin JavaScript-->
