@@ -40,7 +40,8 @@
                 @method('PUT')
                 <div class="card-body">
 
-                    <div class="row">
+<!-- liste des magasins -->
+                <div class="row">
                         <div class="form-group col-6">
                             <form>
                                 <div class="form-group">
@@ -55,6 +56,7 @@
                             </form>
                         </div>
 
+<!-- fin de liste des magasins -->
                         <div class="form-group col-6">
 
                             <div class="form-group">
