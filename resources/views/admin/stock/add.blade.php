@@ -37,6 +37,7 @@
                     @method('PUT')
                     <div class="card-body">
 
+<<<<<<< HEAD
                         <div class="row">
                             <div class="form-group col-6">
                                 <form>
@@ -51,9 +52,18 @@
                                     </div>
                                 </form>
                             </div>
+=======
+        <div class="card shadow col-12">
+            <form class="edit-form" action="{{ url('/admin/stock/' . $id . '/update') }}" method="post"
+                enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="card-body">
+>>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
 
                             <div class="form-group col-6">
 
+<<<<<<< HEAD
                                 <div class="form-group">
                                     <label for="">type de stock </label>
                                     <select id="" name="type" class="form-control">
@@ -71,6 +81,21 @@
 
 
 
+=======
+                        <div class="form-group col-6">
+
+                            <div class="form-group">
+                                <label for="">type de stock </label>
+                                <select id="" name="type" class="form-control">
+                                    <option value="">Sélectionnez le type de stockage </option>
+                                    <option value="Frais">Frais</option>
+                                    <option value="Congele">Congele</option>
+
+
+                                </select>
+                            </div>
+
+>>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
 
                         </div>
 
@@ -163,11 +188,81 @@
 
             <!-- pour affiche la liste des category pour ce magasin  -->
 
+<<<<<<< HEAD
             <script>
                 $(document).ready(function() {
                     // Appeler la fonction au chargement de la page
                     afficher_category({{ $id }});
                     // afficher_la_categorie({{ $id }});
+=======
+
+
+
+
+                    <!-- fin -->
+                </div>
+
+            </form>
+
+        </div>
+
+
+
+        <!-- pour affiche la liste des category pour ce magasin  -->
+
+        <script>
+            $(document).ready(function () {
+                // Appeler la fonction au chargement de la page
+                afficher_category( {{$id}});
+            });
+        </script>
+
+        <script>
+ 
+
+            function afficher_category(id) {
+                $.ajax({
+                    url: '/admin/stock/category/' + id,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                    },
+                    success: function (response) {
+                        $('#category_liste').empty();
+                        $.each(response.category_liste, function (key, value) {
+                            $('#category_liste').append(
+                                '<tr>' +
+                                '<td class="align-middle">' + value.nom + '</td>' +
+                                '<td class="align-middle" style="width:80px;">' +
+                                '<div style="background-image:url(' + value.photo + ');' +
+                                'background-size: cover;' +
+                                'background-position: center;' +
+                                'background-repeat: no-repeat;' +
+                                'height: 80px; width: 70px;' +
+                                'margin-left:5px; margin-right:5px;">' +
+                                '</div>' +
+                                '</td>' +
+                                '<td class="align-middle" style="width:240px;">' +
+                                '<div>' +
+                                '<div class="col-1">' +
+                                '<form class="supp_cat" action="" method="POST" data-id-cat="' + value.categorie_id + '">' +
+                                '@csrf' +
+                                '@method("DELETE")' +
+                                '<button type="button" class="btn btn-outline-danger shadow" onclick="suppcat(this)">' +
+                                'Supprimer' +
+                                '</button>' +
+                                '</form>' +
+                                '</div>' +
+                                '</div>' +
+                                '</td>' +
+                                '</tr>'
+                            );
+                        });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error);
+                    }
+>>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
                 });
             </script>
 
@@ -221,6 +316,7 @@
             </script>
 
 
+<<<<<<< HEAD
             <!-- ajoute une catégorie -->
             <script>
                 function AddCat(button) {
@@ -231,6 +327,67 @@
                         const id_stock = form.getAttribute('data-id');
                         // const category = $('#category').val();
                         const category = form.querySelector('#category').value;
+=======
+
+
+ <!-- supprimer categorie -->
+
+
+ <script>
+    function suppcat(button){
+        const form = button.closest('.supp_cat');
+        if(form) {
+            const categorie = form.getAttribute('data-id-cat'); // Récupérer l'ID de la catégorie
+            console.log('category_id = ' + categorie);
+            // Vérifier si la catégorie est définie
+            if (categorie) {
+                $.ajax({
+                    url: '/admin/stock/categorie/supp/' + {{$id}} + '/' + categorie, // Construire l'URL de la requête
+                    type: 'DELETE', // Type de la requête (DELETE)
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Ajouter le token CSRF pour la sécurité
+                    },
+                    success: function () {
+                        Swal.fire({
+                            title: "Catégorie supprimée !", // Message de succès
+                            icon: "success",
+                            timer: 1000, // Durée d'affichage (1 seconde)
+                            showConfirmButton: false // Ne pas montrer le bouton de confirmation
+                        });
+
+                        // Rafraîchir l'affichage des catégories après suppression
+                        afficher_category({{$id}});
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error); // Afficher l'erreur dans la console
+                        Swal.fire({
+                            title: "Erreur lors de la suppression de la catégorie !", // Message d'erreur
+                            icon: "error",
+                            timer: 1000, // Durée d'affichage (1 seconde)
+                            showConfirmButton: false // Ne pas montrer le bouton de confirmation
+                        });
+                    }
+                });
+            } else {
+                console.error('La valeur de la catégorie est indéfinie.'); // Message d'erreur si la catégorie n'est pas définie
+            }
+        } else {
+            console.error('Formulaire parent non trouvé.'); // Message d'erreur si le formulaire parent n'est pas trouvé
+        }
+    }
+</script>
+
+        <!-- ajoute une catégorie -->
+        <script>
+            function AddCat(button) {
+                // Trouver le formulaire parent le plus proche du bouton cliqué
+                const form = button.closest('.add_cat_form');
+                if (form) {
+                    // Récupérer l'ID du stock et la catégorie sélectionnée
+                    const id_stock = form.getAttribute('data-id');
+                    // const category = $('#category').val();
+                    const category = form.querySelector('#category').value;
+>>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
 
                         console.log('stock_id = ' + id_stock);
                         console.log('category_id = ' + category);
@@ -354,4 +511,9 @@
     </div>
 
 
+<<<<<<< HEAD
 @endsection
+=======
+
+        @endsection
+>>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
