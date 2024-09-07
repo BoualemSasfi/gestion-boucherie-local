@@ -37,15 +37,23 @@
                     @method('PUT')
                     <div class="card-body">
 
-        <div class="card shadow col-12">
-            <form class="edit-form" action="{{ url('/admin/stock/' . $id . '/update') }}" method="post"
-                enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <div class="card-body">
+<!-- liste des magasins -->
+                <div class="row">
+                        <div class="form-group col-6">
+                            <form>
+                                <div class="form-group">
+                                    <label for="">magasin : </label>
+                                    <select id="magasin" name="magasin_id" class="form-control">
+                                        <option value="">Sélectionnez un magasin </option>
+                                        @foreach ($magasins as $magasin)
+                                            <option value="{{ $magasin->id }}">{{ $magasin->nom }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
 
-                            <div class="form-group col-6">
-
+<!-- fin de liste des magasins -->
                         <div class="form-group col-6">
 
                             <div class="form-group">
