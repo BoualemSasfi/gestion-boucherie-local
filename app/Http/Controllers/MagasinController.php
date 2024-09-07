@@ -128,10 +128,10 @@ class MagasinController extends Controller
                 'quantity' 
             )
             ->get();
+            
+                $lesmagasins = Magasin::all();
 
-
-
-        return view('/admin/magasin/stock', ['magasins' => $magasins ,  'stock_frais'=>$stock_frais , 'stock_congele'=> $stock_congele]);
+        return view('/admin/magasin/stock', ['magasins' => $magasins ,  'stock_frais'=>$stock_frais , 'stock_congele'=> $stock_congele ,'lesmagasins'=>$lesmagasins]);
     }
 
 

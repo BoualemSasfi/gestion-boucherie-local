@@ -34,7 +34,7 @@
     <div class="row animate__animated animate__backInLeft">
 
         <div class="card shadow col-12">
-            <form class="edit-form" action="{{ url('/admin/stock/' . $id. '/update') }}" method="post"
+            <form class="edit-form" action="{{ url('/admin/stock/' . $id . '/update') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -56,18 +56,18 @@
                         </div>
 
                         <div class="form-group col-6">
-                        
-                                <div class="form-group">
-                                    <label for="">type de stock </label>
-                                    <select id="" name="type" class="form-control">
-                                        <option value="">Sélectionnez le type de stockage </option>
-                                        <option value="Frais">Frais</option>
-                                        <option value="Congele">Congele</option>
-                                    
 
-                                    </select>
-                                </div>
-                       
+                            <div class="form-group">
+                                <label for="">type de stock </label>
+                                <select id="" name="type" class="form-control">
+                                    <option value="">Sélectionnez le type de stockage </option>
+                                    <option value="Frais">Frais</option>
+                                    <option value="Congele">Congele</option>
+
+
+                                </select>
+                            </div>
+
 
                         </div>
 
@@ -174,9 +174,7 @@
         </script>
 
         <script>
-            $(document).ready(function () {
-                afficher_category(11); // Remplacez 11 par la valeur dynamique si nécessaire
-            });
+ 
 
             function afficher_category(id) {
                 $.ajax({
@@ -203,10 +201,10 @@
                                 '<td class="align-middle" style="width:240px;">' +
                                 '<div>' +
                                 '<div class="col-1">' +
-                                '<form class="delete-form" action="" method="POST" data-id="' + value.id + '">' +
+                                '<form class="supp_cat" action="" method="POST" data-id-cat="' + value.categorie_id + '">' +
                                 '@csrf' +
                                 '@method("DELETE")' +
-                                '<button type="button" class="btn btn-outline-danger shadow" onclick="supprimer(this)">' +
+                                '<button type="button" class="btn btn-outline-danger shadow" onclick="suppcat(this)">' +
                                 'Supprimer' +
                                 '</button>' +
                                 '</form>' +
@@ -224,6 +222,55 @@
             }
         </script>
 
+
+
+
+ <!-- supprimer categorie -->
+
+
+ <script>
+    function suppcat(button){
+        const form = button.closest('.supp_cat');
+        if(form) {
+            const categorie = form.getAttribute('data-id-cat'); // Récupérer l'ID de la catégorie
+            console.log('category_id = ' + categorie);
+            // Vérifier si la catégorie est définie
+            if (categorie) {
+                $.ajax({
+                    url: '/admin/stock/categorie/supp/' + {{$id}} + '/' + categorie, // Construire l'URL de la requête
+                    type: 'DELETE', // Type de la requête (DELETE)
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Ajouter le token CSRF pour la sécurité
+                    },
+                    success: function () {
+                        Swal.fire({
+                            title: "Catégorie supprimée !", // Message de succès
+                            icon: "success",
+                            timer: 1000, // Durée d'affichage (1 seconde)
+                            showConfirmButton: false // Ne pas montrer le bouton de confirmation
+                        });
+
+                        // Rafraîchir l'affichage des catégories après suppression
+                        afficher_category({{$id}});
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(error); // Afficher l'erreur dans la console
+                        Swal.fire({
+                            title: "Erreur lors de la suppression de la catégorie !", // Message d'erreur
+                            icon: "error",
+                            timer: 1000, // Durée d'affichage (1 seconde)
+                            showConfirmButton: false // Ne pas montrer le bouton de confirmation
+                        });
+                    }
+                });
+            } else {
+                console.error('La valeur de la catégorie est indéfinie.'); // Message d'erreur si la catégorie n'est pas définie
+            }
+        } else {
+            console.error('Formulaire parent non trouvé.'); // Message d'erreur si le formulaire parent n'est pas trouvé
+        }
+    }
+</script>
 
         <!-- ajoute une catégorie -->
         <script>
@@ -348,6 +395,7 @@
             }
         </script>
         <!-- fin -->
+
 
 
         @endsection

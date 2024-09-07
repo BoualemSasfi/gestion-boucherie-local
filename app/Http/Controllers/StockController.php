@@ -79,15 +79,15 @@ class StockController extends Controller
 
     public function cat_list($id)
     {
-        $cat_list = Lestock::join('categories', 'lestocks.categorie_id', '=', 'categories.id')
-            ->select('lestocks.stock_id', 'categories.nom', 'categories.photo')
+        $cat_list = Lestock::join('categories', 'categories.id', '=', 'lestocks.categorie_id')
+            ->select('lestocks.stock_id as stock_id', 'categories.nom as nom', 'categories.photo as photo', 'categorie_id')
             ->where('lestocks.stock_id', $id)
+            ->groupBy('lestocks.stock_id', 'categories.nom',
+             'categories.photo', 'lestocks.categorie_id')
             ->get();
 
         return response()->json(['category_liste' => $cat_list]);
     }
-
-
 
 
     public function addcat($id_stock, $category)
@@ -120,8 +120,9 @@ class StockController extends Controller
             return response()->json(['error' => 'Erreur interne du serveur.'], 500); // Utilisez le code d'erreur HTTP 500 pour une erreur interne du serveur
         }
     }
-    public function sppcat ($id_stock, $category){
-        Lestock::where('stock_id',$id_stock)
+    public function suppcat($id_stock, $category)
+    {
+        Lestock::where('stock_id', $id_stock)
             ->where('categorie_id', $category)
             ->delete();
     }

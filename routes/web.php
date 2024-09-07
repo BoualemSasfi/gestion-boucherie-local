@@ -9,6 +9,7 @@ use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\MagasinController;
 use App\Http\Controllers\CaisseController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\TransfertController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -107,11 +108,12 @@ Route::controller(StockController::class)->group(function () {
     // Route::post('/admin/stock/addcat/{magasin}/{category}', 'add_category');
     
     Route::post(' /admin/stock/categorie/add/{id_stock}/{category}', 'addcat');
+    Route::delete(' /admin/stock/categorie/supp/{id_stock}/{category}', 'suppcat');
     
-    Route::post('/admin/stock/deletcat/{$id}', 'deletcat');
+    Route::post('/admin/stock/deletcat/{id}', 'deletcat');
     
     // ajaxe pour afficher la liste des catégories 
-    Route::get('/admin/stock/category/{$id}', 'cat_list');
+    Route::get('/admin/stock/category/{id}', 'cat_list');
     
 
     Route::get('/admin/stock/{id}/update_affich', 'update_affich');
@@ -125,6 +127,27 @@ Route::controller(StockController::class)->group(function () {
     Route::get('/admin/stock/{id}/stock', 'stock');
     Route::delete('/admin/stock/{id}/delete', 'destroy');
 });
+
+
+//-------------------------------------------------------------------------
+// ---------                transfert                            ----------
+// ------------------------------------------------------------------------
+Route::controller(TransfertController::class)->group(function () {
+    Route::get('/admin/transfert', 'transfert');
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
 

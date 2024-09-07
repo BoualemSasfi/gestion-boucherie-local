@@ -183,9 +183,7 @@
         </script>
 
         <script>
-            $(document).ready(function () {
-                afficher_category(11); // Remplacez 11 par la valeur dynamique si nécessaire
-            });
+ 
 
             function afficher_category(id) {
                 $.ajax({

@@ -78,84 +78,91 @@
                             @if ($magasins->type == 'Atelier')
 
 
-                                        <ul class="nav nav-tabs ">
-                                            <li class="nav-item col-6  ">
-                                                <a class="nav-link active bg-danger" id="frais-tab" aria-current="page" href="#"
-                                                    onclick="showTab('frais'); return false;">Frais</a>
-                                            </li>
-                                            <li class="nav-item col-6">
-                                                <a class="nav-link bg-primary " id="congele-tab" href="#"
-                                                    onclick="showTab('congele'); return false;">Congelé</a>
-                                            </li>
-                                        </ul>
+                                    <ul class="nav nav-tabs ">
+                                        <li class="nav-item col-6  ">
+                                            <a class="nav-link active bg-danger" id="frais-tab" aria-current="page" href="#"
+                                                onclick="showTab('frais'); return false;">Frais</a>
+                                        </li>
 
-                                        <div id="frais-content" class="tab-content mt-3">
+                                        <li class="nav-item col-6">
+                                            <a class="nav-link bg-primary " id="congele-tab" href="#"
+                                                onclick="showTab('congele'); return false;">Congelé</a>
+                                        </li>
+                                    </ul>
+
+                                    <div id="frais-content" class="tab-content mt-3">
+                                        <div>
+
                                             <h4 class="text-center">Frais</h4>
-                                            <table class="table-striped table-bordered col-12">
-                                                <thead class="text-center">
+                                            <button>
+                                                transfaire
+                                            </button>
+                                        </div>
+                                        <table class="table-striped table-bordered col-12">
+                                            <thead class="text-center">
+
+                                                <tr>
+                                                    <th>categorré</th>
+                                                    <th>produit</th>
+
+                                                    <th>poid</th>
+                                                    <th>action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($stock_frais as $frais)
+
 
                                                     <tr>
-                                                        <th>categorré</th>
-                                                        <th>produit</th>
+                                                        <td>{{$frais->categorie}}</td>
+                                                        <td>{{$frais->produit}}</td>
+                                                        <td>{{$frais->quantity}}</td>
 
-                                                        <th>poid</th>
-                                                        <th>action</th>
+                                                        <td class="text-center space-x-8">
+                                                            <!-- <button type="button" class="btn btn-outline-secondary">add</button>
+                                                                                            <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
+                                                            <button type="button" class="btn btn-outline-info">ajustier</button>
+                                                        </td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($stock_frais as $frais)
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <div id="congele-content" class="tab-content mt-3" style="display: none;">
+                                        <h4 class="text-center">Congelé</h4>
+                                        <table class="table-striped table-bordered col-12">
+                                            <thead class="text-center">
+                                                <tr>
+                                                    <th>categorré</th>
+                                                    <th>produit</th>
+
+                                                    <th>poid</th>
+                                                    <th>action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($stock_congele as $congele)
 
 
-                                                        <tr>
-                                                            <td>{{$frais->categorie}}</td>
-                                                            <td>{{$frais->produit}}</td>
-                                                            <td>{{$frais->quantity}}</td>
-
-                                                            <td class="text-center space-x-8">
-                                                                <!-- <button type="button" class="btn btn-outline-secondary">add</button>
-                                                                <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
-                                                                <button type="button" class="btn btn-outline-info">ajustier</button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
-
-                                        <div id="congele-content" class="tab-content mt-3" style="display: none;">
-                                            <h4 class="text-center">Congelé</h4>
-                                            <table class="table-striped table-bordered col-12">
-                                                <thead class="text-center">
                                                     <tr>
-                                                        <th>categorré</th>
-                                                        <th>produit</th>
+                                                        <td>{{$congele->categorie}}</td>
+                                                        <td>{{$congele->produit}}</td>
 
-                                                        <th>poid</th>
-                                                        <th>action</th>
+                                                        <td>{{$congele->quantity}}</td>
+
+                                                        <td class="text-center space-x-8">
+                                                            <!-- <button type="button" class="btn btn-outline-secondary">add</button>
+                                                                                            <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
+                                                            <button type="button" class="btn btn-outline-info">ajustier</button>
+                                                        </td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($stock_congele as $congele)
-
-
-                                                        <tr>
-                                                            <td>{{$congele->categorie}}</td>
-                                                            <td>{{$congele->produit}}</td>
-
-                                                            <td>{{$congele->quantity}}</td>
-
-                                                            <td class="text-center space-x-8">
-                                                                <!-- <button type="button" class="btn btn-outline-secondary">add</button>
-                                                                <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
-                                                                <button type="button" class="btn btn-outline-info">ajustier</button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
+                                </di v>
 
                             @else
 
@@ -164,59 +171,100 @@
                                         <tr>
                                             <th>categorré</th>
                                             <th>produit</th>
-                                     
+
                                             <th>poid</th>
                                             <th>action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                    @foreach ($stock_frais as $frais )
-                                        
-                                  
-                                        <tr>
-                                            <td>{{$frais->categorie}} </td>
-                                            <td>{{$frais->produit}} </td>
-                                            <td>{{$frais->quantity}} </td>
-                                          
-                                            <td class="text-center space-x-8">
-                                                <!-- <button type="button" class="btn btn-outline-secondary">add</button>
-                                                <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
-                                                <button type="button" class="btn btn-outline-info">ajustier</button>
-                                            </td>
-                                        </tr>
+                                        @foreach ($stock_frais as $frais)
+
+
+                                            <tr>
+                                                <td>{{$frais->categorie}} </td>
+                                                <td>{{$frais->produit}} </td>
+                                                <td>{{$frais->quantity}} </td>
+
+                                                <td class="text-center space-x-8">
+                                                    <!-- <button type="button" class="btn btn-outline-secondary">add</button>
+                                                                            <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
+                                                    <button type="button" class="btn btn-outline-info">ajustier</button>
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
 
                             @endif
+                    </div>
+
                 </div>
+
+
 
             </div>
 
 
+            <script>
+                function showTab(tabName) {
+                    // Masquer tous les contenus
+                    document.getElementById('frais-content').style.display = 'none';
+                    document.getElementById('congele-content').style.display = 'none';
 
-        </div>
+                    // Afficher le contenu correspondant
+                    document.getElementById(tabName + '-content').style.display = 'block';
+
+                    // Enlever la classe 'active' de tous les onglets
+                    document.getElementById('frais-tab').classList.remove('active');
+                    document.getElementById('congele-tab').classList.remove('active');
+
+                    // Ajouter la classe 'active' à l'onglet sélectionné
+                    document.getElementById(tabName + '-tab').classList.add('active');
+                }
+            </script>
 
 
-        <script>
-            function showTab(tabName) {
-                // Masquer tous les contenus
-                document.getElementById('frais-content').style.display = 'none';
-                document.getElementById('congele-content').style.display = 'none';
 
-                // Afficher le contenu correspondant
-                document.getElementById(tabName + '-content').style.display = 'block';
 
-                // Enlever la classe 'active' de tous les onglets
-                document.getElementById('frais-tab').classList.remove('active');
-                document.getElementById('congele-tab').classList.remove('active');
+<button id="trans">
+    Transfert
+</button>
 
-                // Ajouter la classe 'active' à l'onglet sélectionné
-                document.getElementById(tabName + '-tab').classList.add('active');
+
+
+<script>
+    document.getElementById('trans').addEventListener('click', async () => {
+        // Convert the PHP array of magasins into a JavaScript object
+        const magasins = {
+            @foreach ($lesmagasins as $lemagasin)
+                "{{ $lemagasin->id }}": "{{ $lemagasin->nom }}",
+            @endforeach
+        };
+
+        const { value: selectedMagasin } = await Swal.fire({
+            title: "Sélectionnez un magasin",
+            input: "select",
+            inputOptions: magasins, // Use the magasins object here
+            inputPlaceholder: "Sélectionnez un magasin",
+            showCancelButton: true,
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    if (value) {
+                        resolve();
+                    } else {
+                        resolve("Vous devez sélectionner un magasin :)");
+                    }
+                });
             }
-        </script>
+        });
+
+        if (selectedMagasin) {
+            Swal.fire(`Vous avez sélectionné : ${magasins[selectedMagasin]}`);
+        }
+    });
+</script>
 
 
 
-        @endsection
+            @endsection
