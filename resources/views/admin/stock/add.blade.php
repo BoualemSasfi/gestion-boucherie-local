@@ -37,51 +37,15 @@
                     @method('PUT')
                     <div class="card-body">
 
-<<<<<<< HEAD
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <form>
-                                    <div class="form-group">
-                                        <label for="">magasin : </label>
-                                        <select id="magasin" name="magasin_id" class="form-control">
-                                            <option value="">Sélectionnez un magasin </option>
-                                            @foreach ($magasins as $magasin)
-                                                <option value="{{ $magasin->id }}">{{ $magasin->nom }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-=======
         <div class="card shadow col-12">
             <form class="edit-form" action="{{ url('/admin/stock/' . $id . '/update') }}" method="post"
                 enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="card-body">
->>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
 
                             <div class="form-group col-6">
 
-<<<<<<< HEAD
-                                <div class="form-group">
-                                    <label for="">type de stock </label>
-                                    <select id="" name="type" class="form-control">
-                                        <option value="">Sélectionnez le type de stockage </option>
-                                        <option value="Frais">Frais</option>
-                                        <option value="Congele">Congele</option>
-
-
-                                    </select>
-                                </div>
-
-
-                            </div>
-
-
-
-
-=======
                         <div class="form-group col-6">
 
                             <div class="form-group">
@@ -95,7 +59,6 @@
                                 </select>
                             </div>
 
->>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
 
                         </div>
 
@@ -188,13 +151,6 @@
 
             <!-- pour affiche la liste des category pour ce magasin  -->
 
-<<<<<<< HEAD
-            <script>
-                $(document).ready(function() {
-                    // Appeler la fonction au chargement de la page
-                    afficher_category({{ $id }});
-                    // afficher_la_categorie({{ $id }});
-=======
 
 
 
@@ -262,7 +218,6 @@
                     error: function (xhr, status, error) {
                         console.error(error);
                     }
->>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
                 });
             </script>
 
@@ -316,18 +271,6 @@
             </script>
 
 
-<<<<<<< HEAD
-            <!-- ajoute une catégorie -->
-            <script>
-                function AddCat(button) {
-                    // Trouver le formulaire parent le plus proche du bouton cliqué
-                    const form = button.closest('.add_cat_form');
-                    if (form) {
-                        // Récupérer l'ID du stock et la catégorie sélectionnée
-                        const id_stock = form.getAttribute('data-id');
-                        // const category = $('#category').val();
-                        const category = form.querySelector('#category').value;
-=======
 
 
  <!-- supprimer categorie -->
@@ -387,7 +330,6 @@
                     const id_stock = form.getAttribute('data-id');
                     // const category = $('#category').val();
                     const category = form.querySelector('#category').value;
->>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
 
                         console.log('stock_id = ' + id_stock);
                         console.log('category_id = ' + category);
@@ -511,9 +453,5 @@
     </div>
 
 
-<<<<<<< HEAD
-@endsection
-=======
 
         @endsection
->>>>>>> 51a92dde9b86b05fbdd77bebfc12d153bfbfcd2e
