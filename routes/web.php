@@ -6,7 +6,10 @@ use App\Http\Controllers\Serial_controller;
 use App\Http\Controllers\InformationController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\MagasinController;
 use App\Http\Controllers\CaisseController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\TransfertController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -79,6 +82,72 @@ Route::controller(ProduitController::class)->group(function () {
     Route::put('/admin/produit/{id}/update', 'update');
     Route::delete('/admin/produit/{id}/delete', 'destroy');
 });
+//-------------------------------------------------------------------------
+// ---------                magasin                              ----------
+// ------------------------------------------------------------------------
+Route::controller(MagasinController::class)->group(function () {
+    Route::get('/admin/magasin', 'index');
+    Route::get('/admin/magasin/add', 'create');
+    Route::post('/admin/magasin/add/save', 'store');
+    Route::get('/admin/magasin/{id}/edit', 'edit');
+    Route::put('/admin/magasin/{id}/update', 'update');
+    Route::get('/admin/magasin/{id}/stock', 'stock');
+    Route::delete('/admin/magasin/{id}/delete', 'destroy');
+});
+//-------------------------------------------------------------------------
+// ---------                Stock                              ----------
+// ------------------------------------------------------------------------
+Route::controller(StockController::class)->group(function () {
+    Route::get('/admin/stock', 'index');
+
+    Route::get('/admin/stock/add', 'create');
+    Route::get('/admin/stock/addup/', 'addup');
+    Route::delete('/admin/stock/{id}/delet_add', 'delet_add');
+    
+    // add category ajax
+    // Route::post('/admin/stock/addcat/{magasin}/{category}', 'add_category');
+    
+    Route::post(' /admin/stock/categorie/add/{id_stock}/{category}', 'addcat');
+    Route::delete(' /admin/stock/categorie/supp/{id_stock}/{category}', 'suppcat');
+    
+    Route::post('/admin/stock/deletcat/{id}', 'deletcat');
+    
+    // ajaxe pour afficher la liste des catégories 
+    Route::get('/admin/stock/category/{id}', 'cat_list');
+    
+
+    Route::get('/admin/stock/{id}/update_affich', 'update_affich');
+
+    Route::put('/admin/stock/{id}/update', 'update');
+
+
+
+    Route::post('/admin/stock/add/save', 'store');
+    Route::get('/admin/stock/{id}/edit', 'edit');
+    Route::get('/admin/stock/{id}/stock', 'stock');
+    Route::delete('/admin/stock/{id}/delete', 'destroy');
+});
+
+
+//-------------------------------------------------------------------------
+// ---------                transfert                            ----------
+// ------------------------------------------------------------------------
+Route::controller(TransfertController::class)->group(function () {
+    Route::get('/admin/transfert', 'transfert');
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 require __DIR__ . '/auth.php';
 
@@ -86,9 +155,9 @@ require __DIR__ . '/auth.php';
 
 // les route de la caisse 
 
-// Route::get('/caisse', function () {
-//     return view('caisse.index');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/caisse', function () {
+    return view('caisse.index');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/test', function () {
 //     return view('caisse.test');
