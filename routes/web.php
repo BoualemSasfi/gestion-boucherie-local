@@ -133,8 +133,8 @@ Route::controller(StockController::class)->group(function () {
 // ---------                transfert                            ----------
 // ------------------------------------------------------------------------
 Route::controller(TransfertController::class)->group(function () {
-    Route::get('/admin/transfert', 'transfert');
-
+    Route::get('/admin/transfert/{id_atl}/{id_mag}/{id_magasin}', 'transfert');
+    Route::post('/admin/transfert/validtransfert','validtransfert')->name('validtransfert');
 });
 
 
