@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Magasin;
 use App\Models\Lestock;
+use App\Models\Stock;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
@@ -95,7 +96,7 @@ class MagasinController extends Controller
     {
         $magasin = Magasin::find($id);
         $magasin->delete();
-        session()->flash('success', 'le magasin est supprimet  !');
+        session()->flash('success', 'le magasin est supprimet !');
         return redirect('/admin/magasin');
     }
 
@@ -110,28 +111,71 @@ class MagasinController extends Controller
             ->where('stocks.magasin_id', $id)
             ->where('stocks.type', 'frais')
             ->select(
+                'stocks.id as id_frais',
                 'categories.nom as categorie',
                 'produits.nom_pr as produit',
-                'quantity' 
+                'quantity'
             )
             ->get();
 
-            $stock_congele = Lestock::join('stocks', 'stocks.id', '=', 'lestocks.stock_id')
+
+        // $stcok_frais_categorie = Lestock::join('stocks', 'stocks.id', '=', 'lestocks.stock_id')
+        // ->join('categories', 'categories.id', '=', 'lestocks.categorie_id')
+        // ->join('produits', 'produits.id', '=', 'lestocks.produit_id')
+        // ->join('magasins', 'stocks.magasin_id', '=', 'magasins.id')
+        // ->where('stocks.magasin_id', $id)
+        // ->where('stocks.type', 'frais')
+        // ->select(
+        //     'categories.nom as categorie',
+        //   'categories.id as categorie_id' 
+        // )
+        // ->groupBy('categorie.nom','categories.id')
+        // ->get(); 
+        
+        
+        
+
+
+
+        $stock_congele = Lestock::join('stocks', 'stocks.id', '=', 'lestocks.stock_id')
             ->join('categories', 'categories.id', '=', 'lestocks.categorie_id')
             ->join('produits', 'produits.id', '=', 'lestocks.produit_id')
             ->join('magasins', 'stocks.magasin_id', '=', 'magasins.id')
             ->where('stocks.magasin_id', $id)
             ->where('stocks.type', 'congele')
             ->select(
+                'stocks.id as id_congele',
                 'categories.nom as categorie',
                 'produits.nom_pr as produit',
-                'quantity' 
+                'quantity'
             )
             ->get();
-            
-                $lesmagasins = Magasin::all();
 
-        return view('/admin/magasin/stock', ['magasins' => $magasins ,  'stock_frais'=>$stock_frais , 'stock_congele'=> $stock_congele ,'lesmagasins'=>$lesmagasins]);
+
+
+        $lesmagasins = Magasin::all();
+
+        $stock_congele_id = Stock::where('magasin_id', $id)
+            ->where('type', 'Congele')
+            ->value('id');
+
+        $stock_frais_id = Stock::where('magasin_id', $id)
+            ->where('type', 'Frais')
+            ->value('id');
+
+
+
+
+        return view('/admin/magasin/stock', [
+            'magasins' => $magasins,
+            'stock_frais' => $stock_frais,
+            'stock_congele' => $stock_congele,
+            'lesmagasins' => $lesmagasins,
+            'frais_id' => $stock_frais_id,
+            'congele_id' => $stock_congele_id,
+            // 'categorie_frais' => $stcok_frais_categorie,
+
+        ]);
     }
 
 
