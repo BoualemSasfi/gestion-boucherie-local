@@ -18,6 +18,11 @@ return new class extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('set null');
+            $table->unsignedBigInteger('id_caisse')->nullable();
+            $table->foreign('id_caisse')
+                ->references('id')
+                ->on('caisses')
+                ->onDelete('set null');
             $table->string('raison')->nullable();
             $table->decimal('montant', 8, 2)->default(0.00);
             $table->timestamps();
