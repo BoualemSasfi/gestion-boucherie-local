@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
 Route::controller(CaisseController::class)->group(function () {
     Route::get('/caisse', 'caisse')->name('caisse_home');
     Route::get('/caisse_teste', 'caisse')->name('caisse_teste');
+    Route::get('/caisse_paccino', 'caisse_paccino')->name('caisse_paccino');
     Route::get('/caisse/category/{id}', 'filtrage_des_produits')->name('caisse_filtrage');
 
 });
