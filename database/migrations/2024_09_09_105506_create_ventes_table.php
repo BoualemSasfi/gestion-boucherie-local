@@ -34,7 +34,7 @@ return new class extends Migration
                 ->on('lestocks')
                 ->onDelete('set null');
             $table->decimal('prix_unitaire', 8, 2)->default(0.00);
-            $table->decimal('quantite', 8, 2)->default(0.00);
+            $table->decimal('quantite', 8, 3)->default(0.00);
             $table->decimal('total_vente', 8, 2)->default(0.00);
             $table->decimal('benefice', 8, 2)->default(0.00);
 

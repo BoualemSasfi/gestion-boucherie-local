@@ -4546,7 +4546,8 @@ input[type="button"].btn-block {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
+  padding: 5px;
 
 }
 
@@ -12621,7 +12622,7 @@ form.user .btn-user {
   /* text-align: center; */
   padding: 5px 5px 5px 5px;
   /* flex-shrink: 0; */
-  height: 70px;
+  height: 100px;
 }
 
 footer.sticky-footer .copyright {
@@ -12640,22 +12641,23 @@ body.sidebar-toggled footer.sticky-footer {
 .afficheur {
 
   background-color: black;
-  color: green;
+  color: #09a760;
   height: 120px;
 
 }
+.afficheur-titre{
+  color: #09a760;
+  font-family: 'Nunito',sans-serif;
+}
 
 .digital {
+  color: #09a760;
   font-family: 'digital-7', sans-serif;
   font-size: 70px;
 }
 
-.dz {
-  font-size: 50px;
-
-}
-
 .objet-titre{
+  color: #09a760;
   font-size: 28px;
 }
 
