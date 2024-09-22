@@ -12639,7 +12639,6 @@ body.sidebar-toggled footer.sticky-footer {
 /* caisse affichage numérique  */
 
 .afficheur {
-
   background-color: black;
   color: #09a760;
   height: 120px;
@@ -12648,6 +12647,7 @@ body.sidebar-toggled footer.sticky-footer {
 .afficheur-titre{
   color: #09a760;
   font-family: 'Nunito',sans-serif;
+  font-weight: bold;
 }
 
 .digital {
@@ -12662,3 +12662,10 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* carousel bouton  */
+
+.bouton-action button{
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  padding: 5px;
+}

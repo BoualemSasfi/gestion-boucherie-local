@@ -44,8 +44,7 @@
 
 
     {{-- bootstrap css --}}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Inclure jQuery js-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -81,7 +80,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="me-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                <span
+                                    class="me-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
                                 <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -96,14 +96,15 @@
                                     Settings
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                    data-bs-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
                                     Déconnecter
                                 </a>
                             </div>
                         </li>
                     </ul>
-                    
+
 
                 </nav>
                 <!-- End of Topbar -->
@@ -138,7 +139,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">Voulez-vous vraiments quitter ?</h5>
                     <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close">
                     </button>
-                    
+
                 </div>
                 <div class="modal-body">Selectionner "Quitter" si vous voulez fermer votre session et quitter
                     l'application. <br> Si vous vouler rester clickez sur "Annuler".</div>
@@ -158,9 +159,7 @@
     {{-- ---------------------------------------------------------- --}}
 
     {{-- bootstrap js  --}}
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 
 
     <!-- Core plugin JavaScript-->

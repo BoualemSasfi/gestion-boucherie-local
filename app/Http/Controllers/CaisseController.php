@@ -208,5 +208,18 @@ class CaisseController extends Controller
             return response()->json(['error' => 'controller-function: Total_Facture ! erreur'], 500);
         }
     }
+
+    public function Create_Facture($id_user,$id_magasin,$id_caisse)
+    {
+        try {
+            $NouvelleFacture = $this->Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse);
+            $LastFacture = $this->Get_Last_Facture($id_magasin, $id_user);
+            $LastFactureId = $LastFacture->id;
+            return response()->json(['LastFactureId' => $LastFactureId]);
+        } catch (\Exception $e) {
+            \Log::error($e);
+            return response()->json(['error' => 'controller-function: Create_Facture ! erreur'], 500);
+        }
+    }
     
 }

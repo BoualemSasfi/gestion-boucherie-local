@@ -1,12 +1,46 @@
 @extends('layouts.menu_caisse')
 
 @section('content')
+    <script>
+        $('#kgModal').modal({
+            backdrop: false
+        });
+
+        $('#FacturePoppup').modal({
+            backdrop: false
+        });
+
+        $('#kgModal').on('hidden.bs.modal', function() {
+            $('#FacturePoppup').modal('show');
+        });
+
+        $('#FacturePoppup').on('hidden.bs.modal', function() {
+            $('#kgModal').modal('show');
+        });
+
+        $('body').css('overflow', 'auto');
+    </script>
+
     <style>
         /* Styles pour le popup */
+        .modal {
+            z-index: 1050 !important;
+            /* Z-index standard de Bootstrap pour les modals */
+        }
+
+        .modal-backdrop {
+            z-index: 1040 !important;
+            /* Z-index pour le backdrop */
+        }
+
         .modal-content {
             text-align: center;
         }
+
+        pointer-events: auto;
     </style>
+
+
     <style>
         /* Style pour le toggle switch */
         .switch {
@@ -64,7 +98,7 @@
         <div class="container-fluid">
             <div class="row afficheur text-center pt-1 pb-1 pr-0 pl-0 mt-1 mb-1">
                 <div class="col-2 align-content-center">
-                    <h5 class="objet-titre digital" id="category_text" style="font-weight:bold;">----</h5>
+                    <h5 class="objet-titre digital" id="categorie_text" style="font-weight:bold;">----</h5>
                     <h5 class="objet-titre digital" id="produit_text">----</h5>
                 </div>
                 <div class="col-3 pt-1">
@@ -76,7 +110,7 @@
                         <span>Par la Balance</span>
                     </h6>
                     <div class="digital">
-                        <p id="balance" style="margin-top:-30px;">0</p>
+                        <p id="balance" style="margin-top:-30px; cursor: pointer;">0.000</p>
                     </div>
 
                     <!-- Bouton pour ouvrir le popup -->
@@ -133,7 +167,7 @@
 
                                     </div>
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer text-center align-content-center justify-content-center">
                                     <button type="button" class="btn btn-success" onclick="ValiderQte()"
                                         style="width:150px;">Valider</button>
                                     <button type="button" class="btn btn-danger" onclick="clearInput()">Effacer</button>
@@ -147,11 +181,11 @@
                 </div>
                 <div class="col-3 align-content-center">
                     <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
-                    <p class="digital" id="prix_unitaire" style="margin-top:-20px;">0</p>
+                    <p class="digital" id="prix_unitaire" style="margin-top:-20px;">0.00</p>
                 </div>
                 <div class="col-3 align-content-center">
                     <h6 class="afficheur-titre">PRIX TOTAL:</h6>
-                    <p class="digital" id="prix_total" style="margin-top:-20px;">0</p>
+                    <p class="digital" id="prix_total" style="margin-top:-20px;">0.00</p>
                 </div>
                 <div class="col-1 mt-3 pl-0">
 
@@ -162,8 +196,10 @@
 
                     <form class="valider-vente-form" data-id_facture="{{ $LastFacture->id }}"
                         data-id_user={{ $id_user }}>
-                        <button class="btn btn-success pt-3 pb-3" style="color: white;" onclick="ValiderVente(this)">
-                            <i class="fas fa-check-circle fa-lg"></i><br>Valider
+                        <button class="btn btn-success pt-3 pb-3" style="color: white;" onclick="ValiderVente(this)"
+                            type="button">
+                            <i class="fas fa-check-circle fa-lg"></i>
+                            <br>Valider
                         </button>
                     </form>
                 </div>
@@ -177,7 +213,7 @@
                     <div class="your-carousel">
                         @foreach ($categories as $categorie)
                             <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
-                                onclick="FiltrageProduits(this)">
+                                onclick="FiltrageProduits(this)" style="cursor: pointer;">
                                 <div class="card cat"
                                     style="width: 150px; height: 100px; margin-right:5px; background-image: url('{{ asset('storage/' . $categorie->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                                     <p style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
@@ -187,8 +223,9 @@
                         @endforeach
                     </div>
                 </div>
-                <hr>
+                <hr class="p-0 mb-0 mt-2">
                 <div class="container" style="height:75%; overflow-y: auto;">
+                    <h6 id="titre-categorie" class="p-0 m-0"></h6>
                     <div class="row" id="products">
                         <!-- Les produits filtrés apparaîtront ici -->
                     </div>
@@ -201,6 +238,15 @@
 
             <!-- Facture -->
             <div class="col-4 bg-dark p-0 m-0">
+
+                {{-- stockage variable  --}}
+                <a href="" style="color: aliceblue;">USER / FACTURE / MAGASIN / CAISSE</a>
+                <a id="text-id-user" href="" style="display: inline-flex;">{{ $id_user }}</a>
+                <a id="text-id-facture" href="" style="display: inline-flex;">{{ $LastFacture->id }}</a>
+                <a id="text-id-magasin" href="" style="display: inline-flex;">{{ $id_magasin }}</a>
+                <a id="text-id-caisse" href="" style="display: inline-flex;">{{ $id_caisse }}</a>
+                {{-- stockage variable  --}}
+
                 <div class="card shadow m-3" style="height:440px;">
                     <div class="card-header py-1">
                         <div class="row afficheur text-center" style="height: 105px;">
@@ -216,8 +262,6 @@
                         </div>
                     </div>
                     <div class="card-body m-0 p-1" style="max-height: 550px; overflow-y: auto;">
-                        <h6>IdUser : {{ $id_user }} / IdMagasin : {{ $id_magasin }} / IdCaisse :
-                            {{ $id_caisse }} / IdFacture : {{ $LastFacture->id }}</h6>
                         <table id="example" class="display" style="width:100%">
                             <thead>
                                 <tr>
@@ -242,39 +286,180 @@
             <div class="container-fluid m-0 p-0">
                 <div class="row align-content-center m-0 p-0">
                     <div class="col-4">
-                        <div class="row">
-                            <div class="col-3"><a class="btn btn-warning" href=""><i
-                                        class="fas fa-calculator fa-lg"></i><br>Ouvrir Calculatrice</a></div>
-                            <div class="col-3"><a class="btn btn-warning" href=""><i
-                                        class="fas fa-cubes fa-lg"></i><br> Voir Stock</a></div>
-                            <div class="col-3"><a class="btn btn-warning" href=""><i
-                                        class="fas fa-store-alt fa-lg"></i><br> Historique Ventes</a></div>
-                            <div class="col-3"><a class="btn btn-secondary" href=""><i
-                                        class="fas fa-user-clock fa-lg"></i><br>Liste En Attente</a></div>
+                        <div class="row bouton-action">
+                            <div class="col-3">
+                                <button class="btn btn-warning" type="button">
+                                    <i class="fas fa-calculator fa-lg"></i>
+                                    <br>Ouvrir Calculatrice
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-warning" type="button">
+                                    <i class="fas fa-cubes fa-lg"></i>
+                                    <br>
+                                    Voir<br>Stock
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-warning" type="button">
+                                    <i class="fas fa-store-alt fa-lg"></i>
+                                    <br> Historique Ventes
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-secondary" type="button">
+                                    <i class="fas fa-user-clock fa-lg"></i>
+                                    <br>Liste En Attente
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-4">
-                        <div class="row">
-                            <div class="col-3"><a class="btn btn-dark" href=""><i
-                                        class="fas fa-balance-scale fa-lg"></i><br>Modifier QTE</a></div>
-                            <div class="col-3"><a class="btn btn-dark" href=""><i
-                                        class="fas fa-coins fa-lg"></i><br>Modifier PRIX</a></div>
-                            <div class="col-3"><a class="btn btn-dark" href=""><i
-                                        class="fas fa-chevron-up fa-lg"></i><br>Vers le Haut</a></div>
-                            <div class="col-3"><a class="btn btn-dark" href=""><i
-                                        class="fas fa-chevron-down fa-lg"></i><br>Vers le Bas</a></div>
+                        <div class="row bouton-action">
+                            <div class="col-3">
+                                <button class="btn btn-dark" type="button">
+                                    <i class="fas fa-balance-scale fa-lg"></i>
+                                    <br>Modifier QTE
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-dark" type="button">
+                                    <i class="fas fa-coins fa-lg"></i>
+                                    <br>Modifier PRIX
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-dark" type="button">
+                                    <i class="fas fa-chevron-up fa-lg"></i>
+                                    <br>Vers<br>le Haut
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-dark" type="button">
+                                    <i class="fas fa-chevron-down fa-lg"></i>
+                                    <br>Vers<br>le Bas
+                                </button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-4">
-                        <div class="row">
-                            <div class="col-3"><a class="btn btn-danger" href=""><i
-                                        class="fas fa-trash-alt fa-lg"></i><br>Supprimer Selection</a></div>
-                            <div class="col-3"><a class="btn btn-primary" href=""><i
-                                        class="fas fa-shopping-cart fa-lg"></i><br>Nouvelle Vente</a></div>
-                            <div class="col-3"><a class="btn btn-success" href=""><i
-                                        class="fas fa-cash-register fa-lg"></i><br>Encaisser Valider</a></div>
-                            <div class="col-3"><a class="btn btn-secondary" href=""><i
-                                        class="far fa-clock fa-lg"></i><br>Vente En Attente</a></div>
+                        <div class="row bouton-action">
+                            <div class="col-3">
+                                <button class="btn btn-danger" type="button">
+                                    <i class="fas fa-trash-alt fa-lg"></i>
+                                    <br>Supprimer Selection
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-primary" type="button" onclick="Nouvelle_Facture()">
+                                    <i class="fas fa-shopping-cart fa-lg"></i>
+                                    <br>Nouvelle Vente
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                {{-- Bouton pour afficher le popup --}}
+                                <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#FacturePoppup" id="bouton_encaisser">
+                                    <i class="fas fa-cash-register fa-lg"></i>
+                                    <br>Encaisser Vente
+                                </button>
+
+                                <!-- Popup -->
+                                <div class="modal fade" id="FacturePoppup" tabindex="-1"
+                                    aria-labelledby="factureModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="factureModalLabel">Encaissement :</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mt-3">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <label for="TotalInput">Montant total :</label>
+                                                            <input type="text" id="TotalInput" class="form-control"
+                                                                placeholder="0.00"
+                                                                style="text-align: center; font-size:26px;">
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <label for="versementInput">Versement :</label>
+                                                            <input type="text" id="versementInput"
+                                                                class="form-control" placeholder="0.00"
+                                                                style="text-align: center; font-size:26px;"
+                                                                inputmode="decimal">
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <label for="creditInput">Crédit / Monnaie :</label>
+                                                            <input type="text" id="creditInput" class="form-control"
+                                                                placeholder="0.00"
+                                                                style="text-align: center; font-size:26px;">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row mt-3">
+                                                        <div class="col-4 h-100">
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('1')"
+                                                                style="width:100%;">1</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('4')"
+                                                                style="width:100%;">4</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('7')"
+                                                                style="width:100%;">7</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('0')"
+                                                                style="width:100%;">0</button>
+                                                        </div>
+                                                        <div class="col-4 h-100">
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('2')"
+                                                                style="width:100%;">2</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('5')"
+                                                                style="width:100%;">5</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('8')"
+                                                                style="width:100%;">8</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('.')"
+                                                                style="width:100%;">.</button>
+                                                        </div>
+                                                        <div class="col-4 h-100">
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('3')"
+                                                                style="width:100%;">3</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('6')"
+                                                                style="width:100%;">6</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('9')"
+                                                                style="width:100%;">9</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="FactureAppendValue('00')"
+                                                                style="width:100%;">00</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer text-center align-content-center justify-content-center">
+                                                <button type="button" class="btn btn-success" onclick="Encaisser()"
+                                                    style="width:200px;">Valider</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Popup -->
+
+
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-secondary" type="button">
+                                    <i class="far fa-clock fa-lg"></i>
+                                    <br>Vente En Attente
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -364,8 +549,8 @@
 
         function calculateTotal(weight) {
             const prixUnitaire = parseFloat(document.getElementById('prix_unitaire').value.replace(',', '.')) || 0;
-            const total = (weight * prixUnitaire).toFixed(2);
-            document.getElementById('prix_total').textContent = `${total} €`;
+            const total = (weight * prixUnitaire).toFixed(0);
+            document.getElementById('prix_total').textContent = `${total}`;
         }
 
         document.getElementById('prix_unitaire').addEventListener('input', function() {
@@ -410,7 +595,7 @@
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
                                 '" data-nom="' + value.nom + '" data-prix="' + value.prix +
-                                '" onclick="affichage(this)">' +
+                                '" onclick="affichage(this)" style="cursor: pointer;">' +
                                 '<img src="{{ asset('storage/') }}/' + value.photo +
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
@@ -424,7 +609,7 @@
                         });
 
                         $('#products').append(
-                            '<div class="col-12 zyada" style="height: 500px;"></div>'
+                            '<div class="col-12 zyada" style="height: 600px;"></div>'
                         );
                     },
                     error: function(xhr, status, error) {
@@ -436,16 +621,18 @@
             }
 
             if (nom !== undefined) {
-                const afficheur_cat = document.getElementById('category_text');
+                const afficheur_cat = document.getElementById('categorie_text');
                 const afficheur_produit = document.getElementById('produit_text');
                 const afficheur_qte = document.getElementById('balance');
                 const afficheur_prix = document.getElementById('prix_unitaire');
                 const afficheur_prix_total = document.getElementById('prix_total');
+                const titre_categorie = document.getElementById('titre-categorie');
+                titre_categorie.textContent = nom;
                 afficheur_cat.textContent = nom;
                 afficheur_produit.textContent = '----';
                 // afficheur_qte.textContent = '0.000';
-                afficheur_prix.textContent = '0';
-                afficheur_prix_total.textContent = '0';
+                afficheur_prix.textContent = '0.00';
+                afficheur_prix_total.textContent = '0.00';
 
             } else {
                 console.error('ERREUR NOM');
@@ -563,6 +750,7 @@
             const AffichageQte = document.getElementById('balance');
             const AffichagePrixUnitaire = document.getElementById('prix_unitaire');
             const AffichagePrixTotal = document.getElementById('prix_total');
+            const AffichageNomProduit = document.getElementById('produit_text');
 
             let qte = parseFloat(AffichageQte.textContent); // Utiliser let pour qte
             let PrixUnitaire = parseFloat(AffichagePrixUnitaire.textContent); // Utiliser let pour PrixUnitaire
@@ -574,15 +762,42 @@
                 PrixUnitaire = PrixUnitaire.toFixed(0); // PrixUnitaire est une chaîne après toFixed
                 PrixTotal = (qte * PrixUnitaire).toFixed(0); // Correction de PrixTotal avec qte et PrixUnitaire
 
-                const id_facture = form.getAttribute('data-id_facture');
                 const id_user = form.getAttribute('data-id_user');
+                const id_facture = document.getElementById('text-id-facture').textContent;
                 const id_lestock = document.getElementById('text-id-lestock').textContent; // Utiliser querySelector
                 const id_produit = document.getElementById('text-id-produit').textContent; // Utiliser querySelector
+
+                if (PrixUnitaire <= 0 && qte <= 0) {
+                    Swal.fire({
+                        title: "Veuillez selectionner un Produit, et saisir la Quantité",
+                        icon: "warning",
+                        showConfirmButton: false,
+                        timer: 1200
+                    });
+                } else
+
+                if (qte <= 0 && PrixUnitaire > 0) {
+                    Swal.fire({
+                        title: "Veuillez saisir la Quantité",
+                        icon: "warning",
+                        showConfirmButton: false,
+                        timer: 1200
+                    });
+                } else
+
+                if (PrixUnitaire <= 0 && qte > 0) {
+                    Swal.fire({
+                        title: "Veuillez selectionner un Produit",
+                        icon: "warning",
+                        showConfirmButton: false,
+                        timer: 1200
+                    });
+                } else
 
                 if (id_facture && id_user && id_lestock && id_produit && qte > 0 && PrixUnitaire > 0 && PrixTotal > 0) {
                     $.ajax({
                         url: '/vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit +
-                            '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal ,
+                            '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal,
                         type: 'post',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
@@ -590,10 +805,10 @@
                         },
                         success: function() {
                             Swal.fire({
-                                title: "Validée",
+                                title: "Validé",
                                 icon: "success",
                                 showConfirmButton: false,
-                                timer: 1000
+                                timer: 1200
                             });
 
                             ListeVentes(id_facture);
@@ -604,6 +819,7 @@
                             AffichageQte.textContent = "0";
                             AffichagePrixUnitaire.textContent = "0";
                             AffichagePrixTotal.textContent = "0";
+                            AffichageNomProduit.textContent = "----";
                         },
                         error: function(xhr, status, error) {
                             console.error(error);
@@ -656,9 +872,8 @@
                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
                 },
                 success: function(response) {
-                    $AffichageTotal = document.getElementById('text_total_facture');
-                    $AffichageTotal.textContent = '';
-                    $AffichageTotal.textContent = response.total;
+                    let AffichageTotal = document.getElementById('text_total_facture');
+                    AffichageTotal.textContent = response.total;
 
                 },
                 error: function(xhr, status, error) {
@@ -668,9 +883,71 @@
         }
 
 
+        function Nouvelle_Facture() {
+            const id_user = document.getElementById('text-id-user').textContent;
+            const id_magasin = document.getElementById('text-id-magasin').textContent;
+            const id_caisse = document.getElementById('text-id-caisse').textContent;
+            if (!isNaN(id_user) && !isNaN(id_magasin) && !isNaN(id_caisse)) {
+
+                $.ajax({
+                    url: '/nouvelle-facture/' + id_user + '/' + id_magasin + '/' + id_caisse,
+                    type: 'get',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                            'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                    },
+                    success: function(response) {
+
+                        Swal.fire({
+                            title: "Nouvelle Vente",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1200
+                        });
+
+                        const id_facture = response.LastFactureId;
+                        let StockageIdFacture = document.getElementById('text-id-facture');
+                        StockageIdFacture.textContent = id_facture;
+
+                        ListeVentes(id_facture);
+                        // Calculer_Total_Facture(id_facture);
+                        zero();
 
 
+
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        }
+
+
+        function zero() {
+
+            const AffichageQte = document.getElementById('balance');
+            const AffichagePrixUnitaire = document.getElementById('prix_unitaire');
+            const AffichagePrixTotal = document.getElementById('prix_total');
+            const AffichageFactureTotal = document.getElementById('text_total_facture');
+            const AffichageNomCategorie = document.getElementById('categorie_text');
+            const AffichageNomProduit = document.getElementById('produit_text');
+            const AffichageTitreCategorie = document.getElementById('titre-categorie');
+
+            // Réinitialiser les affichages
+            AffichageQte.textContent = "0.000";
+            AffichagePrixUnitaire.textContent = "0.00";
+            AffichagePrixTotal.textContent = "0.00";
+            AffichageFactureTotal.textContent = "0.00";
+            AffichageNomCategorie.textContent = "----";
+            AffichageNomProduit.textContent = "----";
+            AffichageTitreCategorie.textContent = "";
+            $('#products').empty();
+        }
     </script>
+
+
+
 
     <style>
         .scat {
