@@ -76,7 +76,7 @@
                         <span>Par la Balance</span>
                     </h6>
                     <div class="digital">
-                        <p id="balance" style="margin-top:-30px;">0.000</p>
+                        <p id="balance" style="margin-top:-30px;">0</p>
                     </div>
 
                     <!-- Bouton pour ouvrir le popup -->
@@ -147,16 +147,25 @@
                 </div>
                 <div class="col-3 align-content-center">
                     <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
-                    <p class="digital" id="prix_unitaire" style="margin-top:-20px;">0.00</p>
+                    <p class="digital" id="prix_unitaire" style="margin-top:-20px;">0</p>
                 </div>
                 <div class="col-3 align-content-center">
                     <h6 class="afficheur-titre">PRIX TOTAL:</h6>
-                    <p class="digital" id="prix_total" style="margin-top:-20px;">0.00</p>
+                    <p class="digital" id="prix_total" style="margin-top:-20px;">0</p>
                 </div>
                 <div class="col-1 mt-3 pl-0">
-                    <button class="btn btn-success pt-3 pb-3" style="color: white;">
-                        <i class="fas fa-check-circle fa-lg"></i><br>Valider
-                    </button>
+
+                    {{-- pour le produit selectionné  --}}
+                    <a id="text-id-lestock" href="" style="display: none;"></a>
+                    <a id="text-id-produit" href="" style="display: none;"></a>
+                    {{-- pour le produit selectionné  --}}
+
+                    <form class="valider-vente-form" data-id_facture="{{ $LastFacture->id }}"
+                        data-id_user={{ $id_user }}>
+                        <button class="btn btn-success pt-3 pb-3" style="color: white;" onclick="ValiderVente(this)">
+                            <i class="fas fa-check-circle fa-lg"></i><br>Valider
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -166,13 +175,13 @@
             <div class="col-8">
                 <div class="container mt-2">
                     <div class="your-carousel">
-                        @foreach ($categorys as $category)
-                            <form class="filter-form" data-id="{{ $category->id }}" data-nom="{{ $category->nom }}"
+                        @foreach ($categories as $categorie)
+                            <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
                                 onclick="FiltrageProduits(this)">
                                 <div class="card cat"
-                                    style="width: 150px; height: 100px; margin-right:5px; background-image: url('{{ asset('storage/' . $category->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                                    style="width: 150px; height: 100px; margin-right:5px; background-image: url('{{ asset('storage/' . $categorie->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                                     <p style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
-                                        {{ $category->nom }}</p>
+                                        {{ $categorie->nom }}</p>
                                 </div>
                             </form>
                         @endforeach
@@ -197,7 +206,7 @@
                         <div class="row afficheur text-center" style="height: 105px;">
                             <div class="col-12 p-1 m-0 align-content-center">
                                 <h6 class="afficheur-titre">TOTAL FACTURE :</h6>
-                                <h2 class="digital" style="margin-top:-20px;">0.00</h2>
+                                <h2 id="text_total_facture" class="digital" style="margin-top:-20px;">0.00</h2>
                             </div>
                             <div class="col-12 p-0 m-0">
                                 <h6 class="afficheur-titre" style="margin-top:-25px;">CLIENT : <span
@@ -207,7 +216,8 @@
                         </div>
                     </div>
                     <div class="card-body m-0 p-1" style="max-height: 550px; overflow-y: auto;">
-                        <h6>IdMagasin:{{ $id_magasin }}/IdUser:{{ $id_user }}/IdCaisse:{{ $id_caisse }}</h6>
+                        <h6>IdUser : {{ $id_user }} / IdMagasin : {{ $id_magasin }} / IdCaisse :
+                            {{ $id_caisse }} / IdFacture : {{ $LastFacture->id }}</h6>
                         <table id="example" class="display" style="width:100%">
                             <thead>
                                 <tr>
@@ -217,7 +227,7 @@
                                     <th>Total:</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="ventes_liste">
                                 <!-- Les lignes de ventes -->
                             </tbody>
                         </table>
@@ -397,14 +407,15 @@
                             $('#products').append(
                                 '<div class="col-2 p-2">' +
                                 '<div class="card scat">' +
-                                '<form class="affichage-form" data-id="' + value.id +
-                                '" data-nom="' + value.nom_pr + '" data-prix="' + value.prix_vent +
+                                '<form class="affichage-form" data-id_lestock="' + value.id +
+                                '" data-id_produit="' + value.id_produit +
+                                '" data-nom="' + value.nom + '" data-prix="' + value.prix +
                                 '" onclick="affichage(this)">' +
-                                '<img src="{{ asset('storage/') }}/' + value.photo_pr +
+                                '<img src="{{ asset('storage/') }}/' + value.photo +
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
-                                '<h5 class="card-title">' + value.nom_pr + '</h5>' +
-                                '<p class="card-text">' + value.prix_vent + ' DZD</p>' +
+                                '<h5 class="card-title">' + value.nom + '</h5>' +
+                                '<p class="card-text">' + value.prix + ' DZD</p>' +
                                 '</div>' +
                                 '</form>' +
                                 '</div>' +
@@ -433,8 +444,8 @@
                 afficheur_cat.textContent = nom;
                 afficheur_produit.textContent = '----';
                 // afficheur_qte.textContent = '0.000';
-                afficheur_prix.textContent = '0.00';
-                afficheur_prix_total.textContent = '0.00';
+                afficheur_prix.textContent = '0';
+                afficheur_prix_total.textContent = '0';
 
             } else {
                 console.error('ERREUR NOM');
@@ -445,7 +456,8 @@
     <!-- Affichage Détails Produit -->
     <script>
         function affichage(form) {
-            const id = form.getAttribute('data-id');
+            const id_lestock = form.getAttribute('data-id_lestock');
+            const id_produit = form.getAttribute('data-id_produit');
             const nom = form.getAttribute('data-nom');
             const prix = form.getAttribute('data-prix');
 
@@ -467,6 +479,14 @@
                 // AffichageEtCalcul(parseFloat(prix.replace(',', '.')));
             } else {
                 console.error('ERREUR PRIX');
+            }
+            if (id_lestock !== undefined && id_produit !== undefined) {
+                const affectation_id_lestock = document.getElementById('text-id-lestock');
+                const affectation_id_produit = document.getElementById('text-id-produit');
+                affectation_id_lestock.textContent = id_lestock;
+                affectation_id_produit.textContent = id_produit;
+            } else {
+                console.error('ERREUR ID');
             }
         }
     </script>
@@ -516,12 +536,12 @@
             input.value = ''; // Efface le champ input
         }
 
-        document.getElementById('balance').addEventListener('click', function() { 
+        document.getElementById('balance').addEventListener('click', function() {
             clearInput()
             document.getElementById('bouton_quantite').click(); // Simule le clic sur le bouton
         });
 
-        function calculer_total() {
+        function calculer_total_vente() {
             const Qte = document.getElementById('balance').textContent;
             const PrixUnitaire = document.getElementById('prix_unitaire').textContent;
             const PrixTotal = document.getElementById('prix_total');
@@ -536,8 +556,116 @@
 
         ///// calculer avec la balance ///////
         document.getElementById('balance').addEventListener('change', function() {
-            calculer_total()
+            calculer_total_vente()
         });
+
+        function ValiderVente(button) {
+            const AffichageQte = document.getElementById('balance');
+            const AffichagePrixUnitaire = document.getElementById('prix_unitaire');
+            const AffichagePrixTotal = document.getElementById('prix_total');
+
+            let qte = parseFloat(AffichageQte.textContent); // Utiliser let pour qte
+            let PrixUnitaire = parseFloat(AffichagePrixUnitaire.textContent); // Utiliser let pour PrixUnitaire
+            let PrixTotal = parseFloat(AffichagePrixTotal.textContent); // Utiliser let pour PrixTotal
+
+            const form = button.closest('.valider-vente-form');
+            if (form) {
+                qte = qte.toFixed(3); // qte est une chaîne après toFixed
+                PrixUnitaire = PrixUnitaire.toFixed(0); // PrixUnitaire est une chaîne après toFixed
+                PrixTotal = (qte * PrixUnitaire).toFixed(0); // Correction de PrixTotal avec qte et PrixUnitaire
+
+                const id_facture = form.getAttribute('data-id_facture');
+                const id_user = form.getAttribute('data-id_user');
+                const id_lestock = document.getElementById('text-id-lestock').textContent; // Utiliser querySelector
+                const id_produit = document.getElementById('text-id-produit').textContent; // Utiliser querySelector
+
+                if (id_facture && id_user && id_lestock && id_produit && qte > 0 && PrixUnitaire > 0 && PrixTotal > 0) {
+                    $.ajax({
+                        url: '/vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit +
+                            '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal ,
+                        type: 'post',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                        },
+                        success: function() {
+                            Swal.fire({
+                                title: "Validée",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1000
+                            });
+
+                            ListeVentes(id_facture);
+
+                            Calculer_Total_Facture(id_facture);
+
+                            // Réinitialiser les affichages
+                            AffichageQte.textContent = "0";
+                            AffichagePrixUnitaire.textContent = "0";
+                            AffichagePrixTotal.textContent = "0";
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(error);
+                        }
+                    });
+                } else {
+                    console.error('Conditions non remplies pour la validation.');
+                }
+            } else {
+                console.error('Formulaire vente non trouvé.'); // Message d'erreur si le formulaire parent n'est pas trouvé
+            }
+        }
+
+
+
+        function ListeVentes(id_facture) {
+            $.ajax({
+                url: '/ventes/' + id_facture,
+                type: 'get',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                },
+                success: function(response) {
+                    $('#ventes_liste').empty();
+                    $.each(response.ventes, function(key, value) {
+                        $('#ventes_liste').append(
+                            '<tr>' +
+                            '<td class="">' + value.nom_produit + '</td>' +
+                            '<td class="">' + value.quantite + '</td>' +
+                            '<td class="">' + value.prix_produit + '</td>' +
+                            '<td class="">' + value.prix_total + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
+
+
+        function Calculer_Total_Facture(id_facture) {
+            $.ajax({
+                url: '/total-facture/' + id_facture,
+                type: 'get',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                },
+                success: function(response) {
+                    $AffichageTotal = document.getElementById('text_total_facture');
+                    $AffichageTotal.textContent = '';
+                    $AffichageTotal.textContent = response.total;
+
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+        }
 
 
 

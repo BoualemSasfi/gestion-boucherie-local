@@ -11,6 +11,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
 
@@ -73,7 +74,7 @@
 
 
 
-                    <div class="topbar-divider d-none d-sm-block"></div>
+                    {{-- <div class="topbar-divider d-none d-sm-block"></div> --}}
 
                     <ul class="navbar-nav ms-auto">
                         <!-- Nav Item - User Information -->
