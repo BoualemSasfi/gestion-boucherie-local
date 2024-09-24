@@ -30,7 +30,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer('caisse.paccino', function ($view) {
-            // $id_magasin = auth()->user()->id_magasin;
             $IdUser = Auth::id();
             $Vendeur = Vendeur::where('id_user', $IdUser)->first();
             $IdMagasin = $Vendeur->id_magasin;
