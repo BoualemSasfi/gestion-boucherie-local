@@ -12,6 +12,7 @@ use App\Models\Lestock;
 use App\Models\Facture;
 use App\Models\Vente;
 use App\Models\Vendeur;
+use App\Models\Client;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -59,13 +60,16 @@ class CaisseController extends Controller
             $NouvelleFacture = $this->Nouvelle_Facture_Vide($IdMagasin, $IdUser, $IdCaisse);
             // $LastFacture = $this->Get_Last_Facture($IdMagasin, $IdUser);
 
+            $clients = Client::all();
+
             return view('caisse.paccino', [
                 'categories' => $categories,
                 'magasin' => $magasin,
                 'produits' => $LesStocks,
                 'id_magasin' => $IdMagasin,
                 'id_user' => $IdUser,
-                'id_caisse' => $IdCaisse
+                'id_caisse' => $IdCaisse,
+                'clients' => $clients
             ]);
         } else {
             return "Utilisateur non connecté";
@@ -155,7 +159,7 @@ class CaisseController extends Controller
 
 
 
-    public function Nouvelle_Vente($id_facture,$id_user,$id_lestock,$id_produit,$prix_unitaire,$qte,$prix_total)
+    public function Nouvelle_Vente($id_facture, $id_user, $id_lestock, $id_produit, $prix_unitaire, $qte, $prix_total)
     {
         try {
             $NewVente = new Vente();
@@ -201,7 +205,7 @@ class CaisseController extends Controller
         try {
             // Calculer la somme directement sans utiliser get() après sum()
             $total = Vente::where('id_facture', $id_facture)->sum('total_vente');
-            
+
             return response()->json(['total' => $total]);
         } catch (\Exception $e) {
             \Log::error($e);
@@ -209,7 +213,7 @@ class CaisseController extends Controller
         }
     }
 
-    public function Create_Facture($id_user,$id_magasin,$id_caisse)
+    public function Create_Facture($id_user, $id_magasin, $id_caisse)
     {
         try {
             $NouvelleFacture = $this->Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse);
@@ -221,5 +225,58 @@ class CaisseController extends Controller
             return response()->json(['error' => 'controller-function: Create_Facture ! erreur'], 500);
         }
     }
-    
+
+    public function Valider_Facture($id_user, $id_facture, $id_caisse, $id_client, $total, $versement, $credit, $etat)
+    {
+        try {
+            // Recherche la facture par son ID
+            $Facture = Facture::find($id_facture);
+
+            // Vérifie si la facture existe
+            if ($Facture) {
+                // Mise à jour des attributs de la facture
+                $Facture->id_user = $id_user;
+                $Facture->id_caisse = $id_caisse;
+                $Facture->id_client = $id_client;
+                $Facture->etat_facture = $etat;
+                $Facture->total_facture = $total;
+                $Facture->versement = $versement;
+                $Facture->credit = $credit;
+                $Facture->save(); // Enregistre les modifications
+                return response()->json('success'); // Retourne une réponse de succès
+                
+            } else {
+                // Gérer le cas où la facture n'existe pas, par exemple, en retournant une erreur
+                return response()->json(['error' => 'Facture non trouvée'], 404);
+            }
+
+        } catch (\Exception $e) {
+            \Log::error($e); // Log de l'erreur pour le débogage
+            return response()->json(['error' => 'Erreur dans la fonction Valider_Facture'], 500); // Retourne une erreur générique
+        }
+    }
+
+    public function En_Attente_Facture($id_facture, $total)
+    {
+        try {
+            // Recherche la facture par son ID
+            $Facture = Facture::find($id_facture);
+
+            // Vérifie si la facture existe
+            if ($Facture) {
+
+                $Facture->total_facture = $total;
+
+                $Facture->save(); // Enregistre les modifications
+            } else {
+                // Gérer le cas où la facture n'existe pas, par exemple, en retournant une erreur
+                return response()->json(['error' => 'Facture non trouvée'], 404);
+            }
+
+            return response()->json('success'); // Retourne une réponse de succès
+        } catch (\Exception $e) {
+            \Log::error($e); // Log de l'erreur pour le débogage
+            return response()->json(['error' => 'Erreur dans la fonction En_Attente_Facture'], 500); // Retourne une erreur générique
+        }
+    }
 }

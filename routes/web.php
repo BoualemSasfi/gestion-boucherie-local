@@ -56,6 +56,8 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/ventes/{id_facture}', 'Get_Liste_Ventes')->name('liste_ventes');
     Route::get('/total-facture/{id_facture}', 'Total_Facture')->name('total_facture');
     Route::get('/nouvelle-facture/{id_user}/{id_magasin}/{id_caisse}', 'Create_Facture')->name('nouvelle_facture');
+    Route::put('/valider-facture/{id_user}/{id_facture}/{id_caisse}/{id_client}/valeurs/{total}/{versement}/{credit}/{etat}', 'Valider_Facture')->name('valider_facture');
+    Route::put('/en-attente-facture/{id_facture}/valeurs/{total}', 'En_Attente_Facture')->name('en_attente_facture');
 
 });
 
