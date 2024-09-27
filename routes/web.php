@@ -12,7 +12,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransfertController;
 use Illuminate\Support\Facades\Route;
 
-
+use Barryvdh\DomPDF\Facade\Pdf;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -48,16 +48,19 @@ Route::middleware('auth')->group(function () {
 Route::controller(CaisseController::class)->group(function () {
     Route::get('/caisse', 'caisse')->name('caisse_home');
     Route::get('/caisse_teste', 'caisse')->name('caisse_teste');
-
+    
     Route::get('/caisse_paccino', 'caisse_paccino')->name('caisse_paccino');
     Route::get('/caisse/category/{id}', 'filtrage_des_produits')->name('caisse_filtrage');
-
+    
     Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
     Route::get('/ventes/{id_facture}', 'Get_Liste_Ventes')->name('liste_ventes');
     Route::get('/total-facture/{id_facture}', 'Total_Facture')->name('total_facture');
     Route::get('/nouvelle-facture/{id_user}/{id_magasin}/{id_caisse}', 'Create_Facture')->name('nouvelle_facture');
     Route::put('/valider-facture/{id_user}/{id_facture}/{id_caisse}/{id_client}/valeurs/{total}/{versement}/{credit}/{etat}', 'Valider_Facture')->name('valider_facture');
     Route::put('/en-attente-facture/{id_facture}/valeurs/{total}', 'En_Attente_Facture')->name('en_attente_facture');
+    
+    Route::get('/imprimer-ticket/{id_facture}', 'ImprimerTicket')->name('caisse_ticket');
+    Route::get('/test_pdf', 'test_pdf')->name('caisse_pdf');
 
 });
 
@@ -151,13 +154,6 @@ Route::controller(TransfertController::class)->group(function () {
 
 
 
-
-
-
-
-
-
-
 require __DIR__ . '/auth.php';
 
 
@@ -175,3 +171,9 @@ Route::get('/caisse', function () {
 
 // Route::get('/test1', [Serial_controller::class, 'showBalance']);
 Route::get('/test', [Serial_controller::class, 'showBalance']);
+
+
+
+
+
+
