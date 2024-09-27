@@ -13,10 +13,26 @@ use App\Models\Facture;
 use App\Models\Vente;
 use App\Models\Vendeur;
 use App\Models\Client;
+use App\Models\Caisse;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Psy\Readline\Hoa\Console;
+
+
+use Carbon\Carbon;
+
+use Picqer\Barcode\BarcodeGeneratorPNG;
+use Picqer\Barcode\BarcodeGenerator;
+use Illuminate\Support\Facades\Log;
+
+use Barryvdh\DomPDF\Facade\Pdf;
+
+use TCPDF;
+
+
+
+
 
 class CaisseController extends Controller
 {
@@ -90,8 +106,8 @@ class CaisseController extends Controller
             }
             $IdMagasin = $Vendeur->id_magasin;
 
-            \Log::info('user_id:' . $IdUser);
-            \Log::info('magasin_id:' . $IdMagasin);
+            Log::info('user_id:' . $IdUser);
+            Log::info('magasin_id:' . $IdMagasin);
 
             $StocksFrai = Stock::where('magasin_id', $IdMagasin)->where('type', '=', 'Frais')->first();
             if (!$StocksFrai) {
@@ -99,7 +115,7 @@ class CaisseController extends Controller
             }
             $IdStock = $StocksFrai->id;
 
-            \Log::info('stock_id:' . $IdStock);
+            Log::info('stock_id:' . $IdStock);
 
             $CategoryId = $id;
 
@@ -121,7 +137,7 @@ class CaisseController extends Controller
 
             return response()->json(['produits' => $produits]);
         } catch (\Exception $e) {
-            \Log::error($e);
+            Log::error($e);
             return response()->json(['error' => 'Internal Server Error'], 500);
         }
     }
@@ -170,11 +186,19 @@ class CaisseController extends Controller
             $NewVente->prix_unitaire = $prix_unitaire;
             $NewVente->quantite = $qte;
             $NewVente->total_vente = $prix_total;
-            // calculer le benefice ici
-            $NewVente->benefice = 0;
+
+            // calculer le benefice 
+            $benefice = 0;
+            $Lestock = Lestock::find($id_lestock);
+            if($Lestock){
+                $prix_achat = $Lestock->prix_achat;
+                $prix_vente = $Lestock->prix_vente;
+                $benefice = ($prix_vente - $prix_achat) * $qte;
+            }
+            $NewVente->benefice = $benefice;
             $NewVente->save();
         } catch (\Exception $e) {
-            \Log::error($e);
+            Log::error($e);
             return response()->json(['error' => 'controller-function: Nouvelle_Vente ! erreur'], 500);
         }
     }
@@ -195,7 +219,7 @@ class CaisseController extends Controller
 
             return response()->json(['ventes' => $ventes]);
         } catch (\Exception $e) {
-            \Log::error($e);
+            Log::error($e);
             return response()->json(['error' => 'controller-function: Get_Liste_Ventes ! erreur'], 500);
         }
     }
@@ -208,7 +232,7 @@ class CaisseController extends Controller
 
             return response()->json(['total' => $total]);
         } catch (\Exception $e) {
-            \Log::error($e);
+            Log::error($e);
             return response()->json(['error' => 'controller-function: Total_Facture ! erreur'], 500);
         }
     }
@@ -221,20 +245,126 @@ class CaisseController extends Controller
             $LastFactureId = $LastFacture->id;
             return response()->json(['LastFactureId' => $LastFactureId]);
         } catch (\Exception $e) {
-            \Log::error($e);
+            Log::error($e);
             return response()->json(['error' => 'controller-function: Create_Facture ! erreur'], 500);
         }
     }
 
+
+
+
+
+
+    // public function Valider_Facture($id_user, $id_facture, $id_caisse, $id_client, $total, $versement, $credit, $etat)
+    // {
+    //     try {
+
+    //         $Facture = Facture::find($id_facture);
+
+    //         if ($Facture) {
+    //             $Facture->id_user = $id_user;
+    //             $Facture->id_caisse = $id_caisse;
+    //             $Facture->id_client = $id_client;
+    //             $Facture->etat_facture = $etat;
+    //             $Facture->total_facture = $total;
+    //             $Facture->versement = $versement;
+    //             $Facture->credit = $credit;
+    //             $Facture->save();
+
+
+    //             return response()->json('success');
+
+    //             // imprimer le ticket 
+    //             // ----------------------------------------------------------------------
+
+    //             $barcodePath = public_path('barcode.png');
+
+    //             $generator = new BarcodeGeneratorPNG();
+
+    //             $widthFactor = 1;
+
+    //             $height = 50;
+
+    //             $type = BarcodeGenerator::TYPE_CODE_39;
+
+    //             file_put_contents($barcodePath, $generator->getBarcode($Facture->id, $type, $widthFactor, $height));
+
+    //             // ----------------------------------------------------------------------
+    //             $Facture = Facture::find($id_facture);
+    //             $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
+    //                 ->select(
+    //                     'ventes.id as id',
+    //                     'produits.nom_pr as nom_produit',
+    //                     'ventes.prix_unitaire as prix_produit',
+    //                     'ventes.quantite as quantite',
+    //                     'ventes.total_vente as prix_total'
+    //                 )
+    //                 ->where('id_facture', $id_facture)
+    //                 ->get();
+
+    //             $Client = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
+    //                 ->select(
+    //                     'clients.nom_prenom as nom',
+    //                 )
+    //                 ->where('id_facture', $id_facture)
+    //                 ->first();
+
+    //             $Vendeur = Facture::join('users', 'users.id', '=', 'factures.id_user')
+    //                 ->select(
+    //                     'users.name as nom',
+    //                 )
+    //                 ->where('id_facture', $id_facture)
+    //                 ->first();
+
+    //                 return response()->json($Facture);
+    //                 return response()->json($Ventes);
+    //                 return response()->json($Client);
+    //                 return response()->json($Vendeur);
+
+
+    //             $data = [
+    //                 'num_facture' => $Facture->id,
+    //                 'date_facture' => $Facture->created_at,
+    //                 'etat_facture' => $Facture->etat_facture,
+    //                 'magasin' => $Facture->id_magasin,
+    //                 'caisse' => $Facture->id_caisse,
+    //                 'total' => $Facture->total_facture,
+    //                 'versement' => $Facture->versement,
+    //                 'credit' => $Facture->credit,
+    //                 'ventes' => $Ventes,
+    //                 'client' => $Client->nom ?? 'Inconnu',
+    //                 'vendeur' => $Vendeur->nom ?? 'Inconnu',
+    //                 'barcodePath' => $barcodePath,
+    //             ];
+
+
+
+    //             $titre =  'facture_vente_' . $Facture->id;
+    //             $pdf = PDF::loadView('caisse.ticket', $data)->setPaper('A4', 'portrait');
+    //             return $pdf->download($titre . '.pdf');
+
+
+    //             // ----------------------------------------------------------------------
+    //             // terminé 
+
+    //         } else {
+    //             // Gérer le cas où la facture n'existe pas, par exemple, en retournant une erreur
+    //             return response()->json(['error' => 'Facture non trouvée'], 404);
+    //         }
+    //     } catch (\Exception $e) {
+    //         \Log::error($e); // Log de l'erreur pour le débogage
+    //         return response()->json(['error' => 'Erreur dans la fonction Valider_Facture'], 500); // Retourne une erreur générique
+    //     }
+    // }
+
+
     public function Valider_Facture($id_user, $id_facture, $id_caisse, $id_client, $total, $versement, $credit, $etat)
     {
         try {
-            // Recherche la facture par son ID
             $Facture = Facture::find($id_facture);
 
-            // Vérifie si la facture existe
             if ($Facture) {
-                // Mise à jour des attributs de la facture
+                // Mise à jour des informations de la facture
                 $Facture->id_user = $id_user;
                 $Facture->id_caisse = $id_caisse;
                 $Facture->id_client = $id_client;
@@ -242,19 +372,175 @@ class CaisseController extends Controller
                 $Facture->total_facture = $total;
                 $Facture->versement = $versement;
                 $Facture->credit = $credit;
-                $Facture->save(); // Enregistre les modifications
-                return response()->json('success'); // Retourne une réponse de succès
-                
+                $Facture->save();
+
+                $Caisse = Caisse::find($id_caisse);
+
+                // ajouter l'argent à la caisse 
+                if ($Caisse) {
+                    $Ancien_Solde = $Caisse->solde;
+                    $Nouveau_Solde = $Ancien_Solde + $versement;
+                    $Caisse->solde = $Nouveau_Solde;
+                    $Caisse->save();
+                };
+
+                // Appeler la méthode 'ImprimerTicket'
+                // $this->ImprimerTicket($Facture);
+
+                $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
+                    ->select(
+                        'ventes.id as id',
+                        'ventes.id_lestock as id_lestock',
+                        'produits.nom_pr as nom_produit',
+                        'ventes.prix_unitaire as prix_produit',
+                        'ventes.quantite as quantite',
+                        'ventes.total_vente as prix_total'
+                    )
+                    ->where('id_facture', $Facture->id)
+                    ->get();
+
+                if ($Ventes){
+                    // gérer le stock magasin apres la vente 
+                    foreach ($Ventes as $Vente) {
+                        $id_lestock = $Vente->id_lestock;
+                        $Quantite_vente = $Vente->quantite;
+                        $LeStock = Lestock::find($id_lestock);
+                        if($LeStock){
+                            $Ancienne_Quantite = $LeStock->quantity;
+                            $Nouvelle_Quantite = $Ancienne_Quantite - $Quantite_vente;
+                            $LeStock->quantity = $Nouvelle_Quantite;
+                            $LeStock->save();
+
+                        }
+                    }
+                }
+
+
+                $Client = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
+                    ->select('clients.nom_prenom as nom',)
+                    ->where('factures.id', $Facture->id)
+                    ->first();
+
+                $Vendeur = Facture::join('users', 'users.id', '=', 'factures.id_user')
+                    ->select('users.name as nom')
+                    ->where('factures.id', $Facture->id)
+                    ->first();
+
+                $data = [
+                    'num_facture' => $Facture->id,
+                    'date_facture' => $Facture->created_at,
+                    'etat_facture' => $Facture->etat_facture,
+                    'magasin' => $Facture->id_magasin,
+                    'caisse' => $Facture->id_caisse,
+                    'total' => $Facture->total_facture,
+                    'versement' => $Facture->versement,
+                    'credit' => $Facture->credit,
+                    'ventes' => $Ventes,
+                    'client' => $Client->nom ?? 'Inconnu',
+                    'vendeur' => $Vendeur->nom ?? 'Inconnu',
+                    // 'barcodePath' => $barcodePath,
+                ];
+
+                try {
+                    $titre = 'facture_vente_' . $Facture->id;
+                    // Définir les dimensions de ticket de caisse (80 mm de large et 200 mm de haut)
+                    $pdf = Pdf::loadView('caisse.ticket', $data)->setPaper([0, 0, 226.77, 566.93], 'portrait'); // 80 mm x 200 mm en points (1 mm = 2.83 points)
+                    return $pdf->stream($titre . '.pdf', ['Attachment' => false]);
+                    // Retourner une réponse JSON de succès immédiatement
+                    // Cela permet à l'AJAX de continuer sans attendre la génération du PDF
+                    return response()->json(['success' => true, 'message' => 'Facture validée avec succès']);
+                } catch (\Exception $e) {
+                    Log::error('Erreur lors de la génération du PDF : ' . $e->getMessage());
+                    return response()->json(['error' => 'Erreur lors de la génération du PDF'], 500);
+                }
             } else {
-                // Gérer le cas où la facture n'existe pas, par exemple, en retournant une erreur
                 return response()->json(['error' => 'Facture non trouvée'], 404);
             }
-
         } catch (\Exception $e) {
-            \Log::error($e); // Log de l'erreur pour le débogage
-            return response()->json(['error' => 'Erreur dans la fonction Valider_Facture'], 500); // Retourne une erreur générique
+            Log::error($e); // Log de l'erreur pour le débogage
+            return response()->json(['error' => 'Erreur dans la fonction Valider_Facture'], 500);
         }
     }
+
+    public function ImprimerTicket($id_facture)
+    {
+        // $barcodePath = public_path('barcode.png');
+
+        // if (!is_writable(dirname($barcodePath))) {
+        //     \Log::error('Erreur : Le répertoire public n\'est pas accessible en écriture.');
+        //     return response()->json(['error' => 'Le répertoire public n\'est pas accessible en écriture'], 500);
+        // }
+
+        // $generator = new BarcodeGeneratorPNG();
+        // $widthFactor = 1;
+        // $height = 50;
+        // $type = BarcodeGenerator::TYPE_CODE_39;
+
+        // try {
+        //     file_put_contents($barcodePath, $generator->getBarcode($Facture->id, $type, $widthFactor, $height));
+        // } catch (\Exception $e) {
+        //     \Log::error('Erreur lors de la génération du code-barres : ' . $e->getMessage());
+        //     return response()->json(['error' => 'Erreur lors de la génération du code-barres'], 500);
+        // }
+        $Facture = Facture::find($id_facture);
+
+        $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
+            ->select(
+                'ventes.id as id',
+                'produits.nom_pr as nom_produit',
+                'ventes.prix_unitaire as prix_produit',
+                'ventes.quantite as quantite',
+                'ventes.total_vente as prix_total'
+            )
+            ->where('id_facture', $Facture->id)
+            ->get();
+
+        $Client = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
+            ->select('clients.nom_prenom as nom',)
+            ->where('factures.id', $Facture->id)
+            ->first();
+
+        $Vendeur = Facture::join('users', 'users.id', '=', 'factures.id_user')
+            ->select('users.name as nom')
+            ->where('factures.id', $Facture->id)
+            ->first();
+
+        $data = [
+            'num_facture' => $Facture->id,
+            'date_facture' => $Facture->created_at,
+            'etat_facture' => $Facture->etat_facture,
+            'magasin' => $Facture->id_magasin,
+            'caisse' => $Facture->id_caisse,
+            'total' => $Facture->total_facture,
+            'versement' => $Facture->versement,
+            'credit' => $Facture->credit,
+            'ventes' => $Ventes,
+            'client' => $Client->nom ?? 'Inconnu',
+            'vendeur' => $Vendeur->nom ?? 'Inconnu',
+            // 'barcodePath' => $barcodePath,
+        ];
+
+        try {
+            $titre = 'facture_vente_' . $Facture->id;
+            // Définir les dimensions de ticket de caisse (80 mm de large et 200 mm de haut)
+            $pdf = Pdf::loadView('caisse.ticket', $data)->setPaper([0, 0, 226.77, 566.93], 'portrait'); // 80 mm x 200 mm en points (1 mm = 2.83 points)
+            return $pdf->stream($titre . '.pdf', ['Attachment' => false]);
+            // Retourner une réponse JSON de succès immédiatement
+            // Cela permet à l'AJAX de continuer sans attendre la génération du PDF
+            return response()->json(['success' => true, 'message' => 'Facture validée avec succès']);
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de la génération du PDF : ' . $e->getMessage());
+            return response()->json(['error' => 'Erreur lors de la génération du PDF'], 500);
+        }
+
+
+        // Retourner une réponse JSON de succès immédiatement
+        // Cela permet à l'AJAX de continuer sans attendre la génération du PDF
+
+    }
+
+
+
 
     public function En_Attente_Facture($id_facture, $total)
     {
@@ -275,8 +561,91 @@ class CaisseController extends Controller
 
             return response()->json('success'); // Retourne une réponse de succès
         } catch (\Exception $e) {
-            \Log::error($e); // Log de l'erreur pour le débogage
+            Log::error($e); // Log de l'erreur pour le débogage
             return response()->json(['error' => 'Erreur dans la fonction En_Attente_Facture'], 500); // Retourne une erreur générique
+        }
+    }
+
+
+    public function test_pdf()
+    {
+
+
+        // // Chemin pour sauvegarder le code-barres
+        // $barcodePath = public_path('barcode.png'); // Changez en 'storage/barcode.png' si nécessaire
+
+        // // Créer une instance du générateur de code-barres
+        // $generator = new BarcodeGeneratorPNG();
+
+        // // Configurer les dimensions
+        // $widthFactor = 2; // Ajuste le facteur de largeur si nécessaire
+        // $height = 50;
+        // $type = BarcodeGenerator::TYPE_CODE_39; // Type de code-barres
+
+        // // Le code à encoder
+        // $code = '123456789'; // Assurez-vous que le code est une chaîne de caractères
+
+        // try {
+        //     // Générer le code-barres et l'enregistrer dans le fichier
+        //     $barcodeImage = $generator->getBarcode($code, $type, $widthFactor, $height);
+
+        //     // Écrire l'image dans le fichier
+        //     file_put_contents($barcodePath, $barcodeImage);
+
+        //     Log::info('Code-barres généré avec succès à l\'emplacement : ' . $barcodePath);
+
+        //     return response()->json(['success' => 'Code-barres généré avec succès', 'path' => $barcodePath], 200);
+        // } catch (\Exception $e) {
+        //     Log::error('Erreur lors de la génération du code-barres : ' . $e->getMessage());
+        //     return response()->json(['error' => 'Erreur lors de la génération du code-barres : ' . $e->getMessage()], 500);
+        // }
+
+
+        $Facture = Facture::find(584);
+        $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
+            ->select(
+                'ventes.id as id',
+                'produits.nom_pr as nom_produit',
+                'ventes.prix_unitaire as prix_produit',
+                'ventes.quantite as quantite',
+                'ventes.total_vente as prix_total'
+            )
+            ->where('id_facture', $Facture->id)
+            ->get();
+
+        $Client = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
+            ->select('clients.nom_prenom as nom',)
+            ->where('factures.id', $Facture->id)
+            ->first();
+
+        $Vendeur = Facture::join('users', 'users.id', '=', 'factures.id_user')
+            ->select('users.name as nom')
+            ->where('factures.id', $Facture->id)
+            ->first();
+
+        $data = [
+            'num_facture' => $Facture->id,
+            'date_facture' => $Facture->created_at,
+            'etat_facture' => $Facture->etat_facture,
+            'magasin' => $Facture->id_magasin,
+            'caisse' => $Facture->id_caisse,
+            'total' => $Facture->total_facture,
+            'versement' => $Facture->versement,
+            'credit' => $Facture->credit,
+            'ventes' => $Ventes,
+            'client' => $Client->nom ?? 'Inconnu',
+            'vendeur' => $Vendeur->nom ?? 'Inconnu',
+            // 'barcodePath' => $barcodePath,
+        ];
+
+        try {
+            $titre = 'facture_vente_' . $Facture->id;
+            // Définir les dimensions de ticket de caisse (80 mm de large et 200 mm de haut)
+            $pdf = Pdf::loadView('caisse.ticket', $data)->setPaper([0, 0, 226.77, 566.93], 'portrait'); // 80 mm x 200 mm en points (1 mm = 2.83 points)
+            return $pdf->stream($titre . '.pdf', ['Attachment' => false]);
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de la génération du PDF : ' . $e->getMessage());
+            return response()->json(['error' => 'Erreur lors de la génération du PDF'], 500);
         }
     }
 }

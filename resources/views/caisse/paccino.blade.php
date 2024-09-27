@@ -1138,15 +1138,33 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                                 'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                        },
+                        success: function(response) {
+
+                            Swal.fire({
+                                title: "Vente Validée",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
                         }
                     });
+                    await $.ajax({
+                        url: '/imprimer-ticket/' + IdFacture,
+                        type: 'get',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                        },
+                        success: function(response) {
 
-                    // Affiche une alerte SweetAlert après la réussite de l'AJAX
-                    await Swal.fire({
-                        title: "Vente Terminée avec succès",
-                        icon: "success",
-                        showConfirmButton: false,
-                        timer: 1500
+                            Swal.fire({
+                                title: "Ticket Validé",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
                     });
 
                     // Ferme le modal
@@ -1166,7 +1184,7 @@
 
                 try {
                     // Transforme l'appel AJAX en promesse pour utiliser await
-                    const response = await $.ajax({
+                    await $.ajax({
                         url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' +
                             IdClient +
                             '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
@@ -1174,8 +1192,36 @@
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                                 'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                            },
+                        success: function(response) {
+
+                            Swal.fire({
+                                title: "Vente Validée",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
                         }
                     });
+
+                    await $.ajax({
+                        url: '/imprimer-ticket/' + IdFacture,
+                        type: 'get',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                        },
+                        success: function(response) {
+
+                            Swal.fire({
+                                title: "Ticket",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        }
+                    });
+
 
                     // Affiche une alerte SweetAlert après la réussite de l'AJAX
                     await Swal.fire({
@@ -1272,7 +1318,7 @@
             if (LabelTotal !== '0.00') {
                 try {
                     let Total = parseFloat(LabelTotal);
-                    Total= Total.toFixed(2);
+                    Total = Total.toFixed(2);
                     const response = await $.ajax({
                         url: '/en-attente-facture/' + IdFacture + '/valeurs/' + Total,
                         type: 'put',
@@ -1299,7 +1345,7 @@
                 }
             };
             if (LabelTotal === '0.00') {
-                    Swal.fire({
+                Swal.fire({
                     title: "Facture Vide",
                     icon: "warning",
                     showConfirmButton: false,
