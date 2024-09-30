@@ -9,27 +9,30 @@
 </head>
 
 <body>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Attente avant de lancer l\'impression');
-            setTimeout(function() {
-                window.print();
-            }, 5000); // Attendre 1 seconde
-        });
-    </script>
-
     <div class="container">
-
+        <h2 id="ticket-titre">{{ $informations->nom_entr }}</h2>
         <div class="facture part">
-            {{-- <img class="barcode" src="{{ $barcodePath }}" alt="CODE BARRES"> --}}
-            <h5 id="code">Ticket N°: {{ $num_facture }} <span id="etat">Etat-Facture: {{ $etat_facture }}</span> </h5>
-            <h5 id="vendeur">Vendeur: {{ $vendeur }}</h5>
-            <h5 id="magasin">Magasin: {{ $magasin }} Caisse: {{ $caisse }}</h5>
-            <h5 id="date">Date et Heure: {{ $date_facture }}</h5>
-            <h5 id="client">Client: {{ $client }}</h5>
+            <div class="cell">
+                <h5 id="code">Ticket N°: <br> {{ $num_facture }}</h5>
+            </div>
+            <div class="cell">
+                <h5 id="code-barres">CODE BARRES</h5>
+            </div>
+            <div class="cell">
+                <h5 id="vendeur">Vendeur: <br> {{ $vendeur }}</h5>
+            </div>
+            <div class="cell">
+                <h5 id="magasin">Magasin: {{ $magasin }} <br> Caisse: {{ $caisse }}</h5>
+            </div>
+            <div class="cell">
+                <h5 id="date">Date et Heure: <br> {{ $date_facture }}</h5>
+            </div>
+            <div class="cell">
+                <h5 id="client">Client: <br> {{ $client }}</h5>
+            </div>
         </div>
-
         <div class="ventes part">
+            <hr>
             <table>
                 <tr>
                     <th>Designation:</th>
@@ -42,29 +45,38 @@
                         <td>{{ $vente->nom_produit }} </td>
                         <td>{{ $vente->quantite }} </td>
                         <td>{{ $vente->prix_produit }} </td>
-                        <td>{{ $vente->prix_total }} </td>
+                        <td><b>{{ $vente->prix_total }}</b></td>
                     </tr>
                 @endforeach
             </table>
+            <hr>
         </div>
-
         <div class="resume part">
             <h5 id="total">Total: {{ $total }} DA</h5>
             <h5 id="versement">Versement: {{ $versement }} DA</h5>
             <h5 id="credit">Crédit: {{ $credit }} DA</h5>
         </div>
-
         <div class="message part">
-            <h6>Merci pour votre visite<br>à bientôt</h6>
+            <h5>Merci pour votre visite<br>à bientôt</h5>
         </div>
     </div>
 
-    {{-- CSS  --}}
     <style>
+        html {
+            margin: 20px;
+            padding: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             padding: 0;
             font-size: 14px;
+            line-height: 0.5cm;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .container {
@@ -73,38 +85,49 @@
         }
 
         .part {
-            margin-top: 20px;
+            background-color: rgb(214, 250, 69);
         }
 
         .barcode {
             width: 100%;
             height: 25px;
         }
+
+        .resume {
+            text-align: right;
+            font-size: 18px;
+        }
+
+        .facture {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
+            gap: 0; /* Pas d'espacement */
+            background-color: rgb(39, 231, 39);
+            width: 260px; /* Largeur du ticket */
+        }
+        
+        .cell {
+            background-color: rgb(53, 53, 242);
+            border: 1px solid rgb(0, 0, 0);
+            text-align: center;
+            padding: 0;
+            height: 80px; /* Hauteur de la cellule */
+            width: 130px; /* Largeur du ticket */
+        }
+
+        #ticket-titre {
+            text-align: center;
+        }
+
+        td {
+            padding: 3px;
+        }
+
+        .message {
+            font-family: 'Courier New', Courier, monospace !important;
+            text-align: center;
+        }
     </style>
-
-
-
-    {{-- <script>
-    window.onload = function() {
-        window.print(); // Lancer l'impression automatiquement
-    }
-</script> --}}
-
-    {{-- <script>
-setTimeout(function() {
-    window.print();
-}, 1000);
-</script> --}}
-
-    {{-- <script>
-    function imprimerPDF() {
-    window.print(); // Lancer l'impression
-}
-
-window.onload = function() {
-    imprimerPDF(); // Appeler la fonction d'impression
-};
-</script> --}}
 
 </body>
 

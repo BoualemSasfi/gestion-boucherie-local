@@ -308,23 +308,31 @@
                                     <br>Ouvrir Calculatrice
                                 </button>
                             </div>
-                            <div class="col-3">
+                            {{-- <div class="col-3">
                                 <button class="btn btn-warning" type="button">
                                     <i class="fas fa-cubes fa-lg"></i>
                                     <br>
                                     Voir<br>Stock
                                 </button>
-                            </div>
+                            </div> --}}
                             <div class="col-3">
                                 <button class="btn btn-warning" type="button">
-                                    <i class="fas fa-store-alt fa-lg"></i>
+                                    {{-- <i class="fas fa-store-alt fa-lg"></i> --}}
+                                    <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+
                                     <br> Historique Ventes
                                 </button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-secondary" type="button">
-                                    <i class="fas fa-user-clock fa-lg"></i>
-                                    <br>Liste En Attente
+                                <button class="btn btn-warning" type="button">
+                                    <i class="fa fa-users fa-lg" aria-hidden="true"></i>
+                                    <br>Clients
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-primary" type="button">
+                                    <i class="fas fa-store-alt fa-lg"></i>
+                                    <br> Retour vers magasin
                                 </button>
                             </div>
                         </div>
@@ -332,7 +340,12 @@
 
                     <div class="col-4">
                         <div class="row bouton-action">
-
+                            <div class="col-3">
+                                <button class="btn btn-secondary" type="button">
+                                    <i class="fas fa-user-clock fa-lg"></i>
+                                    <br>Liste En Attente
+                                </button>
+                            </div>
                             {{-- <div class="col-3">
                                 <button class="btn btn-primary" type="button" onclick="Nouvelle_Facture()">
                                     <i class="fas fa-shopping-cart fa-lg"></i>
@@ -491,21 +504,22 @@
                                     <br>Vente En Attente
                                 </button>
                             </div>
-                            <div class="col-3">
-                                <button class="btn btn-danger" type="button">
-                                    <i class="fas fa-trash-alt fa-lg"></i>
-                                    <br>Supprimer Selection
-                                </button>
-                            </div>
+
                         </div>
                     </div>
 
                     <div class="col-4">
                         <div class="row bouton-action">
-                            <div class="col-3">
+                            {{-- <div class="col-3">
                                 <button class="btn btn-dark" type="button">
                                     <i class="fas fa-balance-scale fa-lg"></i>
                                     <br>Modifier QTE
+                                </button>
+                            </div> --}}
+                            <div class="col-3">
+                                <button class="btn btn-danger" type="button">
+                                    <i class="fas fa-trash-alt fa-lg"></i>
+                                    <br>Supprimer Selection
                                 </button>
                             </div>
                             <div class="col-3">
@@ -693,7 +707,7 @@
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
                                 '<h5 class="card-title">' + value.nom + '</h5>' +
-                                '<p class="card-text">' + value.prix + ' DZD</p>' +
+                                '<p class="card-text">' + value.prix + ' DA / ' + value.mesure + '</p>' +
                                 '</div>' +
                                 '</form>' +
                                 '</div>' +
@@ -1100,6 +1114,383 @@
 
 
 
+        // async function ValiderFacture() {
+        //     const InputTotal = document.getElementById('TotalInput');
+        //     const InputVersement = document.getElementById('VersementInput');
+        //     const InputCredit = document.getElementById('CreditInput');
+
+        //     const IdUser = document.getElementById('text-id-user').textContent;
+        //     const IdCaisse = document.getElementById('text-id-caisse').textContent;
+        //     const IdFacture = document.getElementById('text-id-facture').textContent;
+        //     const IdClient = document.getElementById('client_select').value;
+        //     let Total = parseFloat(InputTotal.value);
+        //     let Credit = parseFloat(InputCredit.value);
+
+        //     let Versement; // Déclare la variable en dehors du bloc if/else
+
+
+
+        //     if (InputVersement.value === '') {
+        //         Versement = Total; // Affecte la valeur de Total à Versement si l'input est vide
+        //     } else {
+        //         Versement = parseFloat(InputVersement.value); // Sinon, parse l'input en float
+        //     }
+
+        //     // cas pas de credit 
+        //     if (Total > 0 && (Versement === Total || Versement > Total)) {
+        //         Versement = Total;
+        //         Credit = 0;
+        //         const Etat = 'Facture-Payée';
+
+        //         try {
+        //             // Transforme l'appel AJAX en promesse pour utiliser await
+        //             const response = await $.ajax({
+        //                 url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' +
+        //                     IdClient +
+        //                     '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
+        //                 type: 'put',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+        //                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+        //                 },
+        //                 success: function(response) {
+
+        //                     Swal.fire({
+        //                         title: "Facture Validée",
+        //                         icon: "success",
+        //                         showConfirmButton: false,
+        //                         timer: 1500
+        //                     })
+        //                 }
+        //             });
+        //         } catch (error) {
+        //             console.error("Erreur lors de la validation de la facture :", error);
+        //             // Gère l'erreur si nécessaire
+        //         }
+
+        //         try {
+        //             const response = await $.ajax({
+        //                 url: '/imprimer-ticket/' + IdFacture,
+        //                 type: 'get',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+        //                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+        //                 },
+        //                 success: function(response) {
+
+        //                     Swal.fire({
+        //                         title: "Ticket Validé",
+        //                         icon: "success",
+        //                         showConfirmButton: false,
+        //                         timer: 1500
+        //                     })
+        //                 }
+        //             });
+        //         } catch (error) {
+        //             console.error("Erreur de ticket :", error);
+        //             // Gère l'erreur si nécessaire
+        //         }
+
+        //         // Ferme le modal
+        //         await $('#FactureModal').modal('hide');
+
+        //         // Appelle la fonction Nouvelle_Facture
+        //         await Nouvelle_Facture();
+
+        //     }
+
+        //     // cas credit 
+        //     if (Versement < Total || InputVersement.value === '0') {
+        //         const Etat = 'Crédit';
+
+        //         try {
+        //             // Transforme l'appel AJAX en promesse pour utiliser await
+        //             const response = await $.ajax({
+        //                 url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' +
+        //                     IdClient +
+        //                     '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
+        //                 type: 'put',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+        //                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+        //                 },
+        //                 success: function(response) {
+
+        //                     Swal.fire({
+        //                         title: "Facture Validée",
+        //                         icon: "success",
+        //                         showConfirmButton: false,
+        //                         timer: 1500
+        //                     })
+        //                 }
+        //             });
+        //         } catch (error) {
+        //             console.error("Erreur lors de la validation de la facture :", error);
+        //             // Gère l'erreur si nécessaire
+        //         }
+
+        //         try {
+        //             const response = await $.ajax({
+        //                 url: '/imprimer-ticket/' + IdFacture,
+        //                 type: 'get',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+        //                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+        //                 },
+        //                 success: function(response) {
+
+        //                     Swal.fire({
+        //                         title: "Ticket Validé",
+        //                         icon: "success",
+        //                         showConfirmButton: false,
+        //                         timer: 1500
+        //                     })
+        //                 }
+        //             });
+        //         } catch (error) {
+        //             console.error("Erreur de ticket :", error);
+        //             // Gère l'erreur si nécessaire
+        //         }
+
+        //         // Ferme le modal
+        //         await $('#FactureModal').modal('hide');
+
+        //         // Appelle la fonction Nouvelle_Facture
+        //         await Nouvelle_Facture();
+
+        //     }
+
+        //     console.log('Validation Facture executé');
+        // }
+
+        // ------------------------------------------------------------------------------------------------------
+
+        // async function ValiderFacture() {
+        //     const InputTotal = document.getElementById('TotalInput');
+        //     const InputVersement = document.getElementById('VersementInput');
+        //     const InputCredit = document.getElementById('CreditInput');
+
+        //     const IdUser = document.getElementById('text-id-user').textContent;
+        //     const IdCaisse = document.getElementById('text-id-caisse').textContent;
+        //     const IdFacture = document.getElementById('text-id-facture').textContent;
+        //     const IdClient = document.getElementById('client_select').value;
+        //     let Total = parseFloat(InputTotal.value);
+        //     let Credit = parseFloat(InputCredit.value);
+
+        //     let Versement;
+
+        //     if (InputVersement.value === '') {
+        //         Versement = Total;
+        //     } else {
+        //         Versement = parseFloat(InputVersement.value);
+        //     }
+
+        //     // Full or overpayment case
+        //     if (Total > 0 && (Versement === Total || Versement > Total)) {
+        //         Versement = Total;
+        //         Credit = 0;
+        //         const Etat = 'Facture-Payée';
+
+        //         try {
+        //             // Validate the invoice
+        //             await $.ajax({
+        //                 url: `/valider-facture/${IdUser}/${IdFacture}/${IdCaisse}/${IdClient}/valeurs/${Total}/${Versement}/${Credit}/${Etat}`,
+        //                 type: 'put',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+
+        //             Swal.fire({
+        //                 title: "Facture Validée",
+        //                 icon: "success",
+        //                 showConfirmButton: false,
+        //                 timer: 1500
+        //             });
+
+        //             // Open the PDF ticket in a new tab
+        //             window.open('/imprimer-ticket/' + IdFacture, '_blank');
+
+        //             // Wait for a moment before continuing
+        //             await new Promise((resolve) => setTimeout(resolve, 1600));
+
+        //             // Close the modal and reset after the ticket has been opened
+        //             $('#FactureModal').modal('hide');
+        //             await Nouvelle_Facture();
+
+        //         } catch (error) {
+        //             console.error("Erreur lors de la validation de la facture :", error);
+        //         }
+        //     }
+
+        //     // Handle credit case
+        //     if (Versement < Total || InputVersement.value === '0') {
+        //         const Etat = 'Crédit';
+
+        //         try {
+        //             // Validate the invoice as credit
+        //             await $.ajax({
+        //                 url: `/valider-facture/${IdUser}/${IdFacture}/${IdCaisse}/${IdClient}/valeurs/${Total}/${Versement}/${Credit}/${Etat}`,
+        //                 type: 'put',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+
+        //             Swal.fire({
+        //                 title: "Facture Validée (Crédit)",
+        //                 icon: "success",
+        //                 showConfirmButton: false,
+        //                 timer: 1500
+        //             });
+
+        //             // Open the PDF ticket in a new tab
+        //             window.open('/imprimer-ticket/' + IdFacture, '_blank');
+
+        //             // Wait for a moment before continuing
+        //             await new Promise((resolve) => setTimeout(resolve, 1600));
+
+        //             // Close the modal and reset after the ticket has been opened
+        //             $('#FactureModal').modal('hide');
+        //             await Nouvelle_Facture();
+
+        //         } catch (error) {
+        //             console.error("Erreur lors de la validation ou impression du ticket (Crédit) :", error);
+        //         }
+        //     }
+
+        //     console.log('Validation Facture exécutée');
+        // }
+
+
+
+        // async function ValiderFacture() {
+        //     const InputTotal = document.getElementById('TotalInput');
+        //     const InputVersement = document.getElementById('VersementInput');
+        //     const InputCredit = document.getElementById('CreditInput');
+
+        //     const IdUser = document.getElementById('text-id-user').textContent;
+        //     const IdCaisse = document.getElementById('text-id-caisse').textContent;
+        //     const IdFacture = document.getElementById('text-id-facture').textContent;
+        //     const IdClient = document.getElementById('client_select').value;
+        //     let Total = parseFloat(InputTotal.value);
+        //     let Credit = parseFloat(InputCredit.value);
+
+        //     let Versement;
+
+        //     if (InputVersement.value === '') {
+        //         Versement = Total;
+        //     } else {
+        //         Versement = parseFloat(InputVersement.value);
+        //     }
+
+        //     // Full or overpayment case
+        //     if (Total > 0 && (Versement === Total || Versement > Total)) {
+        //         Versement = Total;
+        //         Credit = 0;
+        //         const Etat = 'Facture-Payée';
+
+        //         try {
+        //             // Validate the invoice
+        //             await $.ajax({
+        //                 url: `/valider-facture/${IdUser}/${IdFacture}/${IdCaisse}/${IdClient}/valeurs/${Total}/${Versement}/${Credit}/${Etat}`,
+        //                 type: 'put',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+
+        //             Swal.fire({
+        //                 title: "Facture Validée",
+        //                 icon: "success",
+        //                 showConfirmButton: false,
+        //                 timer: 1500
+        //             });
+
+        //             // Print the PDF ticket directly using an iframe
+        //             printTicket(IdFacture);
+
+        //             // Wait before continuing
+        //             await new Promise((resolve) => setTimeout(resolve, 1600));
+
+        //             // Close the modal and reset after the print
+        //             $('#FactureModal').modal('hide');
+        //             await Nouvelle_Facture();
+
+        //         } catch (error) {
+        //             console.error("Erreur lors de la validation de la facture :", error);
+        //         }
+        //     }
+
+        //     // Handle credit case
+        //     if (Versement < Total || InputVersement.value === '0') {
+        //         const Etat = 'Crédit';
+
+        //         try {
+        //             // Validate the invoice as credit
+        //             await $.ajax({
+        //                 url: `/valider-facture/${IdUser}/${IdFacture}/${IdCaisse}/${IdClient}/valeurs/${Total}/${Versement}/${Credit}/${Etat}`,
+        //                 type: 'put',
+        //                 headers: {
+        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //                 }
+        //             });
+
+        //             Swal.fire({
+        //                 title: "Facture Validée (Crédit)",
+        //                 icon: "success",
+        //                 showConfirmButton: false,
+        //                 timer: 1500
+        //             });
+
+        //             // Print the PDF ticket directly using an iframe
+        //             printTicketCredit(IdFacture);
+
+        //             // Wait before continuing
+        //             await new Promise((resolve) => setTimeout(resolve, 1600));
+
+        //             // Close the modal and reset after the print
+        //             $('#FactureModal').modal('hide');
+        //             await Nouvelle_Facture();
+
+        //         } catch (error) {
+        //             console.error("Erreur lors de la validation ou impression du ticket (Crédit) :", error);
+        //         }
+        //     }
+
+        //     console.log('Validation Facture exécutée');
+        // }
+
+        // // Function to print the ticket
+        // function printTicket(IdFacture) {
+        //     // Create an iframe dynamically
+        //     let iframe = document.createElement('iframe');
+        //     iframe.style.display = 'none'; // Hide the iframe
+        //     iframe.src = `/imprimer-ticket/${IdFacture}`; // Load the ticket PDF URL
+        //     document.body.appendChild(iframe);
+
+        //     // Wait for the iframe to load, then trigger the print
+        //     iframe.onload = function() {
+        //         iframe.contentWindow.print(); // Trigger the print dialog
+        //     };
+        // }
+
+        // // Function to print the ticket
+        // function printTicketCredit(IdFacture) {
+        //     // Create an iframe dynamically
+        //     let iframe = document.createElement('iframe');
+        //     iframe.style.display = 'none'; // Hide the iframe
+        //     iframe.src = `/imprimer-ticket-credit/${IdFacture}`; // Load the ticket PDF URL
+        //     document.body.appendChild(iframe);
+
+        //     // Wait for the iframe to load, then trigger the print
+        //     iframe.onload = function() {
+        //         iframe.contentWindow.print(); // Trigger the print dialog
+        //     };
+        // }
+
+
+
         async function ValiderFacture() {
             const InputTotal = document.getElementById('TotalInput');
             const InputVersement = document.getElementById('VersementInput');
@@ -1112,138 +1503,95 @@
             let Total = parseFloat(InputTotal.value);
             let Credit = parseFloat(InputCredit.value);
 
-            let Versement; // Déclare la variable en dehors du bloc if/else
-
-
+            let Versement;
 
             if (InputVersement.value === '') {
-                Versement = Total; // Affecte la valeur de Total à Versement si l'input est vide
+                Versement = Total;
             } else {
-                Versement = parseFloat(InputVersement.value); // Sinon, parse l'input en float
+                Versement = parseFloat(InputVersement.value);
             }
 
-            // cas pas de credit 
+            let Etat;
+
+            // Case: no credit
             if (Total > 0 && (Versement === Total || Versement > Total)) {
                 Versement = Total;
                 Credit = 0;
-                const Etat = 'Facture-Payée';
-
-                try {
-                    // Transforme l'appel AJAX en promesse pour utiliser await
-                    const response = await $.ajax({
-                        url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' +
-                            IdClient +
-                            '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
-                        type: 'put',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-                        },
-                        success: function(response) {
-
-                            Swal.fire({
-                                title: "Vente Validée",
-                                icon: "success",
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-                    });
-                    await $.ajax({
-                        url: '/imprimer-ticket/' + IdFacture,
-                        type: 'get',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-                        },
-                        success: function(response) {
-
-                            Swal.fire({
-                                title: "Ticket Validé",
-                                icon: "success",
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-                    });
-
-                    // Ferme le modal
-                    $('#FactureModal').modal('hide');
-
-                    // Appelle la fonction Nouvelle_Facture
-                    await Nouvelle_Facture();
-                } catch (error) {
-                    console.error("Erreur lors de la validation de la facture :", error);
-                    // Gère l'erreur si nécessaire
-                }
+                Etat = 'Facture-Payée';
+            } else {
+                // Case: credit
+                Etat = 'Crédit';
             }
 
-            // cas credit 
-            if (Versement < Total || InputVersement.value === '0') {
-                const Etat = 'Crédit';
-
-                try {
-                    // Transforme l'appel AJAX en promesse pour utiliser await
-                    await $.ajax({
-                        url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' +
-                            IdClient +
-                            '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
-                        type: 'put',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-                            },
-                        success: function(response) {
-
-                            Swal.fire({
-                                title: "Vente Validée",
-                                icon: "success",
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-                    });
-
-                    await $.ajax({
-                        url: '/imprimer-ticket/' + IdFacture,
-                        type: 'get',
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                                'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-                        },
-                        success: function(response) {
-
-                            Swal.fire({
-                                title: "Ticket",
-                                icon: "success",
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                        }
-                    });
-
-
-                    // Affiche une alerte SweetAlert après la réussite de l'AJAX
-                    await Swal.fire({
-                        title: "Vente Terminée avec succès , et Crédit Enregistré",
-                        icon: "success",
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-
-                    // Ferme le modal
-                    $('#FactureModal').modal('hide');
-
-                    // Appelle la fonction Nouvelle_Facture
-                    await Nouvelle_Facture();
-                } catch (error) {
-                    console.error("Erreur lors de la validation de la facture :", error);
-                    // Gère l'erreur si nécessaire
-                }
+            try {
+                // AJAX request to validate the invoice
+                await $.ajax({
+                    url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' + IdClient +
+                        '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
+                    type: 'put',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Facture Validée",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    }
+                });
+            } catch (error) {
+                console.error("Erreur lors de la validation de la facture :", error);
             }
+
+            // Case: if invoice is a credit, print two copies (client + archive)
+            if (Etat === 'Crédit') {
+                // Open and print the client copy
+                let iframeClient = document.createElement('iframe');
+                iframeClient.style.display = 'none';
+                iframeClient.src = '/imprimer-ticket/' + IdFacture;
+                document.body.appendChild(iframeClient);
+
+                iframeClient.onload = function() {
+                    iframeClient.contentWindow.print();
+
+                    // After printing the client copy, print the archive copy
+                    setTimeout(function() {
+                        let iframeArchive = document.createElement('iframe');
+                        iframeArchive.style.display = 'none';
+                        iframeArchive.src = '/imprimer-ticket-credit/' +
+                        IdFacture; // Make sure to create a route for archive copy
+                        document.body.appendChild(iframeArchive);
+
+                        iframeArchive.onload = function() {
+                            iframeArchive.contentWindow.print();
+                        };
+                    }, 1000); // Adjust delay if needed
+                };
+            } else {
+                // Case: not credit, print only one copy
+                let iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = '/imprimer-ticket/' + IdFacture;
+                document.body.appendChild(iframe);
+
+                iframe.onload = function() {
+                    iframe.contentWindow.print();
+                };
+            }
+
+            // Close the modal and create a new invoice
+            await $('#FactureModal').modal('hide');
+            await Nouvelle_Facture();
 
             console.log('Validation Facture executé');
         }
+
+
+
+        // ---------------------------------------------------------------------------------------------------------------
+
 
 
         function TotalClick() {
@@ -1388,6 +1736,7 @@
         }
 
         button {
+            height: 70px;
             padding: 20px;
             font-size: 18px;
             border: none;
