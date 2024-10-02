@@ -12,50 +12,60 @@
     <div class="container">
         <h2 id="ticket-titre">{{ $informations->nom_entr }}</h2>
         <div class="facture part">
-            <div class="cell">
-                <h5 id="code">Ticket N°: <br> {{ $num_facture }}</h5>
+            {{-- <div class="cell" id="cell-1">
+                <h5 id="code">Ticket N° : {{ $num_facture }}</h5>
+            </div> --}}
+            <div class="cell" id="cell-2">
+                {{-- <h5 id="code-barres">CODE BARRES</h5> --}}
+                <img src="{{ $barcodePath }}" alt="">
+                <h5>{{ $code_barres_facture }}</h5>
             </div>
-            <div class="cell">
-                <h5 id="code-barres">CODE BARRES</h5>
+            <div class="cell" id="cell-5">
+                <h5 id="date">Date et Heure : {{ $date_facture }}</h5>
             </div>
-            <div class="cell">
-                <h5 id="vendeur">Vendeur: <br> {{ $vendeur }}</h5>
-            </div>
-            <div class="cell">
-                <h5 id="magasin">Magasin: {{ $magasin }} <br> Caisse: {{ $caisse }}</h5>
-            </div>
-            <div class="cell">
-                <h5 id="date">Date et Heure: <br> {{ $date_facture }}</h5>
-            </div>
-            <div class="cell">
-                <h5 id="client">Client: <br> {{ $client }}</h5>
+            <div class="cell" id="cell-6">
+                <h5 id="client">Client : {{ $client }}</h5>
             </div>
         </div>
         <div class="ventes part">
-            <hr>
+            <hr class="dashed-hr">
             <table>
                 <tr>
-                    <th>Designation:</th>
-                    <th>Qte:</th>
-                    <th>Prix u:</th>
-                    <th>Total:</th>
+                    <th class="designation">Designation :</th>
+                    <th class="prix">Prix :</th>
+                    <th class="prix_total">Total :</th>
                 </tr>
                 @foreach ($ventes as $vente)
                     <tr>
-                        <td>{{ $vente->nom_produit }} </td>
-                        <td>{{ $vente->quantite }} </td>
-                        <td>{{ $vente->prix_produit }} </td>
-                        <td><b>{{ $vente->prix_total }}</b></td>
+                        <td class="designation">{{ $vente->nom_categorie }}:{{ $vente->nom_produit }} <br> x
+                             {{ $vente->quantite == (int) $vente->quantite ? (int) $vente->quantite : $vente->quantite }} 
+                             {{ $vente->unite_mesure }}
+                            </td>
+                        <td class="prix">{{ $vente->prix_produit }} </td>
+                        <td class="prix_total"><b>{{ $vente->prix_total }}</b></td>
                     </tr>
                 @endforeach
             </table>
-            <hr>
+            <hr class="dashed-hr">
         </div>
         <div class="resume part">
-            <h5 id="total">Total: {{ $total }} DA</h5>
-            <h5 id="versement">Versement: {{ $versement }} DA</h5>
-            <h5 id="credit">Crédit: {{ $credit }} DA</h5>
+            <h5 id="total">Montant Total : {{ $total }} DA</h5>
+            <h5 id="versement">Versement : {{ $versement }} DA</h5>
+            <h5 id="credit">Crédit : {{ $credit }} DA</h5>
         </div>
+
+        <div class="facture part">
+            <hr class="dashed-hr">
+            <div class="cell" id="cell-3">
+                <h5 id="vendeur">Vendeur : {{ $vendeur }}</h5>
+            </div>
+            <div class="cell" id="cell-4">
+                <h5 id="magasin">Magasin : {{ $magasin }} | Caisse : {{ $caisse }}</h5>
+            </div>
+            <hr class="dashed-hr">
+        </div>
+
+
         <div class="message part">
             <h5>Merci pour votre visite<br>à bientôt</h5>
         </div>
@@ -63,7 +73,7 @@
 
     <style>
         html {
-            margin: 20px;
+            margin: 10px;
             padding: 0;
         }
 
@@ -85,47 +95,96 @@
         }
 
         .part {
-            background-color: rgb(214, 250, 69);
+            margin: 0;
         }
 
         .barcode {
             width: 100%;
-            height: 25px;
+            height: 35px;
         }
 
         .resume {
             text-align: right;
-            font-size: 18px;
+            font-size: 16px;
         }
 
+        .resume h5 {}
+
         .facture {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 colonnes */
-            gap: 0; /* Pas d'espacement */
-            background-color: rgb(39, 231, 39);
-            width: 260px; /* Largeur du ticket */
+            /* display: grid; */
+            /* grid-template-columns: repeat(1, 1fr); */
+            /* gap: 0; */
+            margin-top: 5px;
+            margin-bottom: 5px;
+            width: 100%;
         }
-        
+
         .cell {
-            background-color: rgb(53, 53, 242);
-            border: 1px solid rgb(0, 0, 0);
             text-align: center;
             padding: 0;
-            height: 80px; /* Hauteur de la cellule */
-            width: 130px; /* Largeur du ticket */
+            margin: 0;
+            width: 100%;
         }
+
+        .cell h5 {}
 
         #ticket-titre {
             text-align: center;
         }
 
+        table{
+            padding: 0;
+            margin: 0;
+        }
+
         td {
-            padding: 3px;
+            padding: 2px;
+        }
+
+        th {
+            font-size: 13px;
+            text-align: left;
+        }
+
+        tr {
+            /* display: grid; */
+            /* grid-template-columns: repeat(3, 1fr); */
+            /* gap: 0; */
+            width: 100%;
+        }
+        .designation{
+            width: 130px;
+            margin-left: 0;
+            padding-left: 0;
+        }
+        .prix{
+            width:70px;
+            text-align: center;
+        }
+        .prix_total{
+            width:75px;
+            text-align: center;
         }
 
         .message {
             font-family: 'Courier New', Courier, monospace !important;
             text-align: center;
+        }
+
+        h5 {
+            margin: 0;
+        }
+
+        .dashed-hr {
+            border: none;
+            border-top: 1px dashed #000;
+            height: 0;
+            margin: 10px 0;
+        }
+
+        .ventes {
+            padding: 0;
+            margin: 0;
         }
     </style>
 

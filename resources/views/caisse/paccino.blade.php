@@ -959,10 +959,11 @@
                 success: function(response) {
                     $('#ventes_liste').empty();
                     $.each(response.ventes, function(key, value) {
+                        let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) : value.quantite;
                         $('#ventes_liste').append(
                             '<tr>' +
-                            '<td class="">' + value.nom_produit + '</td>' +
-                            '<td class="">' + value.quantite + '</td>' +
+                            '<td class="">' + value.nom_categorie + ' : ' + value.nom_produit + '</td>' +
+                            '<td class="">' + quantite + ' ' + value.unite_mesure + '</td>' +
                             '<td class="">' + value.prix_produit + '</td>' +
                             '<td class="">' + value.prix_total + '</td>' +
                             '</tr>'
