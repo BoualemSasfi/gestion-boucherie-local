@@ -60,7 +60,8 @@ Route::controller(CaisseController::class)->group(function () {
     Route::put('/en-attente-facture/{id_facture}/valeurs/{total}', 'En_Attente_Facture')->name('en_attente_facture');
     
     Route::get('/imprimer-ticket/{id_facture}', 'ImprimerTicket')->name('caisse_ticket');
-    Route::get('/test_pdf', 'test_pdf')->name('caisse_pdf');
+    Route::get('/imprimer-ticket-credit/{id_facture}', 'ImprimerTicket')->name('caisse_ticket_credit');
+    Route::get('/test_pdf', 'test_pdf')->name('caisse_teste_ticket');
 
 });
 
