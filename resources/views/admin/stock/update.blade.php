@@ -144,18 +144,12 @@
 
 
                         <div class="col-6">
-                            {{-- delete button --}}
-                            <!-- <form class="delete-form" action="" data-id="{{ $stock->id }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" onclick="annuler_confirmation(this)"
-                                    class="btn btn-danger alpa shadow"><i class="bi bi-trash3"></i>Annuler</button>
-                            </form> -->
 
-                            
-                                <a type="button" href="{{ url('/admin/stock') }}" class="btn btn-danger alpa shadow">
 
-                                    <i class="bi bi-trash3"></i>Annuler
+
+                            <a type="button" href="{{ url('/admin/stock') }}" class="btn btn-danger alpa shadow">
+
+                                <i class="bi bi-trash3"></i>Annuler
                             </a>
                         </div>
                     </div>
@@ -183,7 +177,7 @@
         </script>
 
         <script>
- 
+
 
             function afficher_category(id) {
                 $.ajax({
@@ -197,6 +191,7 @@
                         $.each(response.category_liste, function (key, value) {
                             $('#category_liste').append(
                                 '<tr>' +
+                            
                                 '<td class="align-middle">' + value.nom + '</td>' +
                                 '<td class="align-middle" style="width:80px;">' +
                                 '<div style="background-image:url(' + value.photo + ');' +
@@ -210,10 +205,13 @@
                                 '<td class="align-middle" style="width:240px;">' +
                                 '<div>' +
                                 '<div class="col-1">' +
-                                '<form class="delete-form" action="" method="POST" data-id="' + value.id + '">' +
+                                '<form class="delete-form" action="" method="POST"   data-cat="'+ value.categorie_id +'">' +
+                                // Ajoute un champ caché pour la catégorie
+                                '<input type="hidden" name="category" value="' + value.id + '">' +
                                 '@csrf' +
                                 '@method("DELETE")' +
-                                '<button type="button" class="btn btn-outline-danger shadow" onclick="supprimer(this)">' +
+                         
+                                '<button type="button" class="btn btn-outline-danger shadow" onclick="supprimer_cat(this)">' +
                                 'Supprimer' +
                                 '</button>' +
                                 '</form>' +
@@ -284,6 +282,62 @@
                     console.error('Formulaire parent non trouvé.'); // Message d'erreur si le formulaire parent n'est pas trouvé
                 }
             }
+        </script>
+
+        <!-- Supprimer Une Catégorie -->
+        <script>
+            function supprimer_cat(button) {
+                // Trouver le formulaire parent le plus proche du bouton cliqué
+                const form = button.closest('.delete-form');
+                if (form) {
+                    // Récupérer l'ID du stock et la catégorie sélectionnée
+                    const id_stock = {{$stock->id}};
+            
+                    const category = form.getAttribute('data-cat');
+
+                    console.log('stock_id = ' + {{$stock->id}} );
+                    console.log('category_id = ' + category);
+
+                    // Vérifier si l'ID du stock et la catégorie sont définis
+                    if (id_stock && category) {
+                        console.log('ajax');
+                        $.ajax({
+                            url: '/admin/stock/categorie/supp/' + id_stock + '/' + category, // Construire l'URL de la requête
+                            type: 'POST', // Type de la requête (POST)
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') // Ajouter le token CSRF pour la sécurité
+                            },
+
+                            success: function () {
+                                Swal.fire({
+                                    title: "Catégorie a été supprimée!", // Message de succès
+                                    icon: "success",
+                                    timer: 1000, // Durée d'affichage (1 seconde)
+                                    showConfirmButton: false // Ne pas montrer le bouton de confirmation
+                                });
+
+                                // Rafraîchir l'affichage des catégories après suppression
+                                afficher_category(id_stock);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(error); // Afficher l'erreur dans la console
+                                Swal.fire({
+                                    title: "Suppression refusée, la catégorie ne peut pas être supprimée !", // Message d'erreur
+                                    icon: "warning",
+                                    timer: 1000, // Durée d'affichage (1 seconde)
+                                    showConfirmButton: false // Ne pas montrer le bouton de confirmation
+                                });
+                            }
+                        });
+                    } else {
+                        console.error('La valeur de la catégorie est indéfinie.'); // Message d'erreur si la catégorie n'est pas définie
+                    }
+                } else {
+                    console.error('Formulaire parent non trouvé.'); // Message d'erreur si le formulaire parent n'est pas trouvé
+                }
+            }
+
+
         </script>
 
 

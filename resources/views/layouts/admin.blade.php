@@ -198,6 +198,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Gestion stock frais:</h6> -->
                         <a class="collapse-item" href="/admin/stock">Consulter</a>
+                        <a class="collapse-item" href="/admin/transfert">Transfert</a>
                     </div>
                 </div>
             </li>
