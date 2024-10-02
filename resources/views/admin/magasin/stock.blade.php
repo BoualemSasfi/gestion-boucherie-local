@@ -98,7 +98,7 @@
                                                     Transfert
                                                 </button>
                                             </div>
-                                            
+
                                             <table class="table-striped table-bordered col-12">
                                                 <thead class="text-center">
                                                     <tr>
@@ -168,7 +168,7 @@
 
                                 <div>
                                     <h4 class="text-center">Frais {{$frais_id}} </h4>
-                                    <button type="button" class="btn btn-primary" data-stk="{{$frais_id}}" id="trans_frais">
+                                    <button type="button" class="btn btn-primary" data-stk="frais" id="trans_frais">
                                         Transfert
                                     </button>
                                 </div>
@@ -238,7 +238,7 @@
 
 <script>
     document.getElementById('trans_frais').addEventListener('click', async () => {
-        const id_atl = {{$frais_id}}; // ID du stock frais
+        const id_atl = 'frais'; // stock frais
         const id_magasin = {{$magasins->id}}; // ID du stock frais
         const magasins = {
             @foreach ($lesmagasins as $lemagasin)
@@ -265,7 +265,7 @@
 
         if (selectedMagasin) {
             const result = await Swal.fire({
-                title: `Voulez-vous vraiment transférer vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
+                title: `Voulez-vous vraiment transférer magasin ${id_magasin} de atl : {{$frais_id}} vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Oui, transférer !",

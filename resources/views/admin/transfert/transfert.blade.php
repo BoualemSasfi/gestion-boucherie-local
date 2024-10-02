@@ -10,7 +10,10 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Transfert de {{ $lemagasin->nom }} vers {{ $magasins1->nom }}</h2>
+            <h2>Transfert de {{ $lemagasin->nom }} {{$lemagasin->id}} vers {{ $magasins1->nom }} {{$magasins1->id}}
+            </h2>
+            <h2>{{ Auth::user()->name }}</h2>
+
         </div>
     </div>
 
@@ -55,8 +58,12 @@
                             <input type="hidden" id="original_poid_magasin_2_{{ $stock->id_stock_2 }}"
                                 value="{{ $stock->poid_magasin_2 }}">
                         </div>
+
                     @endif
+
                 @endforeach
+
+
             </div>
         @endforeach
     </div>
@@ -65,9 +72,62 @@
         <button type="button" class="btn btn-outline-primary" id="btn-validate-transfer">Valider le transfert</button>
     </div>
 
+    <div class="text-center">
+        <button type="button" class="btn btn-outline-primary" onclick="collectData()">collect data</button>
+    </div>
+
+    <script>
+        function collectData() {
+            let stockData = [];
+
+            // Boucle à travers les catégories
+            @foreach ($liste_cats as $index => $cat)
+                @foreach ($stocks as $stock)
+                    if ({{ $stock->id_cat }} === {{ $cat->categorie_id }}) {
+                        let poidMagasin1 = document.getElementById("poid_magasin_1_{{ $stock->id_stock_1 }}").value;
+                        let poidMagasin2 = document.getElementById("poid_magasin_2_{{ $stock->id_stock_2 }}").value;
+
+                        // Ajouter les informations de catégorie, produit, ID et poids pour chaque magasin
+                        stockData.push({
+
+                            id: {{ $stock->id_stock_1 }},  // ID stock magasin 1
+                            categorie: "{{$stock->categorie}}",
+                            produit: "{{$stock->produit}}",
+                            poid: poidMagasin1  // Poids magasin 1
+                        });
+
+                        stockData.push({
+
+                            id: {{ $stock->id_stock_2 }},  // ID stock magasin 2
+                            categorie: "{{$stock->categorie}}",
+                            produit: "{{$stock->produit}}",
+                            poid: poidMagasin2  // Poids magasin 2
+                        });
+                    }
+                @endforeach
+            @endforeach
+
+            // Afficher le tableau dans la console avec catégorie, produit, ID et poids
+
+
+            // Ajout des valeurs supplémentaires atl, mag et user
+            stockData.push({
+                atl: "{{ $lemagasin->nom }}",  // Ajout de $atl
+                mag: "{{ $magasins1->nom }}",  // Ajout de $mag
+                user: "{{ Auth::user()->name }}" // Ajout de $user
+            });
+
+            console.table(stockData);
+        }
+
+        // Appeler cette fonction lorsque vous voulez collecter et afficher les données
+        collectData();
+
+
+    </script>
+
     <script>
         document.getElementById('btn-validate-transfer').addEventListener('click', function () {
-            // Affichage de SweetAlert2 pour confirmer l'action
             Swal.fire({
                 title: 'Voulez-vous valider ce transfert?',
                 text: "Cette action est irréversible!",
@@ -79,43 +139,92 @@
                 cancelButtonText: 'Non, annuler'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Si l'utilisateur confirme, envoyer les données via AJAX
-                    let formData = new FormData();
+                    let stockData = [];
 
-                    // Boucler pour ajouter les données des champs d'input
-                    document.querySelectorAll('input[name="poid_ajouter"]').forEach(function (input, index) {
-                        formData.append('poids_ajouter[' + index + ']', input.value);
+                    @foreach ($liste_cats as $index => $cat)
+                        @foreach ($stocks as $stock)
+                            if ({{ $stock->id_cat }} === {{ $cat->categorie_id }}) {
+                                let poidMagasin1 = document.getElementById("poid_magasin_1_{{ $stock->id_stock_1 }}").value;
+                                let poidMagasin2 = document.getElementById("poid_magasin_2_{{ $stock->id_stock_2 }}").value;
+
+                                // Ajouter les informations de catégorie, produit, ID et poids pour chaque magasin
+                                stockData.push({
+
+                                    id: {{ $stock->id_stock_1 }},  // ID stock magasin 1
+                                    categorie: "{{$stock->categorie}}",
+                                    produit: "{{$stock->produit}}",
+                                    poid: poidMagasin1  // Poids magasin 1
+                                });
+
+                                stockData.push({
+
+                                    id: {{ $stock->id_stock_2 }},  // ID stock magasin 2
+                                    categorie: "{{$stock->categorie}}",
+                                    produit: "{{$stock->produit}}",
+                                    poid: poidMagasin2  // Poids magasin 2
+                                });
+                            }
+                        @endforeach
+                    @endforeach
+
+
+                    console.table(stockData);
+
+                    // Ajout des valeurs supplémentaires atl, mag et user
+                    stockData.push({
+                        atl: "{{ $lemagasin->nom }}",  // Ajout de $atl
+                        mag: "{{ $magasins1->nom }}",  // Ajout de $mag
+                        user: "{{ Auth::user()->name }}" // Ajout de $user
                     });
 
-                    document.querySelectorAll('input[name="poid_magasin_1"]').forEach(function (input, index) {
-                        formData.append('poids_magasin_1[' + index + ']', input.value);
+
+                    console.table(stockData); // Affiche le tableau dans la console
+
+                    // Message d'attente avant l'envoi
+                    Swal.fire({
+                        title: 'Envoi en cours...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
                     });
 
-                    document.querySelectorAll('input[name="poid_magasin_2"]').forEach(function (input, index) {
-                        formData.append('poids_magasin_2[' + index + ']', input.value);
-                    });
-
-                    // Envoi des données via AJAX à Laravel
+                    // Envoi des données via AJAX
                     fetch('{{ route("validtransfert") }}', {
                         method: 'POST',
                         headers: {
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json' // Indique que vous envoyez des données JSON
                         },
-                        body: formData
-                    }).then(response => response.json())
+                        body: JSON.stringify(stockData) // Envoi des données
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erreur réseau: ' + response.statusText);
+                            }
+                            return response.json();
+                        })
                         .then(data => {
+                            Swal.close();
                             if (data.success) {
                                 Swal.fire('Succès!', 'Le transfert a été validé.', 'success');
                             } else {
-                                Swal.fire('Erreur!', 'Une erreur s\'est produite.', 'error');
+                                Swal.fire('Erreur!', data.message || 'Une erreur s\'est produite.', 'error');
                             }
-                        }).catch(error => {
-                            Swal.fire('Erreur!', 'Une erreur s\'est produite.', 'error');
+                        })
+                        .catch(error => {
+                            Swal.close();
+                            console.error('Erreur AJAX: ', error); // Capturez les erreurs dans la console
+                            Swal.fire('Erreur!', 'Une erreur interne s\'est produite: ' + error.message, 'error');
                         });
                 }
             });
         });
     </script>
+
+
+
+
 
     <script>
         function showTab(catId) {

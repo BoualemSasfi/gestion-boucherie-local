@@ -108,7 +108,8 @@ Route::controller(StockController::class)->group(function () {
     // Route::post('/admin/stock/addcat/{magasin}/{category}', 'add_category');
     
     Route::post(' /admin/stock/categorie/add/{id_stock}/{category}', 'addcat');
-    Route::delete(' /admin/stock/categorie/supp/{id_stock}/{category}', 'suppcat');
+
+    Route::post(' /admin/stock/categorie/supp/{id_stock}/{category}', 'suppcat');
     
     Route::post('/admin/stock/deletcat/{id}', 'deletcat');
     
@@ -119,8 +120,6 @@ Route::controller(StockController::class)->group(function () {
     Route::get('/admin/stock/{id}/update_affich', 'update_affich');
 
     Route::put('/admin/stock/{id}/update', 'update');
-
-
 
     Route::post('/admin/stock/add/save', 'store');
     Route::get('/admin/stock/{id}/edit', 'edit');
@@ -134,7 +133,8 @@ Route::controller(StockController::class)->group(function () {
 // ------------------------------------------------------------------------
 Route::controller(TransfertController::class)->group(function () {
     Route::get('/admin/transfert/{id_atl}/{id_mag}/{id_magasin}', 'transfert');
-    Route::post('/admin/transfert/validtransfert','validtransfert')->name('validtransfert');
+
+    Route::post('/admin/transfert/validtransfert', 'validTransfert')->name('validtransfert');
 });
 
 
