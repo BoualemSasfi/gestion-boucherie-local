@@ -57,7 +57,11 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/total-facture/{id_facture}', 'Total_Facture')->name('total_facture');
     Route::get('/nouvelle-facture/{id_user}/{id_magasin}/{id_caisse}', 'Create_Facture')->name('nouvelle_facture');
     Route::put('/valider-facture/{id_user}/{id_facture}/{id_caisse}/{id_client}/valeurs/{total}/{versement}/{credit}/{etat}', 'Valider_Facture')->name('valider_facture');
+    
     Route::put('/en-attente-facture/{id_facture}/valeurs/{total}', 'En_Attente_Facture')->name('en_attente_facture');
+    Route::get('/liste-factures-enattente/{id_magasin}', 'Liste_Factures_Enattente')->name('liste_factures_enattente');
+    Route::get('/lafacture-enattente/{id_facture}', 'Get_Facture_Enattente')->name('get_facture_enattente');
+
     
     Route::get('/imprimer-ticket/{id_facture}', 'ImprimerTicket')->name('caisse_ticket');
     Route::get('/imprimer-ticket-credit/{id_facture}', 'ImprimerTicket')->name('caisse_ticket_credit');

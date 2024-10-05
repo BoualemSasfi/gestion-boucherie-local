@@ -55,14 +55,21 @@
     <!-- Bootstrap Icons CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-
-
+    {{-- AOS animations css --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    {{-- AOS animations js --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 
 
 </head>
 
 <body id="page-top">
+
+    <script>
+        AOS.init();
+    </script>
+
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -153,7 +160,7 @@
                 <div class="modal-body">Selectionner "Quitter" si vous voulez fermer votre session et quitter
                     l'application. <br> Si vous vouler rester clickez sur "Annuler".</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Annuler</button>
+                    <button class="btn btn-success" type="button" data-bs-dismiss="modal">Annuler</button>
 
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -177,6 +184,7 @@
 
     <!-- Slick JS -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
 
 
     {{-- <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}

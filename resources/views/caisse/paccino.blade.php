@@ -84,7 +84,13 @@
         }
     </style>
 
-
+    <style>
+        .bouton-caisse {
+            /* height: 100%; */
+            /* width: 100%; */
+            /* margin-bottom: 20px; */
+        }
+    </style>
     <!-- AFFICHEUR -->
     <div class="container-fluid m-0 p-0">
         <div class="container-fluid">
@@ -94,12 +100,12 @@
                     <h5 class="objet-titre digital" id="produit_text">----</h5>
                 </div>
                 <div class="col-3 pt-1">
-                    <h6 class="afficheur-titre"> <span>Saisie Manuelle</span>
+                    <h6 class="afficheur-titre"> <span>Manuelle</span>
                         <label class="switch">
                             <input type="checkbox" id="darkModeSwitch">
                             <span class="slider"></span>
                         </label>
-                        <span>Par la Balance</span>
+                        <span>Balance</span>
                     </h6>
                     <div class="digital">
                         <p id="balance" style="margin-top:-30px; cursor: pointer;" data-bs-toggle="modal"
@@ -224,7 +230,7 @@
         <div class="row le_centre">
             <div class="col-8">
                 <div class="container mt-2">
-                    <div class="your-carousel">
+                    <div class="your-carousel" data-aos="fade-right">
                         @foreach ($categories as $categorie)
                             <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
                                 onclick="FiltrageProduits(this)" style="cursor: pointer;">
@@ -254,14 +260,14 @@
             <div class="col-4 bg-dark p-0 m-0">
 
                 {{-- stockage variable  --}}
-                <a href="" style="color: aliceblue;">USER / FACTURE / MAGASIN / CAISSE</a>
-                <a id="text-id-user" href="" style="display: inline-flex;">{{ $id_user }}</a>
-                <a id="text-id-facture" href="" style="display: inline-flex;">{{ $LastFacture->id }}</a>
-                <a id="text-id-magasin" href="" style="display: inline-flex;">{{ $id_magasin }}</a>
-                <a id="text-id-caisse" href="" style="display: inline-flex;">{{ $id_caisse }}</a>
+                <a href="" style="color: aliceblue; display: inline-block;">USER / FACTURE / MAGASIN / CAISSE</a>
+                <a id="text-id-user" href="" style="display: inline-block;">{{ $id_user }}</a>
+                <a id="text-id-facture" href="" style="display: inline-block;">{{ $LastFacture->id }}</a>
+                <a id="text-id-magasin" href="" style="display: inline-block;">{{ $id_magasin }}</a>
+                <a id="text-id-caisse" href="" style="display: inline-block;">{{ $id_caisse }}</a>
                 {{-- stockage variable  --}}
 
-                <div class="card shadow m-3" style="height:500px;">
+                <div class="card shadow m-3" style="height:440px;" data-aos="flip-left">
                     <div class="card-header py-1">
                         <div class="row afficheur text-center" style="height: 105px;">
                             <div class="col-12 p-1 m-0 align-content-center">
@@ -275,7 +281,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body m-0 p-1" style="max-height: 750px; overflow-y: auto;">
+                    <div class="card-body m-0 p-1" style="max-height: 400px; overflow-y: auto;">
                         <table id="example" class="display" style="width:100%">
                             <thead>
                                 <tr>
@@ -297,26 +303,19 @@
 
         <!-- Footer -->
         <footer class="sticky-footer-caisse bg-white">
-            <div class="container-fluid m-0 p-0">
+            <div class="container-fluid boutons-caisse m-0 p-2">
                 <div class="row align-content-center m-0 p-0">
                     <div class="col-4">
                         <div class="row bouton-action">
                             <div class="col-3">
-                                <button class="btn btn-warning" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#calculatorModal">
                                     <i class="fas fa-calculator fa-lg"></i>
-                                    <br>Ouvrir Calculatrice
+                                    <br>Calculatrice
                                 </button>
                             </div>
-                            {{-- <div class="col-3">
-                                <button class="btn btn-warning" type="button">
-                                    <i class="fas fa-cubes fa-lg"></i>
-                                    <br>
-                                    Voir<br>Stock
-                                </button>
-                            </div> --}}
                             <div class="col-3">
-                                <button class="btn btn-warning" type="button">
+                                <button class="btn btn-warning bouton-caisse" type="button">
                                     {{-- <i class="fas fa-store-alt fa-lg"></i> --}}
                                     <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
 
@@ -324,15 +323,15 @@
                                 </button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-warning" type="button">
+                                <button class="btn btn-warning bouton-caisse" type="button">
                                     <i class="fa fa-users fa-lg" aria-hidden="true"></i>
                                     <br>Clients
                                 </button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-primary bouton-caisse" type="button">
                                     <i class="fas fa-store-alt fa-lg"></i>
-                                    <br> Retour vers magasin
+                                    <br> Retour
                                 </button>
                             </div>
                         </div>
@@ -341,17 +340,48 @@
                     <div class="col-4">
                         <div class="row bouton-action">
                             <div class="col-3">
-                                <button class="btn btn-secondary" type="button">
-                                    <i class="fas fa-user-clock fa-lg"></i>
+                                {{-- Bouton pour afficher le popup --}}
+                                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#ListeEnAttenteModal" id="bouton_liste_enattente"
+                                    onclick="liste_factures_enattente()">
+                                    <i class="fas fa-cash-register fa-lg"></i>
                                     <br>Liste En Attente
                                 </button>
+
+                                <!-- Popup -->
+                                <div class="modal fade" id="ListeEnAttenteModal" tabindex="-1" aria-labelledby=""
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                                        <div class="modal-content">
+                                            <!-- Corps du modal -->
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" id="">Liste des ventes en attente</h4>
+                                                <div class="mt-3" id="liste-factures">
+                                                    {{-- les factures s'affichent ici  --}}
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer m-0 p-2">
+                                                <div class="container pl-0">
+                                                    <div class="row">
+                                                        <div class="col-12">
+
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal" style="width: 150px;">
+                                                                <i class="bi bi-x"></i><br>Fermer
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Popup -->
+
                             </div>
-                            {{-- <div class="col-3">
-                                <button class="btn btn-primary" type="button" onclick="Nouvelle_Facture()">
-                                    <i class="fas fa-shopping-cart fa-lg"></i>
-                                    <br>Nouvelle Vente
-                                </button>
-                            </div> --}}
                             <div class="col-6">
                                 {{-- Bouton pour afficher le popup --}}
                                 <button class="btn btn-success" type="button" data-bs-toggle="modal"
@@ -697,7 +727,7 @@
                         $('#products').empty();
                         $.each(response.produits, function(key, value) {
                             $('#products').append(
-                                '<div class="col-2 p-2">' +
+                                '<div class="col-2 p-2"  data-aos="fade-down">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
@@ -707,7 +737,8 @@
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
                                 '<h5 class="card-title">' + value.nom + '</h5>' +
-                                '<p class="card-text">' + value.prix + ' DA / ' + value.mesure + '</p>' +
+                                '<p class="card-text">' + value.prix + ' DA / ' + value.mesure +
+                                '</p>' +
                                 '</div>' +
                                 '</form>' +
                                 '</div>' +
@@ -716,7 +747,7 @@
                         });
 
                         $('#products').append(
-                            '<div class="col-12 zyada" style="height: 600px;"></div>'
+                            // '<div class="col-12 zyada" style="height: 600px;"></div>'
                         );
                     },
                     error: function(xhr, status, error) {
@@ -959,10 +990,12 @@
                 success: function(response) {
                     $('#ventes_liste').empty();
                     $.each(response.ventes, function(key, value) {
-                        let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) : value.quantite;
+                        let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) :
+                            value.quantite;
                         $('#ventes_liste').append(
                             '<tr>' +
-                            '<td class="">' + value.nom_categorie + ' : ' + value.nom_produit + '</td>' +
+                            '<td class="">' + value.nom_categorie + ' : ' + value.nom_produit +
+                            '</td>' +
                             '<td class="">' + quantite + ' ' + value.unite_mesure + '</td>' +
                             '<td class="">' + value.prix_produit + '</td>' +
                             '<td class="">' + value.prix_total + '</td>' +
@@ -1562,7 +1595,7 @@
                         let iframeArchive = document.createElement('iframe');
                         iframeArchive.style.display = 'none';
                         iframeArchive.src = '/imprimer-ticket-credit/' +
-                        IdFacture; // Make sure to create a route for archive copy
+                            IdFacture; // Make sure to create a route for archive copy
                         document.body.appendChild(iframeArchive);
 
                         iframeArchive.onload = function() {
@@ -1659,7 +1692,8 @@
             console.log('( Crédit | Monnaie ) Calculé !');
         };
 
-
+        // ----------------------------------------------------------------------------------------------------
+        // en-attente 
         async function FactureEnAttente() {
             const LabelTotal = document.getElementById('text_total_facture').textContent;
             const IdFacture = document.getElementById('text-id-facture').textContent;
@@ -1705,10 +1739,224 @@
     </script>
 
     <script>
+        function liste_factures_enattente() {
+            const IdMagasin = document.getElementById('text-id-magasin').textContent;
+            // const IdMagasin = 2
+            if (IdMagasin) { // Vérifie si IdMagasin n'est pas une chaîne vide
+                // console.log('id magasin :' + IdMagasin);
+                $.ajax({
+                    url: '/liste-factures-enattente/' + IdMagasin,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        let counter = 1; // Initialisation du compteur
+                        $('#liste-factures').empty();
+                        if ((!response.factures || response.factures.length === 0)) {
+                            $('#liste-factures').append(
+                                '<div class="row justify-content-center">' +
+                                '<div class="col-12 mt-3 mb-3">' +
+                                '<h3 class="text-secondary text-bold">Liste Vide</h3>' +   
+                                '</div>' +
+                                '</div>'
+                            );
+                        }
+                        $.each(response.factures, function(key, facture) {
+
+                            const id_facture = facture.id;
+                            // console.log('id facture :' + id_facture);
+
+                            $('#liste-factures').append(
+                                '<div class="card shadow m-3 facture-enattente" style="height:400px;">' +
+                                '<div class="card-body m-0 p-1" style="max-height: 750px; overflow-y: auto;">' +
+
+                                '<div class="container">' +
+                                '<div class="row justify-content-center">' +
+
+                                '<div class="col-12 mt-3 mb-3">' +
+                                '<h3 class="text-secondary text-bold">FACTURE N° : <b class="text-primary">' +
+                                counter + '</b></h3>' +
+                                '</div>' +
+
+                                '<div class="col-4">' +
+                                '<h5 class="text-secondary mt-3 mb-3">ETAT : EN-ATTENTE </h5>' +
+                                '</div>' +
+
+                                '<div class="col-4">' +
+                                '<div class="input-group mb-3 mt-3">' +
+                                '<span class="input-group-text" id="inputGroup-sizing-lg">Total Facture: </span>' +
+                                '<input type="text" class="form-control" aria-label="" aria-describedby="inputGroup-sizing-lg" readonly value="' +
+                                facture.total_facture + '">' +
+                                '</div>' +
+                                '</div>' +
+
+                                '<div class="col-4">' +
+                                '<form class="form-ouvrir-facture" data-id="' + id_facture + '">' +
+                                '<button type="button" class="btn btn-success" onclick="Ouvrir_facture(this)" style="padding-left:40px;padding-right:40px;"><i class="bi bi-check-lg"></i><br>Ouvrir</button>' +
+                                '</form>' +
+                                '</div>' +
+
+                                '</div>' +
+
+                                '<div class="row justify-content-start">' +
+                                '<div class="col-12">' +
+
+                                '<table class="display m-3 text-left" style="width:100%">' +
+                                '<thead>' +
+                                '<tr>' +
+                                '<th>Designation:</th>' +
+                                '<th>Qte:</th>' +
+                                '<th>Prix:</th>' +
+                                '<th>Total:</th>' +
+                                '</tr>' +
+                                '</thead>' +
+                                '<tbody id="produits_facture_' + id_facture + '">' +
+                                '</tbody>' +
+                                '</table>' +
+
+                                '</div>' +
+                                '</div>' +
+
+
+                                '</div>' +
+
+                                '</div>' +
+                                '</div>'
+                            );
+
+                            // Appel AJAX pour récupérer les ventes associées à la facture
+                            $.ajax({
+                                url: '/ventes/' + id_facture,
+                                type: 'GET',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(response) {
+                                    $.each(response.ventes, function(key, vente) {
+                                        $('#produits_facture_' + id_facture).append(
+                                            '<tr>' +
+                                            '<td class="">' + vente
+                                            .nom_categorie + ' : ' + vente
+                                            .nom_produit + '</td>' +
+                                            '<td class="">' + vente.quantite +
+                                            ' ' + vente.unite_mesure + '</td>' +
+                                            '<td class="">' + vente
+                                            .prix_produit + '</td>' +
+                                            '<td class="">' + vente.prix_total +
+                                            '</td>' +
+                                            '</tr>'
+                                        );
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(error);
+                                }
+                            });
+
+                            counter++; // Déplacer l'incrémentation ici
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    } // Retirer le point-virgule ici
+                });
+
+            } else {
+                console.error('ERREUR ID');
+            }
+        }
+    </script>
+
+    <script>
+        function Ouvrir_facture(button) {
+            const form = button.closest('.form-ouvrir-facture');
+            const id_facture = form.getAttribute('data-id');
+            console.log('--------------------------------------------');
+            console.log('id facture : ' + id_facture);
+
+            $.ajax({
+                url: '/lafacture-enattente/' + id_facture,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // Récupérer l'objet 'facture' depuis la réponse JSON
+                    const facture = response.facture;
+
+                    // Assurez-vous que 'facture' n'est pas nul
+                    if (facture) {
+                        const id_facture = facture.id;
+                        const id_magasin = facture.id_magasin;
+                        const id_caisse = facture.id_caisse;
+                        const id_user = facture.id_user;
+                        const total_facture = facture.total_facture;
+
+                        console.log('id facture : ' + id_facture);
+                        console.log('id magasin : ' + id_magasin);
+                        console.log('id caisse : ' + id_caisse);
+                        console.log('id user : ' + id_user);
+                        console.log('total : ' + total_facture);
+
+                        Swal.fire({
+                            title: "Ouverture de la vente en-attente",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        const AffichageQte = document.getElementById('balance');
+                        const AffichagePrixUnitaire = document.getElementById('prix_unitaire');
+                        const AffichagePrixTotal = document.getElementById('prix_total');
+                        const AffichageNomProduit = document.getElementById('produit_text');
+
+                        ListeVentes(id_facture);
+
+                        Calculer_Total_Facture(id_facture);
+
+                        // Réinitialiser les affichages
+                        AffichageQte.textContent = "0.000";
+                        AffichagePrixUnitaire.textContent = "0.00";
+                        AffichagePrixTotal.textContent = "0.00";
+                        AffichageNomProduit.textContent = "----";
+
+                        // let text_id_user = document.getElementById('text-id-user');
+                        let text_id_facture = document.getElementById('text-id-facture');
+                        let text_id_magasin = document.getElementById('text-id-magasin');
+                        // let text_id_caisse = document.getElementById('text-id-caisse');
+
+                        // text_id_user.textContent = id_user;
+                        text_id_facture.textContent = id_facture;
+                        text_id_magasin.textContent = id_magasin;
+                        // text_id_caisse.textContent = id_caisse;
+
+                        // zero();
+
+                        // Ferme le popup
+                        $('#ListeEnAttenteModal').modal('hide');
+
+                    } else {
+                        console.error('Facture non trouvée');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur AJAX:', error);
+                }
+            });
+        }
+    </script>
+
+
+    <script>
         document.getElementById('kgModal').addEventListener('show.bs.modal', function() {
             clearInput();
         });
     </script>
+
+    {{-- ------------------------------------------------------------------------------------------------------ --}}
+
+
+
 
 
 
@@ -1730,13 +1978,13 @@
             padding-right: 10px;
         }
 
-        .buttons {
+        .calculator .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-gap: 10px;
         }
 
-        button {
+        .calculator button {
             height: 70px;
             padding: 20px;
             font-size: 18px;
@@ -1747,11 +1995,11 @@
             transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        .calculator button:hover {
             background-color: #d3d3d3;
         }
 
-        button:active {
+        .calculator button:active {
             background-color: #a9a9a9;
         }
     </style>

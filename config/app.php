@@ -70,7 +70,11 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    // 'timezone' => 'UTC',
+    // 'timezone' => 'Europe/Paris',
+    'timezone' => 'Africa/Algiers',
+
+
 
     /*
     |--------------------------------------------------------------------------
