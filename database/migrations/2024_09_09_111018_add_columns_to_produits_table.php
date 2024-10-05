@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('produits', function (Blueprint $table) {
             $table->integer('prix_achat')->unsigned()->default(0);
             $table->integer('prix_vente')->unsigned()->default(0);
-            $table->string('unite_mesure');
+            $table->string('unite_mesure')->nullable();
         });
     }
 
