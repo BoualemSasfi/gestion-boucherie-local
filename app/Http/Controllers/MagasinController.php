@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Storage;
 
 
 class MagasinController extends Controller
-{    public function __construct()
+{
+    public function __construct()
     {
         $this->middleware('auth');
     }
@@ -103,6 +104,25 @@ class MagasinController extends Controller
         return redirect('/admin/magasin');
     }
 
+
+    public function ajouster(Request $request)
+    {
+
+        // Valider les données reçues
+        $request->validate([
+            'id' => 'required|integer',
+            'quantity' => 'required|numeric'
+        ]);
+        $msjproduit = Lestock::find($request->id);
+        $msjproduit->quantity = $request->quantity;
+        $msjproduit->save();
+
+        return response()->json(['message' => 'Quantité mise à jour avec succès.']);
+
+        
+
+    }
+
     public function stock($id)
     {
         $magasins = Magasin::find($id);
@@ -117,6 +137,8 @@ class MagasinController extends Controller
                 'stocks.id as id_frais',
                 'categories.nom as categorie',
                 'produits.nom_pr as produit',
+                'produits.photo_pr as photo',
+                'lestocks.id as id_frais',
                 'quantity'
             )
             ->get();
@@ -134,9 +156,9 @@ class MagasinController extends Controller
         // )
         // ->groupBy('categorie.nom','categories.id')
         // ->get(); 
-        
-        
-        
+
+
+
 
 
 
@@ -150,6 +172,8 @@ class MagasinController extends Controller
                 'stocks.id as id_congele',
                 'categories.nom as categorie',
                 'produits.nom_pr as produit',
+                'produits.photo_pr as photo',
+                'lestocks.id as id_congele',
                 'quantity'
             )
             ->get();

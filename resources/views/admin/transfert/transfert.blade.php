@@ -208,6 +208,7 @@
                             Swal.close();
                             if (data.success) {
                                 Swal.fire('Succès!', 'Le transfert a été validé.', 'success');
+                                location.reload(); 
                             } else {
                                 Swal.fire('Erreur!', data.message || 'Une erreur s\'est produite.', 'error');
                             }

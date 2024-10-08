@@ -16,7 +16,19 @@ use Illuminate\Support\Facades\Log;
 class TransfertController extends Controller
 {
 
+public function liste(){
+    $lists =  Transfert::all();
+    return view('admin.transfert.index',['listes'=>$lists]);
+}
 
+public function details($id){
+
+    $info = Transfert::find($id);
+    $details = prod_trans::where('id_trans','=',$id)->get();
+
+    return view('admin.transfert.details',['info'=>$info ,  'details'=>$details]);
+
+}
 
 
     public function transfert($id_atl, $id_mag, $id_magasin)
@@ -52,6 +64,102 @@ class TransfertController extends Controller
                             ->whereColumn('s2.id', 'ls2.stock_id')
                             ->where('s2.magasin_id', $id_magasin)
                             ->where('s2.type', 'frais');
+                    });
+            })
+            ->whereIn('c.id', function ($query) use ($id_mag) {
+                $query->select(DB::raw('DISTINCT ls1.categorie_id'))
+                    ->from('lestocks as ls1')
+                    ->join('stocks as s1', 's1.id', '=', 'ls1.stock_id')
+                    ->where('s1.magasin_id', $id_mag);
+            })
+            ->groupBy('ls1.id', 'ls2.id', 'c.id', 'c.nom', 'p.nom_pr')
+            ->get();
+
+        // a changer utiliser une surl function ....
+
+        $liste_cats = DB::table('categories as c')
+            ->join('produits as p', 'p.categorie_id', '=', 'c.id')
+            ->leftJoin('lestocks as ls1', function ($join) use ($id_mag) {
+                $join->on('ls1.produit_id', '=', 'p.id')
+                    ->on('ls1.categorie_id', '=', 'c.id')
+                    ->whereExists(function ($query) use ($id_mag) {
+                        $query->select(DB::raw('1'))
+                            ->from('stocks')
+                            ->whereColumn('stocks.id', 'ls1.stock_id')
+                            ->where('stocks.magasin_id', $id_mag);
+                    });
+            })
+            ->leftJoin('lestocks as ls2', function ($join) use ($id_atl) {
+                $join->on('ls2.produit_id', '=', 'p.id')
+                    ->on('ls2.categorie_id', '=', 'c.id')
+                    ->whereExists(function ($query) use ($id_atl) {
+                        $query->select(DB::raw('1'))
+                            ->from('stocks')
+                            ->whereColumn('stocks.id', 'ls2.stock_id')
+                            ->where('stocks.magasin_id', $id_atl)
+                            ->where('stocks.type', 'frais');
+                    });
+            })
+            ->select(
+                'c.id as categorie_id',
+                'c.nom as categorie'
+
+            )
+            ->whereIn('c.id', function ($query) use ($id_mag) {
+                $query->select('ls1.categorie_id')
+                    ->from('lestocks as ls1')
+                    ->join('stocks as s1', 's1.id', '=', 'ls1.stock_id')
+                    ->where('s1.magasin_id', $id_mag)
+                    ->distinct();
+            })
+            ->groupBy('c.id', 'c.nom')
+            ->get();
+
+
+        // ------------------------
+
+        $magasins1 = Magasin::find($id_mag);
+        $magasins2 = Magasin::find($id_atl);
+        $lemagasin = Magasin::find($id_magasin);
+
+
+        // Retourner les résultats à une vue ou directement
+        return view('admin.transfert.transfert', ['stocks' => $stocks, 'magasins1' => $magasins1, 'magasins2' => $magasins2, 'lemagasin' => $lemagasin, 'liste_cats' => $liste_cats]);
+
+    }
+    public function transfert_congele($id_atl, $id_mag, $id_magasin)
+    {
+
+        $stocks = DB::table('categories as c')
+            ->select(
+                'c.id as id_cat',
+                'c.nom as categorie',
+                'p.nom_pr as produit',
+                'ls1.id as id_stock_1',
+                DB::raw('COALESCE(SUM(ls1.quantity), 0) as poid_magasin_1'),
+                'ls2.id as id_stock_2',
+                DB::raw('COALESCE(SUM(ls2.quantity), 0) as poid_magasin_2')
+            )
+            ->join('produits as p', 'p.categorie_id', '=', 'c.id')
+            ->leftJoin('lestocks as ls1', function ($join) use ($id_mag) {
+                $join->on('ls1.produit_id', '=', 'p.id')
+                    ->on('ls1.categorie_id', '=', 'c.id')
+                    ->whereExists(function ($query) use ($id_mag) {
+                        $query->select(DB::raw(1))
+                            ->from('stocks as s1')
+                            ->whereColumn('s1.id', 'ls1.stock_id')
+                            ->where('s1.magasin_id', $id_mag);
+                    });
+            })
+            ->leftJoin('lestocks as ls2', function ($join) use ($id_magasin, $id_atl) {
+                $join->on('ls2.produit_id', '=', 'p.id')
+                    ->on('ls2.categorie_id', '=', 'c.id')
+                    ->whereExists(function ($query) use ($id_magasin, $id_atl) {
+                        $query->select(DB::raw(1))
+                            ->from('stocks as s2')
+                            ->whereColumn('s2.id', 'ls2.stock_id')
+                            ->where('s2.magasin_id', $id_magasin)
+                            ->where('s2.type', 'congele');
                     });
             })
             ->whereIn('c.id', function ($query) use ($id_mag) {
