@@ -697,4 +697,68 @@ class CaisseController extends Controller
             return response()->json(['error' => 'Erreur interne du serveur'], 500);
         }
     }
+
+    public function Liste_Factures_Historique($id_magasin)
+    {
+        try {
+
+            $Factures = Facture::
+                join('clients', 'clients.id', '=', 'factures.id_client')
+                ->select(
+                    'factures.id as id',
+                    'factures.created_at as date',
+                    'factures.etat_facture as etat',
+                    'factures.total_facture as total',
+                    'factures.versement as versement',
+                    'factures.credit as credit',
+                    'clients.nom_prenom as client',
+                )
+                ->where(function ($query) {
+                    $query->where('etat_facture', 'Facture-Payée')
+                          ->orWhere('etat_facture', 'Crédit');
+                })
+                ->where('total_facture', '!=', 0)->get();
+
+            return response()->json(['factures' => $Factures]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+
+
+    public function Chercher_Facture($id_facture){
+        try {
+
+            $Facture = Facture::where('id', $id_facture)->first();
+
+            return response()->json(['facture' => $Facture]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    // ---------------------------------------------------------------------------------
+
+    public function open()
+    {
+        // Nom de l'imprimante, tel qu'il apparaît dans les Périphériques et imprimantes
+        $printerName = "xprinter"; // Remplace par le nom de ton imprimante
+
+        // Commande ESC/POS pour ouvrir la caisse
+        $open_cash_drawer = chr(27) . chr(112) . chr(0) . chr(25) . chr(250);
+
+        // Ouvrir l'imprimante
+        $handle = @popen("print /d:\"$printerName\"", "w");
+
+        if ($handle) {
+            fwrite($handle, $open_cash_drawer); // Envoyer la commande à l'imprimante
+            pclose($handle);
+            return response()->json(['message' => 'Caisse ouverte avec succès.']);
+        } else {
+            return response()->json(['error' => 'Impossible d\'ouvrir l\'imprimante.'], 500);
+        }
+    }
 }
