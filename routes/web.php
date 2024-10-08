@@ -62,10 +62,15 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/liste-factures-enattente/{id_magasin}', 'Liste_Factures_Enattente')->name('liste_factures_enattente');
     Route::get('/lafacture-enattente/{id_facture}', 'Get_Facture_Enattente')->name('get_facture_enattente');
 
+    Route::get('/historique-factures/{id_magasin}', 'Liste_Factures_Historique')->name('liste_factures_historique');
+    Route::get('/chercher-facture/{id_facture}', 'Chercher_Facture')->name('chercher_facture');
+
     
     Route::get('/imprimer-ticket/{id_facture}', 'ImprimerTicket')->name('caisse_ticket');
     Route::get('/imprimer-ticket-credit/{id_facture}', 'ImprimerTicket')->name('caisse_ticket_credit');
     Route::get('/test_pdf', 'test_pdf')->name('caisse_teste_ticket');
+
+    Route::get('/open-cash-drawer', 'CashDrawerController@open')->name('open.cash.drawer');
 
 });
 
