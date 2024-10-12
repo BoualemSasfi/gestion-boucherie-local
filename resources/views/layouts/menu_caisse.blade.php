@@ -112,10 +112,10 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow">
 
 
-                    <div class="nav-item" style="">
+                    {{-- <div class="nav-item" style="">
                         <button class="btn btn-success" onclick="openCashDrawer()"
                             style="height: 100%;margin-left:20px;">Ouvrir la Caisse</button>
-                    </div>
+                    </div> --}}
 
 
 
