@@ -8,6 +8,7 @@ use App\Models\Stock;
 use App\Models\Categorie;
 use App\Models\Produit;
 use App\Models\Transfert;
+use App\Models\Ajuste;
 use App\Models\prod_trans;
 use Illuminate\Support\Facades\DB; // Importez la façade DB
 use Illuminate\Http\Request;
@@ -16,19 +17,28 @@ use Illuminate\Support\Facades\Log;
 class TransfertController extends Controller
 {
 
-public function liste(){
-    $lists =  Transfert::all();
-    return view('admin.transfert.index',['listes'=>$lists]);
-}
+    public function liste()
+    {
+        $lists = Transfert::all();
+        return view('admin.transfert.index', ['listes' => $lists]);
+    }
 
-public function details($id){
+    public function ajste_liste()
+    {
+        $lists = Ajuste::all();
+        return view('admin.transfert.ajuste.index', ['lists' => $lists]);
+    }
 
-    $info = Transfert::find($id);
-    $details = prod_trans::where('id_trans','=',$id)->get();
 
-    return view('admin.transfert.details',['info'=>$info ,  'details'=>$details]);
+    public function details($id)
+    {
 
-}
+        $info = Transfert::find($id);
+        $details = prod_trans::where('id_trans', '=', $id)->get();
+
+        return view('admin.transfert.details', ['info' => $info, 'details' => $details]);
+
+    }
 
 
     public function transfert($id_atl, $id_mag, $id_magasin)
@@ -229,8 +239,11 @@ public function details($id){
         // Récupérer les données JSON envoyées via la clé 'donne'
         // $donnees = $request->input('donne'); 
 
-        $donnees = $request->all();
+        // $donnees = $request->all();
 
+
+        $donnees = $request->input('stockData');
+        $poidData = $request->input('poid');
 
 
 
@@ -239,24 +252,28 @@ public function details($id){
             return response()->json(['success' => false, 'message' => 'Données invalides.'], 400);
         }
 
-                // Récupérer les valeurs de $atl, $mag, et $user
-                $atl = $donnees[count($donnees) - 1]['atl'];
-                $mag = $donnees[count($donnees) - 1]['mag'];
-                $user = $donnees[count($donnees) - 1]['user'];
+        if (!$poidData || !is_array($poidData)) {
+            return response()->json(['success' => false, 'message' => 'Données invalides.'], 400);
+        }
+
+        // Récupérer les valeurs de $atl, $mag, et $user
+        $atl = $donnees[count($donnees) - 1]['atl'];
+        $mag = $donnees[count($donnees) - 1]['mag'];
+        $user = $donnees[count($donnees) - 1]['user'];
 
 
-                $nv_transfert = new Transfert();
-                $nv_transfert->user = $user;
-                $nv_transfert->atl = $atl;
-                $nv_transfert->mag = $mag;
-                $nv_transfert->save();
+        $nv_transfert = new Transfert();
+        $nv_transfert->user = $user;
+        $nv_transfert->atl = $atl;
+        $nv_transfert->mag = $mag;
+        $nv_transfert->save();
 
-    // Récupérer l'ID du transfert nouvellement créé
-                // $id_trans = $nv_transfert->id;
+        // Récupérer l'ID du transfert nouvellement créé
+        // $id_trans = $nv_transfert->id;
 
 
-                $last_transfert = Transfert::latest()->first();
-                $id_trans = $last_transfert->id;
+        $last_transfert = Transfert::latest()->first();
+        $id_trans = $last_transfert->id;
 
 
         // Parcourir chaque ligne des données envoyées
@@ -265,28 +282,26 @@ public function details($id){
             if (isset($stockEnvoye['id'], $stockEnvoye['poid'])) {
                 // Parcourir les enregistrements dans la table Lestock
                 $stocks = Lestock::all(); // Récupère tous les enregistrements de la table Lestock
-
-
-
                 foreach ($stocks as $stock) {
                     // Si l'ID envoyé correspond à un ID dans la table Lestock
                     if ($stock->id == $stockEnvoye['id']) {
                         // Mise à jour du poids
                         $stock->quantity = $stockEnvoye['poid'];
                         $stock->save(); // Sauvegarde de la modification
-
-                        $nv_prod = new prod_trans();
-                        $nv_prod->id_trans = $id_trans;
-                        $nv_prod->category = $stockEnvoye['categorie'];
-                        $nv_prod->produit = $stockEnvoye['produit'];
-                        $nv_prod->quantity = $stockEnvoye['poid'];
-                        $nv_prod->save();
-
                         break; // On sort de la boucle une fois l'ID trouvé et mis à jour
                     }
-
                 }
             }
+        }
+
+
+        foreach ($poidData as $poid) {
+            $nv_prod = new prod_trans();
+            $nv_prod->id_trans = $id_trans;
+            $nv_prod->category = $poid['categorie'];
+            $nv_prod->produit = $poid['produit'];
+            $nv_prod->quantity = $poid['poid'];
+            $nv_prod->save();
         }
 
         // Si tout est correct, retourner une réponse positive

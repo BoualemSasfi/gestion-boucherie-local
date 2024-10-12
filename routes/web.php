@@ -57,11 +57,20 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/total-facture/{id_facture}', 'Total_Facture')->name('total_facture');
     Route::get('/nouvelle-facture/{id_user}/{id_magasin}/{id_caisse}', 'Create_Facture')->name('nouvelle_facture');
     Route::put('/valider-facture/{id_user}/{id_facture}/{id_caisse}/{id_client}/valeurs/{total}/{versement}/{credit}/{etat}', 'Valider_Facture')->name('valider_facture');
+    
     Route::put('/en-attente-facture/{id_facture}/valeurs/{total}', 'En_Attente_Facture')->name('en_attente_facture');
+    Route::get('/liste-factures-enattente/{id_magasin}', 'Liste_Factures_Enattente')->name('liste_factures_enattente');
+    Route::get('/lafacture-enattente/{id_facture}', 'Get_Facture_Enattente')->name('get_facture_enattente');
+
+    Route::get('/historique-factures/{id_magasin}', 'Liste_Factures_Historique')->name('liste_factures_historique');
+    Route::get('/chercher-facture/{id_facture}', 'Chercher_Facture')->name('chercher_facture');
+
     
     Route::get('/imprimer-ticket/{id_facture}', 'ImprimerTicket')->name('caisse_ticket');
     Route::get('/imprimer-ticket-credit/{id_facture}', 'ImprimerTicket')->name('caisse_ticket_credit');
     Route::get('/test_pdf', 'test_pdf')->name('caisse_teste_ticket');
+
+    Route::get('/open-cash-drawer', 'CashDrawerController@open')->name('open.cash.drawer');
 
 });
 
@@ -152,6 +161,8 @@ Route::controller(TransfertController::class)->group(function () {
 
     Route::get('admin/transfert_liste','liste');
     Route::get('admin/transfert/{id}','details');
+    Route::get('admin/ajuste','ajste_liste');
+    
 
 
 });

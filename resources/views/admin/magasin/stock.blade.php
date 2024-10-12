@@ -140,9 +140,14 @@
 
                                                                             <button id="ajst-{{ $produit->id_frais }}" type="button"
                                                                                 class="btn btn-outline-info"
-                                                                                onclick="showAjustModal('{{ $produit->quantity }}','{{$produit->id_frais}}')">
+                                                                                onclick="showAjustModal('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">
                                                                                 ajustier
                                                                             </button>
+                                                                            <div class="text-center">
+                                                                                <button type="button" class="btn btn-outline-primary"
+                                                                                    onclick="collectData('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">collect
+                                                                                    data</button>
+                                                                            </div>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -201,8 +206,8 @@
 
                                                                         <td class="text-center space-x-8">
                                                                             <!-- <button id="ajst" type="button" class="btn btn-outline-info">
-                                                                                                                                                                                                                                                                                                                                                                        ajustier
-                                                                                                                                                                                                                                                                                                                                                                    </button> -->
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ajustier
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
 
                                                                             <button id="ajst-{{ $congele->id_congele }}" type="button"
                                                                                 class="btn btn-outline-info"
@@ -419,39 +424,90 @@
         </script>
 
 
-        <!---------------------------------------------      script pour le bouton ajustier       -------------------------------------->
+
+
         <script>
-            function showAjustModal(quantity, id) {
-                // Supprimer 'const' car 'quantity' est déjà un paramètre
+            function collectData(quantity, id, magasin, user, produit, categorie) {
+                let stockData = [];
+                // Ajout des valeurs supplémentaires atl, mag et user
+                let etat = 0;
+
+                if (quantity > 100) {
+                    etat = 1;  // Si la nouvelle quantité est inférieure à l'ancienne, état 1
+                } else if (quantity < 100) {
+                    etat = 0;  // Si la nouvelle quantité est supérieure, état 0
+                }
+
+                stockData.push({
+                    id: id,
+                    quantity: quantity,
+                    magasin: magasin,
+                    user: user,
+                    categorie: categorie,
+                    produit: produit,
+                    etat: etat
+                });
+
+                console.table(stockData);
+
+
+
+            }
+
+            // Appeler cette fonction lorsque vous voulez collecter et afficher les données
+            collectData();
+
+        </script>
+
+        <script>
+            function showAjustModal(quantity, id, magasin, user, produit, categorie) {
                 quantity = parseFloat(quantity).toFixed(2);  // Convertir en nombre avec 2 décimales si nécessaire
+
                 Swal.fire({
                     title: "Ajuster le produit",
-                    text: "Modifiez la quantité si nécessaire pour le produit ID : " + id,  // Afficher l'ID du produit
-
-                    input: 'number',  // Champ input pour la quantité
+                    text: "Modifiez la quantité si nécessaire pour le produit ID : " + id,
+                    input: 'number',
                     inputLabel: 'Quantité actuelle',
-                    inputValue: quantity,  // Valeur actuelle de la quantité
+                    inputValue: quantity,
                     showCancelButton: true,
                     confirmButtonText: 'Enregistrer',
                     cancelButtonText: 'Annuler',
                     inputValidator: (value) => {
-                        if (!value) {
-                            return 'Vous devez entrer une quantité valide !';
+                        if (!value || isNaN(value) || value <= 0) {
+                            return 'Vous devez entrer une quantité valide et supérieure à 0 !';
                         }
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Action après confirmation
                         const newQuantity = parseFloat(result.value);  // Convertir la nouvelle valeur en nombre
+                        let etat = 0;
 
-                        // Envoyer la nouvelle quantité et l'ID au contrôleur via AJAX
+                        if (quantity > newQuantity) {
+                            etat = 1;  // Si la nouvelle quantité est inférieure à l'ancienne, état 1
+                        } else if (quantity < newQuantity) {
+                            etat = 0;  // Si la nouvelle quantité est supérieure, état 0
+                        }
+
+                        // Stocker les données dans un objet stockData
+                        let stockData = {
+                            id: id,
+                            quantity: newQuantity,
+                            magasin: magasin,
+                            user: user,
+                            categorie: categorie,
+                            produit: produit,
+                            etat: etat
+                        };
+
+                        console.table(stockData);
+
+                        // Envoyer stockData via AJAX au contrôleur
                         $.ajax({
                             url: '/mettre-a-jour-quantite',  // L'URL vers laquelle envoyer les données
                             method: 'POST',  // Utiliser la méthode POST
                             data: {
                                 _token: '{{ csrf_token() }}',  // Inclure le jeton CSRF pour la sécurité
-                                id: id,  // ID du produit
-                                quantity: newQuantity  // Nouvelle quantité
+                                stockData: stockData  // Envoyer tout l'objet stockData
                             },
                             success: function (response) {
                                 // Afficher une notification de succès après la mise à jour
@@ -460,7 +516,7 @@
                                     title: 'Quantité mise à jour',
                                     text: `Nouvelle quantité: ${newQuantity} Kg`,  // Afficher la nouvelle quantité
                                 });
-                                location.reload();
+                                location.reload();  // Rafraîchir la page après la mise à jour
                             },
                             error: function (error) {
                                 // Afficher un message d'erreur si la requête échoue
@@ -474,10 +530,8 @@
                     }
                 });
             }
+
         </script>
-
-
-
 
 
         <!-- ------------------------------------------------------------------------------------------------------------------------ -->

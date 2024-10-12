@@ -154,24 +154,31 @@ class CaisseController extends Controller
 
     public function Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse)
     {
-        $NewFacture = new Facture();
-        $NewFacture->id_user = $id_user;
-        $NewFacture->id_magasin = $id_magasin;
-        $NewFacture->id_caisse = $id_caisse;
-        $NewFacture->id_client = 0;
-        $NewFacture->etat_facture = "en-attente";
-        $NewFacture->total_facture = 0;
-        $NewFacture->versement = 0;
-        $NewFacture->credit = 0;
-        //code barres
-        do {
-            // Générer un nombre de 14 chiffres
-            $code = str_pad(mt_rand(1, 99999999999999), 14, '0', STR_PAD_LEFT);
-            // Vérifier si ce numéro existe déjà dans la base de données
-            $exists = Facture::where('code_barres', $code)->exists();
-        } while ($exists);
-        $NewFacture->code_barres = $code;
-        $NewFacture->save();
+        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('total_facture', '=', 0)
+            ->orderBy('id', 'desc')
+            ->first();
+        if (!$LastFacture) {
+            $NewFacture = new Facture();
+            $NewFacture->id_user = $id_user;
+            $NewFacture->id_magasin = $id_magasin;
+            $NewFacture->id_caisse = $id_caisse;
+            $NewFacture->id_client = 0;
+            $NewFacture->etat_facture = "en-attente";
+            $NewFacture->total_facture = 0;
+            $NewFacture->versement = 0;
+            $NewFacture->credit = 0;
+            //code barres
+            do {
+                // Générer un nombre de 14 chiffres
+                $code = str_pad(mt_rand(1, 99999999999999), 14, '0', STR_PAD_LEFT);
+                // Vérifier si ce numéro existe déjà dans la base de données
+                $exists = Facture::where('code_barres', $code)->exists();
+            } while ($exists);
+            $NewFacture->code_barres = $code;
+            $NewFacture->save();
+        } else {
+            $Ventes = Vente::where('id_facture', $LastFacture->id)->delete();
+        }
     }
 
     public function Get_Last_Facture($id_magasin, $id_user)
@@ -218,7 +225,7 @@ class CaisseController extends Controller
     {
         try {
             $ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
-            ->join('categories', 'categories.id', '=', 'produits.categorie_id')
+                ->join('categories', 'categories.id', '=', 'produits.categorie_id')
                 ->select(
                     'ventes.id as id',
                     'categories.nom as nom_categorie',
@@ -251,7 +258,7 @@ class CaisseController extends Controller
         }
     }
 
-    
+
 
     public function Create_Facture($id_user, $id_magasin, $id_caisse)
     {
@@ -399,7 +406,7 @@ class CaisseController extends Controller
 
         $Informtions = Information::first();
         $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
-        ->join('categories', 'categories.id', '=', 'produits.categorie_id')
+            ->join('categories', 'categories.id', '=', 'produits.categorie_id')
             ->select(
                 'ventes.id as id',
                 'categories.nom as nom_categorie',
@@ -492,7 +499,7 @@ class CaisseController extends Controller
 
         $Informtions = Information::first();
         $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
-        ->join('categories', 'categories.id', '=', 'produits.categorie_id')
+            ->join('categories', 'categories.id', '=', 'produits.categorie_id')
             ->select(
                 'ventes.id as id',
                 'categories.nom as nom_categorie',
@@ -515,9 +522,11 @@ class CaisseController extends Controller
             ->where('factures.id', $Facture->id)
             ->first();
 
+        $date_facture = $Facture->updated_at ? $Facture->updated_at : $Facture->created_at;
+
         $data = [
             'num_facture' => $Facture->id,
-            'date_facture' => $Facture->created_at,
+            'date_facture' => $date_facture,
             'etat_facture' => $Facture->etat_facture,
             'magasin' => $Facture->id_magasin,
             'caisse' => $Facture->id_caisse,
@@ -584,7 +593,7 @@ class CaisseController extends Controller
         $Informtions = Information::first();
 
         $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
-        ->join('categories', 'categories.id', '=', 'produits.categorie_id')
+            ->join('categories', 'categories.id', '=', 'produits.categorie_id')
             ->select(
                 'ventes.id as id',
                 'categories.nom as nom_categorie',
@@ -607,9 +616,11 @@ class CaisseController extends Controller
             ->where('factures.id', $id_facture)
             ->first();
 
+        $date_facture = $Facture->updated_at ? $Facture->updated_at : $Facture->created_at;
+
         $data = [
             'num_facture' => $id_facture,
-            'date_facture' => $Facture->created_at,
+            'date_facture' => $date_facture,
             'etat_facture' => $Facture->etat_facture,
             'magasin' => $Facture->id_magasin,
             'caisse' => $Facture->id_caisse,
@@ -646,6 +657,108 @@ class CaisseController extends Controller
         } catch (\Exception $e) {
             Log::error('Erreur lors de la génération du PDF : ' . $e->getMessage());
             return response()->json(['error' => 'Erreur lors de la génération du PDF'], 500);
+        }
+    }
+
+
+    public function Liste_Factures_Enattente($id_magasin)
+    {
+        try {
+
+            $Factures = Facture::where('id_magasin', $id_magasin)->where('etat_facture', '=', 'en-attente')
+                ->where('total_facture', '!=', 0)->get();
+
+            return response()->json(['factures' => $Factures]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+
+    public function Get_Facture_Enattente($id_facture)
+    {
+        try {
+            // Recherche de la facture par ID
+            $Facture = Facture::where('id', $id_facture)->first();
+
+            // Vérifiez si la facture existe
+            if (!$Facture) {
+                return response()->json(['error' => 'Facture non trouvée'], 404);
+            }
+
+            // Retour de la facture en JSON
+            return response()->json(['facture' => $Facture]);
+        } catch (\Exception $e) {
+            // Log de l'erreur pour la traçabilité
+            Log::error($e);
+
+            // Retour d'une réponse d'erreur en JSON avec le code 500
+            return response()->json(['error' => 'Erreur interne du serveur'], 500);
+        }
+    }
+
+    public function Liste_Factures_Historique($id_magasin)
+    {
+        try {
+
+            $Factures = Facture::
+                join('clients', 'clients.id', '=', 'factures.id_client')
+                ->select(
+                    'factures.id as id',
+                    'factures.created_at as date',
+                    'factures.etat_facture as etat',
+                    'factures.total_facture as total',
+                    'factures.versement as versement',
+                    'factures.credit as credit',
+                    'clients.nom_prenom as client',
+                )
+                ->where(function ($query) {
+                    $query->where('etat_facture', 'Facture-Payée')
+                          ->orWhere('etat_facture', 'Crédit');
+                })
+                ->where('total_facture', '!=', 0)->get();
+
+            return response()->json(['factures' => $Factures]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+
+
+    public function Chercher_Facture($id_facture){
+        try {
+
+            $Facture = Facture::where('id', $id_facture)->first();
+
+            return response()->json(['facture' => $Facture]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    // ---------------------------------------------------------------------------------
+
+    public function open()
+    {
+        // Nom de l'imprimante, tel qu'il apparaît dans les Périphériques et imprimantes
+        $printerName = "xprinter"; // Remplace par le nom de ton imprimante
+
+        // Commande ESC/POS pour ouvrir la caisse
+        $open_cash_drawer = chr(27) . chr(112) . chr(0) . chr(25) . chr(250);
+
+        // Ouvrir l'imprimante
+        $handle = @popen("print /d:\"$printerName\"", "w");
+
+        if ($handle) {
+            fwrite($handle, $open_cash_drawer); // Envoyer la commande à l'imprimante
+            pclose($handle);
+            return response()->json(['message' => 'Caisse ouverte avec succès.']);
+        } else {
+            return response()->json(['error' => 'Impossible d\'ouvrir l\'imprimante.'], 500);
         }
     }
 }

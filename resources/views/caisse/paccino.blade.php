@@ -1,5 +1,6 @@
 @extends('layouts.menu_caisse')
 
+
 @section('content')
     <style>
         .scat {
@@ -84,7 +85,51 @@
         }
     </style>
 
+    <style>
+        .bouton-action .btn {
+            font-size: 14px;
+            padding: 5px;
+        }
 
+        .bouton-action i {
+            font-size: 20px;
+            /* margin-top: 2px; */
+            padding-top: 2px;
+        }
+    </style>
+
+    <style>
+        .carousel-item {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 100px !important;
+            /* Ajuster la largeur des boutons */
+            height: 100%;
+            /* Ajuster la hauteur des boutons */
+            opacity: 0.1 !important;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 0.3 !important;
+        }
+
+
+        .carousel-control-prev {
+            left: 0;
+            /* Ajuster la position du bouton précédent */
+        }
+
+        .carousel-control-next {
+            right: 0;
+            /* Ajuster la position du bouton suivant */
+        }
+    </style>
+
+    {{-- ---------------------------------------------------------------------------------------------------- --}}
     <!-- AFFICHEUR -->
     <div class="container-fluid m-0 p-0">
         <div class="container-fluid">
@@ -94,12 +139,12 @@
                     <h5 class="objet-titre digital" id="produit_text">----</h5>
                 </div>
                 <div class="col-3 pt-1">
-                    <h6 class="afficheur-titre"> <span>Saisie Manuelle</span>
+                    <h6 class="afficheur-titre"> <span>Manuelle</span>
                         <label class="switch">
                             <input type="checkbox" id="darkModeSwitch">
                             <span class="slider"></span>
                         </label>
-                        <span>Par la Balance</span>
+                        <span>Balance</span>
                     </h6>
                     <div class="digital">
                         <p id="balance" style="margin-top:-30px; cursor: pointer;" data-bs-toggle="modal"
@@ -224,7 +269,7 @@
         <div class="row le_centre">
             <div class="col-8">
                 <div class="container mt-2">
-                    <div class="your-carousel">
+                    <div class="your-carousel" data-aos="fade-right">
                         @foreach ($categories as $categorie)
                             <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
                                 onclick="FiltrageProduits(this)" style="cursor: pointer;">
@@ -254,14 +299,14 @@
             <div class="col-4 bg-dark p-0 m-0">
 
                 {{-- stockage variable  --}}
-                <a href="" style="color: aliceblue;">USER / FACTURE / MAGASIN / CAISSE</a>
-                <a id="text-id-user" href="" style="display: inline-flex;">{{ $id_user }}</a>
-                <a id="text-id-facture" href="" style="display: inline-flex;">{{ $LastFacture->id }}</a>
-                <a id="text-id-magasin" href="" style="display: inline-flex;">{{ $id_magasin }}</a>
-                <a id="text-id-caisse" href="" style="display: inline-flex;">{{ $id_caisse }}</a>
+                <a href="" style="color: aliceblue; display: inline-block;">USER / FACTURE / MAGASIN / CAISSE</a>
+                <a id="text-id-user" href="" style="display: inline-block;">{{ $id_user }}</a>
+                <a id="text-id-facture" href="" style="display: inline-block;">{{ $LastFacture->id }}</a>
+                <a id="text-id-magasin" href="" style="display: inline-block;">{{ $id_magasin }}</a>
+                <a id="text-id-caisse" href="" style="display: inline-block;">{{ $id_caisse }}</a>
                 {{-- stockage variable  --}}
 
-                <div class="card shadow m-3" style="height:500px;">
+                <div class="card shadow m-3" style="height:440px;" data-aos="flip-left">
                     <div class="card-header py-1">
                         <div class="row afficheur text-center" style="height: 105px;">
                             <div class="col-12 p-1 m-0 align-content-center">
@@ -275,7 +320,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body m-0 p-1" style="max-height: 750px; overflow-y: auto;">
+                    <div class="card-body m-0 p-1" style="max-height: 400px; overflow-y: auto;">
                         <table id="example" class="display" style="width:100%">
                             <thead>
                                 <tr>
@@ -297,61 +342,168 @@
 
         <!-- Footer -->
         <footer class="sticky-footer-caisse bg-white">
-            <div class="container-fluid m-0 p-0">
+            <div class="container-fluid boutons-caisse m-0 p-2">
                 <div class="row align-content-center m-0 p-0">
                     <div class="col-4">
                         <div class="row bouton-action">
                             <div class="col-3">
-                                <button class="btn btn-warning" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-primary bouton-caisse" type="button">
+                                    <i class="fas fa-store-alt fa-lg"></i>
+                                    <br> Retour
+                                </button>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#calculatorModal">
                                     <i class="fas fa-calculator fa-lg"></i>
-                                    <br>Ouvrir Calculatrice
+                                    <br>Calculatrice
                                 </button>
                             </div>
-                            {{-- <div class="col-3">
-                                <button class="btn btn-warning" type="button">
-                                    <i class="fas fa-cubes fa-lg"></i>
-                                    <br>
-                                    Voir<br>Stock
-                                </button>
-                            </div> --}}
                             <div class="col-3">
-                                <button class="btn btn-warning" type="button">
-                                    {{-- <i class="fas fa-store-alt fa-lg"></i> --}}
-                                    <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
-
+                                {{-- Bouton pour afficher le popup --}}
+                                <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#ListeFacturesModal" onclick="liste_factures_historique()">
+                                    <i class="fa fa-shopping-cart fa-lg"></i>
                                     <br> Historique Ventes
                                 </button>
+
+                                <!-- Popup -->
+                                <div class="modal fade" id="ListeFacturesModal" tabindex="-1" aria-labelledby=""
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                                        <div class="modal-content">
+                                            <!-- Corps du modal -->
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" id="">Liste des ventes</h4>
+                                                <div class="container bg-light mt-2 mb-2" style="height:450px;">
+                                                    <div class="row">
+                                                        <table id="example" class="table table-striped table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Client</th>
+                                                                    <th>Date et heure</th>
+                                                                    <th>Etat</th>
+                                                                    <th>Montant</th>
+                                                                    <th>Versement</th>
+                                                                    <th>Crédit</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="historique-factures">
+                                                                {{-- les factures ici  --}}
+                                                            </tbody>
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="modal-footer m-0 p-2">
+                                                <div class="container pl-0">
+                                                    <div class="row">
+                                                        <div class="col-12">
+
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal" style="width: 150px;">
+                                                                <i class="bi bi-x"></i><br>Fermer
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Popup -->
+
+
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-warning" type="button">
+                                <button class="btn btn-warning bouton-caisse" type="button">
                                     <i class="fa fa-users fa-lg" aria-hidden="true"></i>
                                     <br>Clients
                                 </button>
                             </div>
-                            <div class="col-3">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-store-alt fa-lg"></i>
-                                    <br> Retour vers magasin
-                                </button>
-                            </div>
+
                         </div>
                     </div>
 
                     <div class="col-4">
                         <div class="row bouton-action">
                             <div class="col-3">
-                                <button class="btn btn-secondary" type="button">
+                                {{-- Bouton pour afficher le popup --}}
+                                <button class="btn btn-secondary bouton-caisse" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#ListeEnAttenteModal" id="bouton_liste_enattente"
+                                    onclick="liste_factures_enattente()">
                                     <i class="fas fa-user-clock fa-lg"></i>
                                     <br>Liste En Attente
                                 </button>
+
+                                <!-- Popup -->
+                                <div class="modal fade" id="ListeEnAttenteModal" tabindex="-1" aria-labelledby=""
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                                        <div class="modal-content">
+                                            <!-- Corps du modal -->
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" id="">Liste des ventes en attente</h4>
+                                                {{-- les factures s'affichent ici  --}}
+                                                {{-- <div class="mt-3" id="liste-factures">
+                                                </div> --}}
+                                                <div id="carouselExample1" class="carousel slide mt-3 mb-3 bg-dark"
+                                                    data-bs-interval="false" style="height:470px;">
+
+                                                    <div class="carousel-inner" id="CarouselFacturesEnAttente">
+                                                        {{-- les factures s'affichent ici  --}}
+                                                    </div>
+
+                                                    <!-- Indicateurs de progression -->
+                                                    <div class="carousel-indicators"
+                                                        id="CarouselFacturesEnAttente_indicateurs">
+
+                                                    </div>
+
+                                                    <button class="carousel-control-prev bg-dark" type="button"
+                                                        data-bs-target="#carouselExample1" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next bg-dark" type="button"
+                                                        data-bs-target="#carouselExample1" data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon"
+                                                            aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer m-0 p-2">
+                                                <div class="container pl-0">
+                                                    <div class="row">
+                                                        <div class="col-12">
+
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal" style="width: 150px;">
+                                                                <i class="bi bi-x"></i><br>Fermer
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Popup -->
+
                             </div>
-                            {{-- <div class="col-3">
-                                <button class="btn btn-primary" type="button" onclick="Nouvelle_Facture()">
-                                    <i class="fas fa-shopping-cart fa-lg"></i>
-                                    <br>Nouvelle Vente
-                                </button>
-                            </div> --}}
                             <div class="col-6">
                                 {{-- Bouton pour afficher le popup --}}
                                 <button class="btn btn-success" type="button" data-bs-toggle="modal"
@@ -500,7 +652,7 @@
                             </div>
                             <div class="col-3">
                                 <button class="btn btn-secondary" type="button" onclick="FactureEnAttente()">
-                                    <i class="far fa-clock fa-lg"></i>
+                                    <i class="fa fa-pause-circle fa-lg"></i>
                                     <br>Vente En Attente
                                 </button>
                             </div>
@@ -697,7 +849,7 @@
                         $('#products').empty();
                         $.each(response.produits, function(key, value) {
                             $('#products').append(
-                                '<div class="col-2 p-2">' +
+                                '<div class="col-2 p-2"  data-aos="fade-down">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
@@ -707,7 +859,8 @@
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
                                 '<h5 class="card-title">' + value.nom + '</h5>' +
-                                '<p class="card-text">' + value.prix + ' DA / ' + value.mesure + '</p>' +
+                                '<p class="card-text">' + value.prix + ' DA / ' + value.mesure +
+                                '</p>' +
                                 '</div>' +
                                 '</form>' +
                                 '</div>' +
@@ -716,7 +869,7 @@
                         });
 
                         $('#products').append(
-                            '<div class="col-12 zyada" style="height: 600px;"></div>'
+                            // '<div class="col-12 zyada" style="height: 600px;"></div>'
                         );
                     },
                     error: function(xhr, status, error) {
@@ -959,10 +1112,12 @@
                 success: function(response) {
                     $('#ventes_liste').empty();
                     $.each(response.ventes, function(key, value) {
-                        let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) : value.quantite;
+                        let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) :
+                            value.quantite;
                         $('#ventes_liste').append(
                             '<tr>' +
-                            '<td class="">' + value.nom_categorie + ' : ' + value.nom_produit + '</td>' +
+                            '<td class="">' + value.nom_categorie + ' : ' + value.nom_produit +
+                            '</td>' +
                             '<td class="">' + quantite + ' ' + value.unite_mesure + '</td>' +
                             '<td class="">' + value.prix_produit + '</td>' +
                             '<td class="">' + value.prix_total + '</td>' +
@@ -1115,380 +1270,6 @@
 
 
 
-        // async function ValiderFacture() {
-        //     const InputTotal = document.getElementById('TotalInput');
-        //     const InputVersement = document.getElementById('VersementInput');
-        //     const InputCredit = document.getElementById('CreditInput');
-
-        //     const IdUser = document.getElementById('text-id-user').textContent;
-        //     const IdCaisse = document.getElementById('text-id-caisse').textContent;
-        //     const IdFacture = document.getElementById('text-id-facture').textContent;
-        //     const IdClient = document.getElementById('client_select').value;
-        //     let Total = parseFloat(InputTotal.value);
-        //     let Credit = parseFloat(InputCredit.value);
-
-        //     let Versement; // Déclare la variable en dehors du bloc if/else
-
-
-
-        //     if (InputVersement.value === '') {
-        //         Versement = Total; // Affecte la valeur de Total à Versement si l'input est vide
-        //     } else {
-        //         Versement = parseFloat(InputVersement.value); // Sinon, parse l'input en float
-        //     }
-
-        //     // cas pas de credit 
-        //     if (Total > 0 && (Versement === Total || Versement > Total)) {
-        //         Versement = Total;
-        //         Credit = 0;
-        //         const Etat = 'Facture-Payée';
-
-        //         try {
-        //             // Transforme l'appel AJAX en promesse pour utiliser await
-        //             const response = await $.ajax({
-        //                 url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' +
-        //                     IdClient +
-        //                     '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
-        //                 type: 'put',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-        //                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-        //                 },
-        //                 success: function(response) {
-
-        //                     Swal.fire({
-        //                         title: "Facture Validée",
-        //                         icon: "success",
-        //                         showConfirmButton: false,
-        //                         timer: 1500
-        //                     })
-        //                 }
-        //             });
-        //         } catch (error) {
-        //             console.error("Erreur lors de la validation de la facture :", error);
-        //             // Gère l'erreur si nécessaire
-        //         }
-
-        //         try {
-        //             const response = await $.ajax({
-        //                 url: '/imprimer-ticket/' + IdFacture,
-        //                 type: 'get',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-        //                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-        //                 },
-        //                 success: function(response) {
-
-        //                     Swal.fire({
-        //                         title: "Ticket Validé",
-        //                         icon: "success",
-        //                         showConfirmButton: false,
-        //                         timer: 1500
-        //                     })
-        //                 }
-        //             });
-        //         } catch (error) {
-        //             console.error("Erreur de ticket :", error);
-        //             // Gère l'erreur si nécessaire
-        //         }
-
-        //         // Ferme le modal
-        //         await $('#FactureModal').modal('hide');
-
-        //         // Appelle la fonction Nouvelle_Facture
-        //         await Nouvelle_Facture();
-
-        //     }
-
-        //     // cas credit 
-        //     if (Versement < Total || InputVersement.value === '0') {
-        //         const Etat = 'Crédit';
-
-        //         try {
-        //             // Transforme l'appel AJAX en promesse pour utiliser await
-        //             const response = await $.ajax({
-        //                 url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' +
-        //                     IdClient +
-        //                     '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
-        //                 type: 'put',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-        //                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-        //                 },
-        //                 success: function(response) {
-
-        //                     Swal.fire({
-        //                         title: "Facture Validée",
-        //                         icon: "success",
-        //                         showConfirmButton: false,
-        //                         timer: 1500
-        //                     })
-        //                 }
-        //             });
-        //         } catch (error) {
-        //             console.error("Erreur lors de la validation de la facture :", error);
-        //             // Gère l'erreur si nécessaire
-        //         }
-
-        //         try {
-        //             const response = await $.ajax({
-        //                 url: '/imprimer-ticket/' + IdFacture,
-        //                 type: 'get',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-        //                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-        //                 },
-        //                 success: function(response) {
-
-        //                     Swal.fire({
-        //                         title: "Ticket Validé",
-        //                         icon: "success",
-        //                         showConfirmButton: false,
-        //                         timer: 1500
-        //                     })
-        //                 }
-        //             });
-        //         } catch (error) {
-        //             console.error("Erreur de ticket :", error);
-        //             // Gère l'erreur si nécessaire
-        //         }
-
-        //         // Ferme le modal
-        //         await $('#FactureModal').modal('hide');
-
-        //         // Appelle la fonction Nouvelle_Facture
-        //         await Nouvelle_Facture();
-
-        //     }
-
-        //     console.log('Validation Facture executé');
-        // }
-
-        // ------------------------------------------------------------------------------------------------------
-
-        // async function ValiderFacture() {
-        //     const InputTotal = document.getElementById('TotalInput');
-        //     const InputVersement = document.getElementById('VersementInput');
-        //     const InputCredit = document.getElementById('CreditInput');
-
-        //     const IdUser = document.getElementById('text-id-user').textContent;
-        //     const IdCaisse = document.getElementById('text-id-caisse').textContent;
-        //     const IdFacture = document.getElementById('text-id-facture').textContent;
-        //     const IdClient = document.getElementById('client_select').value;
-        //     let Total = parseFloat(InputTotal.value);
-        //     let Credit = parseFloat(InputCredit.value);
-
-        //     let Versement;
-
-        //     if (InputVersement.value === '') {
-        //         Versement = Total;
-        //     } else {
-        //         Versement = parseFloat(InputVersement.value);
-        //     }
-
-        //     // Full or overpayment case
-        //     if (Total > 0 && (Versement === Total || Versement > Total)) {
-        //         Versement = Total;
-        //         Credit = 0;
-        //         const Etat = 'Facture-Payée';
-
-        //         try {
-        //             // Validate the invoice
-        //             await $.ajax({
-        //                 url: `/valider-facture/${IdUser}/${IdFacture}/${IdCaisse}/${IdClient}/valeurs/${Total}/${Versement}/${Credit}/${Etat}`,
-        //                 type: 'put',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 }
-        //             });
-
-        //             Swal.fire({
-        //                 title: "Facture Validée",
-        //                 icon: "success",
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-
-        //             // Open the PDF ticket in a new tab
-        //             window.open('/imprimer-ticket/' + IdFacture, '_blank');
-
-        //             // Wait for a moment before continuing
-        //             await new Promise((resolve) => setTimeout(resolve, 1600));
-
-        //             // Close the modal and reset after the ticket has been opened
-        //             $('#FactureModal').modal('hide');
-        //             await Nouvelle_Facture();
-
-        //         } catch (error) {
-        //             console.error("Erreur lors de la validation de la facture :", error);
-        //         }
-        //     }
-
-        //     // Handle credit case
-        //     if (Versement < Total || InputVersement.value === '0') {
-        //         const Etat = 'Crédit';
-
-        //         try {
-        //             // Validate the invoice as credit
-        //             await $.ajax({
-        //                 url: `/valider-facture/${IdUser}/${IdFacture}/${IdCaisse}/${IdClient}/valeurs/${Total}/${Versement}/${Credit}/${Etat}`,
-        //                 type: 'put',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 }
-        //             });
-
-        //             Swal.fire({
-        //                 title: "Facture Validée (Crédit)",
-        //                 icon: "success",
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-
-        //             // Open the PDF ticket in a new tab
-        //             window.open('/imprimer-ticket/' + IdFacture, '_blank');
-
-        //             // Wait for a moment before continuing
-        //             await new Promise((resolve) => setTimeout(resolve, 1600));
-
-        //             // Close the modal and reset after the ticket has been opened
-        //             $('#FactureModal').modal('hide');
-        //             await Nouvelle_Facture();
-
-        //         } catch (error) {
-        //             console.error("Erreur lors de la validation ou impression du ticket (Crédit) :", error);
-        //         }
-        //     }
-
-        //     console.log('Validation Facture exécutée');
-        // }
-
-
-
-        // async function ValiderFacture() {
-        //     const InputTotal = document.getElementById('TotalInput');
-        //     const InputVersement = document.getElementById('VersementInput');
-        //     const InputCredit = document.getElementById('CreditInput');
-
-        //     const IdUser = document.getElementById('text-id-user').textContent;
-        //     const IdCaisse = document.getElementById('text-id-caisse').textContent;
-        //     const IdFacture = document.getElementById('text-id-facture').textContent;
-        //     const IdClient = document.getElementById('client_select').value;
-        //     let Total = parseFloat(InputTotal.value);
-        //     let Credit = parseFloat(InputCredit.value);
-
-        //     let Versement;
-
-        //     if (InputVersement.value === '') {
-        //         Versement = Total;
-        //     } else {
-        //         Versement = parseFloat(InputVersement.value);
-        //     }
-
-        //     // Full or overpayment case
-        //     if (Total > 0 && (Versement === Total || Versement > Total)) {
-        //         Versement = Total;
-        //         Credit = 0;
-        //         const Etat = 'Facture-Payée';
-
-        //         try {
-        //             // Validate the invoice
-        //             await $.ajax({
-        //                 url: `/valider-facture/${IdUser}/${IdFacture}/${IdCaisse}/${IdClient}/valeurs/${Total}/${Versement}/${Credit}/${Etat}`,
-        //                 type: 'put',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 }
-        //             });
-
-        //             Swal.fire({
-        //                 title: "Facture Validée",
-        //                 icon: "success",
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-
-        //             // Print the PDF ticket directly using an iframe
-        //             printTicket(IdFacture);
-
-        //             // Wait before continuing
-        //             await new Promise((resolve) => setTimeout(resolve, 1600));
-
-        //             // Close the modal and reset after the print
-        //             $('#FactureModal').modal('hide');
-        //             await Nouvelle_Facture();
-
-        //         } catch (error) {
-        //             console.error("Erreur lors de la validation de la facture :", error);
-        //         }
-        //     }
-
-        //     // Handle credit case
-        //     if (Versement < Total || InputVersement.value === '0') {
-        //         const Etat = 'Crédit';
-
-        //         try {
-        //             // Validate the invoice as credit
-        //             await $.ajax({
-        //                 url: `/valider-facture/${IdUser}/${IdFacture}/${IdCaisse}/${IdClient}/valeurs/${Total}/${Versement}/${Credit}/${Etat}`,
-        //                 type: 'put',
-        //                 headers: {
-        //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //                 }
-        //             });
-
-        //             Swal.fire({
-        //                 title: "Facture Validée (Crédit)",
-        //                 icon: "success",
-        //                 showConfirmButton: false,
-        //                 timer: 1500
-        //             });
-
-        //             // Print the PDF ticket directly using an iframe
-        //             printTicketCredit(IdFacture);
-
-        //             // Wait before continuing
-        //             await new Promise((resolve) => setTimeout(resolve, 1600));
-
-        //             // Close the modal and reset after the print
-        //             $('#FactureModal').modal('hide');
-        //             await Nouvelle_Facture();
-
-        //         } catch (error) {
-        //             console.error("Erreur lors de la validation ou impression du ticket (Crédit) :", error);
-        //         }
-        //     }
-
-        //     console.log('Validation Facture exécutée');
-        // }
-
-        // // Function to print the ticket
-        // function printTicket(IdFacture) {
-        //     // Create an iframe dynamically
-        //     let iframe = document.createElement('iframe');
-        //     iframe.style.display = 'none'; // Hide the iframe
-        //     iframe.src = `/imprimer-ticket/${IdFacture}`; // Load the ticket PDF URL
-        //     document.body.appendChild(iframe);
-
-        //     // Wait for the iframe to load, then trigger the print
-        //     iframe.onload = function() {
-        //         iframe.contentWindow.print(); // Trigger the print dialog
-        //     };
-        // }
-
-        // // Function to print the ticket
-        // function printTicketCredit(IdFacture) {
-        //     // Create an iframe dynamically
-        //     let iframe = document.createElement('iframe');
-        //     iframe.style.display = 'none'; // Hide the iframe
-        //     iframe.src = `/imprimer-ticket-credit/${IdFacture}`; // Load the ticket PDF URL
-        //     document.body.appendChild(iframe);
-
-        //     // Wait for the iframe to load, then trigger the print
-        //     iframe.onload = function() {
-        //         iframe.contentWindow.print(); // Trigger the print dialog
-        //     };
-        // }
 
 
 
@@ -1562,7 +1343,7 @@
                         let iframeArchive = document.createElement('iframe');
                         iframeArchive.style.display = 'none';
                         iframeArchive.src = '/imprimer-ticket-credit/' +
-                        IdFacture; // Make sure to create a route for archive copy
+                            IdFacture; // Make sure to create a route for archive copy
                         document.body.appendChild(iframeArchive);
 
                         iframeArchive.onload = function() {
@@ -1659,7 +1440,8 @@
             console.log('( Crédit | Monnaie ) Calculé !');
         };
 
-
+        // ----------------------------------------------------------------------------------------------------
+        // en-attente 
         async function FactureEnAttente() {
             const LabelTotal = document.getElementById('text_total_facture').textContent;
             const IdFacture = document.getElementById('text-id-facture').textContent;
@@ -1705,11 +1487,389 @@
     </script>
 
     <script>
+        function liste_factures_enattente() {
+            const IdMagasin = document.getElementById('text-id-magasin').textContent;
+            // const IdMagasin = 2
+            if (IdMagasin) { // Vérifie si IdMagasin n'est pas une chaîne vide
+                // console.log('id magasin :' + IdMagasin);
+                $.ajax({
+                    url: '/liste-factures-enattente/' + IdMagasin,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        let counter = 1; // Initialisation du compteur
+                        $('#CarouselFacturesEnAttente').empty();
+                        $('#CarouselFacturesEnAttente_indicateurs').empty();
+                        if ((!response.factures || response.factures.length === 0)) {
+                            $('#CarouselFacturesEnAttente').append(
+
+                                '<div class="carousel-item active">' +
+                                '<div class="row justify-content-center">' +
+                                '<div class="col-12 mt-3 mb-3">' +
+                                '<h3 class="text-secondary text-bold">Liste Vide</h3>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>'
+
+                            );
+
+                        }
+                        $.each(response.factures, function(key, facture) {
+
+                            const id_facture = facture.id;
+                            // const ActiveClass = 'active';
+                            console.log('id facture :' + id_facture);
+
+                            $('#CarouselFacturesEnAttente').append(
+
+                                '<div class="carousel-item ' + (counter === 1 ? 'active' : '') +
+                                '">' +
+
+                                '<div class="card shadow m-3 facture-enattente" style="height:400px;">' +
+
+                                '<div class="card-body m-0 p-1" style="overflow-y: auto;">' +
+
+                                '<div class="container">' +
+
+                                '<div class="row justify-content-center">' +
+
+                                '<div class="col-12 mt-3 mb-3">' +
+                                '<h3 class="text-secondary text-bold">FACTURE N° : <b class="text-primary">' +
+                                counter + '</b></h3>' +
+                                '</div>' +
+
+                                '<div class="col-4">' +
+                                '<h5 class="text-secondary mt-3 mb-3">ETAT : EN-ATTENTE </h5>' +
+                                '</div>' +
+
+                                '<div class="col-4">' +
+                                '<div class="input-group mb-3 mt-3">' +
+                                '<span class="input-group-text" id="inputGroup-sizing-lg">Total Facture: </span>' +
+                                '<input type="text" class="form-control" aria-label="" aria-describedby="inputGroup-sizing-lg" readonly value="' +
+                                facture.total_facture + '">' +
+                                '</div>' +
+                                '</div>' +
+
+                                '<div class="col-4">' +
+                                '<form class="form-ouvrir-facture" data-id="' + id_facture + '">' +
+                                '<button type="button" class="btn btn-success" onclick="Ouvrir_facture(this)" style="padding-left:40px;padding-right:40px;"><i class="bi bi-check-lg"></i><br>Ouvrir</button>' +
+                                '</form>' +
+                                '</div>' +
+
+                                '</div>' +
+
+                                '<div class="row justify-content-start">' +
+                                '<div class="col-12">' +
+
+                                '<table class="display m-3 text-left" style="width:100%">' +
+                                '<thead>' +
+                                '<tr>' +
+                                '<th>Designation:</th>' +
+                                '<th>Qte:</th>' +
+                                '<th>Prix:</th>' +
+                                '<th>Total:</th>' +
+                                '</tr>' +
+                                '</thead>' +
+                                '<tbody id="produits_facture_' + id_facture + '">' +
+                                '</tbody>' +
+                                '</table>' +
+
+                                '</div>' +
+                                '</div>' +
+
+
+                                '</div>' +
+
+                                '</div>' +
+                                '</div>' +
+
+
+
+                                '</div>'
+                            );
+
+                            $('#CarouselFacturesEnAttente_indicateurs').append(
+
+                                '<button type="button" data-bs-target="#carouselExample1" data-bs-slide-to="' +
+                                (counter - 1) + '" ' + (counter === 1 ?
+                                    ' class="active" aria-current="true"' : '') +
+                                '></button>'
+                            );
+
+                            // Appel AJAX pour récupérer les ventes associées à la facture
+                            $.ajax({
+                                url: '/ventes/' + id_facture,
+                                type: 'GET',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(response) {
+                                    $.each(response.ventes, function(key, vente) {
+                                        $('#produits_facture_' + id_facture).append(
+                                            '<tr>' +
+                                            '<td class="">' + vente
+                                            .nom_categorie + ' : ' + vente
+                                            .nom_produit + '</td>' +
+                                            '<td class="">' + vente.quantite +
+                                            ' ' + vente.unite_mesure + '</td>' +
+                                            '<td class="">' + vente
+                                            .prix_produit + '</td>' +
+                                            '<td class="">' + vente.prix_total +
+                                            '</td>' +
+                                            '</tr>'
+                                        );
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error(error);
+                                }
+                            });
+
+                            counter++; // Déplacer l'incrémentation ici
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    } // Retirer le point-virgule ici
+                });
+
+            } else {
+                console.error('ERREUR ID');
+            }
+        }
+    </script>
+
+    <script>
+        function Ouvrir_facture(button) {
+            const form = button.closest('.form-ouvrir-facture');
+            const id_facture = form.getAttribute('data-id');
+            console.log('--------------------------------------------');
+            console.log('id facture : ' + id_facture);
+
+            $.ajax({
+                url: '/lafacture-enattente/' + id_facture,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // Récupérer l'objet 'facture' depuis la réponse JSON
+                    const facture = response.facture;
+
+                    // Assurez-vous que 'facture' n'est pas nul
+                    if (facture) {
+                        const id_facture = facture.id;
+                        const id_magasin = facture.id_magasin;
+                        const id_caisse = facture.id_caisse;
+                        const id_user = facture.id_user;
+                        const total_facture = facture.total_facture;
+
+                        console.log('id facture : ' + id_facture);
+                        console.log('id magasin : ' + id_magasin);
+                        console.log('id caisse : ' + id_caisse);
+                        console.log('id user : ' + id_user);
+                        console.log('total : ' + total_facture);
+
+                        Swal.fire({
+                            title: "Ouverture de la vente en-attente",
+                            icon: "info",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        const AffichageQte = document.getElementById('balance');
+                        const AffichagePrixUnitaire = document.getElementById('prix_unitaire');
+                        const AffichagePrixTotal = document.getElementById('prix_total');
+                        const AffichageNomProduit = document.getElementById('produit_text');
+
+                        ListeVentes(id_facture);
+
+                        Calculer_Total_Facture(id_facture);
+
+                        // Réinitialiser les affichages
+                        AffichageQte.textContent = "0.000";
+                        AffichagePrixUnitaire.textContent = "0.00";
+                        AffichagePrixTotal.textContent = "0.00";
+                        AffichageNomProduit.textContent = "----";
+
+                        // let text_id_user = document.getElementById('text-id-user');
+                        let text_id_facture = document.getElementById('text-id-facture');
+                        let text_id_magasin = document.getElementById('text-id-magasin');
+                        // let text_id_caisse = document.getElementById('text-id-caisse');
+
+                        // text_id_user.textContent = id_user;
+                        text_id_facture.textContent = id_facture;
+                        text_id_magasin.textContent = id_magasin;
+                        // text_id_caisse.textContent = id_caisse;
+
+                        // zero();
+
+                        // Ferme le popup
+                        $('#ListeEnAttenteModal').modal('hide');
+
+                    } else {
+                        console.error('Facture non trouvée');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur AJAX:', error);
+                }
+            });
+        }
+    </script>
+
+
+    <script>
         document.getElementById('kgModal').addEventListener('show.bs.modal', function() {
             clearInput();
         });
     </script>
 
+    {{-- ------------------------------------------------------------------------------------------------------ --}}
+
+    <script>
+        function liste_factures_historique() {
+            const IdMagasin = document.getElementById('text-id-magasin').textContent.trim();
+            console.log('--------------------------------------------');
+            console.log('id magasin : ' + IdMagasin);
+
+            if (IdMagasin) { // Vérifie si IdMagasin n'est pas une chaîne vide
+                $.ajax({
+                    url: '/historique-factures/' + IdMagasin,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        $('#historique-factures').empty();
+
+                        $.each(response.factures, function(key, facture) {
+                            const id_facture = facture.id;
+                            console.log('id facture :' + id_facture);
+
+                            $('#historique-factures').append(
+                                '<tr>' +
+                                '<td>' + facture.id + '</td>' +
+                                '<td>' + facture.client + '</td>' +
+                                '<td>' + facture.date + '</td>' +
+                                '<td>' + facture.etat + '</td>' +
+                                '<td>' + facture.total + '</td>' +
+                                '<td>' + facture.versement + '</td>' +
+                                '<td>' + facture.credit + '</td>' +
+                                '<td>' +
+                                '<form class="form-imprimer-facture" data-id="' + id_facture + '">' +
+                                '<button type="button" class="btn btn-success" onclick="Ticket(this)" style="padding-left:10px;padding-right:10px;"><i class="fas fa-print fa-lg"></i><br>Imprimer</button>' +
+                                '</form>' +
+                                '</td>' +
+                                '</tr>' +
+                                '<tr>' + 
+                                '<td colspan="8">' + 
+                                '<div class="container">' +
+                                '<div class="row justify-content-start">' +
+                                '<div class="col-12">' +
+                                '<table class="table table-bordered m-3 text-left" style="width:100%">' +
+                                '<thead>' +
+                                '<tr>' +
+                                '<th>Designation:</th>' +
+                                '<th>Qte:</th>' +
+                                '<th>Prix:</th>' +
+                                '<th>Total:</th>' +
+                                '</tr>' +
+                                '</thead>' +
+                                '<tbody id="ventes_facture_' + id_facture + '">' +
+                                '</tbody>' +
+                                '</table>' +
+                                '</div>' +
+                                '</div>' +
+                                '</div>' +
+                                '</td>' +
+                                '</tr>' // Closing the sales row
+                            );
+
+                            // Appel AJAX pour récupérer les ventes associées à la facture
+                            $.ajax({
+                                url: '/ventes/' + id_facture,
+                                type: 'GET',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function(response) {
+                                    $.each(response.ventes, function(key, vente) {
+                                        $('#ventes_facture_' + id_facture).append(
+                                            '<tr>' +
+                                            '<td class="">' + vente
+                                            .nom_categorie + ' : ' + vente
+                                            .nom_produit + '</td>' +
+                                            '<td class="">' + vente.quantite +
+                                            ' ' + vente.unite_mesure + '</td>' +
+                                            '<td class="">' + vente
+                                            .prix_produit + '</td>' +
+                                            '<td class="">' + vente.prix_total +
+                                            '</td>' +
+                                            '</tr>'
+                                        );
+                                    });
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error fetching ventes:', error);
+                                }
+                            });
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching historique factures:', error);
+                    }
+                });
+            } else {
+                console.error('ERREUR ID: ID du magasin est vide');
+            }
+        }
+    </script>
+
+<script>
+    function Ticket(button) {
+        const form = button.closest('.form-imprimer-facture');
+        const IdFacture = form.getAttribute('data-id');
+        console.log('--------------------------------------------');
+        console.log('id facture : ' + IdFacture);
+
+        $.ajax({
+            url: '/chercher-facture/' + IdFacture,
+            type: 'GET',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                // Récupérer l'objet 'facture' depuis la réponse JSON
+                const facture = response.facture;
+
+                // Assurez-vous que 'facture' n'est pas nul
+                if (facture) {
+                    let iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = '/imprimer-ticket/' + IdFacture;
+                    document.body.appendChild(iframe);
+
+                    iframe.onload = function() {
+                        iframe.contentWindow.print();
+                    };
+                } else {
+                    console.error('Facture non trouvée');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Erreur AJAX:', error);
+            }
+        });
+    }
+</script>
+
+
+
+
+
+    {{-- ------------------------------------------------------------------------------------------------------ --}}
 
 
 
@@ -1730,13 +1890,13 @@
             padding-right: 10px;
         }
 
-        .buttons {
+        .calculator .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-gap: 10px;
         }
 
-        button {
+        .calculator button {
             height: 70px;
             padding: 20px;
             font-size: 18px;
@@ -1747,11 +1907,11 @@
             transition: background-color 0.3s ease;
         }
 
-        button:hover {
+        .calculator button:hover {
             background-color: #d3d3d3;
         }
 
-        button:active {
+        .calculator button:active {
             background-color: #a9a9a9;
         }
     </style>
@@ -1853,4 +2013,83 @@
             }
         }
     </script>
+
+
+
+    {{-- ------------------------------------------------------------------------------------------------------   --}}
+    {{-- <script>
+        $(document).ready(function() {
+            let startX;
+
+            $('#carouselExample1').on('touchstart', function(e) {
+                startX = e.originalEvent.touches[0].clientX;
+                console.log('Touch start at: ' + startX);
+            });
+
+            $('#carouselExample1').on('touchend', function(e) {
+                const endX = e.originalEvent.changedTouches[0].clientX;
+                const distanceX = startX - endX;
+                console.log('Touch end at: ' + endX);
+                console.log('Distance swiped: ' + distanceX);
+
+                if (Math.abs(distanceX) > 50) {
+                    if (distanceX > 0) {
+                        $(this).carousel('next');
+                        console.log('Swiped left, moving to next slide');
+                    } else {
+                        $(this).carousel('prev');
+                        console.log('Swiped right, moving to previous slide');
+                    }
+                } else {
+                    console.log('Swipe distance not sufficient for slide change');
+                }
+            });
+        });
+    </script> --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const carousel = document.querySelector('#carouselExample1');
+            const carouselInstance = new bootstrap.Carousel(carousel, {
+                wrap: false // Empêche le carrousel de se répéter
+            });
+        });
+    </script>
+
+
+
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                processing: true,
+                scrollCollapse: true,
+                scroller: true,
+                scrollY: 400,
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "Tous"]
+                ],
+                buttons: [], // Ajoutez ici les boutons souhaités
+                language: {
+                    "lengthMenu": "Afficher _MENU_ éléments par page",
+                    "zeroRecords": "Aucun enregistrement trouvé",
+                    "info": "Page _PAGE_ sur _PAGES_",
+                    "infoEmpty": "Aucun enregistrement disponible",
+                    "infoFiltered": "(filtré de _MAX_ total des enregistrements)",
+                    "search": "Rechercher :",
+                    "paginate": {
+                        "first": "Premier",
+                        "last": "Dernier",
+                        "next": "Suivant",
+                        "previous": "Précédent"
+                    }
+                },
+                initComplete: function() {
+                    // Ajouter des styles personnalisés
+                    $('.dataTables_length select').css('width',
+                        '60px'); // Ajustez la largeur selon vos besoins
+                },
+            });
+        });
+    </script>
+    {{-- ------------------------------------------------------------------------------------------------------   --}}
 @endsection

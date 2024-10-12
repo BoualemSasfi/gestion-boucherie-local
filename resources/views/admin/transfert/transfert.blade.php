@@ -48,7 +48,9 @@
                                 id="poid_magasin_2_{{ $stock->id_stock_2 }}">
 
                             <input name="poid_ajouter" class="col-2" type="number" value=""
+                                id="poid_ajouter_{{ $stock->id_stock_1 }}"
                                 oninput="updateWeights({{ $stock->id_stock_1 }}, {{ $stock->id_stock_2 }}, this.value)">
+
                             {{ $stock->id_stock_1 }}
                             <input name="poid_magasin_1" class="col-2" type="number" value="{{ $stock->poid_magasin_1 }}" readonly
                                 id="poid_magasin_1_{{ $stock->id_stock_1 }}">
@@ -106,18 +108,34 @@
                     }
                 @endforeach
             @endforeach
+            console.table(stockData);
 
+
+            let poid = [];
+
+            // Boucle à travers les catégories
+            @foreach ($liste_cats as $index => $cat)
+                @foreach ($stocks as $stock)
+                    if ({{ $stock->id_cat }} === {{ $cat->categorie_id }}) {
+                        let poidMagasin1 = document.getElementById("poid_magasin_1_{{ $stock->id_stock_1 }}").value;
+                        let poidAjouter = document.getElementById("poid_ajouter_{{ $stock->id_stock_1 }}").value;
+                        // Vérifiez si poidAjouter est vide
+                        if (!poidAjouter) {
+                            poidAjouter = 0; // Définir poidAjouter à 0 s'il est vide
+                        }
+                        poid.push({
+                            categorie: "{{$stock->categorie}}",
+                            produit: "{{$stock->produit}}",
+                            poid: poidAjouter
+                        });
+
+
+                    }
+                @endforeach
+            @endforeach
             // Afficher le tableau dans la console avec catégorie, produit, ID et poids
 
-
-            // Ajout des valeurs supplémentaires atl, mag et user
-            stockData.push({
-                atl: "{{ $lemagasin->nom }}",  // Ajout de $atl
-                mag: "{{ $magasins1->nom }}",  // Ajout de $mag
-                user: "{{ Auth::user()->name }}" // Ajout de $user
-            });
-
-            console.table(stockData);
+            console.table(poid);
         }
 
         // Appeler cette fonction lorsque vous voulez collecter et afficher les données
@@ -140,6 +158,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     let stockData = [];
+                    let poid = [];
 
                     @foreach ($liste_cats as $index => $cat)
                         @foreach ($stocks as $stock)
@@ -166,8 +185,6 @@
                             }
                         @endforeach
                     @endforeach
-
-
                     console.table(stockData);
 
                     // Ajout des valeurs supplémentaires atl, mag et user
@@ -179,6 +196,35 @@
 
 
                     console.table(stockData); // Affiche le tableau dans la console
+
+
+
+
+                    // Boucle à travers les catégories
+                    @foreach ($liste_cats as $index => $cat)
+                        @foreach ($stocks as $stock)
+                            if ({{ $stock->id_cat }} === {{ $cat->categorie_id }}) {
+                                let poidMagasin1 = document.getElementById("poid_magasin_1_{{ $stock->id_stock_1 }}").value;
+                                let poidAjouter = document.getElementById("poid_ajouter_{{ $stock->id_stock_1 }}").value;
+
+                                // Vérifiez si poidAjouter est vide
+                                if (!poidAjouter) {
+                                    poidAjouter = 0; // Définir poidAjouter à 0 s'il est vide
+                                }
+
+                                poid.push({
+                                    categorie: "{{$stock->categorie}}",
+                                    produit: "{{$stock->produit}}",
+                                    poid: poidAjouter
+                                });
+
+
+                            }
+                        @endforeach
+                    @endforeach
+                    // Afficher le tableau dans la console avec catégorie, produit, ID et poids
+
+                    console.table(poid);
 
                     // Message d'attente avant l'envoi
                     Swal.fire({
@@ -196,7 +242,13 @@
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                             'Content-Type': 'application/json' // Indique que vous envoyez des données JSON
                         },
-                        body: JSON.stringify(stockData) // Envoi des données
+                        // body: JSON.stringify(stockData) // Envoi des données
+
+
+                        body: JSON.stringify({
+                            stockData: stockData, // Envoi des données de stock
+                            poid: poid   // Envoi des données de poids
+                        })
                     })
                         .then(response => {
                             if (!response.ok) {
@@ -208,7 +260,7 @@
                             Swal.close();
                             if (data.success) {
                                 Swal.fire('Succès!', 'Le transfert a été validé.', 'success');
-                                location.reload(); 
+                                location.reload();
                             } else {
                                 Swal.fire('Erreur!', data.message || 'Une erreur s\'est produite.', 'error');
                             }
