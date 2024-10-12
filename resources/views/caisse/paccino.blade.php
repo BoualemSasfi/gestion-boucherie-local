@@ -134,6 +134,17 @@
     {{-- ---------------------------------------------------------------------------------------------------- --}}
     <!-- AFFICHEUR -->
     <div class="container-fluid m-0 p-0">
+        {{-- <div class="container">
+            <div class="row">
+                <div class="col-12 mb-6"></div>
+                <!-- Input pour le port COM -->
+                <input type="text" id="port" value="COM4" style="display:none;">
+            
+            
+                <!-- Bouton de connexion -->
+                <button id="connectButton" >Connecter au Port Série</button>
+            </div>
+        </div> --}}
         <div class="container-fluid">
             <div class="row afficheur text-center pt-1 pb-1 pr-0 pl-0 mt-1 mb-1">
                 <div class="col-2 align-content-center">
@@ -301,11 +312,11 @@
             <div class="col-4 bg-dark p-0 m-0">
 
                 {{-- stockage variable  --}}
-                <a href="" style="color: aliceblue; display: inline-block;">USER / FACTURE / MAGASIN / CAISSE</a>
-                <a id="text-id-user" href="" style="display: inline-block;">{{ $id_user }}</a>
-                <a id="text-id-facture" href="" style="display: inline-block;">{{ $LastFacture->id }}</a>
-                <a id="text-id-magasin" href="" style="display: inline-block;">{{ $id_magasin }}</a>
-                <a id="text-id-caisse" href="" style="display: inline-block;">{{ $id_caisse }}</a>
+                <a href="" style="color: aliceblue; display: none;">USER / FACTURE / MAGASIN / CAISSE</a>
+                <a id="text-id-user" href="" style="display: none;">{{ $id_user }}</a>
+                <a id="text-id-facture" href="" style="display: none;">{{ $LastFacture->id }}</a>
+                <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
+                <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
                 {{-- stockage variable  --}}
 
                 <div class="card shadow m-3" style="height:440px;" data-aos="flip-left">
@@ -702,6 +713,7 @@
             </div>
         </footer>
     </div>
+    
 
 
     <!-- Popup changement de prix -->
@@ -803,12 +815,6 @@
     <!-- Popup -->
 
 
-    <!-- Input pour le port COM -->
-    <input type="text" id="port" value="COM4" style="display:none;">
-
-
-    <!-- Bouton de connexion -->
-    {{-- <button id="connectButton">Connecter au Port Série</button> --}}
 
 
 
@@ -947,7 +953,7 @@
                         $('#products').empty();
                         $.each(response.produits, function(key, value) {
                             $('#products').append(
-                                '<div class="col-2 p-2"  data-aos="fade-down">' +
+                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 p-2"  data-aos="fade-down">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
