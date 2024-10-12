@@ -91,80 +91,151 @@
                                         </ul>
 
                                         <div id="frais-content" class="tab-content mt-3">
-
+                                            <!-- Stock frais  -->
                                             <div>
                                                 <h4 class="text-center">Frais {{$frais_id}} </h4>
-                                                <button type="button" class="btn btn-primary" data-stk="" id="trans_frais">
+                                                <button type="button" class="btn btn-success col-12" data-stk="" id="trans_frais">
                                                     Transfert
                                                 </button>
                                             </div>
+                                            <!-- Nav tabs -->
+                                            <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
+                                                @foreach ($stock_frais->groupBy('categorie') as $categorie => $produits)
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link @if ($loop->first) active @endif" id="tab-{{$categorie}}"
+                                                            data-toggle="tab" href="#category-{{$loop->index}}" role="tab"
+                                                            aria-controls="category-{{$loop->index}}" aria-selected="true">
+                                                            {{$categorie}}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
 
-                                            <table class="table-striped table-bordered col-12">
-                                                <thead class="text-center">
-                                                    <tr>
-                                                        <th>categorré</th>
-                                                        <th>produit</th>
-                                                        <th>poid</th>
-                                                        <th>action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($stock_frais as $frais)
-                                                        <tr>
-                                                            <td>{{$frais->categorie}}</td>
-                                                            <td>{{$frais->produit}}</td>
-                                                            <td>{{$frais->quantity}}</td>
+                                            <!-- Tab panes -->
+                                            <div class="tab-content">
+                                                @foreach ($stock_frais->groupBy('categorie') as $categorie => $produits)
+                                                    <div class="tab-pane fade @if ($loop->first) show active @endif"
+                                                        id="category-{{$loop->index}}" role="tabpanel"
+                                                        aria-labelledby="tab-{{$categorie}}">
 
-                                                            <td class="text-center space-x-8">
-                                                                <!-- <button type="button" class="btn btn-outline-secondary">add</button>
-                                                                 <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
-                                                                <button type="button" class="btn btn-outline-info">ajustier</button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                        <!-- Table of products -->
+                                                        <table class="table-striped table-bordered col-12">
+                                                            <thead class="text-center">
+                                                                <tr>
+
+                                                                    <th>Produit</th>
+                                                                    <th>Poid</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($produits as $produit)
+                                                                    <tr>
+
+                                                                        <td>{{$produit->produit}}</td>
+                                                                        <td>{{ number_format($produit->quantity, 2) }} kg</td>
+
+                                                                        <td class="text-center space-x-8">
+
+
+                                                                            <button id="ajst-{{ $produit->id_frais }}" type="button"
+                                                                                class="btn btn-outline-info"
+                                                                                onclick="showAjustModal('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">
+                                                                                ajustier
+                                                                            </button>
+                                                                            <div class="text-center">
+                                                                                <button type="button" class="btn btn-outline-primary"
+                                                                                    onclick="collectData('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">collect
+                                                                                    data</button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
                                         </div>
 
+                                        <!-- Stock congele  -->
                                         <div id="congele-content" class="tab-content mt-3" style="display: none;">
                                             <div>
                                                 <h4 class="text-center">congele {{$congele_id}} </h4>
-                                                <button type="button" class="btn btn-primary" data-stk="{{$congele_id}}" id="trans_congele">
+                                                <button type="button" class="btn btn-success col-12" data-stk="{{$congele_id}}"
+                                                    id="trans_congele">
                                                     Transfert
                                                 </button>
                                             </div>
 
-                                            <table class="table-striped table-bordered col-12">
-                                                <thead class="text-center">
-                                                    <tr>
-                                                        <th>categorré</th>
-                                                        <th>produit</th>
-                                                        <th>poid</th>
-                                                        <th>action</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($stock_congele as $congele)
-                                                        <tr>
-                                                            <td>{{$congele->categorie}}</td>
-                                                            <td>{{$congele->produit}}</td>
+                                            <!-- Nav tabs -->
+                                            <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
+                                                @foreach ($stock_congele->groupBy('categorie') as $categorie => $produits)
+                                                    <li class="nav-item" role="presentation">
+                                                        <a class="nav-link @if ($loop->first) active @endif" id="tab-{{$categorie}}"
+                                                            data-toggle="tab" href="#category-{{$loop->index}}" role="tab"
+                                                            aria-controls="category-{{$loop->index}}" aria-selected="true">
+                                                            {{$categorie}}
+                                                        </a>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
 
-                                                            <td>{{$congele->quantity}}</td>
+                                            <!-- Tab panes -->
+                                            <div class="tab-content">
+                                                @foreach ($stock_congele->groupBy('categorie') as $categorie => $produits)
+                                                    <div class="tab-pane fade @if ($loop->first) show active @endif"
+                                                        id="category-{{$loop->index}}" role="tabpanel"
+                                                        aria-labelledby="tab-{{$categorie}}">
 
-                                                            <td class="text-center space-x-8">
-                                                                <!-- <button type="button" class="btn btn-outline-secondary">add</button>
-                                                                                                                                                            <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
-                                                                <button type="button" class="btn btn-outline-info">ajustier</button>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
+                                                        <!-- Table of products -->
+                                                        <table class="table-striped table-bordered col-12">
+                                                            <thead class="text-center">
+                                                                <tr>
+                                                                    <th>Produit</th>
+                                                                    <th>Poid</th>
+                                                                    <th>Action</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($stock_congele as $congele)
+                                                                    <tr>
+                                                                        <td>{{$congele->produit}}</td>
+                                                                        <td> {{ number_format($congele->quantity, 2) }} Kg</td>
+
+                                                                        <td class="text-center space-x-8">
+                                                                            <!-- <button id="ajst" type="button" class="btn btn-outline-info">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ajustier
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
+
+                                                                            <button id="ajst-{{ $congele->id_congele }}" type="button"
+                                                                                class="btn btn-outline-info"
+                                                                                onclick="showAjustModal('{{ $congele->quantity }}' , '{{$congele->id_congele }}')">
+                                                                                ajustier
+                                                                            </button>
+
+
+
+                                                                        </td>
+                                                                    </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+
+
+                                                    </div>
+                                                @endforeach
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
 
                             @else
+
+                                <!-- juste frais  -->
+
 
                                 <div>
                                     <h4 class="text-center">Frais {{$frais_id}} </h4>
@@ -172,34 +243,59 @@
                                         Transfert
                                     </button>
                                 </div>
-                                <table class="table-striped table-bordered col-12">
-                                    <thead class="text-center">
-                                        <tr>
-                                            <th>categorré</th>
-                                            <th>produit</th>
-                                            <th>poid</th>
-                                            <th>action</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
+                                    @foreach ($stock_frais->groupBy('categorie') as $categorie => $produits)
+                                        <li class="nav-item" role="presentation">
+                                            <a class="nav-link @if ($loop->first) active @endif" id="tab-{{$categorie}}"
+                                                data-toggle="tab" href="#category-{{$loop->index}}" role="tab"
+                                                aria-controls="category-{{$loop->index}}" aria-selected="true">
+                                                {{$categorie}}
+                                            </a>
+                                        </li>
+                                    @endforeach
+                                </ul>
 
-                                        @foreach ($stock_frais as $frais)
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    @foreach ($stock_frais->groupBy('categorie') as $categorie => $produits)
+                                        <div class="tab-pane fade @if ($loop->first) show active @endif" id="category-{{$loop->index}}"
+                                            role="tabpanel" aria-labelledby="tab-{{$categorie}}">
+
+                                            <!-- Table of products -->
+                                            <table class="table-striped table-bordered col-12">
+                                                <thead class="text-center">
+                                                    <tr>
+
+                                                        <th>Produit</th>
+                                                        <th>Poid</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($produits as $produit)
+                                                        <tr>
+
+                                                            <td>{{$produit->produit}}</td>
+                                                            <td>{{ number_format($produit->quantity, 2) }} Kg</td>
+                                                            <td class="text-center space-x-8">
 
 
-                                            <tr>
-                                                <td>{{$frais->categorie}} </td>
-                                                <td>{{$frais->produit}} </td>
-                                                <td>{{$frais->quantity}} </td>
+                                                                <button id="ajst-{{ $produit->id_frais }}" type="button"
+                                                                    class="btn btn-outline-info"
+                                                                    onclick="showAjustModal('{{ $produit->quantity }}','{{$produit->id_frais}}')">
+                                                                    ajustier
+                                                                </button>
 
-                                                <td class="text-center space-x-8">
-                                                    <!-- <button type="button" class="btn btn-outline-secondary">add</button>
-                                                                                                                                            <button type="button" class="btn btn-outline-danger">trasfirer</button> -->
-                                                    <button type="button" class="btn btn-outline-info">ajustier</button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    @endforeach
+                                </div>
+
 
                             @endif
                 </div>
@@ -236,84 +332,207 @@
 
 
 
-<script>
-    document.getElementById('trans_frais').addEventListener('click', async () => {
-        const id_atl = 'frais'; // stock frais
-        const id_magasin = {{$magasins->id}}; // ID du stock frais
-        const magasins = {
-            @foreach ($lesmagasins as $lemagasin)
-                "{{ $lemagasin->id }}": "{{ $lemagasin->nom }}",
-            @endforeach
-        };
-
-        const { value: selectedMagasin } = await Swal.fire({
-            title: "Sélectionnez un magasin",
-            input: "select",
-            inputOptions: magasins, // Utiliser l'objet magasins ici
-            inputPlaceholder: "Sélectionnez un magasin",
-            showCancelButton: true,
-            inputValidator: (value) => {
-                return new Promise((resolve) => {
-                    if (value) {
-                        resolve();
-                    } else {
-                        resolve("Vous devez sélectionner un magasin :)");
-                    }
-                });
-            }
-        });
-
-        if (selectedMagasin) {
-            const result = await Swal.fire({
-                title: `Voulez-vous vraiment transférer magasin ${id_magasin} de atl : {{$frais_id}} vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Oui, transférer !",
-                cancelButtonText: "Annuler"
-            });
-
-            // Si l'utilisateur confirme le transfert
-            if (result.isConfirmed) {
-                // Rediriger vers la route de transfert avec les paramètres id_atl et id_magasin
-                window.location.href = `/admin/transfert/${id_atl}/${selectedMagasin}/${id_magasin}`;
-            }
-        }
-    });
-</script>
-
-
         <script>
-            document.getElementById('trans_congele').addEventListener('click', async () => {
-                // Convert the PHP array of magasins into a JavaScript object
+            document.getElementById('trans_frais').addEventListener('click', async () => {
+                const id_atl = 'frais'; // stock frais
+                const id_magasin = {{$magasins->id}}; // ID du stock frais
                 const magasins = {
                     @foreach ($lesmagasins as $lemagasin)
                         "{{ $lemagasin->id }}": "{{ $lemagasin->nom }}",
                     @endforeach
-                };
+            };
 
-                const { value: selectedMagasin } = await Swal.fire({
-                    title: "Sélectionnez un magasin",
-                    input: "select",
-                    inputOptions: magasins, // Use the magasins object here
-                    inputPlaceholder: "Sélectionnez un magasin",
-                    showCancelButton: true,
-                    inputValidator: (value) => {
-                        return new Promise((resolve) => {
-                            if (value) {
-                                resolve();
-                            } else {
-                                resolve("Vous devez sélectionner un magasin :)");
-                            }
-                        });
-                    }
-                });
-
-                if (selectedMagasin) {
-                    Swal.fire(`Vous avez sélectionné : ${magasins[selectedMagasin]}`);
+            const { value: selectedMagasin } = await Swal.fire({
+                title: "Sélectionnez un magasin",
+                input: "select",
+                inputOptions: magasins, // Utiliser l'objet magasins ici
+                inputPlaceholder: "Sélectionnez un magasin",
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    return new Promise((resolve) => {
+                        if (value) {
+                            resolve();
+                        } else {
+                            resolve("Vous devez sélectionner un magasin :)");
+                        }
+                    });
                 }
             });
+
+            if (selectedMagasin) {
+                const result = await Swal.fire({
+                    title: `Voulez-vous transférer du stock de magasin ${id_magasin} de atl : {{$frais_id}} vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Oui, transférer !",
+                    cancelButtonText: "Annuler"
+                });
+
+                // Si l'utilisateur confirme le transfert
+                if (result.isConfirmed) {
+                    // Rediriger vers la route de transfert avec les paramètres id_atl et id_magasin
+                    window.location.href = `/admin/transfert/${id_atl}/${selectedMagasin}/${id_magasin}`;
+                }
+            }
+    });
+        </script>
+
+
+        <script>
+            document.getElementById('trans_congele').addEventListener('click', async () => {
+                const id_atl = 'frais'; // stock frais
+                const id_magasin = {{$magasins->id}}; // ID du stock frais
+                const magasins = {
+                    @foreach ($lesmagasins as $lemagasin)
+                        "{{ $lemagasin->id }}": "{{ $lemagasin->nom }}",
+                    @endforeach
+            };
+
+            const { value: selectedMagasin } = await Swal.fire({
+                title: "Sélectionnez un magasin",
+                input: "select",
+                inputOptions: magasins, // Utiliser l'objet magasins ici
+                inputPlaceholder: "Sélectionnez un magasin",
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    return new Promise((resolve) => {
+                        if (value) {
+                            resolve();
+                        } else {
+                            resolve("Vous devez sélectionner un magasin :)");
+                        }
+                    });
+                }
+            });
+
+            if (selectedMagasin) {
+                const result = await Swal.fire({
+                    title: `Voulez-vous transférer du stock de magasin ${id_magasin} de atl : {{$congele_id}} vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Oui, transférer !",
+                    cancelButtonText: "Annuler"
+                });
+
+                // Si l'utilisateur confirme le transfert
+                if (result.isConfirmed) {
+                    // Rediriger vers la route de transfert avec les paramètres id_atl et id_magasin
+                    window.location.href = `/admin/transfert_congele/${id_atl}/${selectedMagasin}/${id_magasin}`;
+                }
+            }
+    });
         </script>
 
 
 
+
+        <script>
+            function collectData(quantity, id, magasin, user, produit, categorie) {
+                let stockData = [];
+                // Ajout des valeurs supplémentaires atl, mag et user
+                let etat = 0;
+
+                if (quantity > 100) {
+                    etat = 1;  // Si la nouvelle quantité est inférieure à l'ancienne, état 1
+                } else if (quantity < 100) {
+                    etat = 0;  // Si la nouvelle quantité est supérieure, état 0
+                }
+
+                stockData.push({
+                    id: id,
+                    quantity: quantity,
+                    magasin: magasin,
+                    user: user,
+                    categorie: categorie,
+                    produit: produit,
+                    etat: etat
+                });
+
+                console.table(stockData);
+
+
+
+            }
+
+            // Appeler cette fonction lorsque vous voulez collecter et afficher les données
+            collectData();
+
+        </script>
+
+        <script>
+            function showAjustModal(quantity, id, magasin, user, produit, categorie) {
+                quantity = parseFloat(quantity).toFixed(2);  // Convertir en nombre avec 2 décimales si nécessaire
+
+                Swal.fire({
+                    title: "Ajuster le produit",
+                    text: "Modifiez la quantité si nécessaire pour le produit ID : " + id,
+                    input: 'number',
+                    inputLabel: 'Quantité actuelle',
+                    inputValue: quantity,
+                    showCancelButton: true,
+                    confirmButtonText: 'Enregistrer',
+                    cancelButtonText: 'Annuler',
+                    inputValidator: (value) => {
+                        if (!value || isNaN(value) || value <= 0) {
+                            return 'Vous devez entrer une quantité valide et supérieure à 0 !';
+                        }
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const newQuantity = parseFloat(result.value);  // Convertir la nouvelle valeur en nombre
+                        let etat = 0;
+
+                        if (quantity > newQuantity) {
+                            etat = 1;  // Si la nouvelle quantité est inférieure à l'ancienne, état 1
+                        } else if (quantity < newQuantity) {
+                            etat = 0;  // Si la nouvelle quantité est supérieure, état 0
+                        }
+
+                        // Stocker les données dans un objet stockData
+                        let stockData = {
+                            id: id,
+                            quantity: newQuantity,
+                            magasin: magasin,
+                            user: user,
+                            categorie: categorie,
+                            produit: produit,
+                            etat: etat
+                        };
+
+                        console.table(stockData);
+
+                        // Envoyer stockData via AJAX au contrôleur
+                        $.ajax({
+                            url: '/mettre-a-jour-quantite',  // L'URL vers laquelle envoyer les données
+                            method: 'POST',  // Utiliser la méthode POST
+                            data: {
+                                _token: '{{ csrf_token() }}',  // Inclure le jeton CSRF pour la sécurité
+                                stockData: stockData  // Envoyer tout l'objet stockData
+                            },
+                            success: function (response) {
+                                // Afficher une notification de succès après la mise à jour
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Quantité mise à jour',
+                                    text: `Nouvelle quantité: ${newQuantity} Kg`,  // Afficher la nouvelle quantité
+                                });
+                                location.reload();  // Rafraîchir la page après la mise à jour
+                            },
+                            error: function (error) {
+                                // Afficher un message d'erreur si la requête échoue
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Erreur',
+                                    text: "La mise à jour de la quantité a échoué.",
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+
+        </script>
+
+
+        <!-- ------------------------------------------------------------------------------------------------------------------------ -->
         @endsection

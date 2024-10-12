@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Magasin;
 use App\Models\Lestock;
 use App\Models\Stock;
+use App\Models\Ajuste;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Storage;
 
 
 class MagasinController extends Controller
-{    public function __construct()
+{
+    public function __construct()
     {
         $this->middleware('auth');
     }
@@ -103,6 +105,47 @@ class MagasinController extends Controller
         return redirect('/admin/magasin');
     }
 
+
+    public function ajouster(Request $request)
+    {
+        $data = $request->input('stockData');
+
+        // Valider les données reçues
+        $request->validate([
+            'stockData.id' => 'required|integer',
+            'stockData.quantity' => 'required|numeric',
+            'stockData.magasin' => 'required|string',
+            'stockData.user' => 'required|string',
+            'stockData.categorie' => 'required|string',
+            'stockData.produit' => 'required|string',
+            'stockData.etat' => 'required|integer'
+        ]);
+
+        // Récupérer et mettre à jour le produit
+        $produit = Lestock::find($data['id']);
+        if ($produit) {
+            $produit->quantity = $data['quantity'];
+            $produit->save();
+
+
+            // Enregistrement dans la table Ajuste
+            $ajst = new Ajuste();
+            $ajst->user = $data['user'];
+            $ajst->atl = $data['magasin'];
+            $ajst->categorie = $data['categorie'] ;
+            $ajst->produit = $data['produit'] ;
+            $ajst->qauntity = $data['quantity'];
+            $ajst->etat = $data['etat'];
+            $ajst->save();
+
+            // Log ou ajuster selon vos besoins...
+            return response()->json(['message' => 'Quantité mise à jour avec succès.']);
+        } else {
+            return response()->json(['message' => 'Produit non trouvé.'], 404);
+        }
+
+    }
+
     public function stock($id)
     {
         $magasins = Magasin::find($id);
@@ -117,6 +160,8 @@ class MagasinController extends Controller
                 'stocks.id as id_frais',
                 'categories.nom as categorie',
                 'produits.nom_pr as produit',
+                'produits.photo_pr as photo',
+                'lestocks.id as id_frais',
                 'quantity'
             )
             ->get();
@@ -134,9 +179,9 @@ class MagasinController extends Controller
         // )
         // ->groupBy('categorie.nom','categories.id')
         // ->get(); 
-        
-        
-        
+
+
+
 
 
 
@@ -150,6 +195,8 @@ class MagasinController extends Controller
                 'stocks.id as id_congele',
                 'categories.nom as categorie',
                 'produits.nom_pr as produit',
+                'produits.photo_pr as photo',
+                'lestocks.id as id_congele',
                 'quantity'
             )
             ->get();

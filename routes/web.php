@@ -116,6 +116,9 @@ Route::controller(MagasinController::class)->group(function () {
     Route::put('/admin/magasin/{id}/update', 'update');
     Route::get('/admin/magasin/{id}/stock', 'stock');
     Route::delete('/admin/magasin/{id}/delete', 'destroy');
+
+    // ajustisement de stock
+    Route::post('/mettre-a-jour-quantite','ajouster')->name('ajouster');
 });
 //-------------------------------------------------------------------------
 // ---------                Stock                              ----------
@@ -126,9 +129,6 @@ Route::controller(StockController::class)->group(function () {
     Route::get('/admin/stock/add', 'create');
     Route::get('/admin/stock/addup/', 'addup');
     Route::delete('/admin/stock/{id}/delet_add', 'delet_add');
-    
-    // add category ajax
-    // Route::post('/admin/stock/addcat/{magasin}/{category}', 'add_category');
     
     Route::post(' /admin/stock/categorie/add/{id_stock}/{category}', 'addcat');
 
@@ -156,8 +156,16 @@ Route::controller(StockController::class)->group(function () {
 // ------------------------------------------------------------------------
 Route::controller(TransfertController::class)->group(function () {
     Route::get('/admin/transfert/{id_atl}/{id_mag}/{id_magasin}', 'transfert');
+    Route::get('/admin/transfert_congele/{id_atl}/{id_mag}/{id_magasin}', 'transfert_congele');
 
     Route::post('/admin/transfert/validtransfert', 'validTransfert')->name('validtransfert');
+
+    Route::get('admin/transfert_liste','liste');
+    Route::get('admin/transfert/{id}','details');
+    Route::get('admin/ajuste','ajste_liste');
+    
+
+
 });
 
 
