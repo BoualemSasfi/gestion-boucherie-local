@@ -70,6 +70,23 @@
     <!-- Inclure SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    {{-- data tables  --}}
+    <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/searchpanes/2.3.3/css/searchPanes.bootstrap5.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/staterestore/1.4.1/css/stateRestore.bootstrap5.min.css" rel="stylesheet">
+     
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/3.0.3/js/responsive.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.3.3/js/dataTables.searchPanes.min.js"></script>
+    <script src="https://cdn.datatables.net/searchpanes/2.3.3/js/searchPanes.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/staterestore/1.4.1/js/dataTables.stateRestore.min.js"></script>
+    <script src="https://cdn.datatables.net/staterestore/1.4.1/js/stateRestore.bootstrap5.min.js"></script>
+
 
 </head>
 
@@ -95,10 +112,10 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow">
 
 
-                    <div class="nav-item" style="">
+                    {{-- <div class="nav-item" style="">
                         <button class="btn btn-success" onclick="openCashDrawer()"
                             style="height: 100%;margin-left:20px;">Ouvrir la Caisse</button>
-                    </div>
+                    </div> --}}
 
 
 
@@ -228,23 +245,26 @@
 
     <script>
         function openCashDrawer() {
-            fetch("{{ route('open.cash.drawer') }}", {
-                    method: 'GET'
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erreur lors de l\'ouverture de la caisse');
+            $.ajax({
+                url: "{{ route('open.cash.drawer') }}",
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.message) {
+                        console.log(response.message);
+                    } else {
+                        console.error("Erreur : Réponse inattendue.");
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data.message);
-                })
-                .catch(error => {
-                    console.error("Erreur : ", error);
-                });
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erreur lors de l'ouverture de la caisse :", error);
+                }
+            });
         }
     </script>
+    
 
 </body>
 

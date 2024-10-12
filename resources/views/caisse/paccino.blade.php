@@ -89,12 +89,14 @@
         .bouton-action .btn {
             font-size: 14px;
             padding: 5px;
+            height: 80px;
         }
 
         .bouton-action i {
-            font-size: 20px;
+            font-size: 28px;
             /* margin-top: 2px; */
-            padding-top: 2px;
+            padding-top: 5px;
+            padding-bottom: 5px;
         }
     </style>
 
@@ -132,6 +134,17 @@
     {{-- ---------------------------------------------------------------------------------------------------- --}}
     <!-- AFFICHEUR -->
     <div class="container-fluid m-0 p-0">
+        {{-- <div class="container">
+            <div class="row">
+                <div class="col-12 mb-6"></div>
+                <!-- Input pour le port COM -->
+                <input type="text" id="port" value="COM4" style="display:none;">
+            
+            
+                <!-- Bouton de connexion -->
+                <button id="connectButton" >Connecter au Port Série</button>
+            </div>
+        </div> --}}
         <div class="container-fluid">
             <div class="row afficheur text-center pt-1 pb-1 pr-0 pl-0 mt-1 mb-1">
                 <div class="col-2 align-content-center">
@@ -299,11 +312,11 @@
             <div class="col-4 bg-dark p-0 m-0">
 
                 {{-- stockage variable  --}}
-                <a href="" style="color: aliceblue; display: inline-block;">USER / FACTURE / MAGASIN / CAISSE</a>
-                <a id="text-id-user" href="" style="display: inline-block;">{{ $id_user }}</a>
-                <a id="text-id-facture" href="" style="display: inline-block;">{{ $LastFacture->id }}</a>
-                <a id="text-id-magasin" href="" style="display: inline-block;">{{ $id_magasin }}</a>
-                <a id="text-id-caisse" href="" style="display: inline-block;">{{ $id_caisse }}</a>
+                <a href="" style="color: aliceblue; display: none;">USER / FACTURE / MAGASIN / CAISSE</a>
+                <a id="text-id-user" href="" style="display: none;">{{ $id_user }}</a>
+                <a id="text-id-facture" href="" style="display: none;">{{ $LastFacture->id }}</a>
+                <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
+                <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
                 {{-- stockage variable  --}}
 
                 <div class="card shadow m-3" style="height:440px;" data-aos="flip-left">
@@ -321,13 +334,15 @@
                         </div>
                     </div>
                     <div class="card-body m-0 p-1" style="max-height: 400px; overflow-y: auto;">
-                        <table id="example" class="display" style="width:100%">
+                        <table id="affichage-produits-facture" class="text-left" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>Designation:</th>
                                     <th>Qte:</th>
                                     <th>Prix:</th>
                                     <th>Total:</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody id="ventes_liste">
@@ -344,16 +359,16 @@
         <footer class="sticky-footer-caisse bg-white">
             <div class="container-fluid boutons-caisse m-0 p-2">
                 <div class="row align-content-center m-0 p-0">
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="row bouton-action">
                             <div class="col-3">
-                                <button class="btn btn-primary bouton-caisse" type="button">
+                                <button class="btn btn-dark bouton-caisse" type="button">
                                     <i class="fas fa-store-alt fa-lg"></i>
                                     <br> Retour
                                 </button>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#calculatorModal">
                                     <i class="fas fa-calculator fa-lg"></i>
                                     <br>Calculatrice
@@ -361,7 +376,7 @@
                             </div>
                             <div class="col-3">
                                 {{-- Bouton pour afficher le popup --}}
-                                <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#ListeFacturesModal" onclick="liste_factures_historique()">
                                     <i class="fa fa-shopping-cart fa-lg"></i>
                                     <br> Historique Ventes
@@ -370,14 +385,14 @@
                                 <!-- Popup -->
                                 <div class="modal fade" id="ListeFacturesModal" tabindex="-1" aria-labelledby=""
                                     aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
                                         <div class="modal-content">
                                             <!-- Corps du modal -->
                                             <div class="modal-body">
                                                 <h4 class="modal-title" id="">Liste des ventes</h4>
                                                 <div class="container bg-light mt-2 mb-2" style="height:450px;">
                                                     <div class="row">
-                                                        <table id="example" class="table table-striped table-bordered">
+                                                        <table id="example" class="display" style="width:100%">
                                                             <thead>
                                                                 <tr>
                                                                     <th>ID</th>
@@ -423,7 +438,7 @@
 
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-warning bouton-caisse" type="button">
+                                <button class="btn btn-dark bouton-caisse" type="button">
                                     <i class="fa fa-users fa-lg" aria-hidden="true"></i>
                                     <br>Clients
                                 </button>
@@ -432,11 +447,11 @@
                         </div>
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-6">
                         <div class="row bouton-action">
                             <div class="col-3">
                                 {{-- Bouton pour afficher le popup --}}
-                                <button class="btn btn-secondary bouton-caisse" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#ListeEnAttenteModal" id="bouton_liste_enattente"
                                     onclick="liste_factures_enattente()">
                                     <i class="fas fa-user-clock fa-lg"></i>
@@ -504,6 +519,14 @@
                                 <!-- Popup -->
 
                             </div>
+
+                            <div class="col-3">
+                                <button class="btn btn-primary" type="button" onclick="FactureEnAttente()">
+                                    <i class="fa fa-pause-circle fa-lg"></i>
+                                    <br>Vente En Attente
+                                </button>
+                            </div>
+
                             <div class="col-6">
                                 {{-- Bouton pour afficher le popup --}}
                                 <button class="btn btn-success" type="button" data-bs-toggle="modal"
@@ -550,7 +573,7 @@
                                                             <input type="number" id="VersementInput"
                                                                 class="form-control" placeholder="0.00"
                                                                 style="text-align: center; font-size:26px;"
-                                                                inputmode="decimal">
+                                                                inputmode="decimal" readonly>
                                                         </div>
                                                         <div class="col-4">
                                                             <label for="creditInput" id="LabelCredit">Crédit :</label>
@@ -650,24 +673,14 @@
 
 
                             </div>
-                            <div class="col-3">
-                                <button class="btn btn-secondary" type="button" onclick="FactureEnAttente()">
-                                    <i class="fa fa-pause-circle fa-lg"></i>
-                                    <br>Vente En Attente
-                                </button>
-                            </div>
+                            
 
                         </div>
                     </div>
 
-                    <div class="col-4">
+                    {{-- <div class="col-4">
                         <div class="row bouton-action">
-                            {{-- <div class="col-3">
-                                <button class="btn btn-dark" type="button">
-                                    <i class="fas fa-balance-scale fa-lg"></i>
-                                    <br>Modifier QTE
-                                </button>
-                            </div> --}}
+                            
                             <div class="col-3">
                                 <button class="btn btn-danger" type="button">
                                     <i class="fas fa-trash-alt fa-lg"></i>
@@ -693,24 +706,115 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
 
                 </div>
             </div>
         </footer>
     </div>
+    
 
 
+    <!-- Popup changement de prix -->
+    <div class="modal fade" id="PrixModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <!-- En-tête du modal -->
+                {{-- <div class="modal-header">
+                <h4 class="modal-title" id="FactureModalLabel">BLABLABLABLABLA :</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div> --}}
+                <!-- Corps du modal -->
+                <div class="modal-body">
+                    <h4 class="modal-title" id="">MODIFIER LE PRIX</h4>
+                    <div class="mt-3">
+
+                        <div class="row justify-content-center">
+
+                            <div class="col-8">
+                                <div class="input-group mb-3 mt-3">
+                                    <span class="input-group-text" id="inputGroup-sizing-lg">Prix Total :</span>
+                                    <input type="number" id="TotalInput" class="form-control" placeholder="0.00"
+                                        style="text-align: center; font-size:26px;" inputmode="decimal" aria-label=""
+                                        aria-describedby="inputGroup-sizing-lg" readonly>
+                                </div>
+                                {{-- <label for="versementInput">Prix Total :</label>
+                                <input type="number" id="TotalInput" class="form-control" placeholder="0.00"
+                                    style="text-align: center; font-size:26px;" inputmode="decimal" readonly> --}}
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-4 h-100">
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('1')" style="width:100%;">1</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('4')" style="width:100%;">4</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('7')" style="width:100%;">7</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('0')" style="width:100%;">0</button>
+                            </div>
+                            <div class="col-4 h-100">
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('2')" style="width:100%;">2</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('5')" style="width:100%;">5</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('8')" style="width:100%;">8</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('00')" style="width:100%;">00</button>
+                            </div>
+                            <div class="col-4 h-100">
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('3')" style="width:100%;">3</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('6')" style="width:100%;">6</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('9')" style="width:100%;">9</button>
+                                <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                    onclick="PrixAppendValue('000')" style="width:100%;">000</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
+                <div class="modal-footer m-0 p-2">
+                    <div class="container pl-0">
+                        <div class="row justify-content-center">
 
-    <!-- Input pour le port COM -->
-    <input type="text" id="port" value="COM4" style="display:none;">
+                            <div class="col-4">
+                                <button type="button" class="btn btn-success" onclick="ValiderChangementPrix()"
+                                    style="width: 150px;">
+                                    <i class="bi bi-check-lg"></i><br>Valider
+                                </button>
+
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-danger" onclick="ClearTotalPrix()"
+                                    style="width: 150px;">
+                                    <i class="bi bi-eraser"></i><br>Effacer
+                                </button>
+
+                            </div>
+                            <div class="col-4">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                    style="width: 150px;">
+                                    <i class="bi bi-x"></i><br>Fermer
+                                </button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Popup -->
 
 
-    <!-- Bouton de connexion -->
-    {{-- <button id="connectButton">Connecter au Port Série</button> --}}
 
 
 
@@ -849,7 +953,7 @@
                         $('#products').empty();
                         $.each(response.produits, function(key, value) {
                             $('#products').append(
-                                '<div class="col-2 p-2"  data-aos="fade-down">' +
+                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 p-2"  data-aos="fade-down">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
@@ -1121,6 +1225,15 @@
                             '<td class="">' + quantite + ' ' + value.unite_mesure + '</td>' +
                             '<td class="">' + value.prix_produit + '</td>' +
                             '<td class="">' + value.prix_total + '</td>' +
+                            '<td class="">' +
+                            '<form class="form-prix-produit" data-id="' + value.id +
+                            '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrix(this)">' +
+                            '<i class="fas fa-coins"></i></button></form>' +
+                            '</td>' +
+                            '<td class="">' +
+                            '<form class="form-supprimer-produit" data-id="' + value.id +
+                            '"><button class="btn btn-danger" type="button" onclick="SupprimerProduit(this)"><i class="fas fa-trash-alt"></i></button></form>' +
+                            '</td>' +
                             '</tr>'
                         );
                     });
@@ -1153,6 +1266,61 @@
             });
 
             console.log('Calcul Total Facture executé');
+        }
+    </script>
+
+    <script>
+        function SupprimerProduit(button) {
+            const form = button.closest('.form-supprimer-produit');
+            const IdVente = form.getAttribute('data-id');
+            const id_facture = document.getElementById('text-id-facture').textContent;
+
+            if (IdVente) {
+
+                Swal.fire({
+                    title: "Voulez vous la supprimée ?",
+                    icon: "error",
+                    showDenyButton: true,
+                    showCancelButton: false,
+                    confirmButtonText: "Oui",
+                    denyButtonText: `Non`,
+                    customClass: {
+                        confirmButton: 'btn-danger',
+                        denyButton: 'btn-success'
+                    }
+                }).then((result) => {
+                    /* Read more about isConfirmed, isDenied below */
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+                            url: '/supprimer-vente/' + IdVente,
+                            type: 'get',
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content'
+                                ) // Assurez-vous que cette balise meta est incluse dans votre HTML
+                            },
+                            success: function(response) {
+                                Swal.fire({
+                                    title: "Supprimée",
+                                    icon: "error",
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+
+                                ListeVentes(id_facture);
+
+                                Calculer_Total_Facture(id_facture);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error(error);
+                            }
+                        });
+
+                    }
+                });
+
+            }
         }
     </script>
 
@@ -1758,23 +1926,24 @@
                                 '<td>' + facture.versement + '</td>' +
                                 '<td>' + facture.credit + '</td>' +
                                 '<td>' +
-                                '<form class="form-imprimer-facture" data-id="' + id_facture + '">' +
+                                '<form class="form-imprimer-facture" data-id="' + id_facture +
+                                '">' +
                                 '<button type="button" class="btn btn-success" onclick="Ticket(this)" style="padding-left:10px;padding-right:10px;"><i class="fas fa-print fa-lg"></i><br>Imprimer</button>' +
                                 '</form>' +
                                 '</td>' +
                                 '</tr>' +
-                                '<tr>' + 
-                                '<td colspan="8">' + 
+                                '<tr>' +
+                                '<td colspan="8">' +
                                 '<div class="container">' +
                                 '<div class="row justify-content-start">' +
                                 '<div class="col-12">' +
-                                '<table class="table table-bordered m-3 text-left" style="width:100%">' +
+                                '<table id="" class="text-left" style="width:100%">' +
                                 '<thead>' +
                                 '<tr>' +
-                                '<th>Designation:</th>' +
-                                '<th>Qte:</th>' +
-                                '<th>Prix:</th>' +
-                                '<th>Total:</th>' +
+                                '<th style="width:25%;">Designation:</th>' +
+                                '<th style="width:25%;">Qte:</th>' +
+                                '<th style="width:25%;">Prix:</th>' +
+                                '<th style="width:25%;">Total:</th>' +
                                 '</tr>' +
                                 '</thead>' +
                                 '<tbody id="ventes_facture_' + id_facture + '">' +
@@ -1827,43 +1996,43 @@
         }
     </script>
 
-<script>
-    function Ticket(button) {
-        const form = button.closest('.form-imprimer-facture');
-        const IdFacture = form.getAttribute('data-id');
-        console.log('--------------------------------------------');
-        console.log('id facture : ' + IdFacture);
+    <script>
+        function Ticket(button) {
+            const form = button.closest('.form-imprimer-facture');
+            const IdFacture = form.getAttribute('data-id');
+            console.log('--------------------------------------------');
+            console.log('id facture : ' + IdFacture);
 
-        $.ajax({
-            url: '/chercher-facture/' + IdFacture,
-            type: 'GET',
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                // Récupérer l'objet 'facture' depuis la réponse JSON
-                const facture = response.facture;
+            $.ajax({
+                url: '/chercher-facture/' + IdFacture,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // Récupérer l'objet 'facture' depuis la réponse JSON
+                    const facture = response.facture;
 
-                // Assurez-vous que 'facture' n'est pas nul
-                if (facture) {
-                    let iframe = document.createElement('iframe');
-                    iframe.style.display = 'none';
-                    iframe.src = '/imprimer-ticket/' + IdFacture;
-                    document.body.appendChild(iframe);
+                    // Assurez-vous que 'facture' n'est pas nul
+                    if (facture) {
+                        let iframe = document.createElement('iframe');
+                        iframe.style.display = 'none';
+                        iframe.src = '/imprimer-ticket/' + IdFacture;
+                        document.body.appendChild(iframe);
 
-                    iframe.onload = function() {
-                        iframe.contentWindow.print();
-                    };
-                } else {
-                    console.error('Facture non trouvée');
+                        iframe.onload = function() {
+                            iframe.contentWindow.print();
+                        };
+                    } else {
+                        console.error('Facture non trouvée');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur AJAX:', error);
                 }
-            },
-            error: function(xhr, status, error) {
-                console.error('Erreur AJAX:', error);
-            }
-        });
-    }
-</script>
+            });
+        }
+    </script>
 
 
 
@@ -1877,42 +2046,34 @@
 
 
     <style>
-        .calculator {
+        #calculator {
             padding: 20px;
         }
 
-        #result {
+        #display {
             width: 100%;
             height: 40px;
             text-align: right;
-            font-size: 24px;
+            font-size: 34px;
             margin-bottom: 20px;
-            padding-right: 10px;
+            padding: 5px;
         }
 
-        .calculator .buttons {
+        #calculator .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             grid-gap: 10px;
         }
 
-        .calculator button {
-            height: 70px;
-            padding: 20px;
-            font-size: 18px;
+        #calculator .btn {
+            height: 50px;
+            /* padding: 20px; */
+            font-size: 20px;
             border: none;
-            background-color: #f1f1f1;
+            /* background-color: #f1f1f1; */
             cursor: pointer;
             border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-
-        .calculator button:hover {
-            background-color: #d3d3d3;
-        }
-
-        .calculator button:active {
-            background-color: #a9a9a9;
+            /* transition: background-color 0.3s ease; */
         }
     </style>
 
@@ -2017,35 +2178,7 @@
 
 
     {{-- ------------------------------------------------------------------------------------------------------   --}}
-    {{-- <script>
-        $(document).ready(function() {
-            let startX;
 
-            $('#carouselExample1').on('touchstart', function(e) {
-                startX = e.originalEvent.touches[0].clientX;
-                console.log('Touch start at: ' + startX);
-            });
-
-            $('#carouselExample1').on('touchend', function(e) {
-                const endX = e.originalEvent.changedTouches[0].clientX;
-                const distanceX = startX - endX;
-                console.log('Touch end at: ' + endX);
-                console.log('Distance swiped: ' + distanceX);
-
-                if (Math.abs(distanceX) > 50) {
-                    if (distanceX > 0) {
-                        $(this).carousel('next');
-                        console.log('Swiped left, moving to next slide');
-                    } else {
-                        $(this).carousel('prev');
-                        console.log('Swiped right, moving to previous slide');
-                    }
-                } else {
-                    console.log('Swipe distance not sufficient for slide change');
-                }
-            });
-        });
-    </script> --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const carousel = document.querySelector('#carouselExample1');
@@ -2061,9 +2194,6 @@
         $(document).ready(function() {
             $('#example').DataTable({
                 processing: true,
-                scrollCollapse: true,
-                scroller: true,
-                scrollY: 400,
                 lengthMenu: [
                     [10, 25, 50, -1],
                     [10, 25, 50, "Tous"]
@@ -2083,13 +2213,20 @@
                         "previous": "Précédent"
                     }
                 },
-                initComplete: function() {
-                    // Ajouter des styles personnalisés
-                    $('.dataTables_length select').css('width',
-                        '60px'); // Ajustez la largeur selon vos besoins
-                },
+                responsive: true,
+                // columnDefs: [{
+                //         target: 2,
+                //         visible: false,
+                //         searchable: false
+                //     },
+                //     {
+                //         target: 3,
+                //         visible: false
+                //     }
+                // ]
             });
         });
     </script>
+
     {{-- ------------------------------------------------------------------------------------------------------   --}}
 @endsection
