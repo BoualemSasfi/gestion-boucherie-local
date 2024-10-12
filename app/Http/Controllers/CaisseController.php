@@ -259,6 +259,16 @@ class CaisseController extends Controller
     }
 
 
+    public function Supprimer_Vente($id_vente)
+    {
+        try {
+            $Vente = Vente::where('id', $id_vente)
+                ->delete();
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'controller-function: Supprimer_Vente ! erreur'], 500);
+        }
+    }
 
     public function Create_Facture($id_user, $id_magasin, $id_caisse)
     {
@@ -702,8 +712,7 @@ class CaisseController extends Controller
     {
         try {
 
-            $Factures = Facture::
-                join('clients', 'clients.id', '=', 'factures.id_client')
+            $Factures = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
                 ->select(
                     'factures.id as id',
                     'factures.created_at as date',
@@ -715,7 +724,7 @@ class CaisseController extends Controller
                 )
                 ->where(function ($query) {
                     $query->where('etat_facture', 'Facture-Payée')
-                          ->orWhere('etat_facture', 'Crédit');
+                        ->orWhere('etat_facture', 'Crédit');
                 })
                 ->where('total_facture', '!=', 0)->get();
 
@@ -728,7 +737,8 @@ class CaisseController extends Controller
 
 
 
-    public function Chercher_Facture($id_facture){
+    public function Chercher_Facture($id_facture)
+    {
         try {
 
             $Facture = Facture::where('id', $id_facture)->first();
@@ -745,7 +755,7 @@ class CaisseController extends Controller
     public function open()
     {
         // Nom de l'imprimante, tel qu'il apparaît dans les Périphériques et imprimantes
-        $printerName = "xprinter"; // Remplace par le nom de ton imprimante
+        $printerName = "XPRINTER-80mm"; // Remplace par le nom de ton imprimante
 
         // Commande ESC/POS pour ouvrir la caisse
         $open_cash_drawer = chr(27) . chr(112) . chr(0) . chr(25) . chr(250);
