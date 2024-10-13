@@ -10,7 +10,8 @@ use Illuminate\Support\Facades\Storage;
 
 
 class ProduitController extends Controller
-{    public function __construct()
+{
+    public function __construct()
     {
         $this->middleware('auth');
     }
@@ -32,6 +33,8 @@ class ProduitController extends Controller
         $produit = new Produit();
         $produit->nom_pr = $request->input('nom_pr');
         $produit->prix_vent = $request->input('prix_vent');
+        $produit->semi_gros = $request->input('semi_gros');
+        $produit->gros = $request->input('gros');
         $produit->categorie_id = $request->input('category_id');
 
 
@@ -71,6 +74,8 @@ class ProduitController extends Controller
         $produit = Produit::find($id);
         $produit->nom_pr = $request->input('nom_pr');
         $produit->prix_vent = $request->input('prix_vent');
+        $produit->semi_gros = $request->input('semi_gros');
+        $produit->gros = $request->input('gros');
         $produit->categorie_id = $request->input('category_id');
 
 
