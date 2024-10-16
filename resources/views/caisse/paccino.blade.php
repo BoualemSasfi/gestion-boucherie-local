@@ -131,6 +131,11 @@
         }
     </style>
 
+<style>
+    .petit_font{
+        font-size: 14px;
+    }
+</style>
     {{-- ---------------------------------------------------------------------------------------------------- --}}
     <!-- AFFICHEUR -->
     <div class="container-fluid m-0 p-0">
@@ -408,6 +413,7 @@
                                                             <tbody id="historique-factures">
                                                                 {{-- les factures ici  --}}
                                                             </tbody>
+                                                            <a href="" id="id_vente" style="display: none;"></a>
                                                         </table>
 
                                                     </div>
@@ -673,7 +679,7 @@
 
 
                             </div>
-                            
+
 
                         </div>
                     </div>
@@ -713,7 +719,7 @@
             </div>
         </footer>
     </div>
-    
+
 
 
     <!-- Popup changement de prix -->
@@ -735,8 +741,8 @@
                             <div class="col-8">
                                 <div class="input-group mb-3 mt-3">
                                     <span class="input-group-text" id="inputGroup-sizing-lg">Prix Total :</span>
-                                    <input type="number" id="TotalInput" class="form-control" placeholder="0.00"
-                                        style="text-align: center; font-size:26px;" inputmode="decimal" aria-label=""
+                                    <input type="number" id="PriceInput" class="form-control" placeholder="0.00"
+                                        style="text-align: center; font-size:26px;" inputmode="decimal" aria-label="" value=""
                                         aria-describedby="inputGroup-sizing-lg" readonly>
                                 </div>
                                 {{-- <label for="versementInput">Prix Total :</label>
@@ -785,14 +791,15 @@
                         <div class="row justify-content-center">
 
                             <div class="col-4">
-                                <button type="button" class="btn btn-success" onclick="ValiderChangementPrix()"
+                                <form class="" data-id=""></form>
+                                <button type="button" class="btn btn-success" onclick="ValiderPrixProduit()"
                                     style="width: 150px;">
                                     <i class="bi bi-check-lg"></i><br>Valider
                                 </button>
 
                             </div>
                             <div class="col-4">
-                                <button type="button" class="btn btn-danger" onclick="ClearTotalPrix()"
+                                <button type="button" class="btn btn-danger" onclick="ClearPrixInput()"
                                     style="width: 150px;">
                                     <i class="bi bi-eraser"></i><br>Effacer
                                 </button>
@@ -1216,18 +1223,20 @@
                 success: function(response) {
                     $('#ventes_liste').empty();
                     $.each(response.ventes, function(key, value) {
-                        let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) :
-                            value.quantite;
+                        // let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) : value.quantite;
+                        let quantite = Number.isInteger(value.quantite) ? value.quantite : parseFloat(value.quantite);
+
                         $('#ventes_liste').append(
                             '<tr>' +
-                            '<td class="">' + value.nom_categorie + ' : ' + value.nom_produit +
+                            // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
+                            '<td class="petit_font">' + value.nom_produit +
                             '</td>' +
-                            '<td class="">' + quantite + ' ' + value.unite_mesure + '</td>' +
-                            '<td class="">' + value.prix_produit + '</td>' +
-                            '<td class="">' + value.prix_total + '</td>' +
+                            '<td class="petit_font">' + quantite + ' ' + value.unite_mesure + '</td>' +
+                            '<td class="petit_font">' + value.prix_produit + '</td>' +
+                            '<td class="petit_font">' + value.prix_total + '</td>' +
                             '<td class="">' +
                             '<form class="form-prix-produit" data-id="' + value.id +
-                            '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrix(this)">' +
+                            '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrixProduit(this)">' +
                             '<i class="fas fa-coins"></i></button></form>' +
                             '</td>' +
                             '<td class="">' +
@@ -1279,7 +1288,7 @@
 
                 Swal.fire({
                     title: "Voulez vous la supprimée ?",
-                    icon: "error",
+                    icon: "question",
                     showDenyButton: true,
                     showCancelButton: false,
                     confirmButtonText: "Oui",
@@ -1323,6 +1332,93 @@
             }
         }
     </script>
+
+    <script>
+        function ModifierPrixProduit(button) {
+            const form = button.closest('.form-prix-produit');
+            const IdVente = form.getAttribute('data-id');
+            const total_input = document.getElementById('PriceInput');
+            const porteur_IdVente = document.getElementById('id_vente');
+
+            if (IdVente) {
+                porteur_IdVente.textContent = IdVente;
+                $.ajax({
+                    url: '/prix-vente/' + IdVente,
+                    type: 'get',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.vente && response.vente.total_vente) {
+                            total_input.placeholder = response.vente.total_vente;
+                            total_input.value = '';
+                            console.log('Id Vente : ' + IdVente);
+                            console.log('Total Vente : ' + response.vente.total_vente);
+                        } else {
+                            console.error('Vente ou total_vente introuvable');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        }
+
+        function ValiderPrixProduit() {
+            const porteur_IdVente = document.getElementById('id_vente');
+            const IdVente = porteur_IdVente.textContent;
+            const nv_prix = document.getElementById('PriceInput').value;
+            const id_facture = document.getElementById('text-id-facture').textContent;
+
+            if (nv_prix > 0) {
+                $.ajax({
+                    url: '/valider-prix-vente/' + IdVente + '/' + nv_prix,
+                    type: 'get',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Validé",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        // Ferme le popup
+                        $('#PrixModal').modal('hide');
+
+                        ListeVentes(id_facture);
+
+                        Calculer_Total_Facture(id_facture);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: "Erreur de saisie de la quantité",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
+
+        function PrixAppendValue(value) {
+            const input = document.getElementById('PriceInput');
+            input.value += value;
+        }
+
+        function ClearPrixInput() {
+            const input = document.getElementById('PriceInput');
+            input.value = '';
+        }
+    </script>
+
+
+    {{-- ----------------------------------------------------------------------------------------------  --}}
 
     {{-- facture  --}}
     <script>
@@ -1570,8 +1666,7 @@
             const InputTotal = document.getElementById('TotalInput');
             const InputVersement = document.getElementById('VersementInput');
             const InputCredit = document.getElementById('CreditInput');
-            const LabelCredit = document.getElementById(
-                'LabelCredit'); // Assurez-vous que cet ID correspond à un label HTML
+            const LabelCredit = document.getElementById('LabelCredit'); // Assurez-vous que cet ID correspond à un label HTML
 
             let Versement;
             let Credit;
@@ -1630,7 +1725,7 @@
                     // Affiche une alerte SweetAlert après la réussite de l'AJAX
                     await Swal.fire({
                         title: "Vente En-Attente",
-                        icon: "info",
+                        icon: "success",
                         showConfirmButton: false,
                         timer: 1500
                     });
@@ -1775,12 +1870,13 @@
                                 },
                                 success: function(response) {
                                     $.each(response.ventes, function(key, vente) {
+                                        let quantite = Number.isInteger(vente.quantite) ? vente.quantite : parseFloat(vente.quantite);
                                         $('#produits_facture_' + id_facture).append(
                                             '<tr>' +
                                             '<td class="">' + vente
                                             .nom_categorie + ' : ' + vente
                                             .nom_produit + '</td>' +
-                                            '<td class="">' + vente.quantite +
+                                            '<td class="">' + quantite +
                                             ' ' + vente.unite_mesure + '</td>' +
                                             '<td class="">' + vente
                                             .prix_produit + '</td>' +
@@ -1965,12 +2061,13 @@
                                 },
                                 success: function(response) {
                                     $.each(response.ventes, function(key, vente) {
+                                        let quantite = Number.isInteger(vente.quantite) ? vente.quantite : parseFloat(vente.quantite);
                                         $('#ventes_facture_' + id_facture).append(
                                             '<tr>' +
                                             '<td class="">' + vente
                                             .nom_categorie + ' : ' + vente
                                             .nom_produit + '</td>' +
-                                            '<td class="">' + vente.quantite +
+                                            '<td class="">' + quantite +
                                             ' ' + vente.unite_mesure + '</td>' +
                                             '<td class="">' + vente
                                             .prix_produit + '</td>' +

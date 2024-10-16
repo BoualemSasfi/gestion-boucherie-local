@@ -750,9 +750,39 @@ class CaisseController extends Controller
         }
     }
 
+
+    public function Prix_Vente($id_vente)
+    {
+        try {
+            $Vente = Vente::where('id', $id_vente)->first();
+
+            return response()->json(['vente' => $Vente]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+
+    public function Valider_Prix_Vente($id_vente,$nv_prix)
+    {
+        try {
+            $Vente = Vente::where('id', $id_vente)->first();
+
+            $Vente->total_vente = $nv_prix;
+
+            $Vente->save();
+
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+
     // ---------------------------------------------------------------------------------
 
-    public function open()
+    public function OpenCashDrawer()
     {
         // Nom de l'imprimante, tel qu'il apparaît dans les Périphériques et imprimantes
         $printerName = "XP-80C"; // Remplace par le nom de ton imprimante

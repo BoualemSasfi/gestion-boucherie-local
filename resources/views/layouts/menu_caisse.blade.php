@@ -112,10 +112,10 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow">
 
 
-                    {{-- <div class="nav-item" style="">
-                        <button class="btn btn-success" onclick="openCashDrawer()"
+                    <div class="nav-item" style="">
+                        <button class="btn btn-success" onclick="OpenCashDrawer()"
                             style="height: 100%;margin-left:20px;">Ouvrir la Caisse</button>
-                    </div> --}}
+                    </div>
 
 
 
@@ -244,9 +244,9 @@
     {{-- <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
 
     <script>
-        function openCashDrawer() {
+        function OpenCashDrawer() {
             $.ajax({
-                url: "{{ route('open.cash.drawer') }}",
+                url: '/open-cash-drawer',
                 type: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
