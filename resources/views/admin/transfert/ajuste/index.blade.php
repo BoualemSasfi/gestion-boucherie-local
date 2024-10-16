@@ -58,9 +58,10 @@
                                     <td class=" align-middle">{{ $list->qauntity}}</td>
                                     <td class=" align-middle">
                                         @if ($list->etat == 0)
-                                            <i class="fa-solid fa-arrow-up fa-lg" style="color: #63E6BE;"></i>
+                                            <i class="fa-solid fa-arrow-up fa-beat-fade fa-lg" style="color: #63E6BE;"></i>
                                         @else
-                                            <i class="fa-solid fa-arrow-down fa-lg" style="color: #f33f5a;"></i>
+                                            <!-- <i class="fa-solid fa-arrow-down fa-lg" style="color: #f33f5a;"></i> -->
+                                            <i class="fa-solid fa-arrow-down fa-beat-fade fa-lg" style="color: #f33f5a;"></i>
                                         @endif
 
 
