@@ -128,7 +128,7 @@
 
                     <ul class="navbar-nav ms-auto">
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
+                        <li class="nav-item dropdown no-arrow mr-4">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
@@ -138,15 +138,15 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                {{-- <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                     <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
                                     Mon Profil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
                                     Settings
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                </a> --}}
+                                {{-- <div class="dropdown-divider"></div> --}}
                                 <a class="dropdown-item" href="#" data-bs-toggle="modal"
                                     data-bs-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>

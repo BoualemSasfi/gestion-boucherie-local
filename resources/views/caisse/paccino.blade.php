@@ -86,17 +86,20 @@
     </style>
 
     <style>
-        .bouton-action .btn {
-            font-size: 14px;
-            padding: 5px;
-            height: 80px;
+        .bouton-action {
+            height: 70px; 
+        } 
+        .bouton-caisse {
+            font-size: 10px;
+            /* padding: 10px; */
+            height: 100%;
         }
 
-        .bouton-action i {
+        .bouton-caisse i {
             font-size: 28px;
             /* margin-top: 2px; */
-            padding-top: 5px;
-            padding-bottom: 5px;
+            /* padding-top: 3px; */
+            padding-bottom: 3px;
         }
     </style>
 
@@ -286,7 +289,7 @@
 
         <!-- Produits -->
         <div class="row le_centre">
-            <div class="col-8">
+            <div class="col-8 pb-4">
                 <div class="container mt-2">
                     <div class="your-carousel" data-aos="fade-right">
                         @foreach ($categories as $categorie)
@@ -302,16 +305,14 @@
                     </div>
                 </div>
                 <hr class="p-0 mb-0 mt-2">
-                <div class="container" style="height:75%; overflow-y: auto;">
+                <div class="container" style="max-height: 450px; overflow-y: auto;">
                     <h6 id="titre-categorie" class="p-0 m-0"></h6>
                     <div class="row" id="products">
                         <!-- Les produits filtrés apparaîtront ici -->
                     </div>
 
-                    {{-- <div class="col-12 zyada" style="height: 1800px;">
-                        CAISSE ESPACE
-                    </div> --}}
                 </div>
+                {{-- <div class="col-12 zyada" style="height: 100px;"></div> --}}
             </div>
 
             <!-- Facture -->
@@ -325,7 +326,7 @@
                 <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
                 {{-- stockage variable  --}}
 
-                <div class="card shadow m-3" style="height:440px;" data-aos="flip-left">
+                <div class="card shadow m-2" style="height:470px;" data-aos="flip-left">
                     <div class="card-header py-1">
                         <div class="row afficheur text-center" style="height: 105px;">
                             <div class="col-12 p-1 m-0 align-content-center">
@@ -339,14 +340,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body m-0 p-1" style="max-height: 400px; overflow-y: auto;">
+                    <div class="card-body m-0 p-1" style="max-height: 500px; overflow-y: auto;">
                         <table id="affichage-produits-facture" class="text-left" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Designation:</th>
-                                    <th>Qte:</th>
-                                    <th>Prix:</th>
-                                    <th>Total:</th>
+                                    <th>LIBELLE:</th>
+                                    <th>QTE:</th>
+                                    <th>P.U:</th>
+                                    <th>TOTAL:</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -363,7 +364,7 @@
 
         <!-- Footer -->
         <footer class="sticky-footer-caisse bg-white">
-            <div class="container-fluid boutons-caisse m-0 p-2">
+            <div class="container-fluid boutons-caisse m-0 p-0">
                 <div class="row align-content-center m-0 p-0">
                     <div class="col-6">
                         <div class="row bouton-action">
@@ -531,7 +532,7 @@
                             
 
                             <div class="col-6">
-                                <button class="btn btn-primary" type="button" onclick="FactureEnAttente()">
+                                <button class="btn btn-primary bouton-caisse" type="button" onclick="FactureEnAttente()">
                                     <i class="fa fa-pause-circle fa-lg"></i>
                                     <br>Vente En Attente
                                 </button>
@@ -539,7 +540,7 @@
 
                             <div class="col-6">
                                 {{-- Bouton pour afficher le popup --}}
-                                <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-success bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#FactureModal" id="bouton_encaisser" onclick="Ouvrir_Encaissement()">
                                     <i class="fas fa-cash-register fa-lg"></i>
                                     <br>Encaissement
@@ -1241,7 +1242,7 @@
                         $('#products').empty();
                         $.each(response.produits, function(key, value) {
                             $('#products').append(
-                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 p-2"  data-aos="fade-down">' +
+                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4"  data-aos="fade-down">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
