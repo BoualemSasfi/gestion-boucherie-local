@@ -130,6 +130,7 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         array (
             'Monolog\\' => 8,
             'Mockery\\' => 8,
+            'Mike42\\' => 7,
             'Masterminds\\' => 12,
         ),
         'L' => 
@@ -411,8 +412,8 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -453,6 +454,10 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         'Mockery\\' => 
         array (
             0 => __DIR__ . '/..' . '/mockery/mockery/library/Mockery',
+        ),
+        'Mike42\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42',
         ),
         'Masterminds\\' => 
         array (
@@ -649,6 +654,7 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         'App\\Http\\Requests\\InformationRequest' => __DIR__ . '/../..' . '/app/Http/Requests/InformationRequest.php',
         'App\\Http\\Requests\\InformationRequestclear' => __DIR__ . '/../..' . '/app/Http/Requests/InformationRequestclear.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
+        'App\\Models\\Ajuste' => __DIR__ . '/../..' . '/app/Models/Ajuste.php',
         'App\\Models\\Caisse' => __DIR__ . '/../..' . '/app/Models/Caisse.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
@@ -3505,6 +3511,31 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         'Masterminds\\HTML5\\Serializer\\OutputRules' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/OutputRules.php',
         'Masterminds\\HTML5\\Serializer\\RulesInterface' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/RulesInterface.php',
         'Masterminds\\HTML5\\Serializer\\Traverser' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/Traverser.php',
+        'Mike42\\Escpos\\CapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\DefaultCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/DefaultCapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\EposTepCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/EposTepCapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\P822DCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/P822DCapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\SimpleCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/SimpleCapabilityProfile.php',
+        'Mike42\\Escpos\\CapabilityProfiles\\StarCapabilityProfile' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CapabilityProfiles/StarCapabilityProfile.php',
+        'Mike42\\Escpos\\CodePage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/CodePage.php',
+        'Mike42\\Escpos\\Devices\\AuresCustomerDisplay' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Devices/AuresCustomerDisplay.php',
+        'Mike42\\Escpos\\EscposImage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/EscposImage.php',
+        'Mike42\\Escpos\\GdEscposImage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/GdEscposImage.php',
+        'Mike42\\Escpos\\ImagickEscposImage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/ImagickEscposImage.php',
+        'Mike42\\Escpos\\NativeEscposImage' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/NativeEscposImage.php',
+        'Mike42\\Escpos\\PrintBuffers\\EscposPrintBuffer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintBuffers/EscposPrintBuffer.php',
+        'Mike42\\Escpos\\PrintBuffers\\ImagePrintBuffer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintBuffers/ImagePrintBuffer.php',
+        'Mike42\\Escpos\\PrintBuffers\\PrintBuffer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintBuffers/PrintBuffer.php',
+        'Mike42\\Escpos\\PrintConnectors\\ApiPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/ApiPrintConnector.php',
+        'Mike42\\Escpos\\PrintConnectors\\CupsPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/CupsPrintConnector.php',
+        'Mike42\\Escpos\\PrintConnectors\\DummyPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/DummyPrintConnector.php',
+        'Mike42\\Escpos\\PrintConnectors\\FilePrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/FilePrintConnector.php',
+        'Mike42\\Escpos\\PrintConnectors\\NetworkPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/NetworkPrintConnector.php',
+        'Mike42\\Escpos\\PrintConnectors\\PrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/PrintConnector.php',
+        'Mike42\\Escpos\\PrintConnectors\\RawbtPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/RawbtPrintConnector.php',
+        'Mike42\\Escpos\\PrintConnectors\\UriPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/UriPrintConnector.php',
+        'Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/PrintConnectors/WindowsPrintConnector.php',
+        'Mike42\\Escpos\\Printer' => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42/Escpos/Printer.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',
@@ -5040,16 +5071,13 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         'Picqer\\Barcode\\Exceptions\\InvalidFormatException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidFormatException.php',
         'Picqer\\Barcode\\Exceptions\\InvalidLengthException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidLengthException.php',
         'Picqer\\Barcode\\Exceptions\\InvalidOptionException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidOptionException.php',
-        'Picqer\\Barcode\\Exceptions\\UnknownColorException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/UnknownColorException.php',
         'Picqer\\Barcode\\Exceptions\\UnknownTypeException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/UnknownTypeException.php',
         'Picqer\\Barcode\\Helpers\\BinarySequenceConverter' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Helpers/BinarySequenceConverter.php',
-        'Picqer\\Barcode\\Helpers\\ColorHelper' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Helpers/ColorHelper.php',
         'Picqer\\Barcode\\Helpers\\StringHelpers' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Helpers/StringHelpers.php',
         'Picqer\\Barcode\\Renderers\\DynamicHtmlRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/DynamicHtmlRenderer.php',
         'Picqer\\Barcode\\Renderers\\HtmlRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/HtmlRenderer.php',
         'Picqer\\Barcode\\Renderers\\JpgRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/JpgRenderer.php',
         'Picqer\\Barcode\\Renderers\\PngRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/PngRenderer.php',
-        'Picqer\\Barcode\\Renderers\\RendererInterface' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/RendererInterface.php',
         'Picqer\\Barcode\\Renderers\\SvgRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/SvgRenderer.php',
         'Picqer\\Barcode\\Types\\TypeCodabar' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Types/TypeCodabar.php',
         'Picqer\\Barcode\\Types\\TypeCode11' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Types/TypeCode11.php',

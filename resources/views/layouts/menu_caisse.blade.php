@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
 
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -112,10 +113,14 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow">
 
 
-                    <div class="nav-item" style="">
+                    {{-- <div class="nav-item" style="">
                         <button class="btn btn-success" onclick="OpenCashDrawer()"
                             style="height: 100%;margin-left:20px;">Ouvrir la Caisse</button>
-                    </div>
+                    </div> --}}
+
+                    {{-- <div class="nav-item" style="margin-left:20px;">
+                        <button class="btn btn-primary" id="connectButton">Connecter la Balance</button>
+                    </div> --}}
 
 
 
@@ -259,7 +264,7 @@
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error("Erreur lors de l'ouverture de la caisse :", error);
+                    console.error("Erreur lors de l'ouverture de la caisse :", xhr.responseText);
                 }
             });
         }
