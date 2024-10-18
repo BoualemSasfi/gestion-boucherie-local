@@ -235,12 +235,12 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse6"
                     aria-expanded="true" aria-controls="collapse6">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Clients-Gros</span>
+                    <span>Clients</span>
                 </a>
                 <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion clients-gros:</h6>
-                        <a class="collapse-item" href="">Voir la liste</a>
+                        <h6 class="collapse-header">Gestion clients</h6>
+                        <a class="collapse-item" href="/admin/client">Voir la liste</a>
                     </div>
                 </div>
             </li>
