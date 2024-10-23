@@ -2334,7 +2334,7 @@
                                 '</div>' +
                                 '</div>' +
                                 '</td>' +
-                                '</tr>' // Closing the sales row
+                                '</tr>'
                             );
 
                             // Appel AJAX pour récupérer les ventes associées à la facture
