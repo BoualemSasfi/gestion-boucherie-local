@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Vendeur;
 
+use Illuminate\Support\Facades\Request;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -25,15 +27,26 @@ class AppServiceProvider extends ServiceProvider
     //     //
     // }
 
-    
+
 
     public function boot()
     {
+        // View::composer('caisse.paccino', function ($view) {
+        //     $IdUser = Auth::id();
+        //     $Vendeur = Vendeur::where('id_user', $IdUser)->first();
+        //     $IdMagasin = $Vendeur->id_magasin;
+        //     $LastFacture = app('App\Http\Controllers\CaisseController')->Get_Last_Facture($IdMagasin,$IdUser);
+        //     $view->with('LastFacture', $LastFacture);
+        // });
+
         View::composer('caisse.paccino', function ($view) {
-            $IdUser = Auth::id();
-            $Vendeur = Vendeur::where('id_user', $IdUser)->first();
-            $IdMagasin = $Vendeur->id_magasin;
-            $LastFacture = app('App\Http\Controllers\CaisseController')->Get_Last_Facture($IdMagasin,$IdUser);
+            // Récupérer id_magasin depuis l'URL
+            $id_magasin = Request::route('id_magasin');
+
+            $IdUser = 0;
+            $IdMagasin = $id_magasin;
+            $LastFacture = app('App\Http\Controllers\AfficheController')->Get_Last_Facture($IdMagasin, $IdUser);
+
             $view->with('LastFacture', $LastFacture);
         });
     }

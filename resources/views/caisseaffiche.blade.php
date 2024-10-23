@@ -128,9 +128,8 @@
             <div class="row">
                 @foreach ($caisses as $caisse)
                     <div class="col-3">
-                        <form class="affiche-form" action="/admin/lacaisse/{{ $caisse->id }}" method="POST">
+                        <form class="affiche-form" action="{{'/magasin/'. $id_magasin . '/caisse/' . $caisse->id }}" method="GET">
                             @csrf
-
 
                             <div class="card clove" onclick="this.closest('form').submit();">
                                 <div class="card-details">
@@ -140,11 +139,7 @@
 
                             </div>
 
-
-
-
-
-                        </form>
+                    </form>
                     </div>
                 @endforeach
 
