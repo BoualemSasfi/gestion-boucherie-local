@@ -15,10 +15,10 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>liste des vendeur</h2>
+            <h2>liste des caisses</h2>
         </div>
         <div class="col-2 text-right">
-            <a href="{{ url('/admin/vendeur/add') }}" class="btn btn-success">
+            <a href="{{ url('/admin/caisse/add') }}" class="btn btn-success">
                 <i class="fas fa-plus fa-xl pr-1"></i>
                 <span class="btn-description"></span>
             </a>
@@ -43,10 +43,12 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nom</th>
-                                <th>magasin</th>
+                                <th>Magasin</th>
+                                <th>Code</th>
+                                <th>Solde</th>
+                                <th>Active</th>
                                 <!-- <th>caisse</th> -->
-                                <th>Action</th>
+                                <!-- <th>Action</th> -->
                             </tr>
                         </thead>
 
@@ -54,15 +56,29 @@
                             @foreach ($listes as $liste)
                                 <tr>
                                     <td class=" align-middle">{{ $liste->id}}</td>
-                                    <td class=" align-middle">{{ $liste->nom}}</td>
-                                    <td class=" align-middle">{{ $liste->magasin}}</td>
+                                 
+                                    <td class=" align-middle">
+
+                                        @foreach ($magasins as $magasin)                             
+                                            @if ($magasin->id == $liste->id_magasin)
+                                                {{ $magasin->nom }}
+                                            @endif
+
+                                        @endforeach
+                                      
+
+
+                                    </td>
+                                    <td class=" align-middle">{{ $liste->code_caisse}}</td>
+                                    <td class=" align-middle">{{$liste->solde}} DA</td>
+                                    <!-- <td class=" align-middle">{{$liste->active}}</td> -->
                                     <!-- <td class=" align-middle">{{ $liste->caisse}}</td> -->
 
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-between">
                                             {{-- Voir STOCK --}}
                                             <form class="show-form"
-                                                action="{{ url('/admin/vendeur/' . $liste->id . '/voir') }}" method="GET">
+                                                action="{{ url('/admin/caisse/transfertmagasin/'.$liste->id) }}" method="GET">
                                                 @csrf
                                                 <button type="submit">
                                                     <i class="fa-solid fa-xl fa-eye" style="color: #63E6BE;"></i>
@@ -127,7 +143,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Mettez à jour l'action du formulaire avec l'ID et soumettez-le
-                    form.action = '/admin/vendeur/delete/' + id;
+                    form.action = '/admin/caisse/delete/' + id;
                     form.submit();
 
 
@@ -207,7 +223,7 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     // Mettez à jour l'action du formulaire avec l'ID et soumettez-le
-                    form.action = '/admin/vendeur/edit/' + id;
+                    form.action = '/admin/caisse/edit/' + id;
                     form.submit();
                 }
             });
@@ -217,18 +233,7 @@
     }
 </script>
 
-<!-- pour afficher le message dialoge apre les funciton de controller  -->
-<!-- @if(session('success'))
-    <script>
-        Swal.fire({
-            title: 'Succès',
-            text: '{{ session('success') }}',
-            icon: 'success',
-            timer: '3000',
-            showConfirmButton: false
-        });
-    </script>
-@endif -->
+
 
 
 

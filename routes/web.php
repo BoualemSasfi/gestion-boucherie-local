@@ -12,6 +12,8 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransfertController;
 use App\Http\Controllers\ClienController;
 use App\Http\Controllers\VendeurController;
+use App\Http\Controllers\GcaisseController;
+use App\Http\Controllers\AfficheController;
 use Illuminate\Support\Facades\Route;
 
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -185,23 +187,64 @@ Route::controller(ClienController::class)->group(function () {
     Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
 
 });
+
+
+//-------------------------------------------------------------------------
+// ---------                Gestion des caisse                   ----------
+// ------------------------------------------------------------------------
+Route::controller(GcaisseController::class)->group(function () {
+
+    Route::get('admin/caisse', 'index');
+    Route::get('admin/caisse/add', 'create');
+    Route::post('/admin/caisse/add/save', 'stor');
+    Route::get('/admin/caisse/edit/{id}', 'edit');
+    Route::put('/admin/caisse/edit/save/{id}', 'update');
+    Route::delete('/admin/caisse/delete/{id}', 'destroy');
+    Route::get('admin/caisse/{id}/voir', 'voir');
+
+    // transfert
+    Route::get('/admin/caisse/transfertmagasin/{id}', 'caisse_tranfert1');
+    Route::get('/admin/caisse/lemagasin/{id}', 'caisse_transfert2');
+
+    Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
+
+});
+
+//-------------------------------------------------------------------------
+// ---------              interface             ----------
+// ------------------------------------------------------------------------
+Route::controller(AfficheController::class)->group(function () {
+
+    Route::get('/affiche/magasin', 'magasin');
+    Route::post('/admin/affiche/caisse/{id}', 'caisse');
+    Route::post('/admin/lacaisse/{id}', 'lacaisse');
+    // Route::get('/affiche/caisse', 'magasin');
+
+
+
+
+});
+
+
+
+
 //-------------------------------------------------------------------------
 // ---------                vendeur                              ----------
 // ------------------------------------------------------------------------
 Route::controller(VendeurController::class)->group(function () {
 
     Route::get('admin/vendeur', 'index');
+    Route::get('admin/vendeur/add', 'create');
+    Route::post('/admin/vendeur/add/save', 'stor');
+
+    Route::get('/admin/vendeur/edit/{id}', 'edit');
     Route::get('admin/client/{id}/voir', 'voir');
-    Route::get('admin/client/add', 'create');
-    Route::post('/admin/client/add/save', 'stor');
-    Route::get('/admin/client/edit/{id}', 'edit');
     Route::put('/admin/client/edit/save/{id}', 'update');
     Route::delete('/admin/client/delete/{id}', 'destroy');
 
     Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
 
 });
-
 
 
 

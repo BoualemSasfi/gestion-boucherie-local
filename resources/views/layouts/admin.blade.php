@@ -137,12 +137,13 @@
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Nos Magasins</span>
                 </a>
+
                 <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion Magasins:</h6>
                         <a class="collapse-item" href="/admin/magasin">Liste des magasins</a>
                         <a class="collapse-item" href="">Vendeurs par magasin</a>
-                        <a class="collapse-item" href="">Caisses par magasin</a>
+                        <a class="collapse-item" href="/admin/caisse">Gestion des caisses</a>
 
                     </div>
                 </div>
@@ -235,12 +236,14 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse6"
                     aria-expanded="true" aria-controls="collapse6">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Clients</span>
+                    <span>Utilisateurs</span>
                 </a>
                 <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion clients</h6>
-                        <a class="collapse-item" href="/admin/client">Voir la liste</a>
+                        <h6 class="collapse-header">Gestion des utilisateurs</h6>
+                        <a class="collapse-item" href="/admin/client">User</a>
+                        <a class="collapse-item" href="/admin/client">Clients</a>
+                        <a class="collapse-item" href="/admin/vendeur">Vendeurs</a>
                     </div>
                 </div>
             </li>
@@ -1000,7 +1003,7 @@
     <script src="js/demo/chart-pie-demo.js"></script>
     ---------------------------------------------------------- --}}
 
-    
+
 
     {{-- <!-- <script src="{{ asset('js/jquery.js') }}"></script> --> --}}
 
