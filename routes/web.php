@@ -10,6 +10,10 @@ use App\Http\Controllers\MagasinController;
 use App\Http\Controllers\CaisseController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\TransfertController;
+use App\Http\Controllers\ClienController;
+use App\Http\Controllers\VendeurController;
+use App\Http\Controllers\GcaisseController;
+use App\Http\Controllers\AfficheController;
 use Illuminate\Support\Facades\Route;
 
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -49,7 +53,7 @@ Route::controller(CaisseController::class)->group(function () {
 
     Route::get('/caisse', 'caisse_paccino')->name('caisse_paccino');
     Route::get('/caisse/category/{id}', 'filtrage_des_produits')->name('caisse_filtrage');
-    
+
     Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
     Route::get('/ventes/{id_facture}', 'Get_Liste_Ventes')->name('liste_ventes');
     Route::get('/supprimer-vente/{id_vente}', 'Supprimer_Vente')->name('supprimer_vente');
@@ -59,7 +63,7 @@ Route::controller(CaisseController::class)->group(function () {
 
     Route::get('/nouvelle-facture/{id_user}/{id_magasin}/{id_caisse}', 'Create_Facture')->name('nouvelle_facture');
     Route::put('/valider-facture/{id_user}/{id_facture}/{id_caisse}/{id_client}/valeurs/{total}/{versement}/{credit}/{etat}', 'Valider_Facture')->name('valider_facture');
-    
+
     Route::put('/en-attente-facture/{id_facture}/valeurs/{total}', 'En_Attente_Facture')->name('en_attente_facture');
     Route::get('/liste-factures-enattente/{id_magasin}', 'Liste_Factures_Enattente')->name('liste_factures_enattente');
     Route::get('/lafacture-enattente/{id_facture}', 'Get_Facture_Enattente')->name('get_facture_enattente');
@@ -67,7 +71,7 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/historique-factures/{id_magasin}', 'Liste_Factures_Historique')->name('liste_factures_historique');
     Route::get('/chercher-facture/{id_facture}', 'Chercher_Facture')->name('chercher_facture');
 
-    
+
     Route::get('/imprimer-ticket/{id_facture}', 'ImprimerTicket')->name('caisse_ticket');
     Route::get('/imprimer-ticket-credit/{id_facture}', 'ImprimerTicket')->name('caisse_ticket_credit');
     Route::get('/test_pdf', 'test_pdf')->name('caisse_teste_ticket');
@@ -119,7 +123,7 @@ Route::controller(MagasinController::class)->group(function () {
     Route::delete('/admin/magasin/{id}/delete', 'destroy');
 
     // ajustisement de stock
-    Route::post('/mettre-a-jour-quantite','ajouster')->name('ajouster');
+    Route::post('/mettre-a-jour-quantite', 'ajouster')->name('ajouster');
 });
 //-------------------------------------------------------------------------
 // ---------                Stock                              ----------
@@ -130,16 +134,16 @@ Route::controller(StockController::class)->group(function () {
     Route::get('/admin/stock/add', 'create');
     Route::get('/admin/stock/addup/', 'addup');
     Route::delete('/admin/stock/{id}/delet_add', 'delet_add');
-    
+
     Route::post(' /admin/stock/categorie/add/{id_stock}/{category}', 'addcat');
 
     Route::post(' /admin/stock/categorie/supp/{id_stock}/{category}', 'suppcat');
-    
+
     Route::post('/admin/stock/deletcat/{id}', 'deletcat');
-    
+
     // ajaxe pour afficher la liste des catégories 
     Route::get('/admin/stock/category/{id}', 'cat_list');
-    
+
 
     Route::get('/admin/stock/{id}/update_affich', 'update_affich');
 
@@ -161,14 +165,87 @@ Route::controller(TransfertController::class)->group(function () {
 
     Route::post('/admin/transfert/validtransfert', 'validTransfert')->name('validtransfert');
 
-    Route::get('admin/transfert_liste','liste');
-    Route::get('admin/transfert/{id}','details');
-    Route::get('admin/ajuste','ajste_liste');
-    
+    Route::get('admin/transfert_liste', 'liste');
+    Route::get('admin/transfert/{id}', 'details');
+    Route::get('admin/ajuste', 'ajste_liste');
+
+
+
+});
+//-------------------------------------------------------------------------
+// ---------                Client                            ----------
+// ------------------------------------------------------------------------
+Route::controller(ClienController::class)->group(function () {
+
+    Route::get('admin/client', 'index');
+    Route::get('admin/client/{id}/voir', 'voir');
+    Route::get('admin/client/add', 'create');
+    Route::post('/admin/client/add/save', 'stor');
+    Route::get('/admin/client/edit/{id}', 'edit');
+    Route::put('/admin/client/edit/save/{id}', 'update');
+    Route::delete('/admin/client/delete/{id}', 'destroy');
+
+    Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
+
+});
+
+
+//-------------------------------------------------------------------------
+// ---------                Gestion des caisse                   ----------
+// ------------------------------------------------------------------------
+Route::controller(GcaisseController::class)->group(function () {
+
+    Route::get('admin/caisse', 'index');
+    Route::get('admin/caisse/add', 'create');
+    Route::post('/admin/caisse/add/save', 'stor');
+    Route::get('/admin/caisse/edit/{id}', 'edit');
+    Route::put('/admin/caisse/edit/save/{id}', 'update');
+    Route::delete('/admin/caisse/delete/{id}', 'destroy');
+    Route::get('admin/caisse/{id}/voir', 'voir');
+
+    // transfert
+    Route::get('/admin/caisse/transfertmagasin/{id}', 'caisse_tranfert1');
+    Route::get('/admin/caisse/lemagasin/{id}', 'caisse_transfert2');
+
+    Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
+
+});
+
+//-------------------------------------------------------------------------
+// ---------              interface             ----------
+// ------------------------------------------------------------------------
+Route::controller(AfficheController::class)->group(function () {
+
+    Route::get('/affiche/magasin', 'magasin');
+    Route::post('/admin/affiche/caisse/{id}', 'caisse');
+    Route::post('/admin/lacaisse/{id}', 'lacaisse');
+    // Route::get('/affiche/caisse', 'magasin');
+
+
 
 
 });
 
+
+
+
+//-------------------------------------------------------------------------
+// ---------                vendeur                              ----------
+// ------------------------------------------------------------------------
+Route::controller(VendeurController::class)->group(function () {
+
+    Route::get('admin/vendeur', 'index');
+    Route::get('admin/vendeur/add', 'create');
+    Route::post('/admin/vendeur/add/save', 'stor');
+
+    Route::get('/admin/vendeur/edit/{id}', 'edit');
+    Route::get('admin/client/{id}/voir', 'voir');
+    Route::put('/admin/client/edit/save/{id}', 'update');
+    Route::delete('/admin/client/delete/{id}', 'destroy');
+
+    Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
+
+});
 
 
 

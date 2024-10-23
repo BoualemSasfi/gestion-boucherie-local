@@ -7,5 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vendeur extends Model
 {
-    use HasFactory;
+    // use HasFactory;
+
+    protected $table = 'vendeurs';
+    protected $fillable = [
+        'id_user',
+        'id_magasin',
+        'id_caisse',
+        'nom',
+        'prenom',
+        'tel',
+        'details',
+    ];
 }

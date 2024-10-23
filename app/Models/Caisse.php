@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Caisse extends Model
 {
-    use HasFactory;
+    // use HasFactory;
+    protected $table = 'caisses';
+    protected $fillable = [
+        'code_caisse',
+      
+    ];
 }
