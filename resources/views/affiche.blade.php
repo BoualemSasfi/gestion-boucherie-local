@@ -129,7 +129,7 @@
             <div class="row">
                 @foreach ($magasins as $magasin)
                     <div class="col-3">
-                        <form class="affiche-form" action="/admin/affiche/caisse/{{ $magasin->id }}" method="POST">
+                        <form class="affiche-form" action="{{'/magasin/'. $magasin->id . '/caisses'}}" method="GET">
                             @csrf
 
 

@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
 // -------------------------------------------------------------------------
 Route::controller(CaisseController::class)->group(function () {
 
-    Route::get('/caisse', 'caisse_paccino')->name('caisse_paccino');
+    // Route::get('/caisse', 'caisse_paccino')->name('caisse_paccino');
     Route::get('/caisse/category/{id}', 'filtrage_des_produits')->name('caisse_filtrage');
 
     Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
@@ -216,13 +216,9 @@ Route::controller(GcaisseController::class)->group(function () {
 // ------------------------------------------------------------------------
 Route::controller(AfficheController::class)->group(function () {
 
-    Route::get('/affiche/magasin', 'magasin');
-    Route::post('/admin/affiche/caisse/{id}', 'caisse');
-    Route::post('/admin/lacaisse/{id}', 'lacaisse');
-    // Route::get('/affiche/caisse', 'magasin');
-
-
-
+    Route::get('/magasins', 'magasins');
+    Route::get('/magasin/{id_magasin}/caisses', 'caisses');
+    Route::get('/magasin/{id_magasin}/caisse/{id_caisse}', 'pos');
 
 });
 
