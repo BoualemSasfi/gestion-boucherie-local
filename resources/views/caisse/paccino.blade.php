@@ -86,17 +86,20 @@
     </style>
 
     <style>
-        .bouton-action .btn {
-            font-size: 14px;
-            padding: 5px;
-            height: 80px;
+        .bouton-action {
+            height: 70px; 
+        } 
+        .bouton-caisse {
+            font-size: 10px;
+            /* padding: 10px; */
+            height: 100%;
         }
 
-        .bouton-action i {
+        .bouton-caisse i {
             font-size: 28px;
             /* margin-top: 2px; */
-            padding-top: 5px;
-            padding-bottom: 5px;
+            /* padding-top: 3px; */
+            padding-bottom: 3px;
         }
     </style>
 
@@ -131,6 +134,11 @@
         }
     </style>
 
+    <style>
+        .petit_font {
+            font-size: 14px;
+        }
+    </style>
     {{-- ---------------------------------------------------------------------------------------------------- --}}
     <!-- AFFICHEUR -->
     <div class="container-fluid m-0 p-0">
@@ -152,9 +160,10 @@
                     <h5 class="objet-titre digital" id="produit_text">----</h5>
                 </div>
                 <div class="col-3 pt-1">
-                    <h6 class="afficheur-titre"> <span>Manuelle</span>
+                    <h6 class="afficheur-titre">
+                        <span>Manuelle</span>
                         <label class="switch">
-                            <input type="checkbox" id="darkModeSwitch">
+                            <input type="checkbox" id="toggleBalance">
                             <span class="slider"></span>
                         </label>
                         <span>Balance</span>
@@ -280,7 +289,7 @@
 
         <!-- Produits -->
         <div class="row le_centre">
-            <div class="col-8">
+            <div class="col-8 pb-4">
                 <div class="container mt-2">
                     <div class="your-carousel" data-aos="fade-right">
                         @foreach ($categories as $categorie)
@@ -296,16 +305,14 @@
                     </div>
                 </div>
                 <hr class="p-0 mb-0 mt-2">
-                <div class="container" style="height:75%; overflow-y: auto;">
+                <div class="container" style="max-height: 450px; overflow-y: auto;">
                     <h6 id="titre-categorie" class="p-0 m-0"></h6>
                     <div class="row" id="products">
                         <!-- Les produits filtrés apparaîtront ici -->
                     </div>
 
-                    {{-- <div class="col-12 zyada" style="height: 1800px;">
-                        CAISSE ESPACE
-                    </div> --}}
                 </div>
+                {{-- <div class="col-12 zyada" style="height: 100px;"></div> --}}
             </div>
 
             <!-- Facture -->
@@ -319,7 +326,7 @@
                 <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
                 {{-- stockage variable  --}}
 
-                <div class="card shadow m-3" style="height:440px;" data-aos="flip-left">
+                <div class="card shadow m-2" style="height:470px;" data-aos="flip-left">
                     <div class="card-header py-1">
                         <div class="row afficheur text-center" style="height: 105px;">
                             <div class="col-12 p-1 m-0 align-content-center">
@@ -333,14 +340,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-body m-0 p-1" style="max-height: 400px; overflow-y: auto;">
+                    <div class="card-body m-0 p-1" style="max-height: 500px; overflow-y: auto;">
                         <table id="affichage-produits-facture" class="text-left" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>Designation:</th>
-                                    <th>Qte:</th>
-                                    <th>Prix:</th>
-                                    <th>Total:</th>
+                                    <th>LIBELLE:</th>
+                                    <th>QTE:</th>
+                                    <th>P.U:</th>
+                                    <th>TOTAL:</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -357,16 +364,11 @@
 
         <!-- Footer -->
         <footer class="sticky-footer-caisse bg-white">
-            <div class="container-fluid boutons-caisse m-0 p-2">
+            <div class="container-fluid boutons-caisse m-0 p-0">
                 <div class="row align-content-center m-0 p-0">
                     <div class="col-6">
                         <div class="row bouton-action">
-                            <div class="col-3">
-                                <button class="btn btn-dark bouton-caisse" type="button">
-                                    <i class="fas fa-store-alt fa-lg"></i>
-                                    <br> Retour
-                                </button>
-                            </div>
+
                             <div class="col-3">
                                 <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#calculatorModal">
@@ -408,6 +410,7 @@
                                                             <tbody id="historique-factures">
                                                                 {{-- les factures ici  --}}
                                                             </tbody>
+                                                            <a href="" id="id_vente" style="display: none;"></a>
                                                         </table>
 
                                                     </div>
@@ -437,18 +440,20 @@
 
 
                             </div>
+
                             <div class="col-3">
+                                <button class="btn btn-danger bouton-caisse" type="button" style="display: none;">
+                                    <i class="fas fa-store-alt fa-lg"></i>
+                                    <br> Retour
+                                </button>
+                            </div>
+
+                            {{-- <div class="col-3">
                                 <button class="btn btn-dark bouton-caisse" type="button">
                                     <i class="fa fa-users fa-lg" aria-hidden="true"></i>
                                     <br>Clients
                                 </button>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="row bouton-action">
+                            </div> --}}
                             <div class="col-3">
                                 {{-- Bouton pour afficher le popup --}}
                                 <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
@@ -519,9 +524,15 @@
                                 <!-- Popup -->
 
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="col-3">
-                                <button class="btn btn-primary" type="button" onclick="FactureEnAttente()">
+                    <div class="col-6">
+                        <div class="row bouton-action">
+                            
+
+                            <div class="col-6">
+                                <button class="btn btn-primary bouton-caisse" type="button" onclick="FactureEnAttente()">
                                     <i class="fa fa-pause-circle fa-lg"></i>
                                     <br>Vente En Attente
                                 </button>
@@ -529,7 +540,7 @@
 
                             <div class="col-6">
                                 {{-- Bouton pour afficher le popup --}}
-                                <button class="btn btn-success" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-success bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#FactureModal" id="bouton_encaisser" onclick="Ouvrir_Encaissement()">
                                     <i class="fas fa-cash-register fa-lg"></i>
                                     <br>Encaissement
@@ -673,7 +684,7 @@
 
 
                             </div>
-                            
+
 
                         </div>
                     </div>
@@ -713,7 +724,7 @@
             </div>
         </footer>
     </div>
-    
+
 
 
     <!-- Popup changement de prix -->
@@ -735,9 +746,9 @@
                             <div class="col-8">
                                 <div class="input-group mb-3 mt-3">
                                     <span class="input-group-text" id="inputGroup-sizing-lg">Prix Total :</span>
-                                    <input type="number" id="TotalInput" class="form-control" placeholder="0.00"
+                                    <input type="number" id="PriceInput" class="form-control" placeholder="0.00"
                                         style="text-align: center; font-size:26px;" inputmode="decimal" aria-label=""
-                                        aria-describedby="inputGroup-sizing-lg" readonly>
+                                        value="" aria-describedby="inputGroup-sizing-lg" readonly>
                                 </div>
                                 {{-- <label for="versementInput">Prix Total :</label>
                                 <input type="number" id="TotalInput" class="form-control" placeholder="0.00"
@@ -785,14 +796,15 @@
                         <div class="row justify-content-center">
 
                             <div class="col-4">
-                                <button type="button" class="btn btn-success" onclick="ValiderChangementPrix()"
+                                <form class="" data-id=""></form>
+                                <button type="button" class="btn btn-success" onclick="ValiderPrixProduit()"
                                     style="width: 150px;">
                                     <i class="bi bi-check-lg"></i><br>Valider
                                 </button>
 
                             </div>
                             <div class="col-4">
-                                <button type="button" class="btn btn-danger" onclick="ClearTotalPrix()"
+                                <button type="button" class="btn btn-danger" onclick="ClearPrixInput()"
                                     style="width: 150px;">
                                     <i class="bi bi-eraser"></i><br>Effacer
                                 </button>
@@ -847,92 +859,369 @@
         });
         console.log('Carousel executé');
     </script>
+
+
+
+
+
+
     {{-- script pour les poppup  --}}
     <script>
-        // const modalElement1 = document.getElementById('FactureModal');
-        // const modal1 = new bootstrap.Modal(modalElement1, {
-        //     backdrop: false,
-        //     keyboard: false
-        // });
-        // modal1.show();
-
-        // const modalElement2 = document.getElementById('kgModal');
-        // const modal2 = new bootstrap.Modal(modalElement2, {
-        //     backdrop: false,
-        //     keyboard: false
-        // });
-        // modal2.show();
         $('body').css('overflow', 'auto');
     </script>
 
+
+    {{-- ---------------------------------------------------------------------------------------------- --}}
+
     {{-- script pour la balance  --}}
-    <script>
+
+    {{-- <script>
+        const balanceElement = document.getElementById('balance');
+        const prixUnitaireElement = document.getElementById('prix_unitaire');
+        const prixTotalElement = document.getElementById('prix_total');
+        const toggleBalance = document.getElementById('toggleBalance');
         let port;
-        let reader;
+        let reader; // Variable pour stocker le lecteur
 
-        async function connectToPort() {
+        // Fonction pour se connecter ou se déconnecter de la balance
+        async function toggleConnection() {
+            if (toggleBalance.checked) {
+                await connectToSerialPort(); // Connecter à la balance si la case est cochée
+            } else {
+                if (port) {
+                    // Relâcher le verrou du lecteur avant de fermer le port
+                    if (reader) {
+                        await reader.releaseLock();
+                        reader = null; // Réinitialiser la variable reader
+                    }
+                    await port.close(); // Fermer le port si ouvert
+                    port = null; // Réinitialiser la variable port
+                }
+                balanceElement.textContent = '0.000'; // Réinitialiser l'affichage du poids
+                prixTotalElement.textContent = '0.00'; // Réinitialiser le prix total
+            }
+        }
+
+        // Fonction pour se connecter au port série (COM4) et lire les données en temps réel
+        async function connectToSerialPort() {
             try {
-                // Demander à l'utilisateur de sélectionner un port série
                 port = await navigator.serial.requestPort();
-
-                // Ouvrir la connexion au port série
                 await port.open({
                     baudRate: 9600
                 });
-                reader = port.readable.getReader();
 
-                console.log('Connexion au port série établie');
-                readData(); // Commencer à lire les données du port série
+                reader = port.readable.getReader(); // Stocker le lecteur dans la variable
+
+                while (true) {
+                    const {
+                        value,
+                        done
+                    } = await reader.read();
+                    if (done) {
+                        reader.releaseLock(); // Relâcher le verrou si la lecture est terminée
+                        break;
+                    }
+
+                    // Convertir les données lues en chaîne de caractères
+                    const textDecoder = new TextDecoder();
+                    const data = textDecoder.decode(value);
+
+                    // Extraire uniquement la partie numérique (poids) des données reçues
+                    const match = data.match(/-?\d+(\.\d+)?/);
+                    if (match) {
+                        const weight = parseFloat(match[0]);
+                        balanceElement.textContent = weight.toFixed(3); // Mettre à jour la balance
+
+                        // Appeler la fonction pour calculer le prix total
+                        calculer_total_vente(weight);
+                    }
+                }
             } catch (error) {
-                console.error('Erreur lors de la connexion au port série :', error);
+                console.error('Erreur de connexion au port série :', error);
             }
         }
 
-        async function readData() {
+        // Fonction pour calculer le prix total en temps réel
+        function calculer_total_vente(weight) {
+            const PrixUnitaire = parseFloat(prixUnitaireElement.textContent);
+            if (!isNaN(weight) && !isNaN(PrixUnitaire)) {
+                const Total = (PrixUnitaire * weight).toFixed(2);
+                prixTotalElement.textContent = Total;
+            }
+        }
+
+        // Écouter les changements de la case à cocher
+        toggleBalance.addEventListener('change', toggleConnection);
+
+        // Initialiser l'état de la saisie
+        function init() {
+            toggleConnection(); // Appeler la fonction pour établir la connexion initiale
+        }
+
+        // Appeler la fonction d'initialisation
+        init();
+    </script> --}}
+
+
+    <script>
+        const balanceElement = document.getElementById('balance');
+        const prixUnitaireElement = document.getElementById('prix_unitaire');
+        const prixTotalElement = document.getElementById('prix_total');
+        const toggleBalance = document.getElementById('toggleBalance');
+        let port;
+        let reader; // Variable pour stocker le lecteur
+
+        // Fonction pour se connecter ou se déconnecter de la balance
+        async function toggleConnection() {
+            if (toggleBalance.checked) {
+                await connectToSerialPort(); // Connecter à la balance si la case est cochée
+            } else {
+                if (port) {
+                    // Relâcher le verrou du lecteur avant de fermer le port
+                    if (reader) {
+                        try {
+                            await reader.releaseLock(); // Relâcher le verrou uniquement si reader est défini
+                        } catch (error) {
+                            console.error('Erreur lors de la libération du lecteur :', error);
+                        }
+                        reader = null; // Réinitialiser la variable reader
+                    }
+                    await port.close(); // Fermer le port si ouvert
+                    port = null; // Réinitialiser la variable port
+                }
+                balanceElement.textContent = '0.000'; // Réinitialiser l'affichage du poids
+                prixTotalElement.textContent = '0.00'; // Réinitialiser le prix total
+            }
+        }
+
+        // Fonction pour se connecter au port série (COM4) et lire les données en temps réel
+        async function connectToSerialPort() {
             try {
-                const {
-                    value,
-                    done
-                } = await reader.read();
-                if (done) return;
+                port = await navigator.serial.requestPort();
+                await port.open({
+                    baudRate: 9600
+                });
 
-                const data = new TextDecoder().decode(value);
-                const numberMatch = data.match(/(\d+(\.\d+)?)(?=kg)/);
+                reader = port.readable.getReader(); // Stocker le lecteur dans la variable
 
-                if (numberMatch) {
-                    const weight = parseFloat(numberMatch[1]);
-                    document.getElementById('balance').textContent = `${weight} kg`;
-                    calculateTotal(weight);
+                while (true) {
+                    const {
+                        value,
+                        done
+                    } = await reader.read();
+                    if (done) {
+                        if (reader) {
+                            await reader.releaseLock(); // Relâcher le verrou si la lecture est terminée
+                        }
+                        break;
+                    }
+
+                    // Convertir les données lues en chaîne de caractères
+                    const textDecoder = new TextDecoder();
+                    const data = textDecoder.decode(value);
+
+                    // Extraire uniquement la partie numérique (poids) des données reçues
+                    const match = data.match(/-?\d+(\.\d+)?/);
+                    if (match) {
+                        const weight = parseFloat(match[0]);
+                        balanceElement.textContent = weight.toFixed(3); // Mettre à jour la balance
+
+                        // Appeler la fonction pour calculer le prix total
+                        calculer_total_vente(weight);
+                    }
+                }
+            } catch (error) {
+                console.error('Erreur de connexion au port série :', error);
+            }
+        }
+
+        // Fonction pour calculer le prix total en temps réel
+        function calculer_total_vente(weight) {
+            const PrixUnitaire = parseFloat(prixUnitaireElement.textContent);
+            if (!isNaN(weight) && !isNaN(PrixUnitaire)) {
+                const Total = (PrixUnitaire * weight).toFixed(2);
+                prixTotalElement.textContent = Total;
+            }
+        }
+
+        // Écouter les changements de la case à cocher
+        toggleBalance.addEventListener('change', toggleConnection);
+
+        // Initialiser l'état de la saisie
+        function init() {
+            toggleConnection(); // Appeler la fonction pour établir la connexion initiale
+        }
+
+        // Appeler la fonction d'initialisation
+        init();
+    </script>
+
+
+
+
+    {{-- <script>
+            const balanceElement = document.getElementById('balance');
+            const prixUnitaireElement = document.getElementById('prix_unitaire');
+            const prixTotalElement = document.getElementById('prix_total');
+            let port;
+
+            // Fonction pour se connecter au port série (COM4) et lire les données en temps réel
+            async function connectToSerialPort() {
+                try {
+                    port = await navigator.serial.requestPort();
+                    await port.open({
+                        baudRate: 9600
+                    });
+
+                    const reader = port.readable.getReader();
+
+                    while (true) {
+                        const {
+                            value,
+                            done
+                        } = await reader.read();
+                        if (done) {
+                            reader.releaseLock();
+                            break;
+                        }
+
+                        // Convertir les données lues en chaîne de caractères
+                        const textDecoder = new TextDecoder();
+                        const data = textDecoder.decode(value);
+                        //   console.log("Données brutes reçues : ", data);
+
+                        // Extraire uniquement la partie numérique (poids) des données reçues
+                        const match = data.match(/-?\d+(\.\d+)?/);
+
+                        if (match) {
+                            const weight = parseFloat(match[0]);
+                            balanceElement.textContent = weight.toFixed(3); // Mettre à jour la balance
+
+                            // Appeler la fonction pour calculer le prix total
+                            calculer_total_vente(weight);
+                        } else {
+                            // console.error("Les données ne sont pas un nombre valide : ", data);
+                        }
+                    }
+                } catch (error) {
+                    console.error('Erreur de connexion au port série :', error);
+                }
+            }
+
+            // Fonction pour calculer le prix total en temps réel
+            function calculer_total_vente(weight) {
+                const PrixUnitaire = parseFloat(prixUnitaireElement.textContent); // Récupérer le prix unitaire
+
+                // Vérifier que les valeurs sont bien des nombres
+                if (!isNaN(weight) && !isNaN(PrixUnitaire)) {
+                    const Total = (PrixUnitaire * weight).toFixed(2); // Calcul du total avec 2 décimales
+                    prixTotalElement.textContent = Total; // Mettre à jour le prix total
+                } else {
+                    console.error('Poids ou prix unitaire invalide');
                 }
 
-                readData();
-            } catch (error) {
-                console.error('Erreur de lecture des données :', error);
+                console.log('Calcul Total Vente exécuté : ', weight, PrixUnitaire);
             }
+
+            // Ajouter un événement de clic au bouton pour déclencher la connexion à la balance
+            const connectButton = document.getElementById('connectButton');
+            connectButton.addEventListener('click', connectToSerialPort);
+
+    </script> --}}
+
+
+
+    {{-- <script>
+        const balanceElement = document.getElementById('balance');
+        const connectButton = document.getElementById('connectButton');
+        let port;
+    
+        // Fonction pour se connecter au port série (COM4)
+        async function connectToSerialPort() {
+          try {
+            // Demande à l'utilisateur de choisir un port série
+            port = await navigator.serial.requestPort();
+            // Ouvrir le port avec des paramètres de communication spécifiques
+            await port.open({ baudRate: 9600 });  // Ajuster selon votre appareil
+    
+            const reader = port.readable.getReader();
+    
+            // Boucle pour lire les données
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) {
+                // Fermer le port si terminé
+                reader.releaseLock();
+                break;
+              }
+    
+              // Convertir les données lues en chaîne de caractères
+              const textDecoder = new TextDecoder();
+              const data = textDecoder.decode(value);
+    
+              // Journaliser les données pour voir ce qui est reçu
+            //   console.log("Données brutes reçues : ", data);
+    
+              // Extraire uniquement la partie numérique (y compris les signes négatifs et décimales)
+              const match = data.match(/-?\d+(\.\d+)?/);
+              
+              if (match) {
+                // Convertir la partie numérique en float et afficher avec 3 décimales
+                const weight = parseFloat(match[0]);
+                balanceElement.textContent = weight.toFixed(3);
+              } else {
+                // console.error("Les données ne sont pas un nombre valide : ", data);
+              }
+            }
+          } catch (error) {
+            console.error('Erreur de connexion au port série :', error);
+          }
         }
+    
+        // Ajouter un événement de clic au bouton pour déclencher la connexion
+        connectButton.addEventListener('click', connectToSerialPort);
 
-        function calculateTotal(weight) {
-            const prixUnitaire = parseFloat(document.getElementById('prix_unitaire').value.replace(',', '.')) || 0;
-            const total = (weight * prixUnitaire).toFixed(0);
-            document.getElementById('prix_total').textContent = `${total}`;
-        }
+      </script> --}}
 
-        document.getElementById('prix_unitaire').addEventListener('input', function() {
-            const weightText = document.getElementById('balance').textContent;
-            const weight = parseFloat(weightText) || 0;
-            calculateTotal(weight);
-        })
 
-        // Ajouter un gestionnaire d'événements pour le bouton
-        document.getElementById('connectButton').addEventListener('click', function() {
-            connectToPort();
-        })
-    </script>
     {{-- script pour la balance  --}}
 
+    {{-- <script>
+        // Fonction de calcul du total de la vente
+        function calculer_total_vente() {
+          // Récupération des éléments du DOM
+          const Qte = parseFloat(document.getElementById('balance').textContent);
+          const PrixUnitaire = parseFloat(document.getElementById('prix_unitaire').textContent);
+          const PrixTotal = document.getElementById('prix_total');
+      
+          // Vérification si les deux valeurs sont bien des nombres
+          if (!isNaN(Qte) && !isNaN(PrixUnitaire)) {
+            // Calcul du total
+            const Total = (PrixUnitaire * Qte).toFixed(2); // 2 décimales pour le total
+      
+            // Affectation du résultat dans l'élément du prix total
+            PrixTotal.textContent = Total;
+          } else {
+            console.error('Quantité ou prix unitaire invalide');
+          }
+      
+          console.log('Calcul Total Vente exécuté');
+        }
+      
+        // Surveiller les changements de la balance
+        const balanceElement = document.getElementById('balance');
+        
+        // Déclencher le calcul à chaque fois que le contenu de l'élément balance est mis à jour
+        const observer = new MutationObserver(() => {
+          calculer_total_vente();
+        });
+      
+        // Observer les changements dans le contenu de l'élément balance
+        observer.observe(balanceElement, { childList: true });
+      </script> --}}
 
 
-
+    {{-- ---------------------------------------------------------------------------------------------------- --}}
 
 
 
@@ -953,7 +1242,7 @@
                         $('#products').empty();
                         $.each(response.produits, function(key, value) {
                             $('#products').append(
-                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 p-2"  data-aos="fade-down">' +
+                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4"  data-aos="fade-down">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
@@ -1095,24 +1384,22 @@
 
 
 
-        function calculer_total_vente() {
-            const Qte = document.getElementById('balance').textContent;
-            const PrixUnitaire = document.getElementById('prix_unitaire').textContent;
-            const PrixTotal = document.getElementById('prix_total');
-            if (!isNaN(Qte) && !isNaN(PrixUnitaire)) {
-                qte = parseFloat(qte);
-                PrixUnitaire = parseFloat(PrixUnitaire);
-                Total = PrixUnitaire * qte;
-                Total = Total.toFixed(0);
-                PrixTotal.textContent = Total;
-            }
+        // function calculer_total_vente() {
+        //     const Qte = document.getElementById('balance').textContent;
+        //     const PrixUnitaire = document.getElementById('prix_unitaire').textContent;
+        //     const PrixTotal = document.getElementById('prix_total');
+        //     if (!isNaN(Qte) && !isNaN(PrixUnitaire)) {
+        //         qte = parseFloat(qte);
+        //         PrixUnitaire = parseFloat(PrixUnitaire);
+        //         Total = PrixUnitaire * qte;
+        //         Total = Total.toFixed(0);
+        //         PrixTotal.textContent = Total;
+        //     }
 
-            console.log('Calcul Total Vente executé');
-        }
+        //     console.log('Calcul Total Vente executé');
+        // }
 
-        // document.getElementById('balance').addEventListener('change', function() {
-        //     calculer_total_vente()
-        // })
+
 
 
 
@@ -1216,18 +1503,22 @@
                 success: function(response) {
                     $('#ventes_liste').empty();
                     $.each(response.ventes, function(key, value) {
-                        let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) :
-                            value.quantite;
+                        // let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) : value.quantite;
+                        let quantite = Number.isInteger(value.quantite) ? value.quantite : parseFloat(
+                            value.quantite);
+
                         $('#ventes_liste').append(
                             '<tr>' +
-                            '<td class="">' + value.nom_categorie + ' : ' + value.nom_produit +
+                            // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
+                            '<td class="petit_font">' + value.nom_produit +
                             '</td>' +
-                            '<td class="">' + quantite + ' ' + value.unite_mesure + '</td>' +
-                            '<td class="">' + value.prix_produit + '</td>' +
-                            '<td class="">' + value.prix_total + '</td>' +
+                            '<td class="petit_font">' + quantite + ' ' + value.unite_mesure +
+                            '</td>' +
+                            '<td class="petit_font">' + value.prix_produit + '</td>' +
+                            '<td class="petit_font">' + value.prix_total + '</td>' +
                             '<td class="">' +
                             '<form class="form-prix-produit" data-id="' + value.id +
-                            '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrix(this)">' +
+                            '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrixProduit(this)">' +
                             '<i class="fas fa-coins"></i></button></form>' +
                             '</td>' +
                             '<td class="">' +
@@ -1279,7 +1570,7 @@
 
                 Swal.fire({
                     title: "Voulez vous la supprimée ?",
-                    icon: "error",
+                    icon: "question",
                     showDenyButton: true,
                     showCancelButton: false,
                     confirmButtonText: "Oui",
@@ -1323,6 +1614,93 @@
             }
         }
     </script>
+
+    <script>
+        function ModifierPrixProduit(button) {
+            const form = button.closest('.form-prix-produit');
+            const IdVente = form.getAttribute('data-id');
+            const total_input = document.getElementById('PriceInput');
+            const porteur_IdVente = document.getElementById('id_vente');
+
+            if (IdVente) {
+                porteur_IdVente.textContent = IdVente;
+                $.ajax({
+                    url: '/prix-vente/' + IdVente,
+                    type: 'get',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        if (response.vente && response.vente.total_vente) {
+                            total_input.placeholder = response.vente.total_vente;
+                            total_input.value = '';
+                            console.log('Id Vente : ' + IdVente);
+                            console.log('Total Vente : ' + response.vente.total_vente);
+                        } else {
+                            console.error('Vente ou total_vente introuvable');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            }
+        }
+
+        function ValiderPrixProduit() {
+            const porteur_IdVente = document.getElementById('id_vente');
+            const IdVente = porteur_IdVente.textContent;
+            const nv_prix = document.getElementById('PriceInput').value;
+            const id_facture = document.getElementById('text-id-facture').textContent;
+
+            if (nv_prix > 0) {
+                $.ajax({
+                    url: '/valider-prix-vente/' + IdVente + '/' + nv_prix,
+                    type: 'get',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        Swal.fire({
+                            title: "Validé",
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        // Ferme le popup
+                        $('#PrixModal').modal('hide');
+
+                        ListeVentes(id_facture);
+
+                        Calculer_Total_Facture(id_facture);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            } else {
+                Swal.fire({
+                    title: "Erreur de saisie de la quantité",
+                    icon: "error",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+        }
+
+        function PrixAppendValue(value) {
+            const input = document.getElementById('PriceInput');
+            input.value += value;
+        }
+
+        function ClearPrixInput() {
+            const input = document.getElementById('PriceInput');
+            input.value = '';
+        }
+    </script>
+
+
+    {{-- ----------------------------------------------------------------------------------------------  --}}
 
     {{-- facture  --}}
     <script>
@@ -1630,7 +2008,7 @@
                     // Affiche une alerte SweetAlert après la réussite de l'AJAX
                     await Swal.fire({
                         title: "Vente En-Attente",
-                        icon: "info",
+                        icon: "success",
                         showConfirmButton: false,
                         timer: 1500
                     });
@@ -1775,12 +2153,15 @@
                                 },
                                 success: function(response) {
                                     $.each(response.ventes, function(key, vente) {
+                                        let quantite = Number.isInteger(vente
+                                                .quantite) ? vente.quantite :
+                                            parseFloat(vente.quantite);
                                         $('#produits_facture_' + id_facture).append(
                                             '<tr>' +
                                             '<td class="">' + vente
                                             .nom_categorie + ' : ' + vente
                                             .nom_produit + '</td>' +
-                                            '<td class="">' + vente.quantite +
+                                            '<td class="">' + quantite +
                                             ' ' + vente.unite_mesure + '</td>' +
                                             '<td class="">' + vente
                                             .prix_produit + '</td>' +
@@ -1953,7 +2334,7 @@
                                 '</div>' +
                                 '</div>' +
                                 '</td>' +
-                                '</tr>' // Closing the sales row
+                                '</tr>'
                             );
 
                             // Appel AJAX pour récupérer les ventes associées à la facture
@@ -1965,12 +2346,15 @@
                                 },
                                 success: function(response) {
                                     $.each(response.ventes, function(key, vente) {
+                                        let quantite = Number.isInteger(vente
+                                                .quantite) ? vente.quantite :
+                                            parseFloat(vente.quantite);
                                         $('#ventes_facture_' + id_facture).append(
                                             '<tr>' +
                                             '<td class="">' + vente
                                             .nom_categorie + ' : ' + vente
                                             .nom_produit + '</td>' +
-                                            '<td class="">' + vente.quantite +
+                                            '<td class="">' + quantite +
                                             ' ' + vente.unite_mesure + '</td>' +
                                             '<td class="">' + vente
                                             .prix_produit + '</td>' +
@@ -2214,19 +2598,12 @@
                     }
                 },
                 responsive: true,
-                // columnDefs: [{
-                //         target: 2,
-                //         visible: false,
-                //         searchable: false
-                //     },
-                //     {
-                //         target: 3,
-                //         visible: false
-                //     }
-                // ]
+
             });
         });
     </script>
+
+
 
     {{-- ------------------------------------------------------------------------------------------------------   --}}
 @endsection

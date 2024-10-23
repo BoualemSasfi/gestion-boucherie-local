@@ -50,16 +50,17 @@ Route::middleware('auth')->group(function () {
 // ---------               caisse                                 ----------
 // -------------------------------------------------------------------------
 Route::controller(CaisseController::class)->group(function () {
-    Route::get('/caisse', 'caisse')->name('caisse_home');
-    Route::get('/caisse_teste', 'caisse')->name('caisse_teste');
 
-    Route::get('/caisse_paccino', 'caisse_paccino')->name('caisse_paccino');
+    Route::get('/caisse', 'caisse_paccino')->name('caisse_paccino');
     Route::get('/caisse/category/{id}', 'filtrage_des_produits')->name('caisse_filtrage');
 
     Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
     Route::get('/ventes/{id_facture}', 'Get_Liste_Ventes')->name('liste_ventes');
     Route::get('/supprimer-vente/{id_vente}', 'Supprimer_Vente')->name('supprimer_vente');
+    Route::get('/prix-vente/{id_vente}', 'Prix_Vente')->name('prix_vente');
+    Route::get('/valider-prix-vente/{id_vente}/{nv_prix}', 'Valider_Prix_Vente')->name('valider_prix_vente');
     Route::get('/total-facture/{id_facture}', 'Total_Facture')->name('total_facture');
+
     Route::get('/nouvelle-facture/{id_user}/{id_magasin}/{id_caisse}', 'Create_Facture')->name('nouvelle_facture');
     Route::put('/valider-facture/{id_user}/{id_facture}/{id_caisse}/{id_client}/valeurs/{total}/{versement}/{credit}/{etat}', 'Valider_Facture')->name('valider_facture');
 
@@ -75,7 +76,7 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/imprimer-ticket-credit/{id_facture}', 'ImprimerTicket')->name('caisse_ticket_credit');
     Route::get('/test_pdf', 'test_pdf')->name('caisse_teste_ticket');
 
-    Route::get('/open-cash-drawer', 'CashDrawerController@open')->name('open.cash.drawer');
+    Route::get('/open-cash-drawer', 'OpenCashDrawer')->name('open_cash_drawer');
 
 });
 
@@ -256,9 +257,9 @@ require __DIR__ . '/auth.php';
 
 // les route de la caisse 
 
-Route::get('/caisse', function () {
-    return view('caisse.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/caisse', function () {
+//     return view('caisse.index');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/test', function () {
 //     return view('caisse.test');

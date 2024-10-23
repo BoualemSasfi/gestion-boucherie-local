@@ -10,57 +10,68 @@
 
 <body>
     <div class="container">
+
         <h2 id="ticket-titre">{{ $informations->nom_entr }}</h2>
-        <div class="facture part">
-            {{-- <div class="cell" id="cell-1">
-                <h5 id="code">Ticket N° : {{ $num_facture }}</h5>
-            </div> --}}
-            <div class="cell" id="cell-2">
-                {{-- <h5 id="code-barres">CODE BARRES</h5> --}}
-                <img src="{{ $barcodePath }}" alt="">
-                <h5>{{ $code_barres_facture }}</h5>
-            </div>
-            <div class="cell" id="cell-5">
-                <h5 id="date">Date et Heure : {{ $date_facture }}</h5>
-            </div>
-            <div class="cell" id="cell-6">
-                <h5 id="client">Client : {{ $client }}</h5>
-            </div>
-        </div>
-        <div class="ventes part">
-            <hr class="dashed-hr">
-            <table>
-                <tr>
-                    <th class="designation">Designation :</th>
-                    <th class="prix">Prix :</th>
-                    <th class="prix_total">Total :</th>
+        <h4 id="ticket-titre">{{ $magasin->nom }}</h4>
+        <h4 id="ticket-titre">{{ $informations->tel }}</h4>
+        
+        <hr class="dashed-hr">
+
+        <div class="ventes part" style="width: 100%;">
+            <table style="width: 100%;">
+                <tr style="width: 100%;">
+                    <th class="designation" style="width: 40%;">LIBELLE</th>
+                    <th class="quantite" style="width: 20%;">QTE</th>
+                    <th class="prix" style="width: 20%;">P.U</th>
+                    <th class="prix_total" style="width: 20%;">TOTAL</th>
                 </tr>
                 @foreach ($ventes as $vente)
-                    <tr>
-                        <td class="designation">{{ $vente->nom_categorie }}:{{ $vente->nom_produit }} <br> x
-                             {{ $vente->quantite == (int) $vente->quantite ? (int) $vente->quantite : $vente->quantite }} 
-                             {{ $vente->unite_mesure }}
-                            </td>
-                        <td class="prix">{{ $vente->prix_produit }} </td>
-                        <td class="prix_total"><b>{{ $vente->prix_total }}</b></td>
+                <tr style="width: 100%;">
+                        <td class="designation" style="width: 40%;">{{ $vente->nom_produit }}</td>
+                        <td class="quantite" style="width: 20%;">
+                            {{ $vente->quantite == (int) $vente->quantite ? (int) $vente->quantite : $vente->quantite }}
+                            {{-- {{ $vente->unite_mesure }} --}}
+                        </td>
+                        <td class="prix" style="width: 20%;">{{ $vente->prix_produit }} </td>
+                        <td class="prix_total" style="width: 20%;"><b>{{ $vente->prix_total }}</b></td>
                     </tr>
                 @endforeach
             </table>
             <hr class="dashed-hr">
         </div>
-        <div class="resume part">
-            <h5 id="total">Montant Total : {{ $total }} DA</h5>
-            <h5 id="versement">Versement : {{ $versement }} DA</h5>
-            <h5 id="credit">Crédit : {{ $credit }} DA</h5>
+
+        <div class="resume part" style="padding-right: 10px;">
+            <h5 id="nombre">NBRE ARTICLE : {{ $nombre }}</h5>
+            <h5 id="total">TTC A PAYER : {{ $total }}</h5>
+            <h5 id="versement">VERSEMENT : {{ $versement }}</h5>
+            <h5 id="credit">CREDIT : {{ $credit }}</h5>
         </div>
 
         <div class="facture part">
             <hr class="dashed-hr">
+
+            <div class="facture part">
+                {{-- <div class="cell" id="cell-1">
+                    <h5 id="code">Ticket N° : {{ $num_facture }}</h5>
+                </div> --}}
+                <div class="cell" id="cell-2">
+                    {{-- <h5 id="code-barres">CODE BARRES</h5> --}}
+                    <img src="{{ $barcodePath }}" alt="">
+                    <h5>{{ $code_barres_facture }}</h5>
+                </div>
+                <div class="cell" id="cell-5">
+                    <h5 id="date">Date et Heure : {{ $date_facture }}</h5>
+                </div>
+                <div class="cell" id="cell-6">
+                    <h5 id="client">Ticket N°: {{ $num_facture }} | Client : {{ $client }}</h5>
+                </div>
+            </div>
+
             <div class="cell" id="cell-3">
-                <h5 id="vendeur">Vendeur : {{ $vendeur }}</h5>
+                <h5 id="vendeur">Caissier : {{ $vendeur }}</h5>
             </div>
             <div class="cell" id="cell-4">
-                <h5 id="magasin">Magasin : {{ $magasin }} | Caisse : {{ $caisse }}</h5>
+                <h5 id="magasin">Magasin : {{ $magasin->id }} | Caisse : {{ $caisse }}</h5>
             </div>
             <hr class="dashed-hr">
         </div>
@@ -73,7 +84,7 @@
 
     <style>
         html {
-            margin: 10px;
+            margin: 0;
             padding: 0;
         }
 
@@ -132,7 +143,7 @@
             text-align: center;
         }
 
-        table{
+        table {
             padding: 0;
             margin: 0;
         }
@@ -152,18 +163,21 @@
             /* gap: 0; */
             width: 100%;
         }
-        .designation{
-            width: 130px;
+
+        .designation {
+            /* width: 130px; */
             margin-left: 0;
             padding-left: 0;
         }
-        .prix{
-            width:70px;
-            text-align: center;
+
+        .prix {
+            /* width: 70px; */
+            /* text-align: center; */
         }
-        .prix_total{
-            width:75px;
-            text-align: center;
+
+        .prix_total {
+            /* width: 75px; */
+            /* text-align: center; */
         }
 
         .message {
