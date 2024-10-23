@@ -15,6 +15,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "lepiaf/serialport": "^1.1",
+        "mike42/escpos-php": "^2.2",
         "picqer/php-barcode-generator": "^3.1",
         "realrashid/sweet-alert": "^7.2",
         "symfony/property-access": "^7.1",

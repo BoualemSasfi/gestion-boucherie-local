@@ -3,7 +3,7 @@
         'name' => 'laravel/laravel',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '546002dd507ceaac3158071a63ee2f27bf9cb458',
+        'reference' => '0fccaac166d92498cff07824ca004b49ac8f2c2a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -427,7 +427,7 @@
         'laravel/laravel' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '546002dd507ceaac3158071a63ee2f27bf9cb458',
+            'reference' => '0fccaac166d92498cff07824ca004b49ac8f2c2a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -547,6 +547,15 @@
             'reference' => 'f5ac2c0b0a2eefca70b2ce32a5809992227e75a6',
             'type' => 'library',
             'install_path' => __DIR__ . '/../masterminds/html5',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'mike42/escpos-php' => array(
+            'pretty_version' => 'v2.2',
+            'version' => '2.2.0.0',
+            'reference' => 'e5496cf819b048b11877117bd14a9cea4fb17c03',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../mike42/escpos-php',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -829,8 +838,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '3.0.0',
+                0 => '3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(

@@ -46,10 +46,8 @@ Route::middleware('auth')->group(function () {
 // ---------               caisse                                 ----------
 // -------------------------------------------------------------------------
 Route::controller(CaisseController::class)->group(function () {
-    Route::get('/caisse', 'caisse')->name('caisse_home');
-    Route::get('/caisse_teste', 'caisse')->name('caisse_teste');
-    
-    Route::get('/caisse_paccino', 'caisse_paccino')->name('caisse_paccino');
+
+    Route::get('/caisse', 'caisse_paccino')->name('caisse_paccino');
     Route::get('/caisse/category/{id}', 'filtrage_des_produits')->name('caisse_filtrage');
     
     Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
@@ -182,9 +180,9 @@ require __DIR__ . '/auth.php';
 
 // les route de la caisse 
 
-Route::get('/caisse', function () {
-    return view('caisse.index');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/caisse', function () {
+//     return view('caisse.index');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Route::get('/test', function () {
 //     return view('caisse.test');

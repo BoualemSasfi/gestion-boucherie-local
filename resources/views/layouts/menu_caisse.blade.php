@@ -10,6 +10,7 @@
     <meta name="author" content="">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    
 
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -112,10 +113,14 @@
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow">
 
 
-                    <div class="nav-item" style="">
+                    {{-- <div class="nav-item" style="">
                         <button class="btn btn-success" onclick="OpenCashDrawer()"
                             style="height: 100%;margin-left:20px;">Ouvrir la Caisse</button>
-                    </div>
+                    </div> --}}
+
+                    {{-- <div class="nav-item" style="margin-left:20px;">
+                        <button class="btn btn-primary" id="connectButton">Connecter la Balance</button>
+                    </div> --}}
 
 
 
@@ -123,7 +128,7 @@
 
                     <ul class="navbar-nav ms-auto">
                         <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
+                        <li class="nav-item dropdown no-arrow mr-4">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
@@ -133,15 +138,15 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">
+                                {{-- <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                     <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
                                     Mon Profil
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-cogs fa-sm fa-fw me-2 text-gray-400"></i>
                                     Settings
-                                </a>
-                                <div class="dropdown-divider"></div>
+                                </a> --}}
+                                {{-- <div class="dropdown-divider"></div> --}}
                                 <a class="dropdown-item" href="#" data-bs-toggle="modal"
                                     data-bs-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
@@ -259,7 +264,7 @@
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.error("Erreur lors de l'ouverture de la caisse :", error);
+                    console.error("Erreur lors de l'ouverture de la caisse :", xhr.responseText);
                 }
             });
         }
