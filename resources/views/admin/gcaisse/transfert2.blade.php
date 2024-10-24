@@ -13,14 +13,9 @@
         <div class="col-10 d-flex align-items-center">
 
         
-            <h2>choisi un magasin  
+            <h2>choisi une caisse 
            
-            <!-- @foreach ($magasins as $magasin)                             
-                                                @if ($magasin->id == $caisse->id_magasin) 
-                                                {{ $magasin->nom }}
-                                                @endif
-                                                 
-                                        @endforeach         -->
+
         
         </h2>
         </div>
@@ -32,7 +27,7 @@
     <div class="row animate__animated animate__backInLeft">
         <div class="col-xs-6 col-sm-6 col-md-8 col-lg-6 mx-auto">
             <div class="card shadow m-1">
-                <form class="edit-form" action="{{ url('/admin/caisse/lemagasin/' .$caisse->id) }}" method="post"
+                <form class="edit-form" action="{{ url('/admin/caisse/lemagasin/'.$caisse) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -40,11 +35,11 @@
                         <div class="row">
 
                             <div class="text-center form-group col-12">
-                                <h3>Liste des caisse de magasin {{$magasin->nom}} </h3>
+                                <h3>Liste des caisse de de magasin </h3>
                             </div>
-
-                            <input type="hidden" name="caisse_id" value=" {{$caisse->id}} " >
-                            <!-- <input type="text" name="caisse_id" value=" {{$caisse->id}} " > -->
+                   
+                            <input type="hidden" name="caisse_id" value=" {{$caisse}} " >
+                            <input type="text" name="caisse_id" value=" {{$caisse}} " >
 
                             <div class="form-group col-12">
                                     <!-- <label for="magasin_id">Intégrer à un magasin</label> -->
@@ -56,7 +51,7 @@
                                                 @if ($index == 0 || $caisse->id == $caisse->id_magasin) 
                                                     selected 
                                                 @endif>
-                                                {{ $magasin->nom }}
+                                                {{ $caisse->nom }}
                                             </option>
                                         @endforeach
                                     </select>

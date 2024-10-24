@@ -80,12 +80,27 @@ class GcaisseController extends Controller
 
         return view('admin.gcaisse.transfert1', ['magasins' => $magasins, 'caisse' => $caisse]);
     }
-
     public function caisse_transfert2(Request $request, $id)
     {
-        $magasin = Magasin::where('id', $request->id_magasin)->get();
-        $caisses = Caisse::where('id_magasin',$request->id_magasin)->get();
-        $caisse_id = $id;
-        return view('admin.gcaisse.tranfert2', ['magasin' => $magasin,'caisses'=>$caisses ,'caisse_id' => $caisse_id]);
+        // Validation des données reçues
+        $request->validate([
+            'id_magasin' => 'required|exists:magasins,id',
+            'id_caisse' => 'required|exists:caisses,id',
+        ]);
+
+        // Récupérer le magasin et la caisse spécifiques
+        $magasin = Magasin::find($request->id_magasin);
+        $caisse = Caisse::where('id_magasin', $request->id_magasin)
+            ->where('id', $request->id_caisse)
+            ->firstOrFail();
+
+        // Logique supplémentaire si nécessaire
+
+        // Retourner la vue avec les données du magasin et de la caisse
+        return view('admin.gcaisse.tranfert2', [
+            'magasin' => $magasin,
+            'caisse' => $caisse,
+        ]);
     }
+
 }
