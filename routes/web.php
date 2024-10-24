@@ -205,7 +205,11 @@ Route::controller(GcaisseController::class)->group(function () {
 
     // transfert
     Route::get('/admin/caisse/transfertmagasin/{id}', 'caisse_tranfert1');
-    Route::get('/admin/caisse/lemagasin/{id}', 'caisse_transfert2');
+    Route::get('/admin/caisse/lemagasin/{id_liste}/{id_magasin}', 'caisse_transfert2');
+    Route::get('/admin/caisse/letransfert/{lacaisseId}/{selectedCaisseId}', 'letransfert');
+
+    Route::post('/admin/caisse/validtransfert', 'valide_transfer')->name('valide_transfer');
+
 
     Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
 
