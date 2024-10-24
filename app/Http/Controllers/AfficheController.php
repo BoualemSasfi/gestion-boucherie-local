@@ -32,73 +32,73 @@ use Illuminate\Http\Request;
 
 class AfficheController extends Controller
 {
-    public function magasin()
+    public function magasins()
     {
         $magasins = Magasin::all();
         return view('affiche', ['magasins' => $magasins]);
     }
 
-    public function caisse($id)
+    public function caisses($id)
     {
         $caisses = Caisse::where('id_magasin', $id)->get();
 
-        return view('caisseaffiche', ['caisses' => $caisses]);
+        return view('caisseaffiche', ['caisses' => $caisses, 'id_magasin' => $id]);
     }
 
-
-
-    public function lacaisse($id)
+    public function pos($id_magasin, $id_caisse)
     {
+        // Vérifier si un utilisateur est connecté
+        if ($id_magasin && $id_caisse) {
+            // L'utilisateur est connecté
+            $IdUser = 0;
+            $IdMagasin = $id_magasin;
+            $IdCaisse = $id_caisse;
 
-        $caisse = Caisse::find($id);
+            $magasin = Magasin::find($IdMagasin);
+            $StocksFrai = Stock::where('magasin_id', $IdMagasin)->where('type', '=', 'Frais')->first();
+            $IdStock = $StocksFrai->id;
+            $LesStocks = Lestock::where('stock_id', $IdStock)->get();
+            // hadi tafichi man stock magasin 
+            $categories = Lestock::where('stock_id', $IdStock)
+                ->join('categories', 'categories.id', '=', 'lestocks.categorie_id')
+                ->select(
+                    DB::raw('MIN(lestocks.id) as id_lestock'),  // Obtenir la valeur minimum de id_lestock
+                    'lestocks.categorie_id as id',               // Grouper par categorie_id (alias id)
+                    DB::raw('MIN(categories.nom) as nom'),       // Utiliser MIN() ou MAX() pour les autres colonnes
+                    DB::raw('MIN(categories.photo) as photo')
+                )
+                ->groupBy('id')  // Grouper par categorie_id (alias id)
+                ->get();
 
-        // L'utilisateur est connecté
+            $NouvelleFacture = $this->Nouvelle_Facture_Vide($IdMagasin, $IdUser, $IdCaisse);
+            // $LastFacture = $this->Get_Last_Facture($IdMagasin, $IdUser);
 
-        $leuser = User::find(17);
-        $IdUser = $leuser->id;
-        $Vendeur = Vendeur::where('id_user', $IdUser)->first();
-        $IdMagasin = $caisse->id_magasin;
-        $IdCaisse = $id;
-        $magasin = Magasin::find($IdMagasin);
-        $StocksFrai = Stock::where('magasin_id', $IdMagasin)->where('type', '=', 'Frais')->first();
-        $IdStock = $StocksFrai->id;
-        $LesStocks = Lestock::where('stock_id', $IdStock)->get();
-        // hadi tafichi man stock magasin 
-        $categories = Lestock::where('stock_id', $IdStock)
-            ->join('categories', 'categories.id', '=', 'lestocks.categorie_id')
-            ->select(
-                DB::raw('MIN(lestocks.id) as id_lestock'),  // Obtenir la valeur minimum de id_lestock
-                'lestocks.categorie_id as id',               // Grouper par categorie_id (alias id)
-                DB::raw('MIN(categories.nom) as nom'),       // Utiliser MIN() ou MAX() pour les autres colonnes
-                DB::raw('MIN(categories.photo) as photo')
-            )
-            ->groupBy('id')  // Grouper par categorie_id (alias id)
-            ->get();
+            $clients = Client::all();
 
-        // $NouvelleFacture = $this->Nouvelle_Facture_Vide($IdMagasin, $IdUser, $IdCaisse);
+            return view('caisse.paccino', [
+                'categories' => $categories,
+                'magasin' => $magasin,
+                'produits' => $LesStocks,
+                'id_magasin' => $IdMagasin,
+                'id_user' => $IdUser,
+                'id_caisse' => $IdCaisse,
+                'clients' => $clients
+            ]);
+        } else {
+            return "probleme id_magasin ou id_caisse";
+        }
+    }
 
-        $newfacture = new Facture();
-        $newfacture->id_user = $IdUser;
-        $newfacture->id_magasin = $IdMagasin;
-        $newfacture->id_caisse = $IdCaisse;
-        $newfacture->id_client = 0;
-        $newfacture->code_barres = 00000000;
-        $newfacture->save();
-
-
-
-        // $LastFacture = $this->Get_Last_Facture($IdMagasin, $IdUser);
-        // $LastFacture = Facture::where('id',$newfacture->id)->get();
-        // $LastFacture = Facture::latest()->first();
-
-        $LastFacture = Facture::where('id_magasin', $IdMagasin)->where('id_user', $IdUser)->where('total_facture', '=', 0)
+    public function Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse)
+    {
+        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('total_facture', '=', 0)
             ->orderBy('id', 'desc')
             ->first();
         if (!$LastFacture) {
             $NewFacture = new Facture();
-            $NewFacture->id_user = $IdUser;
-            $NewFacture->id_magasin = $IdMagasin;
-            $NewFacture->id_caisse = $id;
+            $NewFacture->id_user = $id_user;
+            $NewFacture->id_magasin = $id_magasin;
+            $NewFacture->id_caisse = $id_caisse;
             $NewFacture->id_client = 0;
             $NewFacture->etat_facture = "en-attente";
             $NewFacture->total_facture = 0;
@@ -116,26 +116,13 @@ class AfficheController extends Controller
         } else {
             $Ventes = Vente::where('id_facture', $LastFacture->id)->delete();
         }
+    }
 
-        $LastFacture = Facture::where('id_magasin', $IdMagasin)->where('id_user', $IdUser)
+    public function Get_Last_Facture($id_magasin, $id_user)
+    {
+        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)
             ->orderBy('id', 'desc')
             ->first();
-    
-
-        $clients = Client::all();
-
-        return view('lacaisse', [
-            'categories' => $categories,
-            'magasin' => $magasin,
-            'produits' => $LesStocks,
-            'id_magasin' => $IdMagasin,
-            'id_user' => $IdUser,
-            'id_caisse' => $IdCaisse,
-            'clients' => $clients,
-            'lasfacture' => $LastFacture
-        ]);
-
-
-
+        return $LastFacture;
     }
 }

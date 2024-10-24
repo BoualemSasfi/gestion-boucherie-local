@@ -1,4 +1,5 @@
-@extends('layouts.menu_caisse')
+{{-- @extends('layouts.menu_caisse') --}}
+@extends('layouts.caisse_provisoir')
 
 
 @section('content')
@@ -319,11 +320,11 @@
             <div class="col-4 bg-dark p-0 m-0">
 
                 {{-- stockage variable  --}}
-                <a href="" style="color: aliceblue; display: none;">USER / FACTURE / MAGASIN / CAISSE</a>
-                <a id="text-id-user" href="" style="display: none;">{{ $id_user }}</a>
-                <a id="text-id-facture" href="" style="display: none;">{{ $LastFacture->id }}</a>
-                <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
-                <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
+                <a href="" style="color: aliceblue; display: inline;">USER / FACTURE / MAGASIN / CAISSE</a>
+                <a id="text-id-user" href="" style="display: inline;">{{ $id_user }}</a>
+                <a id="text-id-facture" href="" style="display: inline;">{{ $LastFacture->id }}</a>
+                <a id="text-id-magasin" href="" style="display: inline;">{{ $id_magasin }}</a>
+                <a id="text-id-caisse" href="" style="display: inline;">{{ $id_caisse }}</a>
                 {{-- stockage variable  --}}
 
                 <div class="card shadow m-2" style="height:470px;" data-aos="flip-left">
