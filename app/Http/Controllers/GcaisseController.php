@@ -206,6 +206,12 @@ class GcaisseController extends Controller
 
     }
 
+    public function trans_solde(){
+        $listes = Transfert_soldes::all();
+        return view('admin.gcaisse.transfertliste',['listes'=>$listes]);
+
+    }
+
 
 
 

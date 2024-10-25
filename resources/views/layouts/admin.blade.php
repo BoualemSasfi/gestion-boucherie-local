@@ -93,7 +93,7 @@
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2"
                     aria-expanded="true" aria-controls="collapse2">
                     <i class="fas fa-fw fa-cog "></i>
@@ -105,10 +105,10 @@
                         <a class="collapse-item" href="utilities-color.html">TVA</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse14"
                     aria-expanded="true" aria-controls="collapse14">
                     <i class="fas fa-fw fa-cog "></i>
@@ -120,7 +120,7 @@
                         <a class="collapse-item" href="">Etat et mouvements</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -134,16 +134,17 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse3"
                     aria-expanded="true" aria-controls="collapse3">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <!-- <i class="fas fa-fw fa-folder"></i> -->
+                    <i class="fa-solid fa-shop fa-lg"></i>
                     <span>Nos Magasins</span>
                 </a>
 
                 <div id="collapse3" class="collapse" aria-labelledby="heading3" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Gestion Magasins:</h6>
-                        <a class="collapse-item" href="/admin/magasin">Liste des magasins</a>
-                        <a class="collapse-item" href="">Vendeurs par magasin</a>
-                        <a class="collapse-item" href="/admin/caisse">Gestion des caisses</a>
+                        <!-- <h6 class="collapse-header">Gestion Magasins:</h6> -->
+                        <a class="collapse-item" href="/admin/magasin"><i class="fa-solid fa-rectangle-list fa-lg" style="color: #080808;"></i> Liste des magasins</a>
+                        <!-- <a class="collapse-item" href="">Vendeurs par magasin</a> -->
+                        <!-- <a class="collapse-item" href="/admin/caisse">Gestion des caisses</a> -->
 
                     </div>
                 </div>
@@ -151,7 +152,34 @@
 
             <!-- Divider -->
             <hr class="sidebar-divider">
+            <div class="sidebar-heading">
+            Gestion des Caisses
+            </div>
+<!-- ---------------------------------------------------------caisses------------------------------------------>
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse19"
+                    aria-expanded="true" aria-controls="collapse19">
+                    <!-- <i class="fas fa-fw fa-folder"></i> -->
+                    <i class="fa-solid fa-cash-register fa-lg" ></i>
+                    <span>Caisses</span>
+                </a>
 
+                <div id="collapse19" class="collapse" aria-labelledby="heading19    " data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Gestion des Caisses</h6> -->
+                        <a class="collapse-item" href="/admin/caisse"><i class="fa-solid fa-rectangle-list fa-lg" style="color: #080808;"></i> Liste des caisses</a>
+                        <a class="collapse-item" href="/admin/caisse/transfolde"><i class="fa-solid fa-file-invoice-dollar fa-lg"></i>  Transfert solde</a>
+                        <!-- <a class="collapse-item" href="">Vendeurs par magasin</a> -->
+
+                    </div>
+                </div>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+<!-- ---------------------------------------------------------fin------------------------------------------>
+<!-- ---------------------------------------------------------fin------------------------------------------>
             <!-- Heading -->
             <div class="sidebar-heading">
                 Stock Marchandise
@@ -161,20 +189,21 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse10"
                     aria-expanded="true" aria-controls="collapse10">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Catégories Viande</span>
+                    <!-- <i class="fas fa-fw fa-folder"></i> -->
+                    <i class="fa-solid fa-horse fa-lg"></i>
+                    <span>Viande</span>
                 </a>
                 <div id="collapse10" class="collapse" aria-labelledby="heading10" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Catégories viande:</h6>
-                        <a class="collapse-item" href="/admin/category">Catétorié</a>
-                        <a class="collapse-item" href="/admin/produit">Produits</a>
+                        <!-- <h6 class="collapse-header">Catégories viande:</h6> -->
+                        <a class="collapse-item" href="/admin/category"><i class="fa-solid fa-horse-head fa-lg"></i> Catétorié</a>
+                        <a class="collapse-item" href="/admin/produit"><i class="fa-solid fa-drumstick-bite fa-lg"></i> Produits</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse11"
                     aria-expanded="true" aria-controls="collapse11">
                     <i class="fas fa-fw fa-folder"></i>
@@ -187,27 +216,28 @@
 
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse4"
                     aria-expanded="true" aria-controls="collapse4">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <!-- <i class="fas fa-fw fa-folder"></i> -->
+                    <i class="fa-solid fa-box fa-lg"></i>
                     <span>Gestion des stocks</span>
                 </a>
                 <div id="collapse4" class="collapse" aria-labelledby="heading4" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Gestion stock frais:</h6> -->
-                        <a class="collapse-item" href="/admin/stock">Stocks</a>
-                        <a class="collapse-item" href="/admin/transfert_liste">Transfert</a>
-                        <a class="collapse-item" href="/admin/ajuste">Ajustisement</a>
+                        <a class="collapse-item" href="/admin/stock"><i class="fa-solid fa-rectangle-list fa-lg" style="color: #080808;"></i> liste des stocks</a>
+                        <a class="collapse-item" href="/admin/transfert_liste"><i class="fa-solid fa-arrow-right-arrow-left fa-lg"></i> Transfert</a>
+                        <a class="collapse-item" href="/admin/ajuste"><i class="fa-solid fa-arrows-rotate fa-lg"></i> Ajustisement</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse5"
                     aria-expanded="true" aria-controls="collapse5">
                     <i class="fas fa-fw fa-folder"></i>
@@ -219,7 +249,7 @@
                         <a class="collapse-item" href="">Consulter tout</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
 
 
@@ -235,21 +265,22 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse6"
                     aria-expanded="true" aria-controls="collapse6">
-                    <i class="fas fa-fw fa-folder"></i>
+                    <!-- <i class="fas fa-fw fa-folder"></i> -->
+                    <i class="fa-solid fa-users fa-lg"></i> 
                     <span>Utilisateurs</span>
                 </a>
                 <div id="collapse6" class="collapse" aria-labelledby="heading6" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Gestion des utilisateurs</h6>
-                        <a class="collapse-item" href="/admin/client">User</a>
-                        <a class="collapse-item" href="/admin/client">Clients</a>
-                        <a class="collapse-item" href="/admin/vendeur">Vendeurs</a>
+                        <!-- <a class="collapse-item" href="/admin/client"><i class="fa-solid fa-user-tie fa-lg"></i> User</a> -->
+                        <a class="collapse-item" href="/admin/client"><i class="fa-solid fa-users fa-lg"></i> Clients</a>
+                        <a class="collapse-item" href="/admin/vendeur"><i class="fa-solid fa-address-card fa-lg"></i> Vendeurs</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse7"
                     aria-expanded="true" aria-controls="collapse7">
                     <i class="fas fa-fw fa-folder"></i>
@@ -262,10 +293,10 @@
                         <a class="collapse-item" href="">Dettes / Crédit</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse12"
                     aria-expanded="true" aria-controls="collapse12">
                     <i class="fas fa-fw fa-folder"></i>
@@ -277,10 +308,10 @@
                         <a class="collapse-item" href="">Voir la liste</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse13"
                     aria-expanded="true" aria-controls="collapse13">
                     <i class="fas fa-fw fa-folder"></i>
@@ -293,19 +324,19 @@
                         <a class="collapse-item" href="">Dettes / Crédit</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <!-- <div class="sidebar-heading">
                 Achats
-            </div>
+            </div> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse8"
                     aria-expanded="true" aria-controls="collapse8">
                     <i class="fas fa-fw fa-folder"></i>
@@ -317,10 +348,10 @@
                         <a class="collapse-item" href="">Voir la liste</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse9"
                     aria-expanded="true" aria-controls="collapse9">
                     <i class="fas fa-fw fa-folder"></i>
@@ -333,19 +364,19 @@
                         <a class="collapse-item" href="">Dettes / Crédit</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <!-- <div class="sidebar-heading">
                 Dépenses
-            </div>
+            </div> -->
 
             <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse20"
                     aria-expanded="true" aria-controls="collapse20">
                     <i class="fas fa-fw fa-folder"></i>
@@ -357,7 +388,7 @@
                         <a class="collapse-item" href="">Consulter tout</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
 
             <!-- Divider -->
