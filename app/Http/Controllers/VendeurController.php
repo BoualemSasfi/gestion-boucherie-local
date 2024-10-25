@@ -25,7 +25,6 @@ class VendeurController extends Controller
     public function index()
     {
 
-
         $listes = Vendeur::join('users', 'vendeurs.id_user', '=', 'users.id')
             ->join('magasins', 'vendeurs.id_magasin', '=', 'magasins.id')
             // ->join('caisses', 'vendeurs.id_caisse', '=', 'caisses.id')
