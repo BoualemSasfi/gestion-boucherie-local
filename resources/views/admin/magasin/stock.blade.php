@@ -159,76 +159,90 @@
 
                                         </div>
 
+                                        <!-- new congele  -->
+
+
+                                        <!-- fin congele  -->
+
+
+
                                         <!-- Stock congele  -->
                                         <div id="congele-content" class="tab-content mt-3" style="display: none;">
                                             <div>
-                                                <h4 class="text-center">congele {{$congele_id}} </h4>
-                                                <button type="button" class="btn btn-success col-12" data-stk="{{$congele_id}}"
+                                                <h4 class="text-center">Congelé {{ $congele_id }}</h4>
+                                                <button type="button" class="btn btn-success col-12" data-stk="{{ $congele_id }}"
                                                     id="trans_congele">
                                                     Transfert
                                                 </button>
                                             </div>
 
-                                            <!-- Nav tabs -->
+                                            <!-- Onglets de catégories -->
                                             <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
-                                                @foreach ($stock_congele->groupBy('categorie') as $categorie => $produits)
+                                                @foreach ($stock_congele->groupBy('categorie') as $index => $produits)
                                                     <li class="nav-item" role="presentation">
-                                                        <a class="nav-link @if ($loop->first) active @endif" id="tab-{{$categorie}}"
-                                                            data-toggle="tab" href="#category-{{$loop->index}}" role="tab"
-                                                            aria-controls="category-{{$loop->index}}" aria-selected="true">
-                                                            {{$categorie}}
+                                                        <a class="nav-link @if ($loop->first) active @endif" id="tab-{{ $index }}"
+                                                            data-toggle="tab" href="#category-{{ $index }}" role="tab"
+                                                            aria-controls="category-{{ $index }}"
+                                                            aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                                                            {{ $index }}
                                                         </a>
                                                     </li>
                                                 @endforeach
                                             </ul>
 
-                                            <!-- Tab panes -->
+                                            <!-- Contenu des onglets -->
                                             <div class="tab-content">
-                                                @foreach ($stock_congele->groupBy('categorie') as $categorie => $produits)
+                                                @foreach ($stock_congele->groupBy('categorie') as $index => $produits)
                                                     <div class="tab-pane fade @if ($loop->first) show active @endif"
-                                                        id="category-{{$loop->index}}" role="tabpanel"
-                                                        aria-labelledby="tab-{{$categorie}}">
+                                                        id="category-{{ $index }}" role="tabpanel" aria-labelledby="tab-{{ $index }}">
 
-                                                        <!-- Table of products -->
-                                                        <table class="table-striped table-bordered col-12">
+                                                        <!-- Tableau des produits -->
+                                                        <table class="table table-striped table-bordered col-12 mt-3">
                                                             <thead class="text-center">
                                                                 <tr>
                                                                     <th>Produit</th>
-                                                                    <th>Poid</th>
+                                                                    <th>Poids</th>
                                                                     <th>Action</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                @foreach ($stock_congele as $congele)
+                                                                @foreach ($produits as $congele)
                                                                     <tr>
-                                                                        <td>{{$congele->produit}}</td>
-                                                                        <td> {{ number_format($congele->quantity, 2) }} Kg</td>
+                                                                        <td>{{ $congele->produit }}</td>
+                                                                        <td>{{ number_format($congele->quantity, 2) }} Kg</td>
+                                                                        <!-- <td class="text-center">
+                                                                            <button id="ajst-{{ $congele->id_congele }}" type="button"
+                                                                                class="btn btn-outline-info"
+                                                                                onclick="showAjustModal('{{ $congele->quantity }}', '{{ $congele->id_congele }}')">
+                                                                                Ajuster
+                                                                            </button>
+                                                                        </td> -->
 
                                                                         <td class="text-center space-x-8">
-                                                                            <!-- <button id="ajst" type="button" class="btn btn-outline-info">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        ajustier
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </button> -->
+
 
                                                                             <button id="ajst-{{ $congele->id_congele }}" type="button"
                                                                                 class="btn btn-outline-info"
-                                                                                onclick="showAjustModal('{{ $congele->quantity }}' , '{{$congele->id_congele }}')">
-                                                                                ajustier
+                                                                                onclick="showAjustModal('{{ $congele->quantity }}','{{ $congele->id_congele }}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$congele->produit}}','{{$categorie}}')">
+                                                                                ajustier {{$congele->id_congele}} ZD
                                                                             </button>
-
-
-
+                                                                            <div class="text-center">
+                                                                                <button type="button" class="btn btn-outline-primary"
+                                                                                    onclick="collectData('{{ $congele->quantity }}','{{$congele->id_congele}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$congele->produit}}','{{$categorie}}')">collect
+                                                                                    data</button>
+                                                                            </div>
                                                                         </td>
+
                                                                     </tr>
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
-
-
                                                     </div>
                                                 @endforeach
                                             </div>
-
                                         </div>
+
+
                                     </div>
                                 </div>
 
@@ -240,7 +254,7 @@
                                 <div>
                                     <h4 class="text-center">Frais {{$frais_id}} </h4>
                                     <button type="button" class="btn btn-primary" data-stk="frais" id="trans_frais">
-                                        Transfert
+                                        Retoure...
                                     </button>
                                 </div>
                                 <!-- Nav tabs -->

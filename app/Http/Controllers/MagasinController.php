@@ -185,6 +185,31 @@ class MagasinController extends Controller
 
 
 
+
+        // $stock_congele = Lestock::join('stocks', 'stocks.id', '=', 'lestocks.stock_id')
+        //     ->join('categories', 'categories.id', '=', 'lestocks.categorie_id')
+        //     ->join('produits', 'produits.id', '=', 'lestocks.produit_id')
+        //     ->join('magasins', 'stocks.magasin_id', '=', 'magasins.id')
+        //     ->where('stocks.magasin_id', $id)
+        //     ->where('stocks.type', 'congele')
+        //     ->select(
+        //         'stocks.id as id_congele',
+        //         'categories.nom as categorie',
+        //         'produits.nom_pr as produit',
+        //         'produits.photo_pr as photo',
+        //         'lestocks.id as id_congele',
+        //         'quantity'
+        //     )
+        //     ->get();
+
+
+
+
+
+
+
+
+
         $stock_congele = Lestock::join('stocks', 'stocks.id', '=', 'lestocks.stock_id')
             ->join('categories', 'categories.id', '=', 'lestocks.categorie_id')
             ->join('produits', 'produits.id', '=', 'lestocks.produit_id')
