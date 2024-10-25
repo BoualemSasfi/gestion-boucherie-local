@@ -164,7 +164,7 @@ class TransfertController extends Controller
             ->leftJoin('lestocks as ls2', function ($join) use ($id_magasin, $id_atl) {
                 $join->on('ls2.produit_id', '=', 'p.id')
                     ->on('ls2.categorie_id', '=', 'c.id')
-                    ->whereExists(function ($query) use ($id_magasin, $id_atl) {
+                    ->whereExists(function ($query) use ($id_magasin,$id_atl) {
                         $query->select(DB::raw(1))
                             ->from('stocks as s2')
                             ->whereColumn('s2.id', 'ls2.stock_id')
