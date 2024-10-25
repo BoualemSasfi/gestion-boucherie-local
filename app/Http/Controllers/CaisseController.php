@@ -197,7 +197,7 @@ class CaisseController extends Controller
 
     public function Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse)
     {
-        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('total_facture', '=', 0)
+        $LastFacture = Facture::where('id_magasin', '=', $id_magasin)->where('id_user', '=', $id_user)->where('id_caisse', '=', $id_caisse)->where('total_facture', '=', 0)
             ->orderBy('id', 'desc')
             ->first();
         if (!$LastFacture) {
@@ -224,10 +224,10 @@ class CaisseController extends Controller
         }
     }
 
-    public function Get_Last_Facture($id_magasin, $id_user)
+    public function Get_Last_Facture($id_magasin, $id_user, $id_caisse)
     {
-        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)
-            ->orderBy('id', 'desc')
+        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('id_caisse', $id_caisse)
+            ->where('total_facture', '=', 0)
             ->first();
         return $LastFacture;
     }
@@ -317,7 +317,8 @@ class CaisseController extends Controller
     {
         try {
             $NouvelleFacture = $this->Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse);
-            $LastFacture = $this->Get_Last_Facture($id_magasin, $id_user);
+
+            $LastFacture = $this->Get_Last_Facture($id_magasin, $id_user, $id_caisse);
             $LastFactureId = $LastFacture->id;
             return response()->json(['LastFactureId' => $LastFactureId]);
         } catch (\Exception $e) {
@@ -351,7 +352,7 @@ class CaisseController extends Controller
                     $nvCredit = new Creditclient();
                     $nvCredit->id_client = $id_client;
                     $nvCredit->id_facture = $id_facture;
-                    $nvCredit->Total_Facture = $total;
+                    $nvCredit->total_facture = $total;
                     $nvCredit->versement = $versement;
                     $nvCredit->credit = $credit;
                     $nvCredit->save();
@@ -366,7 +367,7 @@ class CaisseController extends Controller
                     $Caisse->solde = $Nouveau_Solde;
                     $Caisse->save();
                 }
-            
+
 
                 // Appeler la méthode 'ImprimerTicket'
                 // $this->ImprimerTicket($Facture);

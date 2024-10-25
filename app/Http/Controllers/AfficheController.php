@@ -91,8 +91,7 @@ class AfficheController extends Controller
 
     public function Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse)
     {
-        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('total_facture', '=', 0)
-            ->orderBy('id', 'desc')
+        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('id_caisse', '=', $id_caisse)->where('total_facture', '=', 0)
             ->first();
         if (!$LastFacture) {
             $NewFacture = new Facture();
@@ -118,10 +117,10 @@ class AfficheController extends Controller
         }
     }
 
-    public function Get_Last_Facture($id_magasin, $id_user)
+    public function Get_Last_Facture($id_magasin, $id_user, $id_caisse)
     {
-        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)
-            ->orderBy('id', 'desc')
+        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('id_caisse', $id_caisse)
+            ->where('total_facture', '=', 0)
             ->first();
         return $LastFacture;
     }
