@@ -20,8 +20,8 @@ return new class extends Migration
                 ->on('magasins')
                 ->onDelete('set null');
             $table->boolean('active')->nullable();
-            $table->decimal('solde', 8, 2)->default(0.00);
-            $table->decimal('fond_caisse', 8, 2)->default(0.00);
+            $table->decimal('solde', 10, 2)->default(0.00);
+            $table->decimal('fond_caisse', 10, 2)->default(0.00);
                 
             $table->timestamps();
         });

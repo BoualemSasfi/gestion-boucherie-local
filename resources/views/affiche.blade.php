@@ -58,7 +58,8 @@
     <style>
         /* From Uiverse.io by alexruix */
         .card {
-            width: 250px;
+            /* width: 250px; */
+            width: 100%;
             height: 254px;
             border-radius: 20px;
             background: #f5f5f5;
@@ -76,6 +77,7 @@
             gap: .5em;
             display: grid;
             place-content: center;
+            text-align: center;
         }
 
         .card-button {
@@ -100,7 +102,7 @@
 
         /*Text*/
         .text-title {
-            font-size: 1.5em;
+            font-size: 2em;
             font-weight: bold;
         }
 
@@ -124,22 +126,21 @@
 <body>
     <div
         class="relative sm:flex sm:justify-center sm:items-center min-h-screen bg-dots-darker bg-center bg-gray-100 dark:bg-dots-lighter dark:bg-gray-900 selection:bg-red-500 selection:text-white">
-        <div class="container">
+        <div class="container-fluid">
 
             <div class="row">
                 @foreach ($magasins as $magasin)
                     <div class="col-3">
-                        <form class="affiche-form" action="{{'/magasin/'. $magasin->id . '/caisses'}}" method="GET">
+                        <form class="affiche-form" action="{{ '/magasin/' . $magasin->id . '/caisses' }}" method="GET">
                             @csrf
 
 
                             <div class="card clove" onclick="this.closest('form').submit();"
                                 style="background-image:url({{ asset('storage/' . $magasin->photo) }});background-size: cover">
-                                <div class="card-details">
-                                    <p class="text-title">{{$magasin->nom}}</p>
+                                <div class="card-details text-white">
+                                    <p class="text-title">{{ $magasin->nom }}</p>
 
                                 </div>
-
                             </div>
 
 

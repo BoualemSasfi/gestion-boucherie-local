@@ -58,7 +58,8 @@
     <style>
         /* From Uiverse.io by alexruix */
         .card {
-            width: 250px;
+            /* width: 250px; */
+            width: 100%;
             height: 254px;
             border-radius: 20px;
             background: #f5f5f5;
@@ -132,8 +133,11 @@
                             @csrf
 
                             <div class="card clove" onclick="this.closest('form').submit();">
-                                <div class="card-details">
-                                    <p class="text-title">{{$caisse->code_caisse}}</p>
+                                <div class="card-details text-center">
+
+                                    <i class="fas fa-cash-register fa-lg m-4" style="font-size: 60px;"></i>
+
+                                    <p class="text-title mt-4">{{$caisse->code_caisse}}</p>
 
                                 </div>
 
