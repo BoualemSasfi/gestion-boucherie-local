@@ -12,39 +12,67 @@
 
     <div class="container-fluid">
         <h2>Etat des Caisses :</h2>
-        <div class="row">
-            
-            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                
-                <div class="caisse  bg-primary rounded text-center text-white m-2 shadow-lg h-auto w-auto m-3">
-                    <h3 class="pt-3 pb-1">NOM MAGASIN</h3>
-                    {{-- <hr class="hr-white"> --}}
-                    <h3 class="pt-1 pb-1">CAISSE N° 1</h3>
-                    <hr class="hr-white">
-                    <h3 class="pt-1">SOLDE :</h3>
-                    <h4 class="pt-3 pb-3 fw-bold">231000 DZD</h4>
-                </div>
+        <div class="row" id="caisses-display">
 
-            </div>
+            {{-- affichage caisses --}}
 
         </div>
     </div>
 
 
     <script>
-// Fonction à exécuter
-function EtatCaisses() {
-    console.log("La fonction est exécutée!");
-    // Ajoute ici le code que tu souhaites exécuter
-}
+        // Fonction à exécuter
+        function EtatCaisses() {
+            console.log("La fonction est exécutée!");
 
-// Exécuter la fonction au chargement de la page
-document.addEventListener('DOMContentLoaded', function() {
-    EtatCaisses(); // Exécution immédiate au chargement
-    // Exécuter la fonction chaque minute (60 000 millisecondes)
-    setInterval(EtatCaisses, 10000);
-});
+            $.ajax({
+                url: '/admin/argent',
+                type: 'get',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    // Liste des classes de fond
+                    const bgClasses = ["bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning",
+                        "bg-dark"
+                    ];
 
+                    $('#caisses-display').empty();
+                    $.each(response.caisses, function(index, value) {
+                        // Assigner une couleur fixe en utilisant l'index
+                        const fixedClass = bgClasses[index % bgClasses.length];
+
+                        $('#caisses-display').append(
+                            '<div id="caisse-item" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">' +
+                            '<div id="caisse-card" class="caisse-items ' + fixedClass +
+                            ' rounded text-center text-white m-2 shadow-lg m-3">' +
+                            '<h4 class="p-2">' + value.magasin_nom + '</h4>' +
+                            '<h4 class="p-2">' + value.caisse_titre + '</h4>' +
+                            '<hr class="hr-white">' +
+                            '<h5 class="pt-2">FOND :</h5>' +
+                            '<h3 class="pt-2 pb-3 fw-bold">' + value.caisse_fond + '</h3>' +
+                            '<h5 class="pt-2">SOLDE :</h5>' +
+                            '<h3 class="pt-2 pb-3 fw-bold">' + value.caisse_solde + '</h3>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    });
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                }
+            });
+
+
+
+
+        }
+
+        // Exécuter la fonction au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            EtatCaisses(); // Exécution immédiate au chargement
+            // Exécuter la fonction chaque minute (60 000 millisecondes)
+            setInterval(EtatCaisses, 10000);
+        });
     </script>
-
 @endsection
