@@ -12,17 +12,17 @@
         </div>
         <div class="col-10 d-flex align-items-center">
 
-        
-            <h2>choisi un magasin  
-           
-            <!-- @foreach ($magasins as $magasin)                             
+
+            <h2>choisi un magasin
+
+                <!-- @foreach ($magasins as $magasin)                             
                                                 @if ($magasin->id == $caisse->id_magasin) 
                                                 {{ $magasin->nom }}
                                                 @endif
                                                  
                                         @endforeach         -->
-        
-        </h2>
+
+            </h2>
         </div>
     </div>
 </div>
@@ -36,35 +36,33 @@
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT') -->
-                    <div class="card-body">
-                        <div class="row">
+                <div class="card-body">
+                    <div class="row">
 
-                            <div class="text-center form-group col-12">
-                                <h3>Liste des magasins et ateilier</h3>
-                            </div>
+                        <div class="text-center form-group col-12">
+                            <h3>Liste des magasins et ateilier</h3>
+                        </div>
 
-                            <input type="hidden" name="caisse_id" value=" {{$caisse->id}} " >
-                            <!-- <input type="text" name="caisse_id" value=" {{$caisse->id}} " > -->
+                        <input type="hidden" name="caisse_id" value=" {{$caisse->id}} ">
+                        <!-- <input type="text" name="caisse_id" value=" {{$caisse->id}} " > -->
 
-                            <form class="edit-form" action="{{ url('/admin/caisse/lemagasin/' .$caisse->id) }}" method="post"
-        enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
+                        <form class="edit-form" action="{{ url('/admin/caisse/lemagasin/'.$caisse->id) }}"
+                            method="get" enctype="multipart/form-data">
+                            @csrf
+                         
                             <div class="form-group col-12">
-                                    <!-- <label for="magasin_id">Intégrer à un magasin</label> -->
-                                    <h5 for="magasin_id"> Intégrer à un magasin </h5>
-                                    <select id="magasin" name="id_magasin" class="form-control">
-                                        <option value="">Sélectionnez un magasin</option>
-                                        @foreach ($magasins as $index => $magasin)
-                                            <option value="{{ $magasin->id }}" 
-                                                @if ($index == 0 || $magasin->id == $caisse->id_magasin) 
-                                                    selected 
-                                                @endif>
-                                                {{ $magasin->nom }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
+                                <!-- <label for="magasin_id">Intégrer à un magasin</label> -->
+                                <h5 for="magasin_id"> Intégrer à un magasin </h5>
+                                <select id="magasin" name="id_magasin" class="form-control">
+                                    <option value="">Sélectionnez un magasin</option>
+                                    @foreach ($magasins as $index => $magasin)
+                                        <option value="{{ $magasin->id }}" @if ($magasin->id == $caisse->id_magasin) selected
+                                        @endif>
+                                          {{ $magasin->nom }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
 
                             <div class="form-group col-12">
                                 <div class="form-group row justify-content-center text-center">
@@ -82,8 +80,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
+                </div>
 
                 </form>
             </div>
