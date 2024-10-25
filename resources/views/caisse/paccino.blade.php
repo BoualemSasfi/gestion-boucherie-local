@@ -305,14 +305,16 @@
                         @endforeach
                     </div>
                 </div>
+
                 <hr class="p-0 mb-0 mt-2">
-                <div class="container" style="max-height: 450px; overflow-y: auto;">
+
+                <div class="container" style="height: 500px;">
                     <h6 id="titre-categorie" class="p-0 m-0"></h6>
-                    <div class="row" id="products">
+                    <div class="row" id="products" style="height: 100%; max-height: 450px; overflow-y: auto;">
                         <!-- Les produits filtrés apparaîtront ici -->
                     </div>
-
                 </div>
+                
                 {{-- <div class="col-12 zyada" style="height: 100px;"></div> --}}
             </div>
 
@@ -320,11 +322,11 @@
             <div class="col-4 bg-dark p-0 m-0">
 
                 {{-- stockage variable  --}}
-                <a href="" style="color: aliceblue; display: inline;">USER / FACTURE / MAGASIN / CAISSE</a>
-                <a id="text-id-user" href="" style="display: inline;">{{ $id_user }}</a>
-                <a id="text-id-facture" href="" style="display: inline;">{{ $LastFacture->id }}</a>
-                <a id="text-id-magasin" href="" style="display: inline;">{{ $id_magasin }}</a>
-                <a id="text-id-caisse" href="" style="display: inline;">{{ $id_caisse }}</a>
+                <a href="" style="color: aliceblue; display: none;">USER / FACTURE / MAGASIN / CAISSE</a>
+                <a id="text-id-user" href="" style="display: none;">{{ $id_user }}</a>
+                <a id="text-id-facture" href="" style="display: none;">{{ $LastFacture->id }}</a>
+                <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
+                <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
                 {{-- stockage variable  --}}
 
                 <div class="card shadow m-2" style="height:470px;" data-aos="flip-left">
@@ -1269,7 +1271,7 @@
                         });
 
                         $('#products').append(
-                            // '<div class="col-12 zyada" style="height: 600px;"></div>'
+                            '<div class="col-12 zyada" style="height: 200px;"></div>'
                         );
                     },
                     error: function(xhr, status, error) {

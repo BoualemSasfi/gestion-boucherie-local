@@ -49,10 +49,11 @@
                             '<h4 class="p-2">' + value.magasin_nom + '</h4>' +
                             '<h4 class="p-2">' + value.caisse_titre + '</h4>' +
                             '<hr class="hr-white">' +
-                            '<h5 class="pt-2">FOND :</h5>' +
-                            '<h3 class="pt-2 pb-3 fw-bold">' + value.caisse_fond + '</h3>' +
+                            // '<h5 class="pt-2">FOND :</h5>' +
+                            // '<h3 class="pt-2 pb-3 fw-bold">' + value.caisse_fond + '</h3>' +
                             '<h5 class="pt-2">SOLDE :</h5>' +
-                            '<h3 class="pt-2 pb-3 fw-bold">' + value.caisse_solde + '</h3>' +
+                            '<h3 class="pt-2 fw-bold">' + value.caisse_solde + '</h3>' +
+                            '<h5 class="pt-1 pb-3 fw-bold">DZD</h5>' +
                             '</div>' +
                             '</div>'
                         );
@@ -72,7 +73,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             EtatCaisses(); // Exécution immédiate au chargement
             // Exécuter la fonction chaque minute (60 000 millisecondes)
-            setInterval(EtatCaisses, 10000);
+            setInterval(EtatCaisses, 2000);
         });
     </script>
 @endsection
