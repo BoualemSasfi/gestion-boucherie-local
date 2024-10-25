@@ -1232,14 +1232,20 @@
             const id = form.getAttribute('data-id');
             const nom = form.getAttribute('data-nom');
 
+            // ajouté pour axecuter la function sans auth 
+            const id_user = document.getElementById('text-id-user').textContent;
+            const id_magasin = document.getElementById('text-id-magasin').textContent;
+
             if (id !== undefined) {
                 $.ajax({
-                    url: '{{ url('/caisse/category') }}/' + id,
+                    // url: '/caisse/category/' + id ,
+                    url: '/caisse/category/' + id + '/user/' + id_user + '/magasin/' + id_magasin ,
                     type: 'GET',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
+                        console.log('PRODUCTS FILTER SUCCESS')
                         $('#products').empty();
                         $.each(response.produits, function(key, value) {
                             $('#products').append(
@@ -1292,7 +1298,8 @@
                 console.error('ERREUR NOM');
             }
 
-            console.log('Filtrage Produits executé');
+            // console.log('Filtrage Produits executé');
+            console.log('Filtrage Produits executé sans authentification');
         }
     </script>
 

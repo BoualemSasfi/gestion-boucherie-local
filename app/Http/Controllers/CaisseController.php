@@ -40,11 +40,8 @@ use TCPDF;
 
 class CaisseController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    // }
-    
+
+
     public function caisse()
     {
         $categorys = Category::all();
@@ -149,6 +146,47 @@ class CaisseController extends Controller
     }
 
 
+    public function filtrage_des_produits_libre($id_categorie, $id_user, $id_magasin)
+    {
+        try {
+            $IdMagasin = $id_magasin;
+
+            Log::info('user_id:' . $id_user);
+            Log::info('magasin_id:' . $IdMagasin);
+
+            // Recherche du stock de type "Frais"
+            $StocksFrai = Stock::where('magasin_id', $IdMagasin)->where('type', '=', 'Frais')->first();
+            if (!$StocksFrai) {
+                return response()->json(['error' => 'Stock not found'], 404);
+            }
+
+            $IdStock = $StocksFrai->id;
+            Log::info('stock_id:' . $IdStock);
+
+            $produits = Lestock::join('produits', 'produits.id', '=', 'lestocks.produit_id')
+                ->select(
+                    'lestocks.id as id',
+                    'lestocks.produit_id as id_produit',
+                    'produits.nom_pr as nom',
+                    'produits.photo_pr as photo',
+                    'produits.prix_vente as prix',
+                    'produits.unite_mesure as mesure'
+                )
+                ->where('lestocks.stock_id', $IdStock)
+                ->where('lestocks.categorie_id', $id_categorie)
+                ->get();
+
+            if ($produits->isEmpty()) {
+                return response()->json(['message' => 'No products found'], 404);
+            }
+
+            return response()->json(['produits' => $produits]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
 
 
 
@@ -159,7 +197,7 @@ class CaisseController extends Controller
 
     public function Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse)
     {
-        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('total_facture', '=', 0)
+        $LastFacture = Facture::where('id_magasin', '=', $id_magasin)->where('id_user', '=', $id_user)->where('id_caisse', '=', $id_caisse)->where('total_facture', '=', 0)
             ->orderBy('id', 'desc')
             ->first();
         if (!$LastFacture) {
@@ -186,10 +224,10 @@ class CaisseController extends Controller
         }
     }
 
-    public function Get_Last_Facture($id_magasin, $id_user)
+    public function Get_Last_Facture($id_magasin, $id_user, $id_caisse)
     {
-        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)
-            ->orderBy('id', 'desc')
+        $LastFacture = Facture::where('id_magasin', $id_magasin)->where('id_user', $id_user)->where('id_caisse', $id_caisse)
+            ->where('total_facture', '=', 0)
             ->first();
         return $LastFacture;
     }
@@ -279,7 +317,8 @@ class CaisseController extends Controller
     {
         try {
             $NouvelleFacture = $this->Nouvelle_Facture_Vide($id_magasin, $id_user, $id_caisse);
-            $LastFacture = $this->Get_Last_Facture($id_magasin, $id_user);
+
+            $LastFacture = $this->Get_Last_Facture($id_magasin, $id_user, $id_caisse);
             $LastFactureId = $LastFacture->id;
             return response()->json(['LastFactureId' => $LastFactureId]);
         } catch (\Exception $e) {
@@ -309,11 +348,11 @@ class CaisseController extends Controller
                 $Facture->credit = $credit;
                 $Facture->save();
 
-                if($credit > 0){
-                    $nvCredit = New Creditclient();
+                if ($credit > 0) {
+                    $nvCredit = new Creditclient();
                     $nvCredit->id_client = $id_client;
                     $nvCredit->id_facture = $id_facture;
-                    $nvCredit->Total_Facture = $total;
+                    $nvCredit->total_facture = $total;
                     $nvCredit->versement = $versement;
                     $nvCredit->credit = $credit;
                     $nvCredit->save();
@@ -327,7 +366,8 @@ class CaisseController extends Controller
                     $Nouveau_Solde = $Ancien_Solde + $versement;
                     $Caisse->solde = $Nouveau_Solde;
                     $Caisse->save();
-                };
+                }
+
 
                 // Appeler la méthode 'ImprimerTicket'
                 // $this->ImprimerTicket($Facture);

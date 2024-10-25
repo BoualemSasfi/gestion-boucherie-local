@@ -14,6 +14,8 @@ use App\Http\Controllers\ClienController;
 use App\Http\Controllers\VendeurController;
 use App\Http\Controllers\GcaisseController;
 use App\Http\Controllers\AfficheController;
+use App\Http\Controllers\AdminController;
+
 use Illuminate\Support\Facades\Route;
 
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -36,15 +38,28 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/home', function () {
-    return view('admin.home');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/home', function () {
+//     return view('admin.home');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+//--------------------------------------------------------------------------
+// ---------               admin                                 ----------
+// -------------------------------------------------------------------------
+Route::controller(AdminController::class)->group(function () {
+    Route::get('/admin', [AdminController::class, 'home'])->name('Admin_Home');
+    Route::get('/admin/argent', [AdminController::class, 'argent_caisse'])->name('Argent_Caisse');
+});
+
 
 //--------------------------------------------------------------------------
 // ---------               caisse                                 ----------
@@ -53,6 +68,7 @@ Route::controller(CaisseController::class)->group(function () {
 
     // Route::get('/caisse', 'caisse_paccino')->name('caisse_paccino');
     Route::get('/caisse/category/{id}', 'filtrage_des_produits')->name('caisse_filtrage');
+    Route::get('/caisse/category/{id_categorie}/user/{id_user}/magasin/{id_magasin}', 'filtrage_des_produits_libre')->name('Filtrage_Des_Produits_Libre');
 
     Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
     Route::get('/ventes/{id_facture}', 'Get_Liste_Ventes')->name('liste_ventes');
