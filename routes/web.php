@@ -218,11 +218,17 @@ Route::controller(GcaisseController::class)->group(function () {
     Route::put('/admin/caisse/edit/save/{id}', 'update');
     Route::delete('/admin/caisse/delete/{id}', 'destroy');
     Route::get('admin/caisse/{id}/voir', 'voir');
-
+    
     // transfert
     Route::get('/admin/caisse/transfertmagasin/{id}', 'caisse_tranfert1');
-    Route::get('/admin/caisse/lemagasin/{id}', 'caisse_transfert2');
+    Route::get('/admin/caisse/lemagasin/{id_liste}/{id_magasin}', 'caisse_transfert2');
+    Route::get('/admin/caisse/letransfert/{lacaisseId}/{selectedCaisseId}', 'letransfert');
+    
+    Route::post('/admin/caisse/validtransfert', 'valide_transfer')->name('valide_transfer');
+    
+    Route::get('admin/caisse/transfolde', 'trans_solde');
 
+    
     Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
 
 });

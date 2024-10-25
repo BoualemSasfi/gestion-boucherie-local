@@ -56,7 +56,7 @@
                             @foreach ($listes as $liste)
                                 <tr>
                                     <td class=" align-middle">{{ $liste->id}}</td>
-                                 
+
                                     <td class=" align-middle">
 
                                         @foreach ($magasins as $magasin)                             
@@ -65,7 +65,7 @@
                                             @endif
 
                                         @endforeach
-                                      
+
 
 
                                     </td>
@@ -76,14 +76,15 @@
 
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-between">
-                                            {{-- Voir STOCK --}}
-                                            <form class="show-form"
-                                                action="{{ url('/admin/caisse/transfertmagasin/'.$liste->id) }}" method="GET">
-                                                @csrf
-                                                <button type="submit">
-                                                    <i class="fa-solid fa-xl fa-eye" style="color: #63E6BE;"></i>
-                                                </button>
-                                            </form>
+                                            {{-- tranfert STOCK --}}
+
+
+
+                                            <!-- Bouton qui déclenche SweetAlert -->
+                                            <button type="button" onclick="showMagasins({{ $liste->id }})">
+                                                <i class="fa-solid fa-xl fa-eye" style="color: #63E6BE;"></i>
+                                            </button>
+
 
                                             {{-- edit button --}}
                                             <form class="edit-form" action="" data-id="{{ $liste->id }}" method="GET">
@@ -118,6 +119,54 @@
         </div>
     </div>
 </div>
+<<!-- Script SweetAlert -->
+<script>
+    function showMagasins(idListe) {
+        // Liste des magasins (remplacez par votre propre logique pour récupérer les magasins)
+        let magasins = [
+            @foreach($magasins as $magasin)
+                { id: {{ $magasin->id }}, nom: '{{ $magasin->nom }}' },
+            @endforeach
+        ];
+
+        // Créer une liste des magasins sous forme de HTML pour l'afficher dans SweetAlert
+        let magasinOptions = '';
+        magasins.forEach(magasin => {
+            magasinOptions += `<option value="${magasin.id}">${magasin.nom}</option>`;
+        });
+
+        // Afficher SweetAlert avec un select pour choisir le magasin
+        Swal.fire({
+            title: 'Sélectionnez un magasin pour la liste ID: ' + idListe,
+            html: `
+                <select id="magasinSelect" class="swal2-input">
+                    <option value="">Sélectionnez un magasin</option>
+                    ${magasinOptions}
+                </select>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Transférer',
+            preConfirm: () => {
+                const magasinId = Swal.getPopup().querySelector('#magasinSelect').value;
+                if (!magasinId) {
+                    Swal.showValidationMessage('Vous devez sélectionner un magasin');
+                }
+                return magasinId;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirection vers une route avec idListe et idMagasin dans l'URL
+                const magasinId = result.value;
+                window.location.href = `/admin/caisse/lemagasin/${idListe}/${magasinId}`;
+            }
+        });
+    }
+</script>
+
+
+
+
+
 
 {{-- script suppression --}}
 <script>
