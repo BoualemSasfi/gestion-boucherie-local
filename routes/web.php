@@ -178,6 +178,7 @@ Route::controller(StockController::class)->group(function () {
 Route::controller(TransfertController::class)->group(function () {
     Route::get('/admin/transfert/{id_atl}/{id_mag}/{id_magasin}', 'transfert');
     Route::get('/admin/transfert_congele/{id_atl}/{id_mag}/{id_magasin}', 'transfert_congele');
+    Route::get('/admin/retour/{id_atl}/{id_mag}/{id_magasin}', 'retour');
 
     Route::post('/admin/transfert/validtransfert', 'validTransfert')->name('validtransfert');
 
@@ -228,7 +229,7 @@ Route::controller(GcaisseController::class)->group(function () {
     
     Route::get('admin/caisse/transfolde', 'trans_solde');
 
-    
+
     Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
 
 });
@@ -243,8 +244,6 @@ Route::controller(AfficheController::class)->group(function () {
     Route::get('/magasin/{id_magasin}/caisse/{id_caisse}', 'pos');
 
 });
-
-
 
 
 //-------------------------------------------------------------------------

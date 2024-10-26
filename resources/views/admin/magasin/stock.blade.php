@@ -211,12 +211,12 @@
                                                                         <td>{{ $congele->produit }}</td>
                                                                         <td>{{ number_format($congele->quantity, 2) }} Kg</td>
                                                                         <!-- <td class="text-center">
-                                                                            <button id="ajst-{{ $congele->id_congele }}" type="button"
-                                                                                class="btn btn-outline-info"
-                                                                                onclick="showAjustModal('{{ $congele->quantity }}', '{{ $congele->id_congele }}')">
-                                                                                Ajuster
-                                                                            </button>
-                                                                        </td> -->
+                                                                                                <button id="ajst-{{ $congele->id_congele }}" type="button"
+                                                                                                    class="btn btn-outline-info"
+                                                                                                    onclick="showAjustModal('{{ $congele->quantity }}', '{{ $congele->id_congele }}')">
+                                                                                                    Ajuster
+                                                                                                </button>
+                                                                                            </td> -->
 
                                                                         <td class="text-center space-x-8">
 
@@ -253,7 +253,7 @@
 
                                 <div>
                                     <h4 class="text-center">Frais {{$frais_id}} </h4>
-                                    <button type="button" class="btn btn-primary" data-stk="frais" id="trans_frais">
+                                    <button type="button" class="btn btn-primary" data-stk="frais" id="retour">
                                         Retoure...
                                     </button>
                                 </div>
@@ -391,6 +391,56 @@
     });
         </script>
 
+
+
+        <!-- retoure -->
+
+        <script>
+            document.getElementById('retour').addEventListener('click', async () => {
+                const id_atl = 'frais'; // stock frais
+                const id_magasin = {{$magasins->id}}; // ID du stock frais
+                const magasins = {
+                    @foreach ($lesmagasins as $lemagasin)
+                        "{{ $lemagasin->id }}": "{{ $lemagasin->nom }}",
+                    @endforeach
+            };
+
+            const { value: selectedMagasin } = await Swal.fire({
+                title: "Sélectionnez un magasin",
+                input: "select",
+                inputOptions: magasins, // Utiliser l'objet magasins ici
+                inputPlaceholder: "Sélectionnez un magasin",
+                showCancelButton: true,
+                inputValidator: (value) => {
+                    return new Promise((resolve) => {
+                        if (value) {
+                            resolve();
+                        } else {
+                            resolve("Vous devez sélectionner un magasin :)");
+                        }
+                    });
+                }
+            });
+
+            if (selectedMagasin) {
+                const result = await Swal.fire({
+                    title: `Voulez-vous transférer du stock de magasin ${id_magasin} de atl : {{$frais_id}} vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Oui, transférer !",
+                    cancelButtonText: "Annuler"
+                });
+
+                // Si l'utilisateur confirme le transfert
+                if (result.isConfirmed) {
+                    // Rediriger vers la route de transfert avec les paramètres id_atl et id_magasin
+                    window.location.href = `/admin/retour/${id_atl}/${selectedMagasin}/${id_magasin}`;
+                }
+            }
+    });
+        </script>
+
+        <!-- fin  -->
 
         <script>
             document.getElementById('trans_congele').addEventListener('click', async () => {
