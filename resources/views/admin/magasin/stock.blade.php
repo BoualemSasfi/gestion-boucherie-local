@@ -211,12 +211,12 @@
                                                                         <td>{{ $congele->produit }}</td>
                                                                         <td>{{ number_format($congele->quantity, 2) }} Kg</td>
                                                                         <!-- <td class="text-center">
-                                                                                                <button id="ajst-{{ $congele->id_congele }}" type="button"
-                                                                                                    class="btn btn-outline-info"
-                                                                                                    onclick="showAjustModal('{{ $congele->quantity }}', '{{ $congele->id_congele }}')">
-                                                                                                    Ajuster
-                                                                                                </button>
-                                                                                            </td> -->
+                                                                                                                    <button id="ajst-{{ $congele->id_congele }}" type="button"
+                                                                                                                        class="btn btn-outline-info"
+                                                                                                                        onclick="showAjustModal('{{ $congele->quantity }}', '{{ $congele->id_congele }}')">
+                                                                                                                        Ajuster
+                                                                                                                    </button>
+                                                                                                                </td> -->
 
                                                                         <td class="text-center space-x-8">
 
@@ -248,7 +248,7 @@
 
                             @else
 
-                                <!-- juste frais  -->
+                                <!-- juste frais  magasin-->
 
 
                                 <div>
@@ -292,7 +292,7 @@
 
                                                             <td>{{$produit->produit}}</td>
                                                             <td>{{ number_format($produit->quantity, 2) }} Kg</td>
-                                                            <td class="text-center space-x-8">
+                                                            <!-- <td class="text-center space-x-8">
 
 
                                                                 <button id="ajst-{{ $produit->id_frais }}" type="button"
@@ -301,7 +301,24 @@
                                                                     ajustier
                                                                 </button>
 
+                                                            </td> -->
+
+
+                                                            <td class="text-center space-x-8">
+
+
+                                                                <button id="ajst-{{ $produit->id_frais }}" type="button"
+                                                                    class="btn btn-outline-info"
+                                                                    onclick="showAjustModal('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">
+                                                                    ajustier
+                                                                </button>
+                                                                <div class="text-center">
+                                                                    <button type="button" class="btn btn-outline-primary"
+                                                                        onclick="collectData('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">collect
+                                                                        data</button>
+                                                                </div>
                                                             </td>
+
                                                         </tr>
                                                     @endforeach
                                                 </tbody>

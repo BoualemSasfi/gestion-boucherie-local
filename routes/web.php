@@ -178,13 +178,17 @@ Route::controller(StockController::class)->group(function () {
 Route::controller(TransfertController::class)->group(function () {
     Route::get('/admin/transfert/{id_atl}/{id_mag}/{id_magasin}', 'transfert');
     Route::get('/admin/transfert_congele/{id_atl}/{id_mag}/{id_magasin}', 'transfert_congele');
-    Route::get('/admin/retour/{id_atl}/{id_mag}/{id_magasin}', 'retour');
-
+    
     Route::post('/admin/transfert/validtransfert', 'validTransfert')->name('validtransfert');
+    
+    Route::get('/admin/retour/{id_atl}/{id_mag}/{id_magasin}', 'retour');
+    Route::post('/admin/transfert/validretour', 'validRetour')->name('validRetour');
 
     Route::get('admin/transfert_liste', 'liste');
     Route::get('admin/transfert/{id}', 'details');
     Route::get('admin/ajuste', 'ajste_liste');
+    Route::get('admin/retour', 'listeretour');
+    Route::get('admin/retourdetails/{id}', 'detailsretour');
 
 
 

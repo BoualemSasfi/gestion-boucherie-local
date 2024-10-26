@@ -238,7 +238,7 @@
                     });
 
                     // Envoi des données via AJAX
-                    fetch('{{ route("validtransfert") }}', {
+                    fetch('{{ route("validRetour") }}', {
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',

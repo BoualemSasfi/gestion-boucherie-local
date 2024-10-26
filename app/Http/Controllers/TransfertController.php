@@ -19,8 +19,13 @@ class TransfertController extends Controller
 
     public function liste()
     {
-        $lists = Transfert::all();
+        $lists = Transfert::where('type','transfert')->get();
         return view('admin.transfert.index', ['listes' => $lists]);
+    }
+    public function listeretour()
+    {
+        $lists = Transfert::where('type','retour')->get();
+        return view('admin.transfert.retourliste', ['listes' => $lists]);
     }
 
     public function ajste_liste()
@@ -37,6 +42,15 @@ class TransfertController extends Controller
         $details = prod_trans::where('id_trans', '=', $id)->get();
 
         return view('admin.transfert.details', ['info' => $info, 'details' => $details]);
+
+    }
+    public function detailsretour($id)
+    {
+
+        $info = Transfert::find($id);
+        $details = prod_trans::where('id_trans', '=', $id)->get();
+
+        return view('admin.transfert.detailsretour', ['info' => $info, 'details' => $details]);
 
     }
 
@@ -338,6 +352,82 @@ class TransfertController extends Controller
 
 
 
+    public function validRetour(Request $request)
+    {
+        // Récupérer les données JSON envoyées via la clé 'donne'
+        // $donnees = $request->input('donne'); 
+
+        // $donnees = $request->all();
+
+
+        $donnees = $request->input('stockData');
+        $poidData = $request->input('poid');
+
+
+
+        // Vérifier si les données sont reçues correctement
+        if (!$donnees || !is_array($donnees)) {
+            return response()->json(['success' => false, 'message' => 'Données invalides.'], 400);
+        }
+
+        if (!$poidData || !is_array($poidData)) {
+            return response()->json(['success' => false, 'message' => 'Données invalides.'], 400);
+        }
+
+        // Récupérer les valeurs de $atl, $mag, et $user
+        $atl = $donnees[count($donnees) - 1]['atl'];
+        $mag = $donnees[count($donnees) - 1]['mag'];
+        $user = $donnees[count($donnees) - 1]['user'];
+
+
+        $nv_transfert = new Transfert();
+        $nv_transfert->user = $user;
+        $nv_transfert->atl = $atl;
+        $nv_transfert->mag = $mag;
+        $nv_transfert->type = 'retour';
+        $nv_transfert->save();
+
+        // Récupérer l'ID du transfert nouvellement créé
+        // $id_trans = $nv_transfert->id;
+
+
+        $last_transfert = Transfert::latest()->first();
+        $id_trans = $last_transfert->id;
+
+
+        // Parcourir chaque ligne des données envoyées
+        foreach ($donnees as $stockEnvoye) {
+            // Vérifier si l'ID et le poids sont bien envoyés
+            if (isset($stockEnvoye['id'], $stockEnvoye['poid'])) {
+                // Parcourir les enregistrements dans la table Lestock
+                $stocks = Lestock::all(); // Récupère tous les enregistrements de la table Lestock
+                foreach ($stocks as $stock) {
+                    // Si l'ID envoyé correspond à un ID dans la table Lestock
+                    if ($stock->id == $stockEnvoye['id']) {
+                        // Mise à jour du poids
+                        $stock->quantity = $stockEnvoye['poid'];
+                        $stock->save(); // Sauvegarde de la modification
+                        break; // On sort de la boucle une fois l'ID trouvé et mis à jour
+                    }
+                }
+            }
+        }
+
+
+        foreach ($poidData as $poid) {
+            $nv_prod = new prod_trans();
+            $nv_prod->id_trans = $id_trans;
+            $nv_prod->category = $poid['categorie'];
+            $nv_prod->produit = $poid['produit'];
+            $nv_prod->quantity = $poid['poid'];
+            $nv_prod->save();
+        }
+
+        // Si tout est correct, retourner une réponse positive
+        return response()->json(['success' => true, 'message' => 'Transfert validé et stocks mis à jour avec succès.']);
+    }
+
+
     public function validTransfert(Request $request)
     {
         // Récupérer les données JSON envoyées via la clé 'donne'
@@ -370,6 +460,7 @@ class TransfertController extends Controller
         $nv_transfert->user = $user;
         $nv_transfert->atl = $atl;
         $nv_transfert->mag = $mag;
+        $nv_transfert->type = 'transfert';
         $nv_transfert->save();
 
         // Récupérer l'ID du transfert nouvellement créé
