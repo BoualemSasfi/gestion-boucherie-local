@@ -85,7 +85,8 @@
                                             <div class="col-1">
                                                 {{-- edit VOIR STOCK --}}
                                                 <form class="show-form"
-                                                    action="{{ url('/admin/stock/' . $stock->id . '/stock') }}"
+                                               
+                                                      action="{{ url('/admin/magasin/' . $magasin->id . '/stock') }}"
                                                     method="GET">
                                                     @csrf
                                                     <button type="submit" class="btn btn-outline-info alpa shadow"><i
