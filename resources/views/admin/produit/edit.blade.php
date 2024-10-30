@@ -8,8 +8,10 @@
                     class="btn-description">Retour</span></a>
         </div>
         <div class="col-10 d-flex align-items-center">
-            <h2>Modifier le produit</h2>
+            <h2>Modifier le produit </h2>
         </div>
+
+        
 
     </div>
 </div>
@@ -22,7 +24,7 @@
 
 
 
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 mx-auto">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mx-auto">
             <div class="card shadow m-1">
 
                 <form class="edit-form" action="{{ url('/admin/produit/' . $produit->id . '/update') }}" method="post"
@@ -34,36 +36,16 @@
 
                         <div class="row">
 
-                            <input type="file" name="photo_pr" id="validationLogoCouleurs" accept="image/*"
-                                style="display: none;" onchange="previewImage2();">
 
-
-                            @if (!empty($produit->photo_pr) && Storage::exists('public/' . $produit->photo_pr))
-                                <div class="form-group col-12">
-                                    <img src="{{ asset('storage/' . $produit->photo_pr) }}" class="card-img-top" alt=""
-                                        id="preview2" onclick="triggerFileInput();" style="height: 280px;">
-                                </div>
-                            @else
-                                <div class="form-group col-12">
-                                    <img src="{{ asset('img/logo_vide/add_image.PNG') }}" class="card-img-top" alt=""
-                                        id="preview2" onclick="triggerFileInput();" style="height: 280px;">
-                                </div>
-                            @endif
-
-
-
-                            <div class="form-group col-12">
+                            <div class="form-group col-4">
+                            <h2 class="text-center"> information : </h2>
                                 <label for="">Titre :</label>
                                 <input type="text" name="nom_pr" class="form-control" placeholder="nom de produit"
                                     value="{{ $produit->nom_pr }}"></input>
-                            </div>
 
-
-
-                            <div class="form-group col-12">
-                                <form>
+                                    <form>
                                     <div class="form-group">
-                                        <label for="">Viande :</label>
+                                        <label for="">categorie de viande:</label>
                                         <select id="category" name="category_id" class="form-control">
                                             <option value="">Sélectionnez une catégorie</option>
                                             @foreach ($categorys as $category)
@@ -77,22 +59,43 @@
                                         </select>
                                     </div>
                                 </form>
+
+                                    
                             </div>
 
 
 
 
-                            <div class="form-group col-12">
-                                <h2 class="text-center" >  Prix de vente : </h2>
+                            <div class="col-4">
+                                <input type="file" name="photo_pr" id="validationLogoCouleurs" accept="image/*"
+                                    style="display: none;" onchange="previewImage2();">
+
+
+                                @if (!empty($produit->photo_pr) && Storage::exists('public/' . $produit->photo_pr))
+                                    <div class="form-group col-12">
+                                        <img src="{{ asset('storage/' . $produit->photo_pr) }}" class="card-img-top" alt=""
+                                            id="preview2" onclick="triggerFileInput();" style="height: 280px;">
+                                    </div>
+                                @else
+                                    <div class="form-group col-12">
+                                        <img src="{{ asset('img/logo_vide/add_image.PNG') }}" class="card-img-top" alt=""
+                                            id="preview2" onclick="triggerFileInput();" style="height: 280px;">
+                                    </div>
+                                @endif
+
+                            </div>
+
+                            <div class="form-group col-4">
+                                <h2 class="text-center"> Prix de vente : </h2>
                                 <label for="">détail :</label>
                                 <input type="text" name="prix_vent" class="form-control" placeholder="Prix de vent"
                                     value="{{ $produit->prix_vent }}"></input>
 
-                                    <label for="">Semi gros :</label>
+                                <label for="">Semi gros :</label>
                                 <input type="text" name="semi_gros" class="form-control" placeholder="Prix de semi gors"
                                     value="{{ $produit->semi_gros}}"></input>
 
-                                    <label for="">Gros :</label>
+                                <label for="">Gros :</label>
                                 <input type="text" name="gros" class="form-control" placeholder="Prix de gros"
                                     value="{{ $produit->gros }}"></input>
                             </div>
