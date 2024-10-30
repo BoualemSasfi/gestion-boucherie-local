@@ -4,6 +4,15 @@
 
 @section('content')
     <style>
+        .mini-text {
+            white-space: nowrap;
+            /* Empêche le retour à la ligne */
+            overflow: hidden;
+            /* Cache le texte qui dépasse */
+            text-overflow: ellipsis;
+            /* Ajoute des points de suspension à la fin */
+        }
+
         .scat {
             height: 160px;
             width: 100%;
@@ -88,8 +97,9 @@
 
     <style>
         .bouton-action {
-            height: 70px; 
-        } 
+            height: 70px;
+        }
+
         .bouton-caisse {
             font-size: 10px;
             /* padding: 10px; */
@@ -157,8 +167,8 @@
         <div class="container-fluid">
             <div class="row afficheur text-center pt-1 pb-1 pr-0 pl-0 mt-1 mb-1">
                 <div class="col-2 align-content-center">
-                    <h5 class="objet-titre digital" id="categorie_text" style="font-weight:bold;">----</h5>
-                    <h5 class="objet-titre digital" id="produit_text">----</h5>
+                    <h5 class="objet-titre digital mini-text" id="categorie_text" style="font-weight:bold;">----</h5>
+                    <h5 class="objet-titre digital mini-text" id="produit_text">----</h5>
                 </div>
                 <div class="col-3 pt-1">
                     <h6 class="afficheur-titre">
@@ -298,7 +308,7 @@
                                 onclick="FiltrageProduits(this)" style="cursor: pointer;">
                                 <div class="card cat"
                                     style="width: 150px; height: 100px; margin-right:5px; background-image: url('{{ asset('storage/' . $categorie->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-                                    <p style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
+                                    <p class="mini-text" style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
                                         {{ $categorie->nom }}</p>
                                 </div>
                             </form>
@@ -314,7 +324,7 @@
                         <!-- Les produits filtrés apparaîtront ici -->
                     </div>
                 </div>
-                
+
                 {{-- <div class="col-12 zyada" style="height: 100px;"></div> --}}
             </div>
 
@@ -337,8 +347,8 @@
                                 <h2 id="text_total_facture" class="digital" style="margin-top:-20px;">0.00</h2>
                             </div>
                             <div class="col-12 p-0 m-0">
-                                <h6 class="afficheur-titre" style="margin-top:-25px;">CLIENT : <span
-                                        id="nom_client">CLIENT COMPTOIR</span></h6>
+                                <h6 class="afficheur-titre mini-text" style="margin-top:-25px;">CLIENT : <span
+                                        id="nom_client" class=" mini-text">CLIENT COMPTOIR</span></h6>
 
                             </div>
                         </div>
@@ -347,10 +357,10 @@
                         <table id="affichage-produits-facture" class="text-left" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>LIBELLE:</th>
-                                    <th>QTE:</th>
-                                    <th>P.U:</th>
-                                    <th>TOTAL:</th>
+                                    <th class="text-left">LIBELLE:</th>
+                                    <th class="text-right">QTE:</th>
+                                    <th class="text-right">P.U:</th>
+                                    <th class="text-right">TOTAL:</th>
                                     <th></th>
                                     <th></th>
                                 </tr>
@@ -532,10 +542,11 @@
 
                     <div class="col-6">
                         <div class="row bouton-action">
-                            
+
 
                             <div class="col-6">
-                                <button class="btn btn-primary bouton-caisse" type="button" onclick="FactureEnAttente()">
+                                <button class="btn btn-primary bouton-caisse" type="button"
+                                    onclick="FactureEnAttente()">
                                     <i class="fa fa-pause-circle fa-lg"></i>
                                     <br>Vente En Attente
                                 </button>
@@ -1241,7 +1252,7 @@
             if (id !== undefined) {
                 $.ajax({
                     // url: '/caisse/category/' + id ,
-                    url: '/caisse/category/' + id + '/user/' + id_user + '/magasin/' + id_magasin ,
+                    url: '/caisse/category/' + id + '/user/' + id_user + '/magasin/' + id_magasin,
                     type: 'GET',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1260,7 +1271,7 @@
                                 '<img src="{{ asset('storage/') }}/' + value.photo +
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
-                                '<h5 class="card-title">' + value.nom + '</h5>' +
+                                '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
                                 '<p class="card-text">' + value.prix + ' DA / ' + value.mesure +
                                 '</p>' +
                                 '</div>' +
@@ -1520,12 +1531,12 @@
                         $('#ventes_liste').append(
                             '<tr>' +
                             // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
-                            '<td class="petit_font">' + value.nom_produit +
+                            '<td class="petit_font text-left">' + value.nom_produit +
                             '</td>' +
-                            '<td class="petit_font">' + quantite + ' ' + value.unite_mesure +
+                            '<td class="petit_font text-right">' + quantite + ' ' + value.unite_mesure +
                             '</td>' +
-                            '<td class="petit_font">' + value.prix_produit + '</td>' +
-                            '<td class="petit_font">' + value.prix_total + '</td>' +
+                            '<td class="petit_font text-right">' + value.prix_produit + '</td>' +
+                            '<td class="petit_font text-right">' + value.prix_total + '</td>' +
                             '<td class="">' +
                             '<form class="form-prix-produit" data-id="' + value.id +
                             '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrixProduit(this)">' +
