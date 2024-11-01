@@ -188,6 +188,62 @@ class CaisseController extends Controller
     }
 
 
+    public function filtrage_des_sous_produits_libre($id_produit, $id_user, $id_magasin)
+    {
+        try {
+            $IdMagasin = $id_magasin;
+
+            Log::info('user_id:' . $id_user);
+            Log::info('magasin_id:' . $IdMagasin);
+
+            // Recherche du stock de type "Frais"
+            $StocksFrai = Stock::where('magasin_id', $IdMagasin)->where('type', '=', 'Frais')->first();
+            if (!$StocksFrai) {
+                return response()->json(['error' => 'Stock not found'], 404);
+            }
+
+            $IdStock = $StocksFrai->id;
+            Log::info('stock_id:' . $IdStock);
+
+            $sousproduits = Lestock::join('produits', 'produits.id', '=', 'lestocks.produit_id')
+            ->join('sousproduits', 'sousproduits.id_pr', '=', 'produits.id')
+                ->select(
+                    'lestocks.id as id',
+                    'lestocks.produit_id as id_produit',
+                    'sousproduits.nom_s_pr as nom',
+                    'sousproduits.photo_s_pr as photo',
+                    'sousproduits.prix_vente as prix',
+                    'sousproduits.unite_mesure as mesure'
+                )
+                ->where('lestocks.stock_id', $IdStock)
+                ->where('lestocks.produit_id', $id_produit)
+                ->get();
+
+            $leproduit = Lestock::join('produits', 'produits.id', '=', 'lestocks.produit_id')
+            ->select(
+                'lestocks.id as id',
+                'lestocks.produit_id as id_produit',
+                'produits.nom_pr as nom',
+                'produits.photo_pr as photo',
+                'produits.prix_vente as prix',
+                'produits.unite_mesure as mesure'
+            )
+            ->where('lestocks.produit_id', $id_produit)
+            ->where('lestocks.stock_id', $IdStock)
+            ->first();
+
+            if ($sousproduits->isEmpty()) {
+                return response()->json(['message' => 'No products found'], 404);
+            }
+
+            return response()->json(['sousproduits' => $sousproduits , 'produit' => $leproduit]);
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+
 
 
 

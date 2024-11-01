@@ -46,6 +46,7 @@
                             '<div id="caisse-item" class="col-xs-12 col-sm-6 col-md-3 col-lg-3">' +
                             '<div id="caisse-card" class="caisse-items ' + fixedClass +
                             ' rounded text-center text-white m-2 shadow-lg m-3">' +
+                            '<i class="fas fa-cash-register fa-lg" style="font-size: 30px; text-align: center; padding-top: 30px; padding-bottom: 10px;"></i>'+
                             '<h4 class="p-2">' + value.magasin_nom + '</h4>' +
                             '<h4 class="p-2">' + value.caisse_titre + '</h4>' +
                             '<hr class="hr-white">' +
