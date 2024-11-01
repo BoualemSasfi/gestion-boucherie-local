@@ -46,26 +46,45 @@
                             <label for="">Titre :</label>
                             <input type="text" name="nom_pr" class="form-control" placeholder="Nom de produit"></input>
                         </div>
+                        <div class="row ">
 
-                        <div class="form-group col-12">
-                            <form>
-                                <div class="form-group">
-                                    <label for="">Viande :</label>
-                                    <select id="category" name="category_id" class="form-control">
-                                        <option value="">Sélectionnez une catégorie</option>
-                                        @foreach ($categorys as $category)
-                                            <option value="{{ $category->id }}">{{ $category->nom }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </form>
+                            <div class="form-group col-6">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="">Viande :</label>
+                                        <select id="category" name="category_id" class="form-control">
+                                            <option value="">Sélectionnez une catégorie</option>
+                                            @foreach ($categorys as $category)
+                                                <option value="{{ $category->id }}">{{ $category->nom }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="">Unité de mesure :</label>
+                                <select name="unite_mesure" class="form-control">
+                                    <option value="">Sélectionnez une Unité de mesure</option>
+
+                                    <option value="Kg">Kg</option>
+                                    <option value="piece">pièce</option>
+
+                                </select>
+                            </div>
                         </div>
+                        <h2 class="text-center"> Prix Acaht : </h2>
+                        <div class="form-group col-12">
+
+                            <input type="number" name="prix_achat" class="form-control" placeholder="Prix achat"
+                                step="0.01" min="0">
+                        </div>
+
 
                         <h2 class="text-center"> Prix de vente : </h2>
 
                         <div class="form-group col-12">
                             <label for="">Détail :</label>
-                            <input type="number" name="prix_vent" class="form-control" placeholder="Prix détail"
+                            <input type="number" name="prix_vente" class="form-control" placeholder="Prix détail"
                                 step="0.01" min="0">
                         </div>
 
