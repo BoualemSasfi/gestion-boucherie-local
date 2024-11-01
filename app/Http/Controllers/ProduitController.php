@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Produit;
 use App\Models\Category;
 use App\Models\Sousproduits;
-
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,9 +21,9 @@ class ProduitController extends Controller
     public function index()
     {
         $produits = Produit::all();  // Récupère tous les produits
-
+        $categories = Category::all();
         // Passe les données à la vue
-        return view('admin.produit.index', ['produits' => $produits]);
+        return view('admin.produit.index', ['produits' => $produits,'categories'=>$categories]);
     }
 
     public function create()
@@ -35,7 +35,9 @@ class ProduitController extends Controller
     {
         $produit = new Produit();
         $produit->nom_pr = $request->input('nom_pr');
-        $produit->prix_vent = $request->input('prix_vent');
+        $produit->prix_achat = $request->input('prix_achat');
+        $produit->unite_mesure = $request->input('unite_mesure');
+        $produit->prix_vente = $request->input('prix_vente');
         $produit->semi_gros = $request->input('semi_gros');
         $produit->gros = $request->input('gros');
         $produit->categorie_id = $request->input('category_id');
@@ -58,11 +60,17 @@ class ProduitController extends Controller
 
         $cat_id = $request->input('category_id');
 
-        $lestocks = Lestock::where('categorie_id',$cat_id)->get();
+        $lestocks = Lestock::select('stock_id', DB::raw('MAX(categorie_id) as categorie_id'))
+            ->where('categorie_id', $cat_id)
+            ->groupBy('stock_id')
+            ->get();
 
-        foreach($lestocks as $lestock){
+        foreach ($lestocks as $lestock) {
             $add_prd = new Lestock();
-            
+            $add_prd->stock_id = $lestock->stock_id;
+            $add_prd->categorie_id = $cat_id;
+            $add_prd->produit_id = $produit->id;
+            $add_prd->save();
         }
 
 
@@ -76,7 +84,7 @@ class ProduitController extends Controller
     {
         $produit = Produit::find($id);
         $categorys = Category::all();
-        $sproduits = Sousproduits::where('id_pr',$id)->get();
+        $sproduits = Sousproduits::where('id_pr', $id)->get();
         $defaultCategoryId = $produit->categorie_id;
         return view(
             'admin.produit.edit',
@@ -95,7 +103,9 @@ class ProduitController extends Controller
     {
         $produit = Produit::find($id);
         $produit->nom_pr = $request->input('nom_pr');
-        $produit->prix_vent = $request->input('prix_vent');
+        $produit->prix_achat = $request->input('prix_achat');
+        $produit->unite_mesure = $request->input('unite_mesure');
+        $produit->prix_vente = $request->input('prix_vente');
         $produit->semi_gros = $request->input('semi_gros');
         $produit->gros = $request->input('gros');
         $produit->categorie_id = $request->input('category_id');
@@ -141,7 +151,7 @@ class ProduitController extends Controller
             'priceGros' => 'required|numeric',
             'productId' => 'required|integer|exists:produits,id', // Assurez-vous que l'ID du produit existe
         ]);
-    
+
         // Créer un nouvel enregistrement pour le sous-produit
         $nv_sousprod = new Sousproduits();
         $nv_sousprod->nom_s_pr = $request->subProductName;
@@ -149,7 +159,7 @@ class ProduitController extends Controller
         $nv_sousprod->prix_semi_gros = $request->priceSemiGros;
         $nv_sousprod->prix_gros = $request->priceGros;
         $nv_sousprod->id_pr = $request->productId;
-    
+
         // Gestion de la photo
         if ($request->hasFile('photo')) {
             // Stocker la nouvelle photo et obtenir son chemin
@@ -157,15 +167,16 @@ class ProduitController extends Controller
             // Enregistrer le chemin relatif dans la base de données
             $nv_sousprod->photo_s_pr = str_replace('public/', '', $path);
         }
-    
+
         // Enregistrer le sous-produit
         $nv_sousprod->save();
-    
+
         // Retourner une réponse JSON
         return response()->json(['message' => 'Sous-produit ajouté avec succès!'], 201);
     }
 
-    public function delete_sous_produit($id){
+    public function delete_sous_produit($id)
+    {
         try {
             // $sousProduit = Sousproduits::findOrFail($id);
             // $sousProduit->delete();
@@ -177,7 +188,7 @@ class ProduitController extends Controller
         }
 
     }
-    
+
 
 
 }

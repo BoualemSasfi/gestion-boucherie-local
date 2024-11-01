@@ -3,20 +3,24 @@
 
 {{-- retour en arrière --}}
 <div class="container" id="titre-page">
-    <div class="row">
-        <div class="col-2 d-flex align-items-center">
-            <a href="{{ url('/home') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
-                    class="btn-description">Retour</span></a>
-        </div>
-        <div class="col-8 d-flex align-items-center">
-            <h2>Liste des produits</h2>
-        </div>
-        <div class="col-2 d-flex align-items-center">
-            <a href="{{ url('/admin/produit/add') }}" class="btn btn-success"><i
-                    class="fas fa-plus fa-xl pr-1"></i><span class="btn-description">Ajouter</span></a>
-
-        </div>
+<div class="row justify-content-between align-items-center">
+    <div class="col-2">
+        <a href="{{ url('/home') }}" class="btn btn-dark">
+            <i class="fas fa-arrow-left pr-1"></i><span class="btn-description">Retour</span>
+        </a>
     </div>
+
+    <div class="col-8 text-center">
+        <h2>Liste des produits</h2>
+    </div>
+    
+    <div class="col-2 text-right">
+        <a href="{{ url('/admin/produit/add') }}" class="btn btn-success">
+            <i class="fas fa-plus fa-xl pr-1"></i><span class="btn-description">Ajouter</span>
+        </a>
+    </div>
+</div>
+
 </div>
 
 
@@ -39,15 +43,26 @@
                             <div class="col-12">
 
                                 <h2 class="text-center">{{ $produit->nom_pr }}</h2>
+                                <br>
+                                <h4 class="text-center" >
+                                    @foreach ($categories as $cat )
+                                      @if ($cat->id == $produit->categorie_id)
+                                      {{$cat->nom}}
+                                      @endif
+                                
+                                    @endforeach
+                            
+                            </h4>
                             </div>
                             <div class="col-12">
-                                <img class="card-img-top" src="{{ asset('storage/' . $produit->photo_pr) }}" alt="">
+                                <img  style="height: 300px;" class="card-img-top" src="{{ asset('storage/' . $produit->photo_pr) }}" alt="">
                             </div>
-                            <div class="col-12">
-                                <h2 class="text-center">les prix de vent </h2>
-                                <h3>prix détail : {{ $produit->prix_vent }} DA</h3>
-                                <h3>semi_gros :{{ $produit->semi_gros }} DA</h3>
-                                <h3>gros : {{ $produit->gros }} DA</h3>
+                            <div class="col-12 text-center">
+                                <h2 class="text-center">les prix de vente </h2>
+                                <h3 clang="text-center" >{{ $produit->prix_vente }} DA </h3>
+                                <!-- <h3>Détail : {{ $produit->prix_vente }} DA </h3>
+                                <h3>Semi_gros :{{ $produit->semi_gros }} DA</h3>
+                                <h3>Gros : {{ $produit->gros }} DA</h3> -->
                             </div>
                         </div>
 
