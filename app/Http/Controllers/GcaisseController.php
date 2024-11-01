@@ -115,11 +115,19 @@ class GcaisseController extends Controller
         $caisse1 = Caisse::find($lacaisseId);
         $caisse2 = Caisse::find($selectedCaisseId);
 
-
+        $magasins = Magasin::all();
+        $caisses = Caisse::all();
         $magasin1 = Magasin::where('id', $caisse1->id_magasin)->get();
         $magasin2 = Magasin::where('id', $caisse2->id_magasin)->get();
 
-        return view('admin.gcaisse.letransfert', ['caisse1' => $caisse1, 'caisse2' => $caisse2, 'magasin1' => $magasin1, 'magasin2' => $magasin2]);
+        return view('admin.gcaisse.letransfert',
+         ['caisse1' => $caisse1,
+          'caisse2' => $caisse2, 
+          'magasin1' => $magasin1, 
+          'magasin2' => $magasin2,
+           'magasins'=>$magasins,
+           'caisses'=>$caisses
+        ]);
     }
 
     public function valide_transfer(Request $request)

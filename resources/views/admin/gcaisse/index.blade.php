@@ -125,7 +125,7 @@
         </div>
     </div>
 </div>
-<<!-- Script SweetAlert -->
+<!-- Script SweetAlert -->
     <script>
         function showMagasins(idListe) {
             // Liste des magasins (remplacez par votre propre logique pour récupérer les magasins)

@@ -9,15 +9,102 @@
                 <span class="btn-description"></span>
             </a>
         </div>
-        <div class="col-8 text-center">
-            <h2>Transfert de {{ $caisse1->solde }} {{ $caisse1->id_magasin }} valeurs {{ $caisse2->solde }}
-                {{ $caisse2->id_magasin }}
+        <div class="col-12 text-center">
+            <h2>Transfert de
+                @foreach ($magasins as $magasin)
+                    @if ($caisse1->id_magasin == $magasin->id)
+                        {{$magasin->nom}}
+                    @endif
+                @endforeach
+                =>
+                @foreach ($caisses as $caisse)
+                    @if ($caisse1->id == $caisse->id)
+                        {{$caisse->code_caisse}}
+                    @endif
+                @endforeach
+                vers
+                @foreach ($magasins as $magasin)
+                    @if ($caisse2->id_magasin == $magasin->id)
+                        {{$magasin->nom}}
+                    @endif
+                @endforeach
+                =>
+                @foreach ($caisses as $caisse)
+                    @if ($caisse2->id == $caisse->id)
+                        {{$caisse->code_caisse}}
+                    @endif
+                @endforeach
+                <!-- {{ $caisse1->solde }} {{ $caisse1->id_magasin }} valeurs {{ $caisse2->solde }}
+                {{ $caisse2->id_magasin }} -->
             </h2>
-            <h2>{{ Auth::user()->name }}</h2>
+            <!-- <h2>{{ Auth::user()->name }}</h2> -->
         </div>
     </div>
 
+
+
+    <div class="row  justify-content-center">
+
+        <div class="col-8 card card-body">
+            <div class="input-group justify-content-between align-items-center">
+  
+                <div class="text-center">
+                    <label > 
+
+                    @foreach ($magasins as $magasin)
+                    @if ($caisse1->id_magasin == $magasin->id)
+                        {{$magasin->nom}}
+                    @endif
+                @endforeach
+                <br>
+                @foreach ($caisses as $caisse)
+                    @if ($caisse1->id == $caisse->id)
+                        {{$caisse->code_caisse}}
+                    @endif
+                @endforeach
+                    </label>
+                    <input type="text" aria-label="First name" class="form-control">
+                </div>
+                <div class="text-center" >
+                    <label for="">solde a ajouter</label>
+                    <br>
+                    <input type="text" aria-label="First name" class="form-control">
+                </div>
+                <div class="text-center">
+                    <label > 
+
+                    @foreach ($magasins as $magasin)
+                    @if ($caisse2->id_magasin == $magasin->id)
+                        {{$magasin->nom}}
+                    @endif
+                @endforeach
+                <br>
+                @foreach ($caisses as $caisse)
+                    @if ($caisse2->id == $caisse->id)
+                        {{$caisse->code_caisse}}
+                    @endif
+                @endforeach
+                    </label>
+                    <input type="text" aria-label="First name" class="form-control">
+                </div>
+
+
+
+
+            </div>
+            
+            <div class="justify-content-center">
+                <button type="button" class="btn btn-outline-primary" id="btn-validate-transfer"
+                    onclick="validateTransfer()">Valider le transfert</button>
+            </div>
+        </div>
+    </div>
+
+
+
+
     <div class="tab-content">
+
         <div>
             <label class="col-2"></label>
             <label class="col-2">{{ $caisse1->id_magasin }}</label>
@@ -40,6 +127,7 @@
             <input type="hidden" id="original_solde_caisse_1_{{ $caisse1->id }}" value="{{ $caisse1->solde }}">
             <input type="hidden" id="original_solde_magasin_2_{{ $caisse2->id }}" value="{{ $caisse2->solde }}">
         </div>
+
     </div>
 
     <div class="text-center">
@@ -47,6 +135,10 @@
         <button type="button" class="btn btn-outline-primary" id="btn-validate-transfer"
             onclick="validateTransfer()">Valider le transfert</button>
     </div>
+
+
+
+
 
 
     <script>
