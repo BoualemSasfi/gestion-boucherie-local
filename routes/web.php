@@ -125,6 +125,12 @@ Route::controller(ProduitController::class)->group(function () {
     Route::get('/admin/produit/{id}/edit', 'edit');
     Route::put('/admin/produit/{id}/update', 'update');
     Route::delete('/admin/produit/{id}/delete', 'destroy');
+    
+    // sous produit 
+    Route::post('/admin/produit/add_sous_produit', 'add_sous_produit');
+    Route::delete('/admin/produit/{id}/delete_sous_produit', 'delete_sous_produit');
+
+
 });
 //-------------------------------------------------------------------------
 // ---------                magasin                              ----------
