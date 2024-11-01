@@ -849,25 +849,24 @@
 
     {{-- Bouton pour afficher le popup --}}
     <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#SousProduitsModal"
-        id="bouton_liste_sousproduits" onclick="ListeSousProduits()" style="margin-bottom: 300px;">
-        <br>liste des sous produits 
+        id="bouton_liste_sousproduits" style="display: none;">
+        <br>liste des sous produits
     </button>
 
     <!-- Popup changement de prix -->
     <div class="modal fade" id="SousProduitsModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content">
+            <div class="modal-content bg-white">
                 <div class="modal-body">
                     <div class="mt-3">
 
                         <div class="row justify-content-center">
 
                             <div class="col-12">
-                                {{-- <h1>liste de sous produits ici</h1> --}}
+                                <div class="row p-0 m-0" id="SousProduits">
+                                    {{-- <h1>liste de sous produits ici</h1> --}}
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mt-3">
-
                         </div>
                     </div>
                 </div>
@@ -1307,13 +1306,14 @@
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
                                 '" data-nom="' + value.nom + '" data-prix="' + value.prix +
-                                '" onclick="affichage(this)" style="cursor: pointer;">' +
+                                // '" onclick="affichage(this)" style="cursor: pointer;">' +
+                                '" onclick="Tester_SousProduits(this)" style="cursor: pointer;">' +
                                 '<img src="{{ asset('storage/') }}/' + value.photo +
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
                                 '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-                                '<p class="card-text">' + value.prix + ' DA / ' + value.mesure +
-                                '</p>' +
+                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) + ' DA / ' + value.mesure +
+                                '</h5>' +
                                 '</div>' +
                                 '</form>' +
                                 '</div>' +
@@ -1356,13 +1356,111 @@
         }
     </script>
 
+    <script>
+        function Tester_SousProduits(form) {
+            const id_produit = form.getAttribute('data-id_produit');
+            const nom = form.getAttribute('data-nom');
+
+            // added to execute the function without auth
+            const id_user = document.getElementById('text-id-user').textContent;
+            const id_magasin = document.getElementById('text-id-magasin').textContent;
+
+            const bouton_sousproduits = document.getElementById('bouton_liste_sousproduits');
+
+            if (id_produit !== undefined) {
+                // test the sub-products
+                $.ajax({
+                    url: '/Get_SubProducts/' + id_produit + '/user/' + id_user + '/magasin/' + id_magasin,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log('LIST OF SUB-PRODUCTS RETRIEVED');
+                        $('#SousProduits').empty();
+
+                        // Check the number of records in the response
+                        if (response.sousproduits.length > 0) {
+
+                            const value = response.produit;
+
+                            $('#SousProduits').append(
+                                '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 mb-4">' +
+                                '<div class="card scat">' +
+                                '<form class="affichage-form" data-id_lestock="' + value.id +
+                                '" data-id_produit="' + value.id_produit +
+                                '" data-nom="' + value.nom + '" data-prix="' + value.prix +
+                                '" onclick="affichage(this)" style="cursor: pointer;">' +
+                                '<img src="{{ asset('storage/') }}/' + value.photo +
+                                '" class="card-img-top" alt="Product image">' +
+                                '<div class="card-body p-1 m-0 text-center">' +
+                                '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
+                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) + ' DA / ' + value.mesure +
+                                '</h5>' +
+                                '</div>' +
+                                '</form>' +
+                                '</div>' +
+                                '</div>'
+                            );
+
+                            $.each(response.sousproduits, function(key, value) {
+                                $('#SousProduits').append(
+                                    '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 mb-4">' +
+                                    '<div class="card scat">' +
+                                    '<form class="affichage-form" data-id_lestock="' + value.id +
+                                    '" data-id_produit="' + value.id_produit +
+                                    '" data-nom="' + value.nom + '" data-prix="' + value.prix +
+                                    '" onclick="affichage(this)" style="cursor: pointer;">' +
+                                    '<img src="{{ asset('storage/') }}/' + value.photo +
+                                    '" class="card-img-top" alt="Product image">' +
+                                    '<div class="card-body p-1 m-0 text-center">' +
+                                    '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
+                                    '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) + ' DA / ' + value.mesure +
+                                    '</h5>' +
+                                    '</div>' +
+                                    '</form>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            });
+
+                            bouton_sousproduits.click();
+
+                        } else {
+                            // If there are no records, display a message
+                            $('#SousProduits').append(
+                                '<div class="alert alert-warning text-center" role="alert">' +
+                                'Aucun sous-produit disponible.' +
+                                '</div>'
+                            );
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        affichage(form);
+                    }
+                });
+
+
+            } else {
+                console.error('ERROR: PRODUCT ID MISSING');
+            }
+
+            console.log('Sub-product test executed');
+        }
+    </script>
+
+
+
     {{-- script filtrage produits  --}}
     <script>
         function affichage(form) {
             const id_lestock = form.getAttribute('data-id_lestock');
             const id_produit = form.getAttribute('data-id_produit');
             const nom = form.getAttribute('data-nom');
-            const prix = form.getAttribute('data-prix');
+            let prix = form.getAttribute('data-prix');
+
+            prix = parseFloat(prix);
 
             if (nom !== undefined) {
                 const nom_produit = document.getElementById('produit_text');
@@ -1391,6 +1489,10 @@
             } else {
                 console.error('ERREUR ID');
             }
+
+            $('#SousProduitsModal').modal('hide');
+
+
 
             console.log('Calcul Total Produit*Quantité executé');
         }

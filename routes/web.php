@@ -69,6 +69,7 @@ Route::controller(CaisseController::class)->group(function () {
     // Route::get('/caisse', 'caisse_paccino')->name('caisse_paccino');
     Route::get('/caisse/category/{id}', 'filtrage_des_produits')->name('caisse_filtrage');
     Route::get('/caisse/category/{id_categorie}/user/{id_user}/magasin/{id_magasin}', 'filtrage_des_produits_libre')->name('Filtrage_Des_Produits_Libre');
+    Route::get('/Get_SubProducts/{id_produit}/user/{id_user}/magasin/{id_magasin}', 'filtrage_des_sous_produits_libre')->name('Filtrage_Des_Sous_Produits_Libre');
 
     Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
     Route::get('/ventes/{id_facture}', 'Get_Liste_Ventes')->name('liste_ventes');
