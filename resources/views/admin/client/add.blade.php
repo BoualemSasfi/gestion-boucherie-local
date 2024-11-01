@@ -61,7 +61,7 @@
                                             class="btn-description">Enregistrer</span></button>
                                 </div>
                                 <div class="col-6">
-                                    <a class="btn btn-danger p-2" href="{{ '/home' }}"><i
+                                    <a class="btn btn-danger p-2" href="{{ '/admin/client' }}"><i
                                             class="fas fa-times fa-lg mr-2"></i><span
                                             class="btn-description">Annuler</span></a>
                                 </div>
