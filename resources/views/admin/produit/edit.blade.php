@@ -2,18 +2,27 @@
 @section('content')
 {{-- retour en arrière --}}
 <div class="container" id="titre-page">
-    <div class="row">
-        <div class="col-2 d-flex align-items-center">
+    <div class="row justify-content-between align-items-center">
+
+        <div class="col-2">
             <a href="{{ url('/admin/produit') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                     class="btn-description">Retour</span></a>
         </div>
-        <div class="col-10 d-flex align-items-center">
-            <h2>Modifier le produit {{$produit->id }} </h2>
+        <div class="col-8 text-center">
+            <h2>Modifier Le Produit </h2>
+        </div>
+        <div class="col-2 text-right">
+
         </div>
 
-
-
     </div>
+
+
+
+
+
+
+
 </div>
 
 {{--
@@ -61,12 +70,24 @@
                                 </form>
 
 
+
+                                <label for="">Unité de mesure :</label>
+                                <select name="unite_mesure" class="form-control">
+                                    <!-- Options supplémentaires -->
+                                    <option value="Kg" {{ $produit->unite_mesure == 'Kg' ? 'selected' : '' }}>Kg</option>
+                                    <option value="piece" {{ $produit->unite_mesure == 'piece' ? 'selected' : '' }}>pièce
+                                    </option>
+                                </select>
+
                             </div>
 
-
-
-
                             <div class="col-4">
+
+                                <h2 class="text-center"> Prix d'achat : </h2>
+
+                                <input type="text" name="prix_achat" class="form-control" placeholder="Prix d'achat"
+                                    value="{{ $produit->prix_achat }}"></input>
+
                                 <input type="file" name="photo_pr" id="validationLogoCouleurs" accept="image/*"
                                     style="display: none;" onchange="previewImage2();">
 
@@ -88,8 +109,8 @@
                             <div class="form-group col-4">
                                 <h2 class="text-center"> Prix de vente : </h2>
                                 <label for="">détail :</label>
-                                <input type="text" name="prix_vent" class="form-control" placeholder="Prix de vent"
-                                    value="{{ $produit->prix_vent }}"></input>
+                                <input type="text" name="prix_vente" class="form-control" placeholder="Prix de vent"
+                                    value="{{ $produit->prix_vente }}"></input>
 
                                 <label for="">Semi gros :</label>
                                 <input type="text" name="semi_gros" class="form-control" placeholder="Prix de semi gors"
@@ -99,13 +120,6 @@
                                 <input type="text" name="gros" class="form-control" placeholder="Prix de gros"
                                     value="{{ $produit->gros }}"></input>
                             </div>
-
-
-
-
-
-
-
 
                             <div class="form-group col-12">
 
@@ -164,10 +178,10 @@
                                     <tr class="text-center">
                                         <th>ID</th>
                                         <th>photo</th>
-                                        <th>Sous produit</th>
-                                        <th>prix_details</th>
-                                        <th>prix_s_gros</th>
-                                        <th>prix_gros</th>
+                                        <th>Sous Produit</th>
+                                        <th>Prix Detail</th>
+                                        <th>Prix Semi Gros</th>
+                                        <th>Prix Gros</th>
                                         <th>Active</th>
                                         <!-- <th>caisse</th> -->
                                         <!-- <th>Action</th> -->
