@@ -308,7 +308,8 @@
                                 onclick="FiltrageProduits(this)" style="cursor: pointer;">
                                 <div class="card cat"
                                     style="width: 150px; height: 100px; margin-right:5px; background-image: url('{{ asset('storage/' . $categorie->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-                                    <p class="mini-text" style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
+                                    <p class="mini-text"
+                                        style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
                                         {{ $categorie->nom }}</p>
                                 </div>
                             </form>
@@ -841,7 +842,46 @@
     <!-- Popup -->
 
 
+    {{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
+    {{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
+    {{-- SOUS PRODUITS  --}}
+    {{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
 
+    {{-- Bouton pour afficher le popup --}}
+    <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#SousProduitsModal"
+        id="bouton_liste_sousproduits" onclick="ListeSousProduits()" style="margin-bottom: 300px;">
+        <br>liste des sous produits 
+    </button>
+
+    <!-- Popup changement de prix -->
+    <div class="modal fade" id="SousProduitsModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="mt-3">
+
+                        <div class="row justify-content-center">
+
+                            <div class="col-12">
+                                {{-- <h1>liste de sous produits ici</h1> --}}
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Popup -->
+
+
+    {{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
+    {{-- SOUS PRODUITS  --}}
+    {{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
+    {{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
 
 
     {{-- ------------------------------------------------------------------------------------------------------- --}}
@@ -1533,7 +1573,8 @@
                             // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
                             '<td class="petit_font text-left">' + value.nom_produit +
                             '</td>' +
-                            '<td class="petit_font text-right">' + quantite + ' ' + value.unite_mesure +
+                            '<td class="petit_font text-right">' + quantite + ' ' + value
+                            .unite_mesure +
                             '</td>' +
                             '<td class="petit_font text-right">' + value.prix_produit + '</td>' +
                             '<td class="petit_font text-right">' + value.prix_total + '</td>' +
@@ -2551,6 +2592,8 @@
 
 
 
+
+    {{-- --------------------------------------------------------------------------------------------------------------- --}}
 
     <script>
         function appendNumber(number) {
