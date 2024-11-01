@@ -125,6 +125,7 @@ class StockController extends Controller
             return response()->json(['error' => 'Erreur interne du serveur.'], 500); // Utilisez le code d'erreur HTTP 500 pour une erreur interne du serveur
         }
     }
+    
     public function suppcat($id_stock, $category)
     {
         Lestock::where('stock_id', $id_stock)
