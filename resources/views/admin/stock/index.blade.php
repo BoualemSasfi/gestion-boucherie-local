@@ -44,6 +44,7 @@
                             <tr>
                                 <th>Locla</th>
                                 <th>type stock</th>
+                          
 
                                 <th>Actions</th>
                             </tr>
@@ -53,20 +54,20 @@
                             @foreach ($stocks as $stock)
                                 <tr>
 
-                                @if ($stock->nom ==  'Atelier')
+                                    @if ($stock->nom == 'Atelier')
 
-                                <td class=" align-middle" style="color: red;" >{{ $stock->nom}}</td>
-                                @else
-                                
-                                <td class=" align-middle">{{ $stock->nom}}</td>
-                                @endif
+                                        <td class=" align-middle" style="color: red;">{{ $stock->nom}}</td>
+                                    @else
+
+                                        <td class=" align-middle">{{ $stock->nom}}</td>
+                                    @endif
 
                                     @if ($stock->type == 'Frais')
 
-                                    <td class=" align-middle" style="color: red" >{{ $stock->type }}</td>
+                                        <td class=" align-middle" style="color: red">{{ $stock->type }}</td>
                                     @else
-                                        
-                                    <td class=" align-middle" style="color: blue">{{ $stock->type }}</td>
+
+                                        <td class=" align-middle" style="color: blue">{{ $stock->type }}</td>
                                     @endif
 
 
@@ -77,27 +78,16 @@
 
 
                                         <div>
-
-
-
-
-
-                                            <div class="col-1">
-                                                {{-- edit VOIR STOCK --}}
+                                            <!-- <div class="col-1">
+                                          
                                                 <form class="show-form"
-                                               
-                                                      action="{{ url('/admin/magasin/' . $magasin->id . '/stock') }}"
+                                                    action="{{ url('/admin/magasin/'.$stock->magasin_id.'/stock') }}"
                                                     method="GET">
                                                     @csrf
                                                     <button type="submit" class="btn btn-outline-info alpa shadow"><i
                                                             class="bi bi-pen"></i>stock</button>
                                                 </form>
-                                            </div>
-
-
-
-
-
+                                            </div> -->
 
                                             <div class="col-1">
                                                 {{-- edit button --}}

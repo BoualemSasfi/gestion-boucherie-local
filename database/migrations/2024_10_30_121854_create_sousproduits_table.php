@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('sousproduits', function (Blueprint $table) {
             $table->id();
+            
             $table->unsignedBigInteger('id_pr')->nullable(); 
             $table->string('nom_s_pr')->nullable(); 
             $table->string('photo_s_pr')->nullable()->nullable(); 

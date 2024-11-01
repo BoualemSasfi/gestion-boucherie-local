@@ -36,18 +36,18 @@
 
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-12" >
+                            <div class="col-12">
 
-                                <h2 class="text-center">{{ $produit->nom_pr }}</h2> 
+                                <h2 class="text-center">{{ $produit->nom_pr }}</h2>
                             </div>
                             <div class="col-12">
                                 <img class="card-img-top" src="{{ asset('storage/' . $produit->photo_pr) }}" alt="">
                             </div>
                             <div class="col-12">
-<h2 class="text-center" >les prix de vent </h2>
-                                <h3 >prix détail : {{ $produit->prix_vent }} DA</h3>
-                                <h3 >semi_gros :{{ $produit->semi_gros }} DA</h3>
-                                <h3 >gros : {{ $produit->gros }} DA</h3>
+                                <h2 class="text-center">les prix de vent </h2>
+                                <h3>prix détail : {{ $produit->prix_vent }} DA</h3>
+                                <h3>semi_gros :{{ $produit->semi_gros }} DA</h3>
+                                <h3>gros : {{ $produit->gros }} DA</h3>
                             </div>
                         </div>
 
