@@ -258,6 +258,19 @@ Route::controller(AfficheController::class)->group(function () {
 
 
 //-------------------------------------------------------------------------
+// ---------                client                              ----------
+// ------------------------------------------------------------------------
+Route::controller(ClienController::class)->group(function () {
+
+    Route::get('admin/client/{id}/voir', 'voir');
+    Route::put('/admin/client/edit/save/{id}', 'update');
+    Route::delete('/admin/client/delete/{id}', 'destroy');
+
+    Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
+
+});
+
+//-------------------------------------------------------------------------
 // ---------                vendeur                              ----------
 // ------------------------------------------------------------------------
 Route::controller(VendeurController::class)->group(function () {
@@ -267,11 +280,6 @@ Route::controller(VendeurController::class)->group(function () {
     Route::post('/admin/vendeur/add/save', 'stor');
 
     Route::get('/admin/vendeur/edit/{id}', 'edit');
-    Route::get('admin/client/{id}/voir', 'voir');
-    Route::put('/admin/client/edit/save/{id}', 'update');
-    Route::delete('/admin/client/delete/{id}', 'destroy');
-
-    Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
 
 });
 
