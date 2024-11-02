@@ -2,20 +2,21 @@
 @section('content')
     {{-- retour en arrière  --}}
     <div class="container" id="titre-page">
-        <div class="row">
-            <div class="col-2 d-flex align-items-center">
-                <a href="{{ url('/home') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
+        <div class="row justify-content-between align-items-center">
+            <div class="col-2">
+                <a href="{{ url('/admin') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                         class="btn-description">Retour</span></a>
             </div>
-            <div class="col-8 d-flex align-items-center">
+            <div class="col-8 text-center">
                 <h2>Liste des catégories de viande</h2>
             </div>
-            <div class="col-2 d-flex align-items-center">
+            <div class="col-2 text-right">
                 <a href="{{ url('/admin/category/add') }}" class="btn btn-success"><i
                         class="fas fa-plus fa-xl pr-1"></i><span class="btn-description">Ajouter</span></a>
 
             </div>
         </div>
+
     </div>
 
 
@@ -33,7 +34,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
-                                    <img class="card-img-top" src="{{ asset('storage/' . $category->photo) }}"
+                                    <img style="height: 250px;" class="card-img-top" src="{{ asset('storage/' . $category->photo) }}"
                                         alt="">
                                 </div>
                                 <div class="col-12">

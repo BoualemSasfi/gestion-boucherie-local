@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>List des transferts  Solde</h2>
+            <h2>Liste des Soldes Transfert <i class="fa-solid fa-money-bill-1-wave fa-shake fa-xl" style="color: #63E6BE;"></i></h2>
         </div>
         <div class="col-2 text-right">
             <!-- <a href="{{ url('/admin') }}" class="btn btn-success">
@@ -40,7 +40,7 @@
 
                 <div class="card-body">
                     <table id="example" class="table-striped table-bordered" style="width:100%">
-                        <thead>
+                        <thead class="text-center" >
                             <tr>
                                 <th>Transfert </th>
                                 <th>Solde</th>

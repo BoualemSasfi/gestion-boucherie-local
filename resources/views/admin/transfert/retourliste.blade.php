@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>List des retoure</h2>
+            <h2>Liste Des Retoures <i class="fa-solid fa-rotate-left fa-spin fa-spin-reverse fa-xl" style="color: #eb370a;"></i> </h2>
         </div>
         <div class="col-2 text-right">
             <!-- <a href="{{ url('/admin/stock/add') }}" class="btn btn-success">

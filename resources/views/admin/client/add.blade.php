@@ -2,13 +2,16 @@
 @section('content')
 {{-- retour en arrière --}}
 <div class="container" id="titre-page">
-    <div class="row">
-        <div class="col-2 d-flex align-items-center">
+    <div class="row justify-content-between align-items-center">
+        <div class="col-2 ">
             <a href="{{ url('/admin/client') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                     class="btn-description">Retour</span></a>
         </div>
-        <div class="col-10 d-flex align-items-center">
-            <h2  >Ajouter un nouveau client</h2>
+        <div class="col-8 text-center">
+            <h2>Ajouter un nouveau client</h2>
+        </div>
+        <div class="col-2 text-right">
+
         </div>
 
     </div>
@@ -32,27 +35,28 @@
 
                     <div class="card-body">
 
-                 
+                        <div class="row">
+                            <div class="col-6">
+                                <h5 class="text-center"> Nom & Prenom </h5>
+                                <input type="text" name="nom_prenom" class="form-control"
+                                    placeholder="nom & prenom "></input>
+                            </div>
+
+                            <div class="col-6">
+                                <h5 class="text-center"> N° Tel </h5>
+                                <input type="number" name="fix" class="form-control"
+                                    placeholder="Numéro de telephone "></input>
+                            </div>
+                            <div class="col-12">
+                                <h5 class="text-center"> Details </h5>
+                                <input type="text" name="details" class="form-control" placeholder="Details "></input>
+                            </div>
+
+                            
 
 
-                        <div class="form-group col-12">
-                        <h5 class="text-center"> Nom & Prenom  </h5>
-                            <input type="text" name="nom_prenom" class="form-control" placeholder="nom & prenom "></input>
                         </div>
-
-                        <div class="form-group col-12">
-                        <h5 class="text-center"> N° Tel  </h5>
-                            <input type="text" name="fix" class="form-control" placeholder="Numéro de telephone "></input>
-                        </div>
-
-                        <div class="form-group col-12">
-                        <h5 class="text-center"> Details </h5>
-                            <input type="text" name="details" class="form-control" placeholder="Details "></input>
-                        </div>
-
-
-
-
+                        <br>
                         <div class="form-group col-12">
                             <div class="form-group row justify-content-center text-center">
                                 <div class="col-6">
@@ -67,6 +71,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
             </div>
             </form>

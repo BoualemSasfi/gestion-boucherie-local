@@ -5,15 +5,25 @@
 
 {{-- retour en arrière --}}
 <div class="container" id="titre-page">
-    <div class="row">
-        <div class="col-2 d-flex align-items-center">
-            <a href="{{ url('/admin/vendeur') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
+    <div class="row justify-content-between align-items-center">
+        <div class="col-2">
+            <a href="{{ url('/admin/caisse') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                     class="btn-description">Retour</span></a>
         </div>
-        <div class="col-10 d-flex align-items-center">
-            <h2>Ajouter un nouveau vendeur</h2>
+
+        <div class="col-8  text-center">
+            <h2>Ajouter une nouvelle caisse</h2>
+        </div>
+
+        <div class="col-2 text-right">
+
         </div>
     </div>
+
+
+
+
+
 </div>
 
 {{-- Formulaire d'ajout d'un vendeur --}}
@@ -29,7 +39,7 @@
                         <div class="row">
 
                             <div class="text-center form-group col-12">
-                                <h3>Information personnelle</h3>
+                                <h3>Information de la caisse</h3>
                             </div>
 
 

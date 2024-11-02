@@ -251,9 +251,6 @@ class TransfertController extends Controller
 
     public function retour($id_atl, $id_mag, $id_magasin)
     {
-
-
-
         $stocks = DB::table('categories as c')
             ->select(
                 'c.id as id_cat',

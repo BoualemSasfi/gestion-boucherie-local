@@ -9,44 +9,140 @@
                 <span class="btn-description"></span>
             </a>
         </div>
-        <div class="col-8 text-center">
-            <h2>Transfert de {{ $caisse1->solde }} {{ $caisse1->id_magasin }} valeurs {{ $caisse2->solde }}
-                {{ $caisse2->id_magasin }}
+        <div class="col-12 text-center">
+            <h2>Transfert de
+                @foreach ($magasins as $magasin)
+                    @if ($caisse1->id_magasin == $magasin->id)
+                        {{$magasin->nom}}
+                    @endif
+                @endforeach
+                =>
+                @foreach ($caisses as $caisse)
+                    @if ($caisse1->id == $caisse->id)
+                        {{$caisse->code_caisse}}
+                    @endif
+                @endforeach
+                vers
+                @foreach ($magasins as $magasin)
+                    @if ($caisse2->id_magasin == $magasin->id)
+                        {{$magasin->nom}}
+                    @endif
+                @endforeach
+                =>
+                @foreach ($caisses as $caisse)
+                    @if ($caisse2->id == $caisse->id)
+                        {{$caisse->code_caisse}}
+                    @endif
+                @endforeach
+                <!-- {{ $caisse1->solde }} {{ $caisse1->id_magasin }} valeurs {{ $caisse2->solde }}
+                {{ $caisse2->id_magasin }} -->
             </h2>
-            <h2>{{ Auth::user()->name }}</h2>
+            <!-- <h2>{{ Auth::user()->name }}</h2> -->
         </div>
     </div>
 
-    <div class="tab-content">
-        <div>
-            <label class="col-2"></label>
-            <label class="col-2">{{ $caisse1->id_magasin }}</label>
-            <label class="col-2">À ajouter</label>
-            <label class="col-2">{{ $caisse2->id_magasin }}</label>
-        </div>
 
-        <div class="d-flex align-items-center mb-3">
-            {{ $caisse1->id }}
-            <input name="solde_caisse_1" class="col-2" type="number" value="{{ $caisse1->solde }}" readonly
-                id="solde_caisse_1_{{ $caisse1->id }}">
 
-            <input name="solde_ajouter" class="col-2" type="number" value="" id="solde_ajouter_{{ $caisse1->id }}"
-                oninput="updateBalances({{ $caisse1->id }}, {{ $caisse2->id }}, this.value)">
+    <div class="row  justify-content-center">
 
-            {{ $caisse2->id }}
-            <input name="solde_caisse_2" class="col-2" type="number" value="{{ $caisse2->solde }}" readonly
-                id="solde_caisse_2_{{ $caisse2->id }}">
+        <div class="col-8 card card-body">
+            <div class="input-group justify-content-between align-items-center">
 
-            <input type="hidden" id="original_solde_caisse_1_{{ $caisse1->id }}" value="{{ $caisse1->solde }}">
-            <input type="hidden" id="original_solde_magasin_2_{{ $caisse2->id }}" value="{{ $caisse2->solde }}">
+                <div class="text-center">
+                    <label>
+                        @foreach ($magasins as $magasin)
+                            @if ($caisse1->id_magasin == $magasin->id)
+                                {{$magasin->nom}}
+                            @endif
+                        @endforeach
+                        <br>
+                        @foreach ($caisses as $caisse)
+                            @if ($caisse1->id == $caisse->id)
+                                {{$caisse->code_caisse}}
+                            @endif
+                        @endforeach
+                    </label>
+                    <input name="solde_caisse_1" class="form-control text-center" type="number"
+                        value="{{ $caisse1->solde }}" readonly id="solde_caisse_1_{{ $caisse1->id }}">
+                </div>
+                <div class="text-center">
+                    <label for=""></label>
+                    <br>
+                    <label for="">Solde a ajouter</label>
+                    <input name="solde_ajouter" class="form-control text-center" type="number" value=""
+                        id="solde_ajouter_{{ $caisse1->id }}"
+                        oninput="updateBalances({{ $caisse1->id }}, {{ $caisse2->id }}, this.value)">
+                </div>
+                <div class="text-center">
+                    <label>
+                        @foreach ($magasins as $magasin)
+                            @if ($caisse2->id_magasin == $magasin->id)
+                                {{$magasin->nom}}
+                            @endif
+                        @endforeach
+                        <br>
+                        @foreach ($caisses as $caisse)
+                            @if ($caisse2->id == $caisse->id)
+                                {{$caisse->code_caisse}}
+                            @endif
+                        @endforeach
+                    </label>
+                    <input name="solde_caisse_2" class="form-control text-center" type="number"
+                        value="{{ $caisse2->solde }}" readonly id="solde_caisse_2_{{ $caisse2->id }}">
+                </div>
+                <input type="hidden" id="original_solde_caisse_1_{{ $caisse1->id }}" value="{{ $caisse1->solde }}">
+                <input type="hidden" id="original_solde_magasin_2_{{ $caisse2->id }}" value="{{ $caisse2->solde }}">
+
+
+
+            </div>
+            <br>
+            <div class="justify-content-center">
+                <button type="button" class="btn btn-outline-primary col-12" id="btn-validate-transfer"
+                    onclick="validateTransfer()">Valider le transfert</button>
+            </div>
         </div>
     </div>
 
-    <div class="text-center">
 
-        <button type="button" class="btn btn-outline-primary" id="btn-validate-transfer"
-            onclick="validateTransfer()">Valider le transfert</button>
-    </div>
+
+<!--         
+        <div class="tab-content">
+
+            <div>
+                <label class="col-2"></label>
+                <label class="col-2">{{ $caisse1->id_magasin }}</label>
+                <label class="col-2">À ajouter</label>
+                <label class="col-2">{{ $caisse2->id_magasin }}</label>
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+                {{ $caisse1->id }}
+                <input name="solde_caisse_1" class="col-2 form-control" type="number" value="{{ $caisse1->solde }}" readonly
+                    id="solde_caisse_1_{{ $caisse1->id }}">
+
+                <input name="solde_ajouter" class="col-2" type="number" value="" id="solde_ajouter_{{ $caisse1->id }}"
+                    oninput="updateBalances({{ $caisse1->id }}, {{ $caisse2->id }}, this.value)">
+
+                {{ $caisse2->id }}
+                <input name="solde_caisse_2" class="col-2" type="number" value="{{ $caisse2->solde }}" readonly
+                    id="solde_caisse_2_{{ $caisse2->id }}">
+
+                <input type="hidden" id="original_solde_caisse_1_{{ $caisse1->id }}" value="{{ $caisse1->solde }}">
+                <input type="hidden" id="original_solde_magasin_2_{{ $caisse2->id }}" value="{{ $caisse2->solde }}">
+            </div>
+
+        </div>
+
+        <div class="text-center">
+
+            <button type="button" class="btn btn-outline-primary" id="btn-validate-transfer"
+                onclick="validateTransfer()">Valider le transfert</button>
+        </div>
+
+ -->
+
+
 
 
     <script>

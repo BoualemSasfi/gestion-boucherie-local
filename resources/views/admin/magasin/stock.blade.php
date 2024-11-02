@@ -11,7 +11,9 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>stock {{$magasins->type}} {{$magasins->nom}} {{$magasins->id}} </h2>
+            <h2>{{$magasins->type}} {{$magasins->nom}}
+                <!-- {{$magasins->id}} -->
+            </h2>
         </div>
         <div class="col-2 text-right">
 
@@ -31,7 +33,7 @@
 
                 <div class="row">
                     <div class="col-6">
-
+                        <h2 class="text-center">Information </h2>
                         <h5>Nom : {{$magasins->nom}} </h5>
                         <h5>type : {{$magasins->type}} </h5>
                         <h5>N° register : {{$magasins->N_reg}} </h5>
@@ -68,7 +70,8 @@
                 <div class="row">
                     <div class="col-12 text-center">
 
-                        <H1>STOCK</H1>
+                        <H1>STOCK <i class="fa-solid fa-boxes-stacked fa-bounce fa-xl" style="color: #6d3134;"></i>
+                        </H1>
                     </div>
 
                     <div class="col-12">
@@ -81,23 +84,36 @@
                                         <ul class="nav nav-tabs ">
                                             <li class="nav-item col-6  ">
                                                 <a class="nav-link active bg-danger" id="frais-tab" aria-current="page" href="#"
-                                                    onclick="showTab('frais'); return false;">Frais</a>
+                                                    onclick="showTab('frais'); return false;">
+                                                    <H5 class="text-center" style="color:white;"><i class="fa-solid fa-fire fa-lg"
+                                                            style="color: #eceff4;"> F r a i s </i></H5>
+
+
+                                                </a>
                                             </li>
 
                                             <li class="nav-item col-6">
                                                 <a class="nav-link bg-primary " id="congele-tab" href="#"
-                                                    onclick="showTab('congele'); return false;">Congelé</a>
+                                                    onclick="showTab('congele'); return false;">
+                                                    <H5 class="text-center" style="color:white;"><i
+                                                            class="fa-solid fa-snowflake fa-lg" style="color: #eceff4;"> C o n g e l
+                                                            e </i> </H5>
+
+
+                                                </a>
                                             </li>
                                         </ul>
 
                                         <div id="frais-content" class="tab-content mt-3">
                                             <!-- Stock frais  -->
                                             <div>
-                                                <h4 class="text-center">Frais {{$frais_id}} </h4>
+                                                <!-- <h4 class="text-center">Frais {{$frais_id}} </h4> -->
                                                 <button type="button" class="btn btn-success col-12" data-stk="" id="trans_frais">
-                                                    Transfert
+                                                    <h5>Transfert <i class="fa-solid fa-right-left fa-flip fa-lg"
+                                                            style="color: #dfe4ec;"></i></h5>
                                                 </button>
                                             </div>
+                                            <br>
                                             <!-- Nav tabs -->
                                             <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
                                                 @foreach ($stock_frais->groupBy('categorie') as $categorie => $produits)
@@ -120,6 +136,7 @@
 
                                                         <!-- Table of products -->
                                                         <table class="table-striped table-bordered col-12">
+
                                                             <thead class="text-center">
                                                                 <tr>
 
@@ -141,13 +158,13 @@
                                                                             <button id="ajst-{{ $produit->id_frais }}" type="button"
                                                                                 class="btn btn-outline-info"
                                                                                 onclick="showAjustModal('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">
-                                                                                ajustier
+                                                                                ajustier <i class="fa-solid fa-arrows-rotate fa-spin fa-sm" style="color: #63E6BE;"></i>
                                                                             </button>
-                                                                            <div class="text-center">
-                                                                                <button type="button" class="btn btn-outline-primary"
-                                                                                    onclick="collectData('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">collect
-                                                                                    data</button>
-                                                                            </div>
+                                                                            <!-- <div class="text-center">
+                                                                                                                        <button type="button" class="btn btn-outline-primary"
+                                                                                                                            onclick="collectData('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">collect
+                                                                                                                            data</button>
+                                                                                                                    </div> -->
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -168,13 +185,17 @@
 
                                         <!-- Stock congele  -->
                                         <div id="congele-content" class="tab-content mt-3" style="display: none;">
-                                            <div>
-                                                <h4 class="text-center">Congelé {{ $congele_id }}</h4>
-                                                <button type="button" class="btn btn-success col-12" data-stk="{{ $congele_id }}"
+                                            <div class="">
+
+
+                                                <!-- <h4 class="text-center">Congelé {{ $congele_id }}</h4> -->
+                                                <button type="button" class="btn btn-success col-12 " data-stk="{{ $congele_id }}"
                                                     id="trans_congele">
-                                                    Transfert
+                                                    <h5>Transfert <i class="fa-solid fa-right-left fa-flip fa-lg"
+                                                            style="color: #dfe4ec;"></i></h5>
                                                 </button>
                                             </div>
+                                            <br>
 
                                             <!-- Onglets de catégories -->
                                             <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
@@ -197,7 +218,7 @@
                                                         id="category-{{ $index }}" role="tabpanel" aria-labelledby="tab-{{ $index }}">
 
                                                         <!-- Tableau des produits -->
-                                                        <table class="table table-striped table-bordered col-12 mt-3">
+                                                        <table class="table-striped table-bordered col-12">
                                                             <thead class="text-center">
                                                                 <tr>
                                                                     <th>Produit</th>
@@ -210,27 +231,20 @@
                                                                     <tr>
                                                                         <td>{{ $congele->produit }}</td>
                                                                         <td>{{ number_format($congele->quantity, 2) }} Kg</td>
-                                                                        <!-- <td class="text-center">
-                                                                                                                    <button id="ajst-{{ $congele->id_congele }}" type="button"
-                                                                                                                        class="btn btn-outline-info"
-                                                                                                                        onclick="showAjustModal('{{ $congele->quantity }}', '{{ $congele->id_congele }}')">
-                                                                                                                        Ajuster
-                                                                                                                    </button>
-                                                                                                                </td> -->
 
-                                                                        <td class="text-center space-x-8">
 
+                                                                        <td class="text-center">
 
                                                                             <button id="ajst-{{ $congele->id_congele }}" type="button"
                                                                                 class="btn btn-outline-info"
                                                                                 onclick="showAjustModal('{{ $congele->quantity }}','{{ $congele->id_congele }}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$congele->produit}}','{{$categorie}}')">
-                                                                                ajustier {{$congele->id_congele}} ZD
+                                                                                ajustier <i class="fa-solid fa-arrows-rotate fa-spin fa-sm" style="color: #63E6BE;"></i>
                                                                             </button>
-                                                                            <div class="text-center">
-                                                                                <button type="button" class="btn btn-outline-primary"
-                                                                                    onclick="collectData('{{ $congele->quantity }}','{{$congele->id_congele}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$congele->produit}}','{{$categorie}}')">collect
-                                                                                    data</button>
-                                                                            </div>
+                                                                            <!-- <div class="text-center">
+                                                                                                                                            <button type="button" class="btn btn-outline-primary"
+                                                                                                                                                onclick="collectData('{{ $congele->quantity }}','{{$congele->id_congele}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$congele->produit}}','{{$categorie}}')">collect
+                                                                                                                                                data</button>
+                                                                                                                                        </div> -->
                                                                         </td>
 
                                                                     </tr>
@@ -252,11 +266,14 @@
 
 
                                 <div>
-                                    <h4 class="text-center">Frais {{$frais_id}} </h4>
-                                    <button type="button" class="btn btn-primary" data-stk="frais" id="retour">
-                                        Retoure...
+                                    <!-- <h4 class="text-center">Frais {{$frais_id}} </h4> -->
+                                    <button type="button" class="btn btn-primary col-12" data-stk="frais" id="retour">
+                                        <h5> Retoure... <i class="fa-solid fa-rotate-left fa-spin fa-spin-reverse fa-lg"
+                                                style="color: #e6e9ef;"></i></h5>
+
                                     </button>
                                 </div>
+                                <br>
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-tabs" id="categoryTabs" role="tablist">
                                     @foreach ($stock_frais->groupBy('categorie') as $categorie => $produits)
@@ -292,16 +309,6 @@
 
                                                             <td>{{$produit->produit}}</td>
                                                             <td>{{ number_format($produit->quantity, 2) }} Kg</td>
-                                                            <!-- <td class="text-center space-x-8">
-
-
-                                                                <button id="ajst-{{ $produit->id_frais }}" type="button"
-                                                                    class="btn btn-outline-info"
-                                                                    onclick="showAjustModal('{{ $produit->quantity }}','{{$produit->id_frais}}')">
-                                                                    ajustier
-                                                                </button>
-
-                                                            </td> -->
 
 
                                                             <td class="text-center space-x-8">
@@ -310,13 +317,13 @@
                                                                 <button id="ajst-{{ $produit->id_frais }}" type="button"
                                                                     class="btn btn-outline-info"
                                                                     onclick="showAjustModal('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">
-                                                                    ajustier
+                                                                    ajustier <i class="fa-solid fa-arrows-rotate fa-spin fa-sm" style="color: #63E6BE;"></i>
                                                                 </button>
-                                                                <div class="text-center">
-                                                                    <button type="button" class="btn btn-outline-primary"
-                                                                        onclick="collectData('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">collect
-                                                                        data</button>
-                                                                </div>
+                                                                <!-- <div class="text-center">
+                                                                                        <button type="button" class="btn btn-outline-primary"
+                                                                                            onclick="collectData('{{ $produit->quantity }}','{{$produit->id_frais}}','{{$magasins->nom}}','{{ Auth::user()->name }}','{{$produit->produit}}','{{$categorie}}')">collect
+                                                                                            data</button>
+                                                                                    </div> -->
                                                             </td>
 
                                                         </tr>
@@ -392,7 +399,7 @@
 
             if (selectedMagasin) {
                 const result = await Swal.fire({
-                    title: `Voulez-vous transférer du stock de magasin ${id_magasin} de atl : {{$frais_id}} vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
+                    title: `Voulez-vous transférer du stock vers le magasin  ${magasins[selectedMagasin]}  ?`,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: "Oui, transférer !",
@@ -420,6 +427,7 @@
                     @foreach ($lesmagasins as $lemagasin)
                         "{{ $lemagasin->id }}": "{{ $lemagasin->nom }}",
                     @endforeach
+                    // a changer ajouter que les atelier
             };
 
             const { value: selectedMagasin } = await Swal.fire({
@@ -441,7 +449,7 @@
 
             if (selectedMagasin) {
                 const result = await Swal.fire({
-                    title: `Voulez-vous transférer du stock de magasin ${id_magasin} de atl : {{$frais_id}} vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
+                    title: `Voulez-vous faire un retoure vers ${magasins[selectedMagasin]}  ?`,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: "Oui, transférer !",
@@ -459,6 +467,7 @@
 
         <!-- fin  -->
 
+        <!-- transfert congele -->
         <script>
             document.getElementById('trans_congele').addEventListener('click', async () => {
                 const id_atl = 'frais'; // stock frais
@@ -488,7 +497,7 @@
 
             if (selectedMagasin) {
                 const result = await Swal.fire({
-                    title: `Voulez-vous transférer du stock de magasin ${id_magasin} de atl : {{$congele_id}} vers le magasin : ${magasins[selectedMagasin]} avec l'ID = ${selectedMagasin} ?`,
+                    title: `Voulez-vous transférer du stock  vers le magasin : ${magasins[selectedMagasin]}  ?`,
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonText: "Oui, transférer !",

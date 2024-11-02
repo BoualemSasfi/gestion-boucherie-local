@@ -11,7 +11,7 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Ajouter magasin</h2>
+            <h2>Ajouter un nouveau magasin</h2>
         </div>
         <div class="col-2 text-right">
 
@@ -55,7 +55,7 @@
                             <!-- telephone de magasin  -->
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <label for="">N° Telephone :</label>
-                                <input type="text" name="tel" class="form-control" placeholder="Numéro telephone"
+                                <input type="number" name="tel" class="form-control" placeholder="Numéro telephone"
                                     value="">
                             </div>
                             <!-- fin   -->
@@ -63,21 +63,15 @@
                             <!-- Type de magasin  -->
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 <select id="" name="type" class="form-control">
-                                 
-
                                     <option value=""> selectionez le type </option>
                                     
                                     <option value="Magasin">magasin</option>
                                     <option value="Atelier">Atelier</option>
-                                    <option value="Boucherier">boucherier </option>
-                                    <option value="Volaillerie">volaillerie </option>
-
+                                    <!-- <option value="Boucherier">boucherier </option>
+                                    <option value="Volaillerie">volaillerie </option> -->
                                 </select>
                             </div>
                             <!-- fin   -->
-
-
-       
                         </div>
 
                         <!-- <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 gauche"> -->
@@ -92,18 +86,10 @@
                                     style="height:80%; width:100%; margin-top: 5px; cursor: pointer;" id="preview2"
                                     onclick="triggerFileInput();">
                             </div>
-                     
-
-
-
                         <!-- end  -->
-
                         <input type="file" name="photo" id="validationLogoCouleurs" accept="image/*"
                             style="display: none;" onchange="previewImage2();">
-
                     </div>
-
-
                     <div class="row">
                      <!-- adresse   -->
                      <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -115,7 +101,7 @@
 
                         <!-- map  -->
 
-                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                        <!-- <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
                             style="border: 1px solid #ccc; padding: 10px;">
                             <label for="">Localisation :</label>
                             <input type="text" name="loca" class="form-control mb-2" placeholder="Localisation"
@@ -123,16 +109,16 @@
 
 
 
-                            <!-- new code  -->
+                     
                         
                                 <div class=" col-xs-6 col-sm-6 col-md-6 col-lg-6" data-aos="flip-right">
                                     <iframe style="border:0; width: 100%; height: 350px;"
                                         src="{{ asset('img/logo_vide/map.png') }}" frameborder="0" allowfullscreen></iframe>
                                 </div>
                           
-                            <!-- fin  -->
+                    
  
-                        </div>
+                        </div> -->
 
                         <!-- fin  -->
                     </div>

@@ -3,18 +3,23 @@
 
 {{-- retour en arrière --}}
 <div class="container" id="titre-page">
-    <div class="row">
+    <div class="row justify-content-between align-items-center">
         <div class="col-2 d-flex align-items-center">
             <a href="{{ url('/admin/caisse') }}" class="btn btn-dark">
                 <i class="fas fa-arrow-left pr-1"></i>
                 <span class="btn-description">Retour</span>
             </a>
         </div>
-        <div class="col-10 d-flex align-items-center">
+        <div class="col-8 text-center">
             <h2>Choisissez une caisse</h2>
+        </div>
+        <div class="col-2 text-right">
+        
         </div>
     </div>
 </div>
+
+
 
 {{-- Formulaire d'ajout d'un vendeur --}}
 <div class="container" style="margin-top: 10px;">
@@ -24,13 +29,13 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="text-center form-group col-12">
-                            <h3>ID de magasin : {{$lemagasin->id}} </h3>
-                            <h3>Nom du magasin : {{$lemagasin->nom}} </h3>
-                            <h3>ID de la caisse : {{$lacaisse->id}} </h3>
+                            <!-- <h3>ID de magasin : {{$lemagasin->id}} </h3> -->
+                            <h3>Nom : {{$lemagasin->nom}} </h3>
+                            <!-- <h3>ID de la caisse : {{$lacaisse->id}} </h3> -->
                         </div>
 
                         <div class="form-group col-12">
-                            <h5 for="magasin_id">Intégrer à une caisse</h5>
+                            <h5 for="magasin_id">Choisissez une caisse</h5>
                             <select id="magasin" name="id_caisse" class="form-control">
                                 <option value="">Sélectionnez une caisse</option>
                                 @foreach ($caisses as $caisse)
@@ -50,7 +55,7 @@
                                     </button>
                                 </div>
                                 <div class="col-6">
-                                    <a class="btn btn-danger p-2" href="{{ url('/home') }}">
+                                    <a class="btn btn-danger p-2" href="{{ url('/admin/caisse') }}">
                                         <i class="fas fa-times fa-lg mr-2"></i>
                                         <span class="btn-description">Annuler</span>
                                     </a>

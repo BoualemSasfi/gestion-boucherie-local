@@ -9,13 +9,13 @@
 <div class="container" id="titre-page">
     <div class="row d-flex justify-content-between align-items-center">
         <div class="col-2">
-            <a href="{{ url('/home') }}" class="btn btn-dark">
+            <a href="{{ url('/admin') }}" class="btn btn-dark">
                 <i class="fas fa-arrow-left pr-1"></i>
                 <span class="btn-description"></span>
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>liste des caisses</h2>
+            <h2>liste des caisses <i class="fa-solid fa-cash-register fa-bounce fa-xl" style="color: #3fa689;"></i></h2>
         </div>
         <div class="col-2 text-right">
             <a href="{{ url('/admin/caisse/add') }}" class="btn btn-success">
@@ -125,7 +125,7 @@
         </div>
     </div>
 </div>
-<<!-- Script SweetAlert -->
+<!-- Script SweetAlert -->
     <script>
         function showMagasins(idListe) {
             // Liste des magasins (remplacez par votre propre logique pour récupérer les magasins)

@@ -10,75 +10,104 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Retoure  de {{ $lemagasin->nom }} {{$lemagasin->id}} vers {{ $magasins1->nom }} {{$magasins1->id}}
+            <h2>Retoure de {{ $lemagasin->nom }}
+                <!-- {{$lemagasin->id}}  -->
+                vers {{ $magasins1->nom }}
+                <!-- {{$magasins1->id}} -->
             </h2>
-            <h2>{{ Auth::user()->name }}</h2>
+            <!-- <h2>{{ Auth::user()->name }}</h2> -->
 
+        </div>
+        <div class="col-2 text-right"></div>
+    </div>
+
+
+
+    <div class="row  justify-content-center">
+
+        <div class="col-10 card card-body">
+
+            <div>
+                <ul class="nav nav-tabs">
+                    @foreach ($liste_cats as $index => $cat)
+                        <li class="nav-item">
+                            <a class="nav-link {{ $index === 0 ? 'active' : '' }}" id="{{ $cat->categorie_id }}-tab"
+                                href="#" onclick="showTab('{{ $cat->categorie_id }}'); return false;">
+                                {{ $cat->categorie }}
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <div class="tab-content">
+                <br>
+                @foreach ($liste_cats as $index => $cat)
+                    <div id="tab-content-{{ $cat->categorie_id }}"
+                        class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}">
+                        <!-- <div>
+                                    <label class="col-2"></label>
+                                    <label class="col-2">{{ $lemagasin->nom }}</label>
+                                    <label class="col-2">À ajouter</label>
+                                    <label class="col-2">{{ $magasins1->nom }}</label>
+                                </div> -->
+                        @foreach ($stocks as $stock)
+                            @if ($stock->id_cat == $cat->categorie_id)
+                                <div class="d-flex align-items-center mb-3">
+
+                                    <!-- <label class="col-2">{{ $stock->produit }}</label> -->
+
+                                    <h5 class="col-2">{{ $stock->produit }}</h5>
+
+                                    <div class="input-group justify-content-between align-items-center">
+
+                                        <div class="text-center">
+                                            <!-- {{ $stock->id_stock_1 }} -->
+                                            <input name="poid_magasin_1" class="form-control text-center" type="number"
+                                                value="{{ $stock->poid_magasin_1 }}" readonly
+                                                id="poid_magasin_1_{{ $stock->id_stock_1 }}">
+
+                                        </div>
+
+                                        <div class="text-center">
+                                            <input name="poid_ajouter" class="form-control text-center" type="number" value=""
+                                                id="poid_ajouter_{{ $stock->id_stock_1 }}"
+                                                oninput="updateWeights({{ $stock->id_stock_1 }}, {{ $stock->id_stock_2 }}, this.value)">
+                                        </div>
+                                        <div class="text-center">
+                                            <!-- {{ $stock->id_stock_2 }} -->
+                                            <input name="poid_magasin_2" class="form-control text-center" type="number"
+                                                value="{{ $stock->poid_magasin_2 }}" readonly
+                                                id="poid_magasin_2_{{ $stock->id_stock_2 }}">
+
+                                        </div>
+                                    </div>
+
+                                    <input type="hidden" id="original_poid_magasin_1_{{ $stock->id_stock_1 }}"
+                                        value="{{ $stock->poid_magasin_1 }}">
+                                    <input type="hidden" id="original_poid_magasin_2_{{ $stock->id_stock_2 }}"
+                                        value="{{ $stock->poid_magasin_2 }}">
+                                </div>
+
+                            @endif
+
+                        @endforeach
+
+
+                    </div>
+                @endforeach
+            </div>
+
+            <div class="text-center">
+                <button type="button" class="btn btn-outline-primary" id="btn-validate-transfer">Valider le
+                    Retoure</button>
+            </div>
         </div>
     </div>
 
-    <div>
-        <ul class="nav nav-tabs">
-            @foreach ($liste_cats as $index => $cat)
-                <li class="nav-item">
-                    <a class="nav-link {{ $index === 0 ? 'active' : '' }}" id="{{ $cat->categorie_id }}-tab" href="#"
-                        onclick="showTab('{{ $cat->categorie_id }}'); return false;">
-                        {{ $cat->categorie }}
-                    </a>
-                </li>
-            @endforeach
-        </ul>
-    </div>
-
-    <div class="tab-content">
-        @foreach ($liste_cats as $index => $cat)
-            <div id="tab-content-{{ $cat->categorie_id }}" class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}">
-                <div>
-                    <label class="col-2"></label>
-                    <label class="col-2">{{ $lemagasin->nom }}</label>
-                    <label class="col-2">À ajouter</label>
-                    <label class="col-2">{{ $magasins1->nom }}</label>
-                </div>
-                @foreach ($stocks as $stock)
-                    @if ($stock->id_cat == $cat->categorie_id)
-                        <div class="d-flex align-items-center mb-3">
-                            
-                            <label class="col-2">{{ $stock->produit }}</label>
-                            {{ $stock->id_stock_1 }}
-                            <input name="poid_magasin_1" class="col-2" type="number" value="{{ $stock->poid_magasin_1 }}" readonly
-                                id="poid_magasin_1_{{ $stock->id_stock_1 }}">
-
-                                
-                                <input name="poid_ajouter" class="col-2" type="number" value=""
-                                id="poid_ajouter_{{ $stock->id_stock_1 }}"
-                                oninput="updateWeights({{ $stock->id_stock_1 }}, {{ $stock->id_stock_2 }}, this.value)">
-                                
-                                {{ $stock->id_stock_2 }}
-                                <input name="poid_magasin_2" class="col-2" type="number" value="{{ $stock->poid_magasin_2 }}" readonly
-                                    id="poid_magasin_2_{{ $stock->id_stock_2 }}">
-
-                            <input type="hidden" id="original_poid_magasin_1_{{ $stock->id_stock_1 }}"
-                                value="{{ $stock->poid_magasin_1 }}">
-                            <input type="hidden" id="original_poid_magasin_2_{{ $stock->id_stock_2 }}"
-                                value="{{ $stock->poid_magasin_2 }}">
-                        </div>
-
-                    @endif
-
-                @endforeach
-
-
-            </div>
-        @endforeach
-    </div>
-
-    <div class="text-center">
-        <button type="button" class="btn btn-outline-primary" id="btn-validate-transfer">Valider le transfert</button>
-    </div>
-
-    <div class="text-center">
+    <!-- <div class="text-center">
         <button type="button" class="btn btn-outline-primary" onclick="collectData()">collect data</button>
-    </div>
+    </div> -->
 
     <script>
         function collectData() {
@@ -305,7 +334,7 @@
 
             let poidAjouterValue = parseFloat(poidAjouter) || 0;
 
-            if (poidAjouterValue < 0 || poidAjouterValue > originalPoidMagasin2) {
+            if (poidAjouterValue < 0 || poidAjouterValue > originalPoidMagasin1) {
 
                 Swal.fire({
                     title: "La quantité ajoutée ne peut pas être négative ou dépasser le stock disponible.",
