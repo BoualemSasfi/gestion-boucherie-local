@@ -45,9 +45,9 @@
                         <H1>état des payements </H1>
                     </div>
                     <div>
-                        <h5>Total achat: {{$totalfacture}} DA</h5>
+                        <h5>Total achat: <span style="color: green;">{{$totalfacture}}</span> DA</h5>
 
-                        <h5 style="color: red; margin-top: 10px;">Crédit : {{$credit}} DA</h5>
+                        <h5 style=" margin-top: 10px;">Crédit : <span style="color: red;">{{$credit}}</span> DA</h5>
                     </div>
 
                     <div class="col-12">
@@ -78,12 +78,12 @@
                                             <td>{{$liste->credit}} DA</td>
 
                                             <!-- <td >
-                                                            @if ($liste->etat_credit == 'impayé')
-                                                                <i class="fa-solid fa-circle-xmark fa-lg" style="color: #f7224c;"></i>
-                                                            @else
-                                                                <i class="fa-solid fa-circle-check fa-lg" style="color: #63E6BE;"></i>
-                                                            @endif
-                                                        </td> -->
+                                                                    @if ($liste->etat_credit == 'impayé')
+                                                                        <i class="fa-solid fa-circle-xmark fa-lg" style="color: #f7224c;"></i>
+                                                                    @else
+                                                                        <i class="fa-solid fa-circle-check fa-lg" style="color: #63E6BE;"></i>
+                                                                    @endif
+                                                                </td> -->
                                             <td>
                                                 @if ($liste->etat_credit == 'impayé')
                                                     <button
@@ -110,47 +110,48 @@
 
 
                     </div>
+                </div>
 
+                <script>
+                    function afficherSweetAlert(id_facture, credit) {
+                        Swal.fire({
+                            title: `Crédit impayé : ${credit} DA`,
+                            text: `voulez vous valider ce credit ..?`,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Valider',
+                            cancelButtonText: 'Annuler',
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Redirige vers le contrôleur avec l'ID de la facture
+                                window.location.href = `/admin/client/valider_paiement/${id_facture}`;
+                            }
+                        });
+                    }
+
+                </script>
+
+
+
+                @if(session('success'))
                     <script>
-                        function afficherSweetAlert(id_facture, credit) {
-                            Swal.fire({
-                                title: `Crédit impayé : ${credit} DA`,
-                                text: `voulez vous valider ce credit ..?`,
-                                icon: 'warning',
-                                showCancelButton: true,
-                                confirmButtonText: 'Valider',
-                                cancelButtonText: 'Annuler',
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // Redirige vers le contrôleur avec l'ID de la facture
-                                    window.location.href = `/admin/client/valider_paiement/${id_facture}`;
-                                }
-                            });
-                        }
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 5000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
 
+                        Toast.fire({
+                            icon: "success",
+                            title: "{{ session('success') }}"
+                        });
                     </script>
-
-
-
-                    @if(session('success'))
-                        <script>
-                            const Toast = Swal.mixin({
-                                toast: true,
-                                position: "top-end",
-                                showConfirmButton: false,
-                                timer: 5000,
-                                timerProgressBar: true,
-                                didOpen: (toast) => {
-                                    toast.onmouseenter = Swal.stopTimer;
-                                    toast.onmouseleave = Swal.resumeTimer;
-                                }
-                            });
-
-                            Toast.fire({
-                                icon: "success",
-                                title: "{{ session('success') }}"
-                            });
-                        </script>
-                    @endif
-                    <!-- ------------------------------------------------------------------------------------------------------------------------ -->
-                    @endsection
+                @endif
+                <!-- ------------------------------------------------------------------------------------------------------------------------ -->
+                @endsection

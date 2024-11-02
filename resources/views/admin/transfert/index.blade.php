@@ -9,13 +9,13 @@
 <div class="container" id="titre-page">
     <div class="row d-flex justify-content-between align-items-center">
         <div class="col-2">
-            <a href="{{ url('/home') }}" class="btn btn-dark">
+            <a href="{{ url('/admin') }}" class="btn btn-dark">
                 <i class="fas fa-arrow-left pr-1"></i>
                 <span class="btn-description"></span>
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>List des transferts</h2>
+            <h2>Liste Des Transferts <i class="fa-solid fa-right-left fa-flip fa-xl" style="color: #63E6BE;"></i></h2>
         </div>
         <div class="col-2 text-right">
             <a href="{{ url('/admin/stock/add') }}" class="btn btn-success">

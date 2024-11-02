@@ -9,13 +9,13 @@
 <div class="container" id="titre-page">
     <div class="row d-flex justify-content-between align-items-center">
         <div class="col-2">
-            <a href="{{ url('/home') }}" class="btn btn-dark">
+            <a href="{{ url('/admin') }}" class="btn btn-dark">
                 <i class="fas fa-arrow-left pr-1"></i>
                 <span class="btn-description"></span>
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Liste des ajustisements</h2>
+            <h2>Liste des ajustisements <i class="fa-solid fa-arrows-rotate fa-spin-pulse fa-xl" style="color: #74C0FC;"></i></h2>
         </div>
         <div class="col-2 text-right">
 
@@ -37,12 +37,12 @@
 
                 <div class="card-body">
                     <table id="example" class="table-striped table-bordered" style="width:100%">
-                        <thead>
+                        <thead  class="text-center">
                             <tr>
-                                <th>Magasin </th>
+                                <th>Date D'ajustisements</th>
                                 <th>Initiateur</th>
-                                <th>Categorie</th>
-                                <th>Produit</th>
+                                <th>Magasin </th>
+                                <th>Categorie | Produit</th>
                                 <th>Quantity</th>
                                 <th>etat</th>
                             </tr>
@@ -51,11 +51,11 @@
                         <tbody class="text-center">
                             @foreach ($lists as $list)
                                 <tr>
-                                    <td class=" align-middle">{{ $list->atl}}</td>
+                                    <td class=" align-middle">{{ $list->created_at}}</td>
                                     <td class=" align-middle">{{ $list->user}}</td>
-                                    <td class=" align-middle">{{ $list->categorie}}</td>
-                                    <td class=" align-middle">{{ $list->produit}}</td>
-                                    <td class=" align-middle">{{ $list->qauntity}}</td>
+                                    <td class=" align-middle">{{ $list->atl}}</td>
+                                    <td class=" align-middle">{{ $list->categorie}} | {{ $list->produit}}</td>
+                                    <td class=" align-middle">{{ $list->qauntity}} Kg</td>
                                     <td class=" align-middle">
                                         @if ($list->etat == 0)
                                             <i class="fa-solid fa-arrow-up fa-beat-fade fa-lg" style="color: #63E6BE;"></i>

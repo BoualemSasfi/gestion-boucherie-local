@@ -4,7 +4,7 @@
     <div class="container" id="titre-page">
         <div class="row justify-content-between align-items-center">
             <div class="col-2">
-                <a href="{{ url('/home') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
+                <a href="{{ url('/admin') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                         class="btn-description">Retour</span></a>
             </div>
             <div class="col-8 text-center">

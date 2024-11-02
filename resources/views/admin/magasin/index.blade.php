@@ -9,13 +9,13 @@
 <div class="container" id="titre-page">
     <div class="row d-flex justify-content-between align-items-center">
         <div class="col-2">
-            <a href="{{ url('/home') }}" class="btn btn-dark">
+            <a href="{{ url('/admin') }}" class="btn btn-dark">
                 <i class="fas fa-arrow-left pr-1"></i>
                 <span class="btn-description"></span>
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Mgasins</h2>
+            <h2>Liste Des Mgasins <i class="fa-solid fa-shop fa-beat fa-xl" style="color: #b42d34;"></i></h2>
         </div>
         <div class="col-2 text-right">
             <a href="{{ url('/admin/magasin/add') }}" class="btn btn-success">
@@ -41,31 +41,33 @@
                     <table id="example" class="table-striped table-bordered" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Nom</th>
-                                <th>Type</th>
                                 <th>Photo</th>
+                                <th>Nom de magasin</th>
+                                <th>Type</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
 
                         <tbody class="text-center">
                             @foreach ($magasins as $magasin)
-                            <tr>
-                                @if ($magasin->nom == 'Atelier')
-                                <td class=" align-middle" style="color: red;">{{ $magasin->nom}}</td>
-                                @else
-                                <td class=" align-middle">{{ $magasin->nom}}</td>
-                                @endif
-                                   
-                                   
+                                <tr>
+
+
+                                    <td class=" align-middle" style="width:80px;">
+                                        <div
+                                            style="background-image:url({{ asset('storage/' . $magasin->photo) }});background-size: cover;background-position: center;background-repeat: no-repeat;  height: 80px; width: 70px; margin-left:5px; margin-right:5px;">
+                                        </div>
+                                    </td>
+                                    @if ($magasin->nom == 'Atelier')
+                                        <td class=" align-middle" style="color: red;">{{ $magasin->nom}}</td>
+                                    @else
+                                        <td class=" align-middle">{{ $magasin->nom}}</td>
+                                    @endif
+
+
 
                                     <td class=" align-middle">{{ $magasin->type }}</td>
 
-                                    <td class=" align-middle" style="width:80px;">
-                                                        <div
-                                                            style="background-image:url({{ asset('storage/' . $magasin->photo) }});background-size: cover;background-position: center;background-repeat: no-repeat;  height: 80px; width: 70px; margin-left:5px; margin-right:5px;">
-                                                        </div>
-                                                    </td>
 
 
 
@@ -128,7 +130,7 @@
 
                                     </td>
                                 </tr>
-                                
+
                             @endforeach
 
                         </tbody>

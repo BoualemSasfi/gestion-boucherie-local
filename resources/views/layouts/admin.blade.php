@@ -51,10 +51,12 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <!-- <i class="fas fa-laugh-wink"></i> -->
+                    <!-- <i class="fa-solid fa-horse-head fa-bounce fa-xl" style="color: #e9ecf1;"></i> -->
+                    <i class="fa-solid fa-cow fa-bounce fa-xl" style="color: #d1d7e1;"></i>
                 </div>
                 {{-- <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div> --}}
-                <div class="sidebar-brand-text mx-3">Gestion Entreprise</div>
+                <div class="sidebar-brand-text mx-3">Gestion Boucherier</div>
             </a>
 
             <!-- Divider -->
@@ -287,8 +289,8 @@
                         <!-- <a class="collapse-item" href="/admin/client"><i class="fa-solid fa-user-tie fa-lg"></i> User</a> -->
                         <a class="collapse-item" href="/admin/client"><i class="fa-solid fa-users fa-lg"></i>
                             Clients</a>
-                        <a class="collapse-item" href="/admin/vendeur"><i class="fa-solid fa-address-card fa-lg"></i>
-                            Vendeurs</a>
+                        <!-- <a class="collapse-item" href="/admin/vendeur"><i class="fa-solid fa-address-card fa-lg"></i>
+                            Vendeurs</a> -->
                     </div>
                 </div>
             </li>

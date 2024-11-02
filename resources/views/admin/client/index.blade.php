@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>liste de clients</h2>
+            <h2>liste des clients <i class="fa-solid fa-users fa-beat fa-xl" style="color: #FFD43B;"></i></h2>
         </div>
         <div class="col-2 text-right">
             <a href="{{ url('/admin/client/add') }}" class="btn btn-success">

@@ -2,19 +2,20 @@
 @section('content')
     {{-- retour en arrière  --}}
     <div class="container" id="titre-page">
-        <div class="row">
+        <div class="row justify-content-between align-items-center">
             <div class="col-2 d-flex align-items-center">
-                <a href="{{ url('/home') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
+                <a href="{{ url('/admin') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                         class="btn-description">Retour</span></a>
             </div>
-            <div class="col-10 d-flex align-items-center">
+            <div class="col-8  text-center">
                 <h2>Informations Générales</h2>
             </div>
+            <div class="col-2 text-right">
+          
+            </div>
         </div>
+
     </div>
-
-
-
 
     {{-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- --}}
 
@@ -62,7 +63,7 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 gauche">
-                                <label for="">Logo :</label>
+                                <!-- <label for="">Logo :</label> -->
                                 <div class="row">
                                     <!-- Afficher l'image -->
                                     @if (!empty($information->logo) && Storage::exists('public/' . $information->logo))
@@ -91,7 +92,7 @@
                             <!-- telephone  -->
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <label for="">N° téléphone :</label>
-                                <input type="text" name="tel" class="form-control " placeholder="N° telephone"
+                                <input type="number" name="tel" class="form-control " placeholder="N° telephone"
                                     value="{{ $information->tel }}">
 
                             </div>
@@ -100,14 +101,11 @@
                             <!-- email  -->
                             <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
                                 <label for="">E-Mail :</label>
-                                <input type="text" name="email" class="form-control " placeholder="E-Mail"
+                                <input type="email" name="email" class="form-control " placeholder="E-Mail"
                                     value="{{ $information->email }}">
 
                             </div>
                             <!-- fin  -->
-
-
-
 
                             <!-- adresse   -->
                             <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -118,7 +116,8 @@
                             <!-- fin  -->
 
                             <!-- map  -->
-                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                             
+                            <!-- <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                 style="border: 1px solid #ccc; padding: 10px;">
                                 <label for="">Localisation :</label>
                                 <input type="text" name="map" class="form-control mb-2" placeholder="Localisation"
@@ -128,7 +127,7 @@
                                         <iframe style="border:0; width: 100%; height: 350px;" src="{{ $information->map }}"
                                             frameborder="0" allowfullscreen></iframe>
                                     </div>
-                            </div>
+                            </div> -->
 
                             <!-- fin  -->
                         </div>
