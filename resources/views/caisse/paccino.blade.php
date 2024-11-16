@@ -299,78 +299,80 @@
         </div>
 
         <!-- Produits -->
-        <div class="row le_centre">
-            <div class="col-8 pb-4">
-                <div class="container mt-2">
-                    <div class="your-carousel" data-aos="fade-right">
-                        @foreach ($categories as $categorie)
-                            <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
-                                onclick="FiltrageProduits(this)" style="cursor: pointer;">
-                                <div class="card cat"
-                                    style="width: 150px; height: 100px; margin-right:5px; background-image: url('{{ asset('storage/' . $categorie->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
-                                    <p class="mini-text"
-                                        style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
-                                        {{ $categorie->nom }}</p>
-                                </div>
-                            </form>
-                        @endforeach
-                    </div>
-                </div>
-
-                <hr class="p-0 mb-0 mt-2">
-
-                <div class="container" style="height: 500px;">
-                    <h6 id="titre-categorie" class="p-0 m-0"></h6>
-                    <div class="row" id="products" style="height: 100%; max-height: 450px; overflow-y: auto;">
-                        <!-- Les produits filtrés apparaîtront ici -->
-                    </div>
-                </div>
-
-                {{-- <div class="col-12 zyada" style="height: 100px;"></div> --}}
-            </div>
-
-            <!-- Facture -->
-            <div class="col-4 bg-dark p-0 m-0">
-
-                {{-- stockage variable  --}}
-                <a href="" style="color: aliceblue; display: none;">USER / FACTURE / MAGASIN / CAISSE</a>
-                <a id="text-id-user" href="" style="display: none;">{{ $id_user }}</a>
-                <a id="text-id-facture" href="" style="display: none;">{{ $LastFacture->id }}</a>
-                <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
-                <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
-                {{-- stockage variable  --}}
-
-                <div class="card shadow m-2" style="height:470px;" data-aos="flip-left">
-                    <div class="card-header py-1">
-                        <div class="row afficheur text-center" style="height: 105px;">
-                            <div class="col-12 p-1 m-0 align-content-center">
-                                <h6 class="afficheur-titre">TOTAL FACTURE :</h6>
-                                <h2 id="text_total_facture" class="digital" style="margin-top:-20px;">0.00</h2>
-                            </div>
-                            <div class="col-12 p-0 m-0">
-                                <h6 class="afficheur-titre mini-text" style="margin-top:-25px;">CLIENT : <span
-                                        id="nom_client" class=" mini-text">CLIENT COMPTOIR</span></h6>
-
-                            </div>
+        <div class="container-fluid pl-4 pr-4">
+            <div class="row le_centre">
+                <div class="col-8 pb-4">
+                    <div class="container mt-2">
+                        <div class="your-carousel" data-aos="fade-right">
+                            @foreach ($categories as $categorie)
+                                <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
+                                    onclick="FiltrageProduits(this)" style="cursor: pointer;">
+                                    <div class="card cat"
+                                        style="width: 150px; height: 100px; margin-right:5px; background-image: url('{{ asset('storage/' . $categorie->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+                                        <p class="mini-text"
+                                            style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
+                                            {{ $categorie->nom }}</p>
+                                    </div>
+                                </form>
+                            @endforeach
                         </div>
                     </div>
-                    <div class="card-body m-0 p-1" style="max-height: 500px; overflow-y: auto;">
-                        <table id="affichage-produits-facture" class="text-left" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th class="text-left">LIBELLE:</th>
-                                    <th class="text-right">QTE:</th>
-                                    <th class="text-right">P.U:</th>
-                                    <th class="text-right">TOTAL:</th>
-                                    <th></th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="ventes_liste">
-                                <!-- Les lignes de ventes -->
-                            </tbody>
-                        </table>
-                        {{-- <div class="col-12 zyada" style="height: 500px;">CAISSE ESPACE</div> --}}
+
+                    <hr class="p-0 mb-0 mt-2">
+
+                    <div class="container" style="height: 500px;">
+                        <h6 id="titre-categorie" class="p-0 m-0"></h6>
+                        <div class="row" id="products" style="height: 100%; max-height: 450px; overflow-y: auto;">
+                            <!-- Les produits filtrés apparaîtront ici -->
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Facture -->
+                <div class="col-4 bg-dark p-0 m-0">
+
+                    {{-- stockage variable  --}}
+                    <a href="" style="color: aliceblue; display: none;">USER / FACTURE / MAGASIN / CAISSE</a>
+                    <a id="text-id-user" href="" style="display: none;">{{ $id_user }}</a>
+                    <a id="text-id-facture" href="" style="display: none;">{{ $LastFacture->id }}</a>
+                    <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
+                    <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
+                    {{-- stockage variable  --}}
+
+                    <div class="card shadow m-2" style="height:500px;" data-aos="flip-left">
+                        <div class="card-header py-1">
+                            <div class="row afficheur text-center" style="height: 105px;">
+                                <div class="col-12 p-1 m-0 align-content-center">
+                                    <h6 class="afficheur-titre">TOTAL FACTURE :</h6>
+                                    <h2 id="text_total_facture" class="digital" style="margin-top:-20px;">0.00</h2>
+                                </div>
+                                <div class="col-12 p-0 m-0">
+                                    <h6 class="afficheur-titre mini-text" style="margin-top:-25px;">CLIENT : <span
+                                            id="nom_client" class=" mini-text">CLIENT COMPTOIR</span></h6>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body m-0 p-1" style="max-height: 500px; overflow-y: auto;">
+                            <table id="affichage-produits-facture" class="text-left" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="text-left">LIBELLE:</th>
+                                        <th class="text-right">QTE:</th>
+                                        <th class="text-right">P.U:</th>
+                                        <th class="text-right">TOTAL:</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ventes_liste">
+                                    <!-- Les lignes de ventes -->
+                                </tbody>
+                            </table>
+                            {{-- <div class="col-12 zyada" style="height: 500px;">CAISSE ESPACE</div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -455,22 +457,26 @@
 
                             </div>
 
-                            <div class="col-3">
+                            {{-- <div class="col-3">
                                 <button class="btn btn-danger bouton-caisse" type="button" style="display: none;">
                                     <i class="fas fa-store-alt fa-lg"></i>
                                     <br> Retour
                                 </button>
+                            </div> --}}
+
+
+                            <div class="col-3">
+                                <button class="btn btn-dark bouton-caisse" type="button">
+                                    <i class="fas fa-handshake fa-lg"></i>
+                                    <br>Mode de Vente
+                                </button>
                             </div>
 
-                            {{-- <div class="col-3">
-                                <button class="btn btn-dark bouton-caisse" type="button">
-                                    <i class="fa fa-users fa-lg" aria-hidden="true"></i>
-                                    <br>Clients
-                                </button>
-                            </div> --}}
+
+
                             <div class="col-3">
                                 {{-- Bouton pour afficher le popup --}}
-                                <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#ListeEnAttenteModal" id="bouton_liste_enattente"
                                     onclick="liste_factures_enattente()">
                                     <i class="fas fa-user-clock fa-lg"></i>
@@ -855,8 +861,8 @@
 
     <!-- Popup changement de prix -->
     <div class="modal fade" id="SousProduitsModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div class="modal-content bg-white">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content bg-dark">
                 <div class="modal-body">
                     <div class="mt-3">
 
@@ -1278,41 +1284,40 @@
 
 
 
-    <!-- script pour la caisse -->
     <script>
         function FiltrageProduits(form) {
             const id = form.getAttribute('data-id');
             const nom = form.getAttribute('data-nom');
-
-            // ajouté pour axecuter la function sans auth 
-            const id_user = document.getElementById('text-id-user').textContent;
-            const id_magasin = document.getElementById('text-id-magasin').textContent;
-
+    
             if (id !== undefined) {
+                // Ajouté pour exécuter la fonction sans authentification
+                const id_user = document.getElementById('text-id-user').textContent;
+                const id_magasin = document.getElementById('text-id-magasin').textContent;
                 $.ajax({
-                    // url: '/caisse/category/' + id ,
                     url: '/caisse/category/' + id + '/user/' + id_user + '/magasin/' + id_magasin,
                     type: 'GET',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     success: function(response) {
-                        console.log('PRODUCTS FILTER SUCCESS')
+                        console.log('PRODUCTS FILTER SUCCESS');
                         $('#products').empty();
+    
+                        // Ajout des produits retournés par l'API
                         $.each(response.produits, function(key, value) {
                             $('#products').append(
-                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4"  data-aos="fade-down">' +
+                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4" data-aos="fade-down">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
                                 '" data-nom="' + value.nom + '" data-prix="' + value.prix +
-                                // '" onclick="affichage(this)" style="cursor: pointer;">' +
                                 '" onclick="Tester_SousProduits(this)" style="cursor: pointer;">' +
                                 '<img src="{{ asset('storage/') }}/' + value.photo +
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
                                 '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) + ' DA / ' + value.mesure +
+                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) +
+                                ' DA / ' + value.mesure +
                                 '</h5>' +
                                 '</div>' +
                                 '</form>' +
@@ -1320,10 +1325,24 @@
                                 '</div>'
                             );
                         });
-
+    
                         $('#products').append(
                             '<div class="col-12 zyada" style="height: 200px;"></div>'
                         );
+    
+                        // Gestion des classes pour les cartes
+                        // Supprime "bg-danger" de toutes les cartes et ajoute "bg-white"
+                        document.querySelectorAll('.card.scat').forEach(card => {
+                            card.classList.remove('bg-danger');
+                            card.classList.add('bg-white');
+                        });
+    
+                        // Ajoute "bg-danger" à la carte contenant le formulaire cliqué
+                        const card = form.closest('.card');
+                        if (card) {
+                            card.classList.add('bg-danger');
+                            card.classList.remove('bg-white');
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
@@ -1332,29 +1351,27 @@
             } else {
                 console.error('ERREUR ID');
             }
-
+    
             if (nom !== undefined) {
                 const afficheur_cat = document.getElementById('categorie_text');
                 const afficheur_produit = document.getElementById('produit_text');
-                const afficheur_qte = document.getElementById('balance');
                 const afficheur_prix = document.getElementById('prix_unitaire');
                 const afficheur_prix_total = document.getElementById('prix_total');
                 const titre_categorie = document.getElementById('titre-categorie');
+    
                 titre_categorie.textContent = nom;
                 afficheur_cat.textContent = nom;
                 afficheur_produit.textContent = '----';
-                // afficheur_qte.textContent = '0.000';
                 afficheur_prix.textContent = '0.00';
                 afficheur_prix_total.textContent = '0.00';
-
             } else {
                 console.error('ERREUR NOM');
             }
-
-            // console.log('Filtrage Produits executé');
-            console.log('Filtrage Produits executé sans authentification');
+    
+            console.log('Filtrage Produits exécuté sans authentification');
         }
     </script>
+    
 
     <script>
         function Tester_SousProduits(form) {
@@ -1395,7 +1412,8 @@
                                 '" class="card-img-top" alt="Product image">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
                                 '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) + ' DA / ' + value.mesure +
+                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) +
+                                ' DA / ' + value.mesure +
                                 '</h5>' +
                                 '</div>' +
                                 '</form>' +
@@ -1415,7 +1433,8 @@
                                     '" class="card-img-top" alt="Product image">' +
                                     '<div class="card-body p-1 m-0 text-center">' +
                                     '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-                                    '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) + ' DA / ' + value.mesure +
+                                    '<h5 class="card-text mini-text">' + Math.round(parseFloat(value
+                                        .prix)) + ' DA / ' + value.mesure +
                                     '</h5>' +
                                     '</div>' +
                                     '</form>' +
@@ -1452,51 +1471,67 @@
 
 
 
-    {{-- script filtrage produits  --}}
-    <script>
-        function affichage(form) {
-            const id_lestock = form.getAttribute('data-id_lestock');
-            const id_produit = form.getAttribute('data-id_produit');
-            const nom = form.getAttribute('data-nom');
-            let prix = form.getAttribute('data-prix');
+   {{-- script filtrage produits --}}
+<script>
+    function affichage(form) {
+        const id_lestock = form.getAttribute('data-id_lestock');
+        const id_produit = form.getAttribute('data-id_produit');
+        const nom = form.getAttribute('data-nom');
+        let prix = form.getAttribute('data-prix');
 
-            prix = parseFloat(prix);
+        prix = parseFloat(prix);
 
-            if (nom !== undefined) {
-                const nom_produit = document.getElementById('produit_text');
-                nom_produit.textContent = nom;
-            } else {
-                console.error('ERREUR NOM');
-            }
-
-            if (prix !== undefined) {
-                const prix_produit = document.getElementById('prix_unitaire');
-                const prix_total = document.getElementById('prix_total');
-                const qte = parseFloat(document.getElementById('balance').textContent);
-                prix_produit.textContent = prix;
-                LeTotal = prix * qte;
-                LeTotal = LeTotal.toFixed(0);
-                prix_total.textContent = LeTotal;
-                // AffichageEtCalcul(parseFloat(prix.replace(',', '.')));
-            } else {
-                console.error('ERREUR PRIX');
-            }
-            if (id_lestock !== undefined && id_produit !== undefined) {
-                const affectation_id_lestock = document.getElementById('text-id-lestock');
-                const affectation_id_produit = document.getElementById('text-id-produit');
-                affectation_id_lestock.textContent = id_lestock;
-                affectation_id_produit.textContent = id_produit;
-            } else {
-                console.error('ERREUR ID');
-            }
-
-            $('#SousProduitsModal').modal('hide');
-
-
-
-            console.log('Calcul Total Produit*Quantité executé');
+        // Mise à jour des informations du produit sélectionné
+        if (nom !== undefined) {
+            const nom_produit = document.getElementById('produit_text');
+            nom_produit.textContent = nom;
+        } else {
+            console.error('ERREUR NOM');
         }
-    </script>
+
+        if (prix !== undefined) {
+            const prix_produit = document.getElementById('prix_unitaire');
+            const prix_total = document.getElementById('prix_total');
+            const qte = parseFloat(document.getElementById('balance').textContent);
+            prix_produit.textContent = prix;
+            let LeTotal = prix * qte;
+            LeTotal = LeTotal.toFixed(0);
+            prix_total.textContent = LeTotal;
+        } else {
+            console.error('ERREUR PRIX');
+        }
+
+        if (id_lestock !== undefined && id_produit !== undefined) {
+            const affectation_id_lestock = document.getElementById('text-id-lestock');
+            const affectation_id_produit = document.getElementById('text-id-produit');
+            affectation_id_lestock.textContent = id_lestock;
+            affectation_id_produit.textContent = id_produit;
+        } else {
+            console.error('ERREUR ID');
+        }
+
+        $('#SousProduitsModal').modal('hide');
+
+        // Ajout de la classe "bg-danger" à la carte contenant le formulaire cliqué
+        const card = form.closest('.card');
+        if (card) {
+            // Réinitialise toutes les cartes pour retirer la classe "bg-danger"
+            document.querySelectorAll('.card.scat').forEach(otherCard => {
+                otherCard.classList.remove('bg-danger');
+                otherCard.classList.remove('text-white');
+                otherCard.classList.add('bg-white');
+            });
+
+            // Ajoute "bg-danger" à la carte actuellement sélectionnée
+            card.classList.add('bg-danger');
+            card.classList.add('text-white');
+            card.classList.remove('bg-white');
+        }
+
+        console.log('Calcul Total Produit*Quantité exécuté');
+    }
+</script>
+
 
     {{-- script poppup quantite  --}}
     <script>
