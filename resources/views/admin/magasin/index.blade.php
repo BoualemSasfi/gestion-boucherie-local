@@ -15,7 +15,7 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Liste Des Mgasins <i class="fa-solid fa-shop fa-beat fa-xl" style="color: #b42d34;"></i></h2>
+            <h2>Liste Des Mgasins okok test <i class="fa-solid fa-shop fa-beat fa-xl" style="color: #b42d34;"></i></h2>
         </div>
         <div class="col-2 text-right">
             <a href="{{ url('/admin/magasin/add') }}" class="btn btn-success">
