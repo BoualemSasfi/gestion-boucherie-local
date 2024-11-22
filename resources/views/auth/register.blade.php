@@ -133,11 +133,11 @@
                                 <div class="form-group">
                                     <select id="role"
                                         class="form-control form-select @error('role') is-invalid @enderror"
-                                        name="role" value="{{ old('role') }}" required autocomplete="off"
-                                        placeholder="type" style="border-radius: 20px;">
+                                        name="role" value="{{ old('role') }}" required autocomplete="off" style="border-radius: 20px;">
 
-                                    <option value="Administrateur" selected>Administrateur</option>
-                                    <option value="Vendeur">Vendeur</option>
+                                    <option value="" disabled>Choisir un rôle</option>
+                                    <option value="Administrateur">Administrateur</option>
+                                    <option value="Vendeur" selected>Vendeur</option>
                                     </select>
 
                                     @error('role')

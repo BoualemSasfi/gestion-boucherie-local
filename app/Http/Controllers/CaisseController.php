@@ -169,7 +169,9 @@ class CaisseController extends Controller
                     'lestocks.produit_id as id_produit',
                     'produits.nom_pr as nom',
                     'produits.photo_pr as photo',
-                    'produits.prix_vente as prix',
+                    'produits.prix_vente as prix_detail',
+                    'produits.semi_gros as prix_semigros',
+                    'produits.gros as prix_gros',
                     'produits.unite_mesure as mesure'
                 )
                 ->where('lestocks.stock_id', $IdStock)
@@ -212,7 +214,9 @@ class CaisseController extends Controller
                     'lestocks.produit_id as id_produit',
                     'sousproduits.nom_s_pr as nom',
                     'sousproduits.photo_s_pr as photo',
-                    'sousproduits.prix_vente as prix',
+                    'sousproduits.prix_vente as prix_detail',
+                    'sousproduits.prix_semi_gros as prix_semigros',
+                    'sousproduits.prix_gros as prix_gros',
                     'sousproduits.unite_mesure as mesure'
                 )
                 ->where('lestocks.stock_id', $IdStock)
@@ -225,7 +229,9 @@ class CaisseController extends Controller
                 'lestocks.produit_id as id_produit',
                 'produits.nom_pr as nom',
                 'produits.photo_pr as photo',
-                'produits.prix_vente as prix',
+                'produits.prix_vente as prix_detail',
+                'produits.semi_gros as prix_semigros',
+                'produits.gros as prix_gros',
                 'produits.unite_mesure as mesure'
             )
             ->where('lestocks.produit_id', $id_produit)
