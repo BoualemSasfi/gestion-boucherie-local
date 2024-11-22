@@ -101,7 +101,7 @@
         }
 
         .bouton-caisse {
-            font-size: 10px;
+            font-size: 14px;
             /* padding: 10px; */
             height: 100%;
         }
@@ -110,7 +110,7 @@
             font-size: 28px;
             /* margin-top: 2px; */
             /* padding-top: 3px; */
-            padding-bottom: 3px;
+            padding-bottom: 10px;
         }
     </style>
 
@@ -339,20 +339,31 @@
                     <a id="text-id-facture" href="" style="display: none;">{{ $LastFacture->id }}</a>
                     <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
                     <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
+                    {{-- -------------------------------------------- --}}
+                    <a id="text-type-vente" href="" style="display: block;">details</a>
+                    {{-- -------------------------------------------- --}}
                     {{-- stockage variable  --}}
 
                     <div class="card shadow m-2" style="height:500px;" data-aos="flip-left">
                         <div class="card-header py-1">
-                            <div class="row afficheur text-center" style="height: 105px;">
-                                <div class="col-12 p-1 m-0 align-content-center">
-                                    <h6 class="afficheur-titre">TOTAL FACTURE :</h6>
-                                    <h2 id="text_total_facture" class="digital" style="margin-top:-20px;">0.00</h2>
-                                </div>
-                                <div class="col-12 p-0 m-0">
-                                    <h6 class="afficheur-titre mini-text" style="margin-top:-25px;">CLIENT : <span
-                                            id="nom_client" class=" mini-text">CLIENT COMPTOIR</span></h6>
+                            <div class="row afficheur text-center" style="height: 110px;" id="facture_afficheur">
 
+                                <div class="col-3 pt-3">
+                                    <h6 class="afficheur-titre pt-3" id="type_vente_header">TYPE DE VENTE</h6>
                                 </div>
+
+                                <div class="col-9 border-start border-1 border-dark">
+                                    <div class="col-12 p-1 m-0 align-content-center">
+                                        <h6 class="afficheur-titre">TOTAL FACTURE :</h6>
+                                        <h2 id="text_total_facture" class="digital" style="margin-top:-20px;">0.00</h2>
+                                    </div>
+                                    <div class="col-12 p-0 m-0">
+                                        <h6 class="afficheur-titre mini-text" style="margin-top:-25px;">CLIENT : <span
+                                                id="nom_client" class=" mini-text">CLIENT COMPTOIR</span></h6>
+
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                         <div class="card-body m-0 p-1" style="max-height: 500px; overflow-y: auto;">
@@ -465,18 +476,103 @@
                             </div> --}}
 
 
+                            {{-- <div class="col-3">
+                                <select class="form-select bouton-caisse" id="type_vente">
+                                    <option value="details">Détails</option>
+                                    <option value="semi_gros">Semi-Gros</option>
+                                    <option value="gros">Gros</option>
+                                </select>
+                            </div> --}}
+
                             <div class="col-3">
-                                <button class="btn btn-dark bouton-caisse" type="button">
-                                    <i class="fas fa-handshake fa-lg"></i>
-                                    <br>Mode de Vente
-                                </button>
+                                <div class="dropdown">
+                                    <button class="btn btn-danger dropdown-toggle bouton-caisse" type="button"
+                                        id="type_vente" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-store fa-lg"></i>
+                                        <br><span id="selected_option">Vente-Détails</span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="type_vente">
+                                        <li><a class="dropdown-item btn btn-primary" href="#" data-value="details"
+                                                id="vente_details" onclick="prix_details();">
+                                                <br> <i class="fas fa-user-tag fa-lg"></i> <br>
+                                                Vente-Détails</a></li>
+                                        <li><a class="dropdown-item btn btn-primary" href="#"
+                                                data-value="semi_gros" id="vente_semi" onclick="prix_semigros();">
+                                                <br> <i class="fas fa-boxes fa-lg"></i> <br>
+                                                Vente-Semi-Gros</a></li>
+                                        <li><a class="dropdown-item btn btn-primary" href="#" data-value="gros"
+                                                id="vente_gros" onclick="prix_gros();">
+                                                <br> <i class="fas fa-truck-moving fa-lg"></i> <br>
+                                                Vente-Gros</a></li>
+                                    </ul>
+                                </div>
                             </div>
 
+                            <script>
+                                document.querySelectorAll('.dropdown-item').forEach(item => {
+                                    item.addEventListener('click', function(e) {
+                                        e.preventDefault(); // Empêche le rechargement
+                                        const selectedValue = this.getAttribute('data-value'); // Récupère la valeur
+                                        const selectedText = this.textContent.trim(); // Récupère le texte
+                                        document.getElementById('selected_option').textContent =
+                                            selectedText; // Affiche le texte sélectionné
+                                        document.getElementById('type_vente').setAttribute('data-selected-value',
+                                            selectedValue); // Ajoute une valeur sélectionnée au bouton
+                                    });
+                                });
+                            </script>
+
+                            <style>
+                                .dropdown {
+                                    height: 100%;
+                                    width: 100%;
+
+                                }
+
+                                .dropdown-toggle {
+                                    text-align: center;
+
+                                }
+
+                                #type_cente {
+                                    height: 100%;
+                                }
+
+                                .dropdown-menu {
+                                    font-size: 26px;
+                                    text-align: center;
+                                    justify-content: center;
+
+                                }
+
+                                .dropdown-item {
+                                    height: 90px;
+                                }
+
+                                #vente_details {
+                                    color: white;
+                                    background-color: rgb(12, 190, 74);
+                                    font-weight: bold;
+
+                                }
+
+                                #vente_semi {
+                                    color: white;
+                                    background-color: rgb(251, 183, 58);
+                                    font-weight: bold;
+                                }
+
+                                #vente_gros {
+                                    color: white;
+                                    background-color: rgb(214, 34, 34);
+                                    font-weight: bold;
+                                }
+                            </style>
 
 
                             <div class="col-3">
                                 {{-- Bouton pour afficher le popup --}}
-                                <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
+                                <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
                                     data-bs-target="#ListeEnAttenteModal" id="bouton_liste_enattente"
                                     onclick="liste_factures_enattente()">
                                     <i class="fas fa-user-clock fa-lg"></i>
@@ -1288,7 +1384,9 @@
         function FiltrageProduits(form) {
             const id = form.getAttribute('data-id');
             const nom = form.getAttribute('data-nom');
-    
+
+            const vente_type = document.getElementById('text-type-vente').textContent;
+
             if (id !== undefined) {
                 // Ajouté pour exécuter la fonction sans authentification
                 const id_user = document.getElementById('text-id-user').textContent;
@@ -1302,21 +1400,29 @@
                     success: function(response) {
                         console.log('PRODUCTS FILTER SUCCESS');
                         $('#products').empty();
-    
+
                         // Ajout des produits retournés par l'API
                         $.each(response.produits, function(key, value) {
+
+                            let prix = 0;
+                            if (vente_type === 'details') prix = value.prix_detail;
+                            else if (vente_type === 'semigros') prix = value.prix_semigros;
+                            else if (vente_type === 'gros') prix = value.prix_gros;
+
                             $('#products').append(
                                 '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4" data-aos="fade-down">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
-                                '" data-nom="' + value.nom + '" data-prix="' + value.prix +
+                                '" data-nom="' + value.nom + '" data-prix-detail="' + value
+                                .prix_detail + '" data-prix-semigros="' + value.prix_semigros +
+                                '" data-prix-gros="' + value.prix_gros +
                                 '" onclick="Tester_SousProduits(this)" style="cursor: pointer;">' +
                                 '<img src="{{ asset('storage/') }}/' + value.photo +
                                 '" class="card-img-top" alt="...">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
                                 '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) +
+                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(prix)) +
                                 ' DA / ' + value.mesure +
                                 '</h5>' +
                                 '</div>' +
@@ -1325,18 +1431,18 @@
                                 '</div>'
                             );
                         });
-    
+
                         $('#products').append(
                             '<div class="col-12 zyada" style="height: 200px;"></div>'
                         );
-    
+
                         // Gestion des classes pour les cartes
                         // Supprime "bg-danger" de toutes les cartes et ajoute "bg-white"
                         document.querySelectorAll('.card.scat').forEach(card => {
                             card.classList.remove('bg-danger');
                             card.classList.add('bg-white');
                         });
-    
+
                         // Ajoute "bg-danger" à la carte contenant le formulaire cliqué
                         const card = form.closest('.card');
                         if (card) {
@@ -1351,14 +1457,14 @@
             } else {
                 console.error('ERREUR ID');
             }
-    
+
             if (nom !== undefined) {
                 const afficheur_cat = document.getElementById('categorie_text');
                 const afficheur_produit = document.getElementById('produit_text');
                 const afficheur_prix = document.getElementById('prix_unitaire');
                 const afficheur_prix_total = document.getElementById('prix_total');
                 const titre_categorie = document.getElementById('titre-categorie');
-    
+
                 titre_categorie.textContent = nom;
                 afficheur_cat.textContent = nom;
                 afficheur_produit.textContent = '----';
@@ -1367,11 +1473,11 @@
             } else {
                 console.error('ERREUR NOM');
             }
-    
+
             console.log('Filtrage Produits exécuté sans authentification');
         }
     </script>
-    
+
 
     <script>
         function Tester_SousProduits(form) {
@@ -1383,6 +1489,8 @@
             const id_magasin = document.getElementById('text-id-magasin').textContent;
 
             const bouton_sousproduits = document.getElementById('bouton_liste_sousproduits');
+
+            const vente_type = document.getElementById('text-type-vente').textContent;
 
             if (id_produit !== undefined) {
                 // test the sub-products
@@ -1400,19 +1508,29 @@
                         if (response.sousproduits.length > 0) {
 
                             const value = response.produit;
+                            let prix = 0;
+                            if (vente_type === 'details') prix = value.prix_detail;
+                            else if (vente_type === 'semigros') prix = value.prix_semigros;
+                            else if (vente_type === 'gros') prix = value.prix_gros;
 
                             $('#SousProduits').append(
                                 '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 mb-4">' +
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
-                                '" data-nom="' + value.nom + '" data-prix="' + value.prix +
+                                '" data-nom="' + value.nom + '" data-prix-detail="' + value.prix_detail +
+                                '" data-prix-semigros="' + value.prix_semigros + '" data-prix-gros="' +
+                                value.prix_gros +
                                 '" onclick="affichage(this)" style="cursor: pointer;">' +
                                 '<img src="{{ asset('storage/') }}/' + value.photo +
                                 '" class="card-img-top" alt="Product image">' +
                                 '<div class="card-body p-1 m-0 text-center">' +
                                 '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-                                '<h5 class="card-text mini-text">' + Math.round(parseFloat(value.prix)) +
+                                '<h5 class="card-text mini-text">'
+
+                                +
+                                Math.round(parseFloat(prix)) +
+
                                 ' DA / ' + value.mesure +
                                 '</h5>' +
                                 '</div>' +
@@ -1422,19 +1540,31 @@
                             );
 
                             $.each(response.sousproduits, function(key, value) {
+
+                                let prix = 0;
+                                if (vente_type === 'details') prix = value.prix_detail;
+                                else if (vente_type === 'semigros') prix = value.prix_semigros;
+                                else if (vente_type === 'gros') prix = value.prix_gros;
+
                                 $('#SousProduits').append(
                                     '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 mb-4">' +
                                     '<div class="card scat">' +
                                     '<form class="affichage-form" data-id_lestock="' + value.id +
                                     '" data-id_produit="' + value.id_produit +
-                                    '" data-nom="' + value.nom + '" data-prix="' + value.prix +
+                                    '" data-nom="' + value.nom + '" data-prix-detail="' + value
+                                    .prix_detail + '" data-prix-semigros="' + value.prix_semigros +
+                                    '" data-prix-gros="' + value.prix_gros +
                                     '" onclick="affichage(this)" style="cursor: pointer;">' +
                                     '<img src="{{ asset('storage/') }}/' + value.photo +
                                     '" class="card-img-top" alt="Product image">' +
                                     '<div class="card-body p-1 m-0 text-center">' +
                                     '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-                                    '<h5 class="card-text mini-text">' + Math.round(parseFloat(value
-                                        .prix)) + ' DA / ' + value.mesure +
+                                    '<h5 class="card-text mini-text">'
+
+                                    +
+                                    Math.round(parseFloat(prix)) +
+
+                                    ' DA / ' + value.mesure +
                                     '</h5>' +
                                     '</div>' +
                                     '</form>' +
@@ -1471,66 +1601,85 @@
 
 
 
-   {{-- script filtrage produits --}}
-<script>
-    function affichage(form) {
-        const id_lestock = form.getAttribute('data-id_lestock');
-        const id_produit = form.getAttribute('data-id_produit');
-        const nom = form.getAttribute('data-nom');
-        let prix = form.getAttribute('data-prix');
+    {{-- script filtrage produits --}}
+    <script>
+        function affichage(form) {
+            const id_lestock = form.getAttribute('data-id_lestock');
+            const id_produit = form.getAttribute('data-id_produit');
+            const nom = form.getAttribute('data-nom');
+            let prix = 0;
+            // type prix
+            const vente_type = document.getElementById('text-type-vente').textContent;
 
-        prix = parseFloat(prix);
+            console.log('id_lestock=' + id_lestock);
+            console.log('id_produit=' + id_produit);
+            console.log('nom=' + nom);
+            console.log('vente_type=' + vente_type);
 
-        // Mise à jour des informations du produit sélectionné
-        if (nom !== undefined) {
-            const nom_produit = document.getElementById('produit_text');
-            nom_produit.textContent = nom;
-        } else {
-            console.error('ERREUR NOM');
+            console.log('varisables ok');
+
+            if (vente_type == 'details') {
+                prix = form.getAttribute('data-prix-detail');
+            }
+            if (vente_type == 'semigros') {
+                prix = form.getAttribute('data-prix-semigros');
+            }
+            if (vente_type == 'gros') {
+                prix = form.getAttribute('data-prix-gros');
+            }
+
+            prix = parseFloat(prix);
+
+            // Mise à jour des informations du produit sélectionné
+            if (nom !== undefined) {
+                const nom_produit = document.getElementById('produit_text');
+                nom_produit.textContent = nom;
+            } else {
+                console.error('ERREUR NOM');
+            }
+
+            if (prix !== undefined) {
+                const prix_produit = document.getElementById('prix_unitaire');
+                const prix_total = document.getElementById('prix_total');
+                const qte = parseFloat(document.getElementById('balance').textContent);
+                prix_produit.textContent = prix;
+                let LeTotal = prix * qte;
+                LeTotal = LeTotal.toFixed(0);
+                prix_total.textContent = LeTotal;
+            } else {
+                console.error('ERREUR PRIX');
+            }
+
+            if (id_lestock !== undefined && id_produit !== undefined) {
+                const affectation_id_lestock = document.getElementById('text-id-lestock');
+                const affectation_id_produit = document.getElementById('text-id-produit');
+                affectation_id_lestock.textContent = id_lestock;
+                affectation_id_produit.textContent = id_produit;
+            } else {
+                console.error('ERREUR ID');
+            }
+
+            $('#SousProduitsModal').modal('hide');
+
+            // Ajout de la classe "bg-danger" à la carte contenant le formulaire cliqué
+            const card = form.closest('.card');
+            if (card) {
+                // Réinitialise toutes les cartes pour retirer la classe "bg-danger"
+                document.querySelectorAll('.card.scat').forEach(otherCard => {
+                    otherCard.classList.remove('bg-danger');
+                    otherCard.classList.remove('text-white');
+                    otherCard.classList.add('bg-white');
+                });
+
+                // Ajoute "bg-danger" à la carte actuellement sélectionnée
+                card.classList.add('bg-danger');
+                card.classList.add('text-white');
+                card.classList.remove('bg-white');
+            }
+
+            console.log('Calcul Total Produit*Quantité exécuté');
         }
-
-        if (prix !== undefined) {
-            const prix_produit = document.getElementById('prix_unitaire');
-            const prix_total = document.getElementById('prix_total');
-            const qte = parseFloat(document.getElementById('balance').textContent);
-            prix_produit.textContent = prix;
-            let LeTotal = prix * qte;
-            LeTotal = LeTotal.toFixed(0);
-            prix_total.textContent = LeTotal;
-        } else {
-            console.error('ERREUR PRIX');
-        }
-
-        if (id_lestock !== undefined && id_produit !== undefined) {
-            const affectation_id_lestock = document.getElementById('text-id-lestock');
-            const affectation_id_produit = document.getElementById('text-id-produit');
-            affectation_id_lestock.textContent = id_lestock;
-            affectation_id_produit.textContent = id_produit;
-        } else {
-            console.error('ERREUR ID');
-        }
-
-        $('#SousProduitsModal').modal('hide');
-
-        // Ajout de la classe "bg-danger" à la carte contenant le formulaire cliqué
-        const card = form.closest('.card');
-        if (card) {
-            // Réinitialise toutes les cartes pour retirer la classe "bg-danger"
-            document.querySelectorAll('.card.scat').forEach(otherCard => {
-                otherCard.classList.remove('bg-danger');
-                otherCard.classList.remove('text-white');
-                otherCard.classList.add('bg-white');
-            });
-
-            // Ajoute "bg-danger" à la carte actuellement sélectionnée
-            card.classList.add('bg-danger');
-            card.classList.add('text-white');
-            card.classList.remove('bg-white');
-        }
-
-        console.log('Calcul Total Produit*Quantité exécuté');
-    }
-</script>
+    </script>
 
 
     {{-- script poppup quantite  --}}
@@ -2618,7 +2767,80 @@
     </script>
 
 
+    <script>
+        // background-color: #09a760;
+        // background-color: #ffd500;
+        // background-color: #ff2926;
+        function prix_details() {
+            const type_de_vente_variable = document.getElementById('text-type-vente');
+            const affect_color = document.querySelector('#facture_afficheur');
+            const affect_type_vente = document.getElementById('type_vente_header');
 
+            if (affect_color) {
+                // Sélectionne tous les enfants de .facture_afficheur
+                const children = affect_color.querySelectorAll('*');
+                children.forEach(child => {
+                    child.style.color = '#09a760';
+                });
+            }
+
+            if (type_de_vente_variable) {
+                type_de_vente_variable.textContent = 'details';
+            }
+
+            if (affect_type_vente) {
+                affect_type_vente.textContent = 'Vente Détails';
+            }
+
+            $('#products').empty();
+        }
+
+        function prix_semigros() {
+            const type_de_vente_variable = document.getElementById('text-type-vente');
+            const affect_color = document.querySelector('#facture_afficheur');
+            const affect_type_vente = document.getElementById('type_vente_header');
+
+            if (affect_color) {
+                // Sélectionne tous les enfants de .facture_afficheur
+                const children = affect_color.querySelectorAll('*');
+                children.forEach(child => {
+                    child.style.color = '#ffd500';
+                });
+            }
+
+            if (type_de_vente_variable) {
+                type_de_vente_variable.textContent = 'semigros';
+            }
+
+            if (affect_type_vente) {
+                affect_type_vente.textContent = 'Vente Semi-Gros';
+            }
+            $('#products').empty();
+        }
+
+        function prix_gros() {
+            const type_de_vente_variable = document.getElementById('text-type-vente');
+            const affect_color = document.querySelector('#facture_afficheur');
+            const affect_type_vente = document.getElementById('type_vente_header');
+
+            if (affect_color) {
+                // Sélectionne tous les enfants de .facture_afficheur
+                const children = affect_color.querySelectorAll('*');
+                children.forEach(child => {
+                    child.style.color = '#ff2926';
+                });
+            }
+
+            if (type_de_vente_variable) {
+                type_de_vente_variable.textContent = 'gros';
+            }
+
+            if (affect_type_vente) {
+                affect_type_vente.textContent = 'Vente Gros';
+            }
+            $('#products').empty();
+        }
+    </script>
 
 
     {{-- ------------------------------------------------------------------------------------------------------ --}}
