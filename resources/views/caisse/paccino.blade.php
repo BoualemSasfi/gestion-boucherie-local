@@ -340,6 +340,7 @@
                     <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
                     <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
                     {{-- -------------------------------------------- --}}
+                    <a id="text-id-categorie" href="" style="display: block;">0</a>
                     <a id="text-type-vente" href="" style="display: block;">details</a>
                     {{-- -------------------------------------------- --}}
                     {{-- stockage variable  --}}
@@ -349,7 +350,7 @@
                             <div class="row afficheur text-center" style="height: 110px;" id="facture_afficheur">
 
                                 <div class="col-3 pt-3">
-                                    <h6 class="afficheur-titre pt-3" id="type_vente_header">TYPE DE VENTE</h6>
+                                    <h6 class="afficheur-titre pt-3" id="type_vente_header">Vente En Détails</h6>
                                 </div>
 
                                 <div class="col-9 border-start border-1 border-dark">
@@ -1385,6 +1386,9 @@
             const id = form.getAttribute('data-id');
             const nom = form.getAttribute('data-nom');
 
+            const text_id_categorie = document.getElementById('text-id-categorie');
+            text_id_categorie.textContent = id;
+
             const vente_type = document.getElementById('text-type-vente').textContent;
 
             if (id !== undefined) {
@@ -2056,6 +2060,7 @@
             const id_user = document.getElementById('text-id-user').textContent;
             const id_magasin = document.getElementById('text-id-magasin').textContent;
             const id_caisse = document.getElementById('text-id-caisse').textContent;
+
             if (!isNaN(id_user) && !isNaN(id_magasin) && !isNaN(id_caisse)) {
 
                 $.ajax({
@@ -2113,6 +2118,10 @@
             AffichageNomProduit.textContent = "----";
             AffichageTitreCategorie.textContent = "";
             $('#products').empty();
+
+            const TextIdCategorie = document.getElementById('text-id-categorie');
+            TextIdCategorie.textContent = '0';
+            $('#vente_details').click();
 
             console.log('Remise à zero executé');
         }
@@ -2776,6 +2785,7 @@
             const affect_color = document.querySelector('#facture_afficheur');
             const affect_type_vente = document.getElementById('type_vente_header');
 
+
             if (affect_color) {
                 // Sélectionne tous les enfants de .facture_afficheur
                 const children = affect_color.querySelectorAll('*');
@@ -2789,10 +2799,26 @@
             }
 
             if (affect_type_vente) {
-                affect_type_vente.textContent = 'Vente Détails';
+                affect_type_vente.textContent = 'Vente En Détails';
             }
 
             $('#products').empty();
+
+            const id = document.getElementById('text-id-categorie').textContent;
+            const formName = 'filter-form';
+
+            // Sélection du formulaire avec la classe 'filter-form' et l'attribut data-id égal à id
+            const form = document.querySelector(`.${formName}[data-id="${id}"]`);
+
+            if (form) {
+                FiltrageProduits(form);
+                console.log('nouveaux prix affichés');
+            } else {
+                console.error(`Aucun formulaire trouvé avec la classe '${formName}' et data-id='${id}'`);
+            }
+
+
+
         }
 
         function prix_semigros() {
@@ -2813,9 +2839,23 @@
             }
 
             if (affect_type_vente) {
-                affect_type_vente.textContent = 'Vente Semi-Gros';
+                affect_type_vente.textContent = 'Vente En Semi-Gros';
             }
+            
             $('#products').empty();
+
+            const id = document.getElementById('text-id-categorie').textContent;
+            const formName = 'filter-form';
+
+            // Sélection du formulaire avec la classe 'filter-form' et l'attribut data-id égal à id
+            const form = document.querySelector(`.${formName}[data-id="${id}"]`);
+
+            if (form) {
+                FiltrageProduits(form);
+                console.log('nouveaux prix affichés');
+            } else {
+                console.error(`Aucun formulaire trouvé avec la classe '${formName}' et data-id='${id}'`);
+            }
         }
 
         function prix_gros() {
@@ -2836,9 +2876,23 @@
             }
 
             if (affect_type_vente) {
-                affect_type_vente.textContent = 'Vente Gros';
+                affect_type_vente.textContent = 'Vente En Gros';
             }
+            
             $('#products').empty();
+
+            const id = document.getElementById('text-id-categorie').textContent;
+            const formName = 'filter-form';
+
+            // Sélection du formulaire avec la classe 'filter-form' et l'attribut data-id égal à id
+            const form = document.querySelector(`.${formName}[data-id="${id}"]`);
+
+            if (form) {
+                FiltrageProduits(form);
+                console.log('nouveaux prix affichés');
+            } else {
+                console.error(`Aucun formulaire trouvé avec la classe '${formName}' et data-id='${id}'`);
+            }
         }
     </script>
 
