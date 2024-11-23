@@ -71,7 +71,9 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/caisse/category/{id_categorie}/user/{id_user}/magasin/{id_magasin}', 'filtrage_des_produits_libre')->name('Filtrage_Des_Produits_Libre');
     Route::get('/Get_SubProducts/{id_produit}/user/{id_user}/magasin/{id_magasin}', 'filtrage_des_sous_produits_libre')->name('Filtrage_Des_Sous_Produits_Libre');
 
-    Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
+    Route::post('/calculer-ventes/{id_facture}/{type_vente}', 'Calculer_Ventes')->name('calculer_ventes');
+    
+    Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/{id_sousproduit}/{nom_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
     Route::get('/ventes/{id_facture}', 'Get_Liste_Ventes')->name('liste_ventes');
     Route::get('/supprimer-vente/{id_vente}', 'Supprimer_Vente')->name('supprimer_vente');
     Route::get('/prix-vente/{id_vente}', 'Prix_Vente')->name('prix_vente');
@@ -79,7 +81,7 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/total-facture/{id_facture}', 'Total_Facture')->name('total_facture');
 
     Route::get('/nouvelle-facture/{id_user}/{id_magasin}/{id_caisse}', 'Create_Facture')->name('nouvelle_facture');
-    Route::put('/valider-facture/{id_user}/{id_facture}/{id_caisse}/{id_client}/valeurs/{total}/{versement}/{credit}/{etat}', 'Valider_Facture')->name('valider_facture');
+    Route::put('/valider-facture/{id_user}/{id_facture}/{id_caisse}/{id_client}/{type_vente}/valeurs/{total}/{versement}/{credit}/{etat}', 'Valider_Facture')->name('valider_facture');
 
     Route::put('/en-attente-facture/{id_facture}/valeurs/{total}', 'En_Attente_Facture')->name('en_attente_facture');
     Route::get('/liste-factures-enattente/{id_magasin}', 'Liste_Factures_Enattente')->name('liste_factures_enattente');

@@ -172,12 +172,12 @@
                 </div>
                 <div class="col-3 pt-1">
                     <h6 class="afficheur-titre">
-                        <span>Manuelle</span>
+                        <span class="slider-text">Manuelle</span>
                         <label class="switch">
                             <input type="checkbox" id="toggleBalance">
                             <span class="slider"></span>
                         </label>
-                        <span>Balance</span>
+                        <span class="slider-text">Balance</span>
                     </h6>
                     <div class="digital">
                         <p id="balance" style="margin-top:-30px; cursor: pointer;" data-bs-toggle="modal"
@@ -284,6 +284,7 @@
                     {{-- pour le produit selectionné  --}}
                     <a id="text-id-lestock" href="" style="display: none;"></a>
                     <a id="text-id-produit" href="" style="display: none;"></a>
+                    <a id="text-id-sousproduit" href="" style="display: none;"></a>
                     {{-- pour le produit selectionné  --}}
 
                     <form class="valider-vente-form" data-id_facture="{{ $LastFacture->id }}"
@@ -340,8 +341,9 @@
                     <a id="text-id-magasin" href="" style="display: none;">{{ $id_magasin }}</a>
                     <a id="text-id-caisse" href="" style="display: none;">{{ $id_caisse }}</a>
                     {{-- -------------------------------------------- --}}
-                    <a id="text-id-categorie" href="" style="display: block;">0</a>
-                    <a id="text-type-vente" href="" style="display: block;">details</a>
+                    <a id="text-id-categorie" href="" style="display: none;">0</a>
+                    <a id="text-id-categorie" href="" style="display: none;">0</a>
+                    <a id="text-type-vente" href="" style="display: none;">details</a>
                     {{-- -------------------------------------------- --}}
                     {{-- stockage variable  --}}
 
@@ -485,7 +487,7 @@
                                 </select>
                             </div> --}}
 
-                            <div class="col-3">
+                            {{-- <div class="col-3">
                                 <div class="dropdown">
                                     <button class="btn btn-danger dropdown-toggle bouton-caisse" type="button"
                                         id="type_vente" data-bs-toggle="dropdown" aria-expanded="false">
@@ -507,18 +509,80 @@
                                                 Vente-Gros</a></li>
                                     </ul>
                                 </div>
+                            </div> --}}
+
+                            <div class="col-3">
+                                <div class="dropdown">
+                                    <button class="btn btn-danger dropdown-toggle bouton-caisse" type="button"
+                                        id="type_vente" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-store fa-lg"></i>
+                                        <br><span id="selected_option">Vente-Détails</span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="type_vente">
+                                        <li>
+                                            <a class="dropdown-item btn btn-primary" href="#" data-value="details"
+                                                id="vente_details">
+                                                <br> <i class="fas fa-user-tag fa-lg"></i> <br>
+                                                Vente-Détails
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item btn btn-primary" href="#"
+                                                data-value="semi_gros" id="vente_semi">
+                                                <br> <i class="fas fa-boxes fa-lg"></i> <br>
+                                                Vente-Semi-Gros
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item btn btn-primary" href="#" data-value="gros"
+                                                id="vente_gros">
+                                                <br> <i class="fas fa-truck-moving fa-lg"></i> <br>
+                                                Vente-Gros
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
 
+
                             <script>
+                                // document.querySelectorAll('.dropdown-item').forEach(item => {
+                                //     item.addEventListener('click', function(e) {
+                                //         e.preventDefault(); // Empêche le rechargement
+                                //         const selectedValue = this.getAttribute('data-value'); // Récupère la valeur
+                                //         const selectedText = this.textContent.trim(); // Récupère le texte
+                                //         document.getElementById('selected_option').textContent =
+                                //             selectedText; // Affiche le texte sélectionné
+                                //         document.getElementById('type_vente').setAttribute('data-selected-value',
+                                //             selectedValue); // Ajoute une valeur sélectionnée au bouton
+                                //     });
+                                // });
                                 document.querySelectorAll('.dropdown-item').forEach(item => {
                                     item.addEventListener('click', function(e) {
-                                        e.preventDefault(); // Empêche le rechargement
-                                        const selectedValue = this.getAttribute('data-value'); // Récupère la valeur
-                                        const selectedText = this.textContent.trim(); // Récupère le texte
-                                        document.getElementById('selected_option').textContent =
-                                            selectedText; // Affiche le texte sélectionné
-                                        document.getElementById('type_vente').setAttribute('data-selected-value',
-                                            selectedValue); // Ajoute une valeur sélectionnée au bouton
+                                        e.preventDefault(); // Empêche le comportement par défaut du lien
+                                        const selectedValue = this.getAttribute('data-value'); // Récupère la valeur sélectionnée
+                                        const selectedText = this.textContent.trim(); // Récupère le texte sélectionné
+
+                                        // Met à jour le texte et la valeur de l'option sélectionnée dans le bouton principal
+                                        document.getElementById('selected_option').textContent = selectedText;
+                                        document.getElementById('type_vente').setAttribute('data-selected-value', selectedValue);
+
+                                        console.log(`Option sélectionnée : ${selectedValue} (${selectedText})`);
+
+                                        // Si nécessaire, déclenche la fonction associée en fonction de la sélection
+                                        switch (selectedValue) {
+                                            case 'details':
+                                                prix_details();
+                                                break;
+                                            case 'semi_gros':
+                                                prix_semigros();
+                                                break;
+                                            case 'gros':
+                                                prix_gros();
+                                                break;
+                                            default:
+                                                console.error('Valeur inconnue : ', selectedValue);
+                                        }
                                     });
                                 });
                             </script>
@@ -966,7 +1030,7 @@
                         <div class="row justify-content-center">
 
                             <div class="col-12">
-                                <div class="row p-0 m-0" id="SousProduits">
+                                <div class="row p-0 m-0" id="SousProduits" style="height: 220px;">
                                     {{-- <h1>liste de sous produits ici</h1> --}}
                                 </div>
                             </div>
@@ -1381,7 +1445,7 @@
 
 
 
-    <script>
+    {{-- <script>
         function FiltrageProduits(form) {
             const id = form.getAttribute('data-id');
             const nom = form.getAttribute('data-nom');
@@ -1418,6 +1482,7 @@
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
+                                '" data-id_sousproduit="0' +
                                 '" data-nom="' + value.nom + '" data-prix-detail="' + value
                                 .prix_detail + '" data-prix-semigros="' + value.prix_semigros +
                                 '" data-prix-gros="' + value.prix_gros +
@@ -1480,10 +1545,130 @@
 
             console.log('Filtrage Produits exécuté sans authentification');
         }
+    </script> --}}
+
+    <script>
+        function FiltrageProduits(form) {
+            try {
+                const id = form.getAttribute('data-id');
+                const nom = form.getAttribute('data-nom');
+
+                const text_id_categorie = document.getElementById('text-id-categorie');
+                if (text_id_categorie) {
+                    text_id_categorie.textContent = id;
+                }
+
+                const vente_type = document.getElementById('text-type-vente')?.textContent || '';
+
+                if (!id) {
+                    console.error('ERREUR ID : ID manquant');
+                    return;
+                }
+
+                // Récupération des autres informations nécessaires
+                const id_user = document.getElementById('text-id-user')?.textContent || '';
+                const id_magasin = document.getElementById('text-id-magasin')?.textContent || '';
+
+                if (!id_user || !id_magasin) {
+                    console.error('ERREUR : Informations utilisateur ou magasin manquantes');
+                    return;
+                }
+
+                $.ajax({
+                    url: `/caisse/category/${id}/user/${id_user}/magasin/${id_magasin}`,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log('PRODUCTS FILTER SUCCESS');
+                        const productsContainer = $('#products');
+                        productsContainer.empty();
+
+                        // Vérification des produits avant l'itération
+                        if (!response.produits || response.produits.length === 0) {
+                            console.warn('Aucun produit trouvé');
+                            return;
+                        }
+
+                        // Ajout des produits retournés par l'API
+                        response.produits.forEach(value => {
+                            let prix = 0;
+                            if (vente_type === 'details') prix = value.prix_detail;
+                            else if (vente_type === 'semigros') prix = value.prix_semigros;
+                            else if (vente_type === 'gros') prix = value.prix_gros;
+
+                            productsContainer.append(`
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4" data-aos="fade-down">
+                                    <div class="card scat">
+                                        <form class="affichage-form"
+                                            data-id_lestock="${value.id}"
+                                            data-id_produit="${value.id_produit}"
+                                            data-id_sousproduit="0"
+                                            data-nom="${value.nom}"
+                                            data-prix-detail="${value.prix_detail}"
+                                            data-prix-semigros="${value.prix_semigros}"
+                                            data-prix-gros="${value.prix_gros}"
+                                            onclick="Tester_SousProduits(this)"
+                                            style="cursor: pointer;">
+                                            <img src="{{ asset('storage/') }}/${value.photo}" class="card-img-top" alt="...">
+                                            <div class="card-body p-1 m-0 text-center">
+                                                <h5 class="card-title mini-text">${value.nom}</h5>
+                                                <h5 class="card-text mini-text">${Math.round(parseFloat(prix))} DA / ${value.mesure}</h5>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            `);
+                        });
+
+                        // Ajout d'un espace supplémentaire
+                        productsContainer.append('<div class="col-12 zyada" style="height: 200px;"></div>');
+
+                        // Gestion des classes pour les cartes
+                        document.querySelectorAll('.card.scat').forEach(card => {
+                            card.classList.remove('bg-danger');
+                            card.classList.add('bg-white');
+                        });
+
+                        // Ajout de la classe "bg-danger" à la carte sélectionnée
+                        const card = form.closest('.card');
+                        if (card) {
+                            card.classList.add('bg-danger');
+                            card.classList.remove('bg-white');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erreur AJAX :', error);
+                    }
+                });
+
+                if (nom) {
+                    const afficheur_cat = document.getElementById('categorie_text');
+                    const afficheur_produit = document.getElementById('produit_text');
+                    const afficheur_prix = document.getElementById('prix_unitaire');
+                    const afficheur_prix_total = document.getElementById('prix_total');
+                    const titre_categorie = document.getElementById('titre-categorie');
+
+                    titre_categorie.textContent = nom;
+                    afficheur_cat.textContent = nom;
+                    afficheur_produit.textContent = '----';
+                    afficheur_prix.textContent = '0.00';
+                    afficheur_prix_total.textContent = '0.00';
+                } else {
+                    console.error('ERREUR NOM : Nom manquant');
+                }
+
+                console.log('Filtrage Produits exécuté');
+            } catch (error) {
+                console.error('Erreur dans la fonction FiltrageProduits :', error);
+            }
+        }
     </script>
 
 
-    <script>
+
+    {{-- <script>
         function Tester_SousProduits(form) {
             const id_produit = form.getAttribute('data-id_produit');
             const nom = form.getAttribute('data-nom');
@@ -1522,6 +1707,7 @@
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
+                                '" data-id_sousproduit="0' +
                                 '" data-nom="' + value.nom + '" data-prix-detail="' + value.prix_detail +
                                 '" data-prix-semigros="' + value.prix_semigros + '" data-prix-gros="' +
                                 value.prix_gros +
@@ -1555,6 +1741,7 @@
                                     '<div class="card scat">' +
                                     '<form class="affichage-form" data-id_lestock="' + value.id +
                                     '" data-id_produit="' + value.id_produit +
+                                    '" data-id_sousproduit="' + value.id +
                                     '" data-nom="' + value.nom + '" data-prix-detail="' + value
                                     .prix_detail + '" data-prix-semigros="' + value.prix_semigros +
                                     '" data-prix-gros="' + value.prix_gros +
@@ -1601,15 +1788,119 @@
 
             console.log('Sub-product test executed');
         }
+    </script> --}}
+
+    <script>
+        function Tester_SousProduits(form) {
+            try {
+                const id_produit = form.getAttribute('data-id_produit');
+                const nom = form.getAttribute('data-nom');
+
+                if (!id_produit) {
+                    console.error('ERREUR : ID produit manquant');
+                    return;
+                }
+
+                const id_user = document.getElementById('text-id-user')?.textContent || '';
+                const id_magasin = document.getElementById('text-id-magasin')?.textContent || '';
+                const bouton_sousproduits = document.getElementById('bouton_liste_sousproduits');
+                const vente_type = document.getElementById('text-type-vente')?.textContent || '';
+
+                if (!id_user || !id_magasin) {
+                    console.error('ERREUR : Informations utilisateur ou magasin manquantes');
+                    return;
+                }
+
+                $.ajax({
+                    url: `/Get_SubProducts/${id_produit}/user/${id_user}/magasin/${id_magasin}`,
+                    type: 'GET',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function(response) {
+                        console.log('LISTE DES SOUS-PRODUITS RETOURNÉE');
+                        const sousProduitsContainer = $('#SousProduits');
+                        sousProduitsContainer.empty();
+
+                        if (response.sousproduits && response.sousproduits.length > 0) {
+                            // Produit principal
+                            const produit = response.produit;
+                            appendProductCard(sousProduitsContainer, produit, vente_type, 0);
+
+                            // Sous-produits
+                            response.sousproduits.forEach(subProduit => {
+                                appendProductCard(sousProduitsContainer, subProduit, vente_type,
+                                    subProduit.id);
+                            });
+
+                            // Activer le bouton pour afficher la liste des sous-produits
+                            bouton_sousproduits?.click();
+                        } else {
+                            sousProduitsContainer.append(`
+                                <div class="alert alert-warning text-center" role="alert">
+                                    Aucun sous-produit disponible.
+                                </div>
+                            `);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Erreur AJAX :', error);
+                        affichage(form); // Si erreur, effectuer une action alternative
+                    }
+                });
+
+                console.log('Test des sous-produits exécuté');
+            } catch (error) {
+                console.error('Erreur dans la fonction Tester_SousProduits :', error);
+            }
+        }
+
+        /**
+         * Ajoute une carte produit ou sous-produit dans le conteneur.
+         * @param {jQuery} container - Conteneur où ajouter la carte.
+         * @param {Object} produit - Données du produit.
+         * @param {string} vente_type - Type de vente.
+         * @param {number} sousProduitId - ID du sous-produit (ou 0 pour produit principal).
+         */
+        function appendProductCard(container, produit, vente_type, sousProduitId) {
+            let prix = 0;
+            if (vente_type === 'details') prix = produit.prix_detail;
+            else if (vente_type === 'semigros') prix = produit.prix_semigros;
+            else if (vente_type === 'gros') prix = produit.prix_gros;
+
+            container.append(`
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 mb-4">
+                    <div class="card scat" style="height: 200px;">
+                        <form class="affichage-form"
+                            data-id_lestock="${produit.id}"
+                            data-id_lestock="${produit.id}"
+                            data-id_produit="${produit.id_produit}"
+                            data-id_sousproduit="${sousProduitId}"
+                            data-nom="${produit.nom}"
+                            data-prix-detail="${produit.prix_detail}"
+                            data-prix-semigros="${produit.prix_semigros}"
+                            data-prix-gros="${produit.prix_gros}"
+                            onclick="affichage(this)"
+                            style="cursor: pointer;">
+                            <img src="{{ asset('storage/') }}/${produit.photo}" class="card-img-top" alt="Image produit" style="height: 120px;">
+                            <div class="card-body p-1 m-0 text-center">
+                                <h5 class="card-title mini-text">${produit.nom}</h5>
+                                <h5 class="card-text mini-text">${Math.round(parseFloat(prix))} DA / ${produit.mesure}</h5>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            `);
+        }
     </script>
 
 
-
     {{-- script filtrage produits --}}
-    <script>
+    {{-- <script>
         function affichage(form) {
             const id_lestock = form.getAttribute('data-id_lestock');
             const id_produit = form.getAttribute('data-id_produit');
+            const id_sousproduit = form.getAttribute('data-id_sousproduit') || '0';
             const nom = form.getAttribute('data-nom');
             let prix = 0;
             // type prix
@@ -1617,6 +1908,7 @@
 
             console.log('id_lestock=' + id_lestock);
             console.log('id_produit=' + id_produit);
+            console.log('id_sousproduit=' + id_sousproduit);
             console.log('nom=' + nom);
             console.log('vente_type=' + vente_type);
 
@@ -1654,9 +1946,16 @@
                 console.error('ERREUR PRIX');
             }
 
+            if (id_sousproduit) {
+                const affectation_id_sousproduit = document.getElementById('text-id-sousproduit');
+
+                affectation_id_sousproduit.textContent = id_sousproduit;
+            }
+
             if (id_lestock !== undefined && id_produit !== undefined) {
                 const affectation_id_lestock = document.getElementById('text-id-lestock');
-                const affectation_id_produit = document.getElementById('text-id-produit');
+                const affectation_id_lestock = document.getElementById('text-id-produit');
+
                 affectation_id_lestock.textContent = id_lestock;
                 affectation_id_produit.textContent = id_produit;
             } else {
@@ -1682,6 +1981,84 @@
             }
 
             console.log('Calcul Total Produit*Quantité exécuté');
+        }
+    </script> --}}
+
+    <script>
+        function affichage(form) {
+            try {
+                // Récupération des attributs du formulaire
+                const id_lestock = form.getAttribute('data-id_lestock');
+                const id_produit = form.getAttribute('data-id_produit');
+                const id_sousproduit = form.getAttribute('data-id_sousproduit') || '0';
+                const nom = form.getAttribute('data-nom');
+                const vente_type = document.getElementById('text-type-vente')?.textContent || '';
+
+                if (!id_lestock || !id_produit) {
+                    console.error('ERREUR : ID produit ou stock manquant');
+                    return;
+                }
+
+                console.log(`id_lestock=${id_lestock}`);
+                console.log(`id_produit=${id_produit}`);
+                console.log(`id_sousproduit=${id_sousproduit}`);
+                console.log(`nom=${nom}`);
+                console.log(`vente_type=${vente_type}`);
+
+                // Détermination du prix en fonction du type de vente
+                let prix = parseFloat(
+                    vente_type === 'details' ? form.getAttribute('data-prix-detail') :
+                    vente_type === 'semigros' ? form.getAttribute('data-prix-semigros') :
+                    vente_type === 'gros' ? form.getAttribute('data-prix-gros') :
+                    0
+                );
+
+                if (isNaN(prix)) {
+                    console.error('ERREUR : Prix invalide');
+                    return;
+                }
+
+                // Mise à jour des informations du produit sélectionné
+                const nom_produit = document.getElementById('produit_text');
+                const prix_produit = document.getElementById('prix_unitaire');
+                const prix_total = document.getElementById('prix_total');
+                const balance = parseFloat(document.getElementById('balance')?.textContent || 0);
+
+                if (nom_produit) nom_produit.textContent = nom || 'Nom indisponible';
+                if (prix_produit) prix_produit.textContent = prix.toFixed(2);
+
+                // Calcul et affichage du total
+                const total = (prix * balance).toFixed(0);
+                if (prix_total) prix_total.textContent = total;
+
+                // Mise à jour des ID dans les champs cachés
+                const text_id_sousproduit = document.getElementById('text-id-sousproduit');
+                const text_id_lestock = document.getElementById('text-id-lestock');
+                const text_id_produit = document.getElementById('text-id-produit');
+
+                if (text_id_sousproduit) text_id_sousproduit.textContent = id_sousproduit;
+                if (text_id_lestock) text_id_lestock.textContent = id_lestock;
+                if (text_id_produit) text_id_produit.textContent = id_produit;
+
+                // Fermeture du modal des sous-produits
+                $('#SousProduitsModal').modal('hide');
+
+                // Mise en surbrillance de la carte sélectionnée
+                const card = form.closest('.card');
+                if (card) {
+                    document.querySelectorAll('.card.scat').forEach(otherCard => {
+                        otherCard.classList.remove('bg-danger', 'text-white');
+                        otherCard.classList.add('bg-white');
+                    });
+
+                    card.classList.add('bg-danger', 'text-white');
+                    card.classList.remove('bg-white');
+                }
+
+                console.log('Calcul Total Produit*Quantité exécuté');
+            } catch (error) {
+                console.error('Erreur dans la fonction affichage :', error);
+            }
         }
     </script>
 
@@ -1760,6 +2137,8 @@
             const AffichagePrixTotal = document.getElementById('prix_total');
             const AffichageNomProduit = document.getElementById('produit_text');
 
+            const IdSousProduit = document.getElementById('text-id-sousproduit').textContent || '0';
+
             let qte = parseFloat(AffichageQte.textContent); // Utiliser let pour qte
             let PrixUnitaire = parseFloat(AffichagePrixUnitaire.textContent); // Utiliser let pour PrixUnitaire
             let PrixTotal = parseFloat(AffichagePrixTotal.textContent); // Utiliser let pour PrixTotal
@@ -1774,6 +2153,7 @@
                 const id_facture = document.getElementById('text-id-facture').textContent;
                 const id_lestock = document.getElementById('text-id-lestock').textContent; // Utiliser querySelector
                 const id_produit = document.getElementById('text-id-produit').textContent; // Utiliser querySelector
+                const nom_produit = AffichageNomProduit.textContent;
 
                 if (PrixUnitaire <= 0 && qte <= 0) {
                     Swal.fire({
@@ -1802,9 +2182,14 @@
                     });
                 } else
 
-                if (id_facture && id_user && id_lestock && id_produit && qte > 0 && PrixUnitaire > 0 && PrixTotal > 0) {
+                if (id_facture && id_user && id_lestock && id_produit && qte > 0 && PrixUnitaire > 0 && PrixTotal > 0 &&
+                    nom_produit && IdSousProduit) {
+                    console.log('ROUTE = /vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit + '/' +
+                        IdSousProduit + '/' + nom_produit +
+                        '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal, );
                     $.ajax({
-                        url: '/vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit +
+                        url: '/vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit + '/' +
+                            IdSousProduit + '/' + nom_produit +
                             '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal,
                         type: 'post',
                         headers: {
@@ -1844,12 +2229,13 @@
 
 
         function ListeVentes(id_facture) {
+            console.log('ROUTE = /ventes/' + id_facture)
             $.ajax({
                 url: '/ventes/' + id_facture,
                 type: 'get',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                        'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                        'content')
                 },
                 success: function(response) {
                     $('#ventes_liste').empty();
@@ -1858,16 +2244,20 @@
                         let quantite = Number.isInteger(value.quantite) ? value.quantite : parseFloat(
                             value.quantite);
 
+                        console.log('id=' + value.id + '/ nom=' + value.designation_produit +
+                            '/ quantite=' + quantite + value.unite_mesure + '/ prix=' + value
+                            .prix_unitaire + '/ total=' + value.total_vente);
+
                         $('#ventes_liste').append(
                             '<tr>' +
                             // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
-                            '<td class="petit_font text-left">' + value.nom_produit +
+                            '<td class="petit_font text-left">' + value.designation_produit +
                             '</td>' +
                             '<td class="petit_font text-right">' + quantite + ' ' + value
                             .unite_mesure +
                             '</td>' +
-                            '<td class="petit_font text-right">' + value.prix_produit + '</td>' +
-                            '<td class="petit_font text-right">' + value.prix_total + '</td>' +
+                            '<td class="petit_font text-right">' + value.prix_unitaire + '</td>' +
+                            '<td class="petit_font text-right">' + value.total_vente + '</td>' +
                             '<td class="">' +
                             '<form class="form-prix-produit" data-id="' + value.id +
                             '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrixProduit(this)">' +
@@ -1880,13 +2270,14 @@
                             '</tr>'
                         );
                     });
+                    console.log('Réccuperation Liste des Ventes executé');
                 },
                 error: function(xhr, status, error) {
+                    console.log('Réccuperation Liste des Ventes echoué');
                     console.error(error);
                 }
             });
 
-            console.log('Réccuperation Liste des Ventes executé');
         }
 
 
@@ -1901,14 +2292,15 @@
                 success: function(response) {
                     let AffichageTotal = document.getElementById('text_total_facture');
                     AffichageTotal.textContent = response.total;
-
+                    if (response.total == 0) AffichageTotal.textContent = '0.00';
+                    console.log('Calcul Total Facture executé');
+                    console.log('Total Facture = ' + response.total);
                 },
                 error: function(xhr, status, error) {
                     console.error(error);
                 }
             });
 
-            console.log('Calcul Total Facture executé');
         }
     </script>
 
@@ -2121,7 +2513,10 @@
 
             const TextIdCategorie = document.getElementById('text-id-categorie');
             TextIdCategorie.textContent = '0';
-            $('#vente_details').click();
+
+            prix_details()
+            document.getElementById('selected_option').textContent = 'Vente-Détails';
+
 
             console.log('Remise à zero executé');
         }
@@ -2184,6 +2579,9 @@
             const IdUser = document.getElementById('text-id-user').textContent;
             const IdCaisse = document.getElementById('text-id-caisse').textContent;
             const IdFacture = document.getElementById('text-id-facture').textContent;
+
+            const TypeVente = document.getElementById('text-type-vente').textContent;
+
             const IdClient = document.getElementById('client_select').value;
             let Total = parseFloat(InputTotal.value);
             let Credit = parseFloat(InputCredit.value);
@@ -2212,6 +2610,7 @@
                 // AJAX request to validate the invoice
                 await $.ajax({
                     url: '/valider-facture/' + IdUser + '/' + IdFacture + '/' + IdCaisse + '/' + IdClient +
+                        '/' + TypeVente +
                         '/valeurs/' + Total + '/' + Versement + '/' + Credit + '/' + Etat,
                     type: 'put',
                     headers: {
@@ -2782,13 +3181,39 @@
         // background-color: #ff2926;
         function prix_details() {
             const type_de_vente_variable = document.getElementById('text-type-vente');
-            const affect_color = document.querySelector('#facture_afficheur');
+            const afficheur_facture = document.querySelector('#facture_afficheur');
             const affect_type_vente = document.getElementById('type_vente_header');
 
+            // Sélection des éléments
+            const titre_cat_prod = document.getElementsByClassName('objet-titre');
+            const titres_slider = document.getElementsByClassName('slider-text');
+            const titre_afficheur_top = document.getElementsByClassName('afficheur-titre');
+            const prix_unitaire_text = document.getElementById('prix_unitaire');
+            const prix_total_text = document.getElementById('prix_total');
+            const balance_text = document.getElementById('balance');
 
-            if (affect_color) {
+            // Fonction pour appliquer une couleur à une collection d'éléments
+            function applyColorToCollection(collection, color) {
+                for (let i = 0; i < collection.length; i++) {
+                    collection[i].style.color = color;
+                }
+            }
+
+            // Appliquer la couleur rouge aux collections
+            applyColorToCollection(titre_cat_prod, '#09a760');
+            applyColorToCollection(titres_slider, '#09a760');
+            applyColorToCollection(titre_afficheur_top, '#09a760');
+
+            // Appliquer la couleur rouge aux éléments uniques
+            if (prix_unitaire_text) prix_unitaire_text.style.color = '#09a760';
+            if (prix_total_text) prix_total_text.style.color = '#09a760';
+            if (balance_text) balance_text.style.color = '#09a760';
+
+
+
+            if (afficheur_facture) {
                 // Sélectionne tous les enfants de .facture_afficheur
-                const children = affect_color.querySelectorAll('*');
+                const children = afficheur_facture.querySelectorAll('*');
                 children.forEach(child => {
                     child.style.color = '#09a760';
                 });
@@ -2817,18 +3242,74 @@
                 console.error(`Aucun formulaire trouvé avec la classe '${formName}' et data-id='${id}'`);
             }
 
+            // calculer les ventes avec le nouveau type de vente 
+            const IdFacture = document.getElementById('text-id-facture').textContent;
+            const TypeVente = type_de_vente_variable.textContent;
+
+            console.log(IdFacture + '/' + TypeVente);
+
+            $.ajax({
+                url: '/calculer-ventes/' + IdFacture + '/' + TypeVente,
+                type: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content')
+                },
+                success: function() {
+                    // Swal.fire({
+                    //     title: "Calculs éffectués",
+                    //     icon: "success",
+                    //     showConfirmButton: false,
+                    //     timer: 1500
+                    // });
+
+                    ListeVentes(IdFacture);
+
+                    Calculer_Total_Facture(IdFacture);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur AJAX:', error);
+                }
+            });
 
 
         }
 
         function prix_semigros() {
             const type_de_vente_variable = document.getElementById('text-type-vente');
-            const affect_color = document.querySelector('#facture_afficheur');
+            const afficheur_facture = document.querySelector('#facture_afficheur');
             const affect_type_vente = document.getElementById('type_vente_header');
 
-            if (affect_color) {
+            // Sélection des éléments
+            const titre_cat_prod = document.getElementsByClassName('objet-titre');
+            const titres_slider = document.getElementsByClassName('slider-text');
+            const titre_afficheur_top = document.getElementsByClassName('afficheur-titre');
+            const prix_unitaire_text = document.getElementById('prix_unitaire');
+            const prix_total_text = document.getElementById('prix_total');
+            const balance_text = document.getElementById('balance');
+
+            // Fonction pour appliquer une couleur à une collection d'éléments
+            function applyColorToCollection(collection, color) {
+                for (let i = 0; i < collection.length; i++) {
+                    collection[i].style.color = color;
+                }
+            }
+
+            // Appliquer la couleur rouge aux collections
+            applyColorToCollection(titre_cat_prod, '#ffd500');
+            applyColorToCollection(titres_slider, '#ffd500');
+            applyColorToCollection(titre_afficheur_top, '#ffd500');
+
+            // Appliquer la couleur rouge aux éléments uniques
+            if (prix_unitaire_text) prix_unitaire_text.style.color = '#ffd500';
+            if (prix_total_text) prix_total_text.style.color = '#ffd500';
+            if (balance_text) balance_text.style.color = '#ffd500';
+
+
+
+            if (afficheur_facture) {
                 // Sélectionne tous les enfants de .facture_afficheur
-                const children = affect_color.querySelectorAll('*');
+                const children = afficheur_facture.querySelectorAll('*');
                 children.forEach(child => {
                     child.style.color = '#ffd500';
                 });
@@ -2841,7 +3322,7 @@
             if (affect_type_vente) {
                 affect_type_vente.textContent = 'Vente En Semi-Gros';
             }
-            
+
             $('#products').empty();
 
             const id = document.getElementById('text-id-categorie').textContent;
@@ -2856,16 +3337,73 @@
             } else {
                 console.error(`Aucun formulaire trouvé avec la classe '${formName}' et data-id='${id}'`);
             }
+
+            // calculer les ventes avec le nouveau type de vente 
+            const IdFacture = document.getElementById('text-id-facture').textContent;
+            const TypeVente = type_de_vente_variable.textContent;
+
+            console.log(IdFacture + '/' + TypeVente);
+
+            $.ajax({
+                url: '/calculer-ventes/' + IdFacture + '/' + TypeVente,
+                type: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content')
+                },
+                success: function() {
+                    // Swal.fire({
+                    //     title: "Calculs éffectués",
+                    //     icon: "success",
+                    //     showConfirmButton: false,
+                    //     timer: 1500
+                    // });
+
+                    ListeVentes(IdFacture);
+
+                    Calculer_Total_Facture(IdFacture);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur AJAX:', error);
+                }
+            });
         }
 
         function prix_gros() {
             const type_de_vente_variable = document.getElementById('text-type-vente');
-            const affect_color = document.querySelector('#facture_afficheur');
+            const afficheur_facture = document.querySelector('#facture_afficheur');
             const affect_type_vente = document.getElementById('type_vente_header');
 
-            if (affect_color) {
+            // Sélection des éléments
+            const titre_cat_prod = document.getElementsByClassName('objet-titre');
+            const titres_slider = document.getElementsByClassName('slider-text');
+            const titre_afficheur_top = document.getElementsByClassName('afficheur-titre');
+            const prix_unitaire_text = document.getElementById('prix_unitaire');
+            const prix_total_text = document.getElementById('prix_total');
+            const balance_text = document.getElementById('balance');
+
+            // Fonction pour appliquer une couleur à une collection d'éléments
+            function applyColorToCollection(collection, color) {
+                for (let i = 0; i < collection.length; i++) {
+                    collection[i].style.color = color;
+                }
+            }
+
+            // Appliquer la couleur rouge aux collections
+            applyColorToCollection(titre_cat_prod, '#ff2926');
+            applyColorToCollection(titres_slider, '#ff2926');
+            applyColorToCollection(titre_afficheur_top, '#ff2926');
+
+            // Appliquer la couleur rouge aux éléments uniques
+            if (prix_unitaire_text) prix_unitaire_text.style.color = '#ff2926';
+            if (prix_total_text) prix_total_text.style.color = '#ff2926';
+            if (balance_text) balance_text.style.color = '#ff2926';
+
+
+
+            if (afficheur_facture) {
                 // Sélectionne tous les enfants de .facture_afficheur
-                const children = affect_color.querySelectorAll('*');
+                const children = afficheur_facture.querySelectorAll('*');
                 children.forEach(child => {
                     child.style.color = '#ff2926';
                 });
@@ -2878,7 +3416,7 @@
             if (affect_type_vente) {
                 affect_type_vente.textContent = 'Vente En Gros';
             }
-            
+
             $('#products').empty();
 
             const id = document.getElementById('text-id-categorie').textContent;
@@ -2893,6 +3431,36 @@
             } else {
                 console.error(`Aucun formulaire trouvé avec la classe '${formName}' et data-id='${id}'`);
             }
+
+            // calculer les ventes avec le nouveau type de vente 
+            const IdFacture = document.getElementById('text-id-facture').textContent;
+            const TypeVente = type_de_vente_variable.textContent;
+
+            console.log(IdFacture + '/' + TypeVente);
+
+            $.ajax({
+                url: '/calculer-ventes/' + IdFacture + '/' + TypeVente,
+                type: 'post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content')
+                },
+                success: function() {
+                    // Swal.fire({
+                    //     title: "Calculs éffectués",
+                    //     icon: "success",
+                    //     showConfirmButton: false,
+                    //     timer: 1500
+                    // });
+
+                    ListeVentes(IdFacture);
+
+                    Calculer_Total_Facture(IdFacture);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur AJAX:', error);
+                }
+            });
         }
     </script>
 
