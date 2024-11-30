@@ -49,24 +49,43 @@
         <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <!-- <i class="fas fa-laugh-wink"></i> -->
                     <!-- <i class="fa-solid fa-horse-head fa-bounce fa-xl" style="color: #e9ecf1;"></i> -->
                     <i class="fa-solid fa-cow fa-bounce fa-xl" style="color: #d1d7e1;"></i>
                 </div>
                 {{-- <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div> --}}
-                <div class="sidebar-brand-text mx-3">Gestion Boucherier</div>
+                <div class="sidebar-brand-text mx-3">
+                
+                
+                Gestion Boucherier</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
                 <a class="nav-link" href="/admin">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
+            </li> -->
+
+            <!-- Nav Item - Utilities Collapse Menu -->
+            <li class="nav-item active">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse2"
+                    aria-expanded="true" aria-controls="collapse2">
+                    <i class="fa-solid fa-money-check-dollar fa-bounce fa-xl" style="color: #e1e6ef;"></i>
+                    <span>Vente</span>
+                </a>
+                <div id="collapse2" class="collapse" aria-labelledby="heading2" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <!-- <h6 class="collapse-header">Paramètres Application:</h6> -->
+                        <a class="collapse-item" href="utilities-color.html"><i class="fa-solid fa-money-bill-1-wave fa-lg"></i> New</a>
+                        <a class="collapse-item" href="utilities-color.html"><i class="fa-solid fa-file-invoice fa-lg"></i> Facture</a>
+                    </div>
+                </div>
             </li>
 
             <!-- Divider -->
