@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
+class ComposerStaticInit7ead1154e3a4e6ac72d590a8442ba9ec
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
@@ -412,8 +412,8 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -621,6 +621,8 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',
+        'App\\Http\\Controllers\\AfficheController' => __DIR__ . '/../..' . '/app/Http/Controllers/AfficheController.php',
         'App\\Http\\Controllers\\Auth\\AuthenticatedSessionController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/AuthenticatedSessionController.php',
         'App\\Http\\Controllers\\Auth\\ConfirmablePasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/ConfirmablePasswordController.php',
         'App\\Http\\Controllers\\Auth\\EmailVerificationNotificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/EmailVerificationNotificationController.php',
@@ -632,7 +634,9 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         'App\\Http\\Controllers\\Auth\\VerifyEmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/VerifyEmailController.php',
         'App\\Http\\Controllers\\CaisseController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaisseController.php',
         'App\\Http\\Controllers\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/CategoryController.php',
+        'App\\Http\\Controllers\\ClienController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\GcaisseController' => __DIR__ . '/../..' . '/app/Http/Controllers/GcaisseController.php',
         'App\\Http\\Controllers\\InformationController' => __DIR__ . '/../..' . '/app/Http/Controllers/InformationController.php',
         'App\\Http\\Controllers\\MagasinController' => __DIR__ . '/../..' . '/app/Http/Controllers/MagasinController.php',
         'App\\Http\\Controllers\\ProduitController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProduitController.php',
@@ -640,6 +644,8 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         'App\\Http\\Controllers\\Serial_controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Serial_controller.php',
         'App\\Http\\Controllers\\StockController' => __DIR__ . '/../..' . '/app/Http/Controllers/StockController.php',
         'App\\Http\\Controllers\\TransfertController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransfertController.php',
+        'App\\Http\\Controllers\\TransoldeController' => __DIR__ . '/../..' . '/app/Http/Controllers/TransoldeController.php',
+        'App\\Http\\Controllers\\VendeurController' => __DIR__ . '/../..' . '/app/Http/Controllers/VendeurController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
@@ -658,13 +664,17 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         'App\\Models\\Caisse' => __DIR__ . '/../..' . '/app/Models/Caisse.php',
         'App\\Models\\Category' => __DIR__ . '/../..' . '/app/Models/Category.php',
         'App\\Models\\Client' => __DIR__ . '/../..' . '/app/Models/Client.php',
+        'App\\Models\\Credit' => __DIR__ . '/../..' . '/app/Models/Credit.php',
+        'App\\Models\\Creditclient' => __DIR__ . '/../..' . '/app/Models/Creditclient.php',
         'App\\Models\\Facture' => __DIR__ . '/../..' . '/app/Models/Facture.php',
         'App\\Models\\Information' => __DIR__ . '/../..' . '/app/Models/Information.php',
         'App\\Models\\Lestock' => __DIR__ . '/../..' . '/app/Models/Lestock.php',
         'App\\Models\\Magasin' => __DIR__ . '/../..' . '/app/Models/Magasin.php',
         'App\\Models\\Produit' => __DIR__ . '/../..' . '/app/Models/Produit.php',
+        'App\\Models\\Sousproduits' => __DIR__ . '/../..' . '/app/Models/Sousproduits.php',
         'App\\Models\\Stock' => __DIR__ . '/../..' . '/app/Models/Stock.php',
         'App\\Models\\Transfert' => __DIR__ . '/../..' . '/app/Models/Transfert.php',
+        'App\\Models\\Transfert_soldes' => __DIR__ . '/../..' . '/app/Models/Transfert_soldes.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Models\\Vendeur' => __DIR__ . '/../..' . '/app/Models/Vendeur.php',
         'App\\Models\\Vente' => __DIR__ . '/../..' . '/app/Models/Vente.php',
@@ -5071,13 +5081,16 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
         'Picqer\\Barcode\\Exceptions\\InvalidFormatException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidFormatException.php',
         'Picqer\\Barcode\\Exceptions\\InvalidLengthException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidLengthException.php',
         'Picqer\\Barcode\\Exceptions\\InvalidOptionException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/InvalidOptionException.php',
+        'Picqer\\Barcode\\Exceptions\\UnknownColorException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/UnknownColorException.php',
         'Picqer\\Barcode\\Exceptions\\UnknownTypeException' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Exceptions/UnknownTypeException.php',
         'Picqer\\Barcode\\Helpers\\BinarySequenceConverter' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Helpers/BinarySequenceConverter.php',
+        'Picqer\\Barcode\\Helpers\\ColorHelper' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Helpers/ColorHelper.php',
         'Picqer\\Barcode\\Helpers\\StringHelpers' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Helpers/StringHelpers.php',
         'Picqer\\Barcode\\Renderers\\DynamicHtmlRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/DynamicHtmlRenderer.php',
         'Picqer\\Barcode\\Renderers\\HtmlRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/HtmlRenderer.php',
         'Picqer\\Barcode\\Renderers\\JpgRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/JpgRenderer.php',
         'Picqer\\Barcode\\Renderers\\PngRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/PngRenderer.php',
+        'Picqer\\Barcode\\Renderers\\RendererInterface' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/RendererInterface.php',
         'Picqer\\Barcode\\Renderers\\SvgRenderer' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Renderers/SvgRenderer.php',
         'Picqer\\Barcode\\Types\\TypeCodabar' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Types/TypeCodabar.php',
         'Picqer\\Barcode\\Types\\TypeCode11' => __DIR__ . '/..' . '/picqer/php-barcode-generator/src/Types/TypeCode11.php',
@@ -7292,9 +7305,9 @@ class ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInite95285e579e3c8c5acb8cf3fa1a71dc7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit7ead1154e3a4e6ac72d590a8442ba9ec::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit7ead1154e3a4e6ac72d590a8442ba9ec::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit7ead1154e3a4e6ac72d590a8442ba9ec::$classMap;
 
         }, null, ClassLoader::class);
     }

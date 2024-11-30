@@ -16,4 +16,6 @@ class Produit extends Model
         'prix_vent',
         'categorie_id',
     ];
+
+
 }

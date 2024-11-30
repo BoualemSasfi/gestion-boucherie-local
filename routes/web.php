@@ -15,6 +15,8 @@ use App\Http\Controllers\VendeurController;
 use App\Http\Controllers\GcaisseController;
 use App\Http\Controllers\AfficheController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VenteController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -126,7 +128,7 @@ Route::controller(ProduitController::class)->group(function () {
     Route::get('/admin/produit/{id}/edit', 'edit');
     Route::put('/admin/produit/{id}/update', 'update');
     Route::delete('/admin/produit/{id}/delete', 'destroy');
-    
+
     // sous produit 
     Route::post('/admin/produit/add_sous_produit', 'add_sous_produit');
     Route::delete('/admin/produit/{id}/delete_sous_produit', 'delete_sous_produit');
@@ -185,9 +187,9 @@ Route::controller(StockController::class)->group(function () {
 Route::controller(TransfertController::class)->group(function () {
     Route::get('/admin/transfert/{id_atl}/{id_mag}/{id_magasin}', 'transfert');
     Route::get('/admin/transfert_congele/{id_atl}/{id_mag}/{id_magasin}', 'transfert_congele');
-    
+
     Route::post('/admin/transfert/validtransfert', 'validTransfert')->name('validtransfert');
-    
+
     Route::get('/admin/retour/{id_atl}/{id_mag}/{id_magasin}', 'retour');
     Route::post('/admin/transfert/validretour', 'validRetour')->name('validRetour');
 
@@ -230,14 +232,14 @@ Route::controller(GcaisseController::class)->group(function () {
     Route::put('/admin/caisse/edit/save/{id}', 'update');
     Route::delete('/admin/caisse/delete/{id}', 'destroy');
     Route::get('admin/caisse/{id}/voir', 'voir');
-    
+
     // transfert
     Route::get('/admin/caisse/transfertmagasin/{id}', 'caisse_tranfert1');
     Route::get('/admin/caisse/lemagasin/{id_liste}/{id_magasin}', 'caisse_transfert2');
     Route::get('/admin/caisse/letransfert/{lacaisseId}/{selectedCaisseId}', 'letransfert');
-    
+
     Route::post('/admin/caisse/validtransfert', 'valide_transfer')->name('valide_transfer');
-    
+
     Route::get('admin/caisse/transfolde', 'trans_solde');
 
 
@@ -282,6 +284,42 @@ Route::controller(VendeurController::class)->group(function () {
     Route::get('/admin/vendeur/edit/{id}', 'edit');
 
 });
+//-------------------------------------------------------------------------
+// ---------               vente                            ----------
+// ------------------------------------------------------------------------
+Route::controller(VenteController::class)->group(function () {
+
+    Route::get('admin/newfact', 'newfact')->name('newfact');
+    Route::get('admin/facture/{id}', 'fact')->name('fact');
+
+    // categorie
+    Route::get('/get-categories/{stockId}', [VenteController::class, 'getCategoriesByStock']);
+
+    // prduit
+    Route::get('/get-produits/{categoryId}/{type_sId}', [VenteController::class, 'getProduitsByCategorie']);
+    // 
+    Route::get('/get-caisses/{atelierId}', [VenteController::class, 'getcaissesByAtelier']);
+
+    Route::get('/get-stock-s/{atelierId}', [VenteController::class, 'gettypeByAtelier']);
+
+    Route::get('/get-credet/{clientId}', [VenteController::class, 'getcredetByClient']);
+
+    Route::get('/get-prix/{id}', [VenteController::class, 'getPrixById']);
+
+    Route::get('/list_ventes/{id_facture}', [VenteController::class, 'list_ventes']);
+    // add vent
+    Route::post('/add_vente', [VenteController::class, 'add_vente']);
+
+    Route::delete('/delet_vente/{id_vente}', [VenteController::class, 'delet_vente']);
+
+    Route::get('/facture/{id_facture}/total', [VenteController::class, 'total_fact']);
+
+
+
+});
+
+
+
 
 
 
