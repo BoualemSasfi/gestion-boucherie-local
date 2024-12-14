@@ -14,6 +14,7 @@
         <h2 id="ticket-titre">{{ $informations->nom_entr }}</h2>
         <h4 id="ticket-titre">{{ $magasin->nom }}</h4>
         <h4 id="ticket-titre">{{ $informations->tel }}</h4>
+        <h5 id="ticket-titre" style="text-transform: uppercase;">{{ $type_vente }}</h5>
         
         <hr class="dashed-hr">
 

@@ -208,7 +208,7 @@ class CaisseController extends Controller
             Log::info('stock_id:' . $IdStock);
 
             $sousproduits = Lestock::join('produits', 'produits.id', '=', 'lestocks.produit_id')
-            ->join('sousproduits', 'sousproduits.id_pr', '=', 'produits.id')
+                ->join('sousproduits', 'sousproduits.id_pr', '=', 'produits.id')
                 ->select(
                     'lestocks.id as id',
                     'lestocks.produit_id as id_produit',
@@ -224,25 +224,25 @@ class CaisseController extends Controller
                 ->get();
 
             $leproduit = Lestock::join('produits', 'produits.id', '=', 'lestocks.produit_id')
-            ->select(
-                'lestocks.id as id',
-                'lestocks.produit_id as id_produit',
-                'produits.nom_pr as nom',
-                'produits.photo_pr as photo',
-                'produits.prix_vente as prix_detail',
-                'produits.semi_gros as prix_semigros',
-                'produits.gros as prix_gros',
-                'produits.unite_mesure as mesure'
-            )
-            ->where('lestocks.produit_id', $id_produit)
-            ->where('lestocks.stock_id', $IdStock)
-            ->first();
+                ->select(
+                    'lestocks.id as id',
+                    'lestocks.produit_id as id_produit',
+                    'produits.nom_pr as nom',
+                    'produits.photo_pr as photo',
+                    'produits.prix_vente as prix_detail',
+                    'produits.semi_gros as prix_semigros',
+                    'produits.gros as prix_gros',
+                    'produits.unite_mesure as mesure'
+                )
+                ->where('lestocks.produit_id', $id_produit)
+                ->where('lestocks.stock_id', $IdStock)
+                ->first();
 
             if ($sousproduits->isEmpty()) {
                 return response()->json(['message' => 'No products found'], 404);
             }
 
-            return response()->json(['sousproduits' => $sousproduits , 'produit' => $leproduit]);
+            return response()->json(['sousproduits' => $sousproduits, 'produit' => $leproduit]);
         } catch (\Exception $e) {
             Log::error($e);
             return response()->json(['error' => 'Internal Server Error'], 500);
@@ -296,7 +296,7 @@ class CaisseController extends Controller
 
 
 
-    public function Nouvelle_Vente($id_facture, $id_user, $id_lestock, $id_produit, $prix_unitaire, $qte, $prix_total)
+    public function Nouvelle_Vente($id_facture, $id_user, $id_lestock, $id_produit, $id_sousproduit, $nom_produit, $prix_unitaire, $qte, $prix_total)
     {
         try {
             $NewVente = new Vente();
@@ -304,19 +304,29 @@ class CaisseController extends Controller
             $NewVente->id_user = $id_user;
             $NewVente->id_lestock = $id_lestock;
             $NewVente->id_produit = $id_produit;
+            if($id_sousproduit !== '0'){
+                $NewVente->id_sousproduit = $id_sousproduit;
+                $NewVente->produit = false;
+                $NewVente->sous_produit = true;
+            }else{
+                $NewVente->produit = true;
+                $NewVente->sous_produit = false; 
+            }
+            $NewVente->designation_produit = $nom_produit;
             $NewVente->prix_unitaire = $prix_unitaire;
             $NewVente->quantite = $qte;
             $NewVente->total_vente = $prix_total;
 
             // calculer le benefice 
             $benefice = 0;
-            $Produit = Produit::find($id_produit);
-            if ($Produit) {
-                $prix_achat = $Produit->prix_achat;
-                $prix_vente = $Produit->prix_vente;
-                $benefice = ($prix_vente - $prix_achat) * $qte;
-                $mesure = $Produit->unite_mesure;
-            }
+                $Produit = Produit::find($id_produit);
+                if ($Produit) {
+                    $prix_achat = $Produit->prix_achat;
+                    $prix_vente = $Produit->prix_vente;
+                    $benefice = ($prix_vente - $prix_achat) * $qte;
+                    $mesure = $Produit->unite_mesure;
+                }
+
             $NewVente->benefice = $benefice;
             $NewVente->unite_mesure = $mesure;
             $NewVente->save();
@@ -329,26 +339,33 @@ class CaisseController extends Controller
     public function Get_Liste_Ventes($id_facture)
     {
         try {
-            $ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
-                ->join('categories', 'categories.id', '=', 'produits.categorie_id')
+            $ventes = Vente::where('id_facture', $id_facture)
                 ->select(
-                    'ventes.id as id',
-                    'categories.nom as nom_categorie',
-                    'produits.nom_pr as nom_produit',
-                    'ventes.prix_unitaire as prix_produit',
-                    'ventes.quantite as quantite',
-                    'ventes.total_vente as prix_total',
-                    'ventes.unite_mesure as unite_mesure'
+                    'id',
+                    'designation_produit',
+                    'prix_unitaire',
+                    'quantite',
+                    'total_vente',
+                    'unite_mesure'
                 )
-                ->where('id_facture', $id_facture)
                 ->get();
-
-            return response()->json(['ventes' => $ventes]);
+    
+            // // Vérification si des ventes existent pour cette facture
+            // if ($ventes->isEmpty()) {
+            //     return response()->json(['message' => 'Aucune vente trouvée pour cette facture'], 404);
+            // }
+    
+            // Retour des ventes au format JSON
+            return response()->json(['ventes' => $ventes], 200);
         } catch (\Exception $e) {
-            Log::error($e);
-            return response()->json(['error' => 'controller-function: Get_Liste_Ventes ! erreur'], 500);
+            // Enregistrement de l'erreur dans les logs
+            Log::error('Erreur dans Get_Liste_Ventes : ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
+    
+            // Retour d'une réponse JSON avec un message d'erreur
+            return response()->json(['error' => 'Une erreur est survenue lors de la récupération des ventes'], 500);
         }
     }
+    
 
     public function Total_Facture($id_facture)
     {
@@ -394,7 +411,7 @@ class CaisseController extends Controller
 
 
 
-    public function Valider_Facture($id_user, $id_facture, $id_caisse, $id_client, $total, $versement, $credit, $etat)
+    public function Valider_Facture($id_user, $id_facture, $id_caisse, $id_client, $type_vente, $total, $versement, $credit, $etat)
     {
         try {
             $Facture = Facture::find($id_facture);
@@ -408,6 +425,9 @@ class CaisseController extends Controller
                 $Facture->total_facture = $total;
                 $Facture->versement = $versement;
                 $Facture->credit = $credit;
+                if($type_vente == 'details'){ $Facture->type_vente = 'Vente en détails';}
+                if($type_vente == 'semigros'){ $Facture->type_vente = 'Vente en semi-gros';}
+                if($type_vente == 'gros'){ $Facture->type_vente = 'Vente en gros';}
                 $Facture->save();
 
                 if ($credit > 0) {
@@ -434,17 +454,7 @@ class CaisseController extends Controller
                 // Appeler la méthode 'ImprimerTicket'
                 // $this->ImprimerTicket($Facture);
 
-                $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
-                    ->select(
-                        'ventes.id as id',
-                        'ventes.id_lestock as id_lestock',
-                        'produits.nom_pr as nom_produit',
-                        'ventes.prix_unitaire as prix_produit',
-                        'ventes.quantite as quantite',
-                        'ventes.total_vente as prix_total'
-                    )
-                    ->where('id_facture', $Facture->id)
-                    ->get();
+                $Ventes = Vente::where('id_facture', $Facture->id)->get();
 
                 if ($Ventes) {
                     // gérer le stock magasin apres la vente 
@@ -625,18 +635,15 @@ class CaisseController extends Controller
         }
 
         $Informtions = Information::first();
-        $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
-            ->join('categories', 'categories.id', '=', 'produits.categorie_id')
+        $Ventes = Vente::where('id_facture', $id_facture)
             ->select(
                 'ventes.id as id',
-                'categories.nom as nom_categorie',
-                'produits.nom_pr as nom_produit',
+                'ventes.designation_produit as nom_produit',
                 'ventes.prix_unitaire as prix_produit',
                 'ventes.quantite as quantite',
                 'ventes.total_vente as prix_total',
                 'ventes.unite_mesure as unite_mesure'
             )
-            ->where('id_facture', $id_facture)
             ->get();
 
         // Calculer le nombre de lignes
@@ -667,6 +674,7 @@ class CaisseController extends Controller
             'total' => $Facture->total_facture,
             'versement' => $Facture->versement,
             'credit' => $Facture->credit,
+            'type_vente' => $Facture->type_vente,
             'ventes' => $Ventes,
             'nombre' => $nombreDeLignes,
 
@@ -729,18 +737,15 @@ class CaisseController extends Controller
 
         $Informtions = Information::first();
 
-        $Ventes = Vente::join('produits', 'produits.id', '=', 'ventes.id_produit')
-            ->join('categories', 'categories.id', '=', 'produits.categorie_id')
+        $Ventes = Vente::where('id_facture', $id_facture)
             ->select(
                 'ventes.id as id',
-                'categories.nom as nom_categorie',
-                'produits.nom_pr as nom_produit',
+                'ventes.designation_produit as nom_produit',
                 'ventes.prix_unitaire as prix_produit',
                 'ventes.quantite as quantite',
                 'ventes.total_vente as prix_total',
                 'ventes.unite_mesure as unite_mesure'
             )
-            ->where('id_facture', $id_facture)
             ->get();
 
         // Calculer le nombre de lignes
@@ -770,6 +775,7 @@ class CaisseController extends Controller
             'total' => $Facture->total_facture,
             'versement' => $Facture->versement,
             'credit' => $Facture->credit,
+            'type_vente' => $Facture->type_vente,
             'ventes' => $Ventes,
             'nombre' => $nombreDeLignes,
 
@@ -908,6 +914,37 @@ class CaisseController extends Controller
             $Vente->total_vente = $nv_prix;
 
             $Vente->save();
+        } catch (\Exception $e) {
+            Log::error($e);
+            return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+
+    public function Calculer_Ventes($id_facture, $type_vente)
+    {
+        try {
+            $Ventes = Vente::where('id_facture', $id_facture)->get();
+            foreach ($Ventes as $Vente) {
+                $Quantite = $Vente->quantite;
+                $IdProduit = $Vente->id_produit;
+                $LeProduit = Produit::find($IdProduit);
+                if ($LeProduit) {
+                    if ($type_vente == 'details') {
+                        $NouveauPrix = $LeProduit->prix_vente;
+                    }
+                    if ($type_vente == 'semigros') {
+                        $NouveauPrix = $LeProduit->semi_gros;
+                    }
+                    if ($type_vente == 'gros') {
+                        $NouveauPrix = $LeProduit->gros;
+                    }
+                    $Total = $NouveauPrix * $Quantite;
+                    $Vente->prix_unitaire = $NouveauPrix;
+                    $Vente->total_vente = $Total;
+                    $Vente->save();
+                }
+            }
         } catch (\Exception $e) {
             Log::error($e);
             return response()->json(['error' => 'Internal Server Error'], 500);
