@@ -11,26 +11,18 @@
             <h2>Nouvelle vente Facture N° {{$facture->id}} </h2>
         </div>
         <div class="col-2 text-right">
-
         </div>
-
     </div>
 </div>
-
 {{--
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 --}}
-
-
 <div class="container" style="margin-top: 10px;">
     <div class="row animate__animated animate__backInLeft">
-
-
         <!-- information atelier -->
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
             <div class="card shadow m-1">
-
-                <form class="edit-form" action="{{ url('/admin/client/add/save') }}" method="post"
+                <form class="edit-form" action="{{ url('/admin/facture/save') }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
@@ -45,12 +37,10 @@
                                     @endforeach
                                 </select>
                             </div>
-
                             <div class="col-4">
                                 <h5 class="text-center">Type de stock</h5>
                                 <select name="type_s" id="type-s-select" class="form-control">
                                     <option value="" disabled selected>Types</option>
-
                                 </select>
                             </div>
                             <div class="col-4">
@@ -59,21 +49,14 @@
                                     <option value="" disabled selected>Caisses</option>
                                 </select>
                             </div>
-
                         </div>
-
-
                     </div>
             </div>
-
         </div>
-
         <!-- Fin information atelier -->
-
         <!-- information Client -->
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
             <div class="card shadow m-1">
-
                 <div class="card-body">
                     <H4 class="text-center">Information Client <i class="fa-solid fa-user-tie fa-lg"></i></H4>
                     <div class="row">
@@ -86,31 +69,19 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="col-6">
                             <h5 class="text-center"> Crédit </h5>
                             <h4 class="text-center  digital " style="color:gray;" id="credet-select">
-
                                 ----.-- DA</h4>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-
         </div>
-
-
-
-
-
         <!-- information Client -->
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
             <div class="card shadow m-1">
-
                 <div class="card-body">
-
                     <div class="row">
                         <div class="col-6">
                             <h5 class="text-center">Type de vente </h5>
@@ -121,7 +92,6 @@
                                 <option value="Gros">Gros</option>
                             </select>
                         </div>
-
                         <div class="col-6">
                             <h5 class="text-center">livraison <i class="fa-solid fa-truck  fa-lg"
                                     style="color: #a6546c;">
@@ -139,46 +109,29 @@
                                         disabled>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
-
                 </div>
             </div>
-
         </div>
         <!-- total -->
         <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 mx-auto">
             <div class="card shadow m-1" style="background-color: #000000;">
-
-
                 <div class="card-body  text-center">
-
                     <div class="row">
                         <div class="col-2">
                             <h2 class="digital3">TOTAL</h2>
-
                         </div>
                         <div class="col-10">
                             <h2 class="digital2" id="total_fact">0.00 <span class="digital3">DA</span> </h2>
                         </div>
-
-
                     </div>
-
-
                 </div>
             </div>
-
         </div>
-
-
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mx-auto">
             <div class="card shadow m-1">
-
                 <div class="card-body">
-
                     <!-- categorie et produit  -->
                     <div class="row">
                         <div class="col-3">
@@ -188,8 +141,6 @@
                                 <!-- Les options seront remplies par AJAX -->
                             </select>
                         </div>
-
-
                         <div class="col-3">
                             <h6 class="text-center"> Produits </h6>
                             <select name="produit" id="produit-select" class="form-control" disabled>
@@ -197,115 +148,229 @@
                                 <!-- Les options des produits seront chargées dynamiquement -->
                             </select>
                         </div>
-                        <!-- <div class="col-2">
-                            <h6 class="text-center"> Prix / Kg</h6>
-                            <input type="text" name="prix" id="prix-input" class="form-control digital1 text-center"
-                                placeholder="0000.00" readonly ></input>
-                        </div> -->
-                        <!-- LABEL -->
 
-                        <div class="col-2">
+                        <!-- LABEL -->
+                        <!-- <div class="col-2">
                             <h6 class="text-center">Prix / Kg</h6>
                             <h6 style="color:black;" class="text-center digital" name="prix" id="prix-input" disabled>
                                 0.00 DA
                             </h6>
-                        </div>
-
-
+                        </div> -->
                         <div class="col-1">
                             <h6 class="text-center "> Qantité</h6>
                             <input type="text" name="qantite" id="qantite" class="form-control digital1 text-center"
                                 placeholder="00" disabled></input>
                         </div>
-
+                        <div class="col-2">
+                            <h6 class="text-center"> Prix / Kg</h6>
+                            <input type="text" name="prix" id="prix-input" class="form-control digital1 text-center"
+                                placeholder="0.00 DA" disabled></input>
+                        </div>
                         <div class="col-2">
                             <h6 class="text-center "> Total </h6>
                             <h6 class="text-center digital " id="total"> 0.00 DA </h6>
-
                         </div>
-
                         <div class="col-1">
                             <h6 class="text-center">Action</h6>
-                            <!-- <input type="text" name="ajouter" class="form-control" placeholder=" "></input> -->
-
-
                             <button type="button" onclick="ajouter(this)" class="btn btn-success"
                                 class="btn-description" disabled id="ajt">
                                 <i class="fa-solid fa-plus  fa-lg"></i>
                             </button>
                         </div>
-
-
                     </div>
                     <!-- fin  -->
                     <br>
-
                     <div class="row">
                         <div class="col-12">
                             <div class="container mt-4">
                                 <!-- Table of products -->
                                 <table class="table-striped table-bordered col-12">
-
                                     <thead class="text-center">
                                         <tr>
                                             <th>Categorie </th>
                                             <th>Produit</th>
-                                            <th>PU </th>
                                             <th>Q </th>
+                                            <th>PU </th>
                                             <th>total</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-
                                     <tbody>
-                                        <!-- @foreach ($listes as $liste)
-                                            <tr class="text-center">
-                                                <td>{{$liste->categorie}}</td>
-                                                <td>{{$liste->produit}}</td>
-                                                <td>{{$liste->PU}} DA</td>
-                                                <td>{{$liste->Q}}</td>
-                                                <td>{{$liste->total}} DA</td>
-                                                <td>
-                                                    <button onclick="afficherSweetAlert({{ $liste->id }})"
-                                                        style="background: none; border: none;">
-                                                        <i class="fa-solid fa-circle-xmark fa-lg"
-                                                            style="color: #f7224c;"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        @endforeach -->
+                                        <!-- function pour recupirer les donner  -->
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <div class="form-group col-12">
+                        <div class="form-group row justify-content-center text-center">
+                            <div class="col-6">
+                                <button type="button" onclick="validerVente(this)" class="btn btn-success p-2"><i
+                                        class="fas fa-check fa-lg mr-2"></i><span
+                                        class="btn-description">Validier</span></button>
+                            </div>
 
-
-
+                            <div class="col-6">
+                                <button type="button" onclick="annuler({{ $facture->id }})"
+                                    class="btn btn-danger p-2"><i class="fas fa-check fa-lg mr-2"></i><span
+                                        class="btn-description">Annuler</span></button>
+                                <!-- function pour annuler la facture  -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            </form>
         </div>
-
         <!-- fin -->
     </div>
 </div>
 
 
-<!-- fucntion pour total de la facture -->
+<!-- fucntion pour validier facteur  -->
+<script>
+    function validerVente(button) {
+        // Récupérer les valeurs des champs
+        const id_magasin = document.getElementById('atelier-select').value.trim();
+        const id_caisse = document.getElementById('caisse-select').value.trim();
+        const id_client = document.getElementById('client-select').value.trim();
+        const type_vent = document.getElementById('type-select').value.trim();
+        const id_user = "{{ Auth::user()->id }}";
+        // Vérifier si les champs obligatoires sont sélectionnés
+        if (!id_magasin || !id_caisse || !id_client) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'Veuillez sélectionner tous les champs obligatoires avant de valider.',
+            });
+            return;
+        }
+
+        // Récupérer les autres valeurs nécessaires
+        const id_fact = {{$facture->id}};
+        const id_type_s = document.getElementById('type-s-select').value.trim();
+        const total = parseFloat(document.getElementById('total_fact').innerText.trim());
+
+        // Afficher le SweetAlert2 avec les champs requis
+        Swal.fire({
+            title: 'Validation de la vente',
+            html: `
+                <p>Total à payer : <strong>${total.toFixed(2)} DA</strong></p>
+                <label for="montant-input">Versement:</label>
+                <input type="number" id="montant-verse" class="swal2-input" value="${total.toFixed(2)}" min="0" max="${total}" step="0.01">
+                <p>Crédit : <strong id="credet-label">0.00 DA</strong></p>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Valider',
+            cancelButtonText: 'Annuler',
+            didOpen: () => {
+                const montantInput = document.getElementById('montant-verse');
+                montantInput.addEventListener('input', () => updateCredet(total));
+            },
+            preConfirm: () => {
+                const montant = parseFloat(document.getElementById('montant-verse').value);
+                if (isNaN(montant) || montant < 0 || montant > total) {
+                    Swal.showValidationMessage('Veuillez saisir un montant valide (entre 0 et le total).');
+                    return false;
+                }
+                return montant;
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const montant = document.getElementById('montant-verse').value.trim();
+                const credet = total - montant;
+
+                // Préparer les données pour l'envoi AJAX
+                const data = {
+                    id_fact: id_fact,
+                    id_magasin: id_magasin,
+                    id_caisse: id_caisse,
+                    id_client: id_client,
+                    id_type_s: id_type_s,
+                    total: total,
+                    montant: montant,
+                    credet : credet,
+                    type_vent : type_vent,
+                    id_user : id_user,
+                    livaison: document.getElementById('montant-input').value.trim()
+                };
+                // Afficher les données dans la console
+                console.log('Données préparées pour lenvoi :', data);
+
+                // Envoyer les données via AJAX
+                fetch('/valid_vente', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(data)
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Erreur HTTP: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Vente validée avec succès',
+                            text: 'La vente a été enregistrée.',
+                        });
+                        // Optionnel : Actualiser la page ou d'autres éléments de l'interface utilisateur
+                    })
+                    .catch(error => {
+                        console.error('Erreur:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Erreur',
+                            text: 'Une erreur s\'est produite lors de la validation de la vente.',
+                        });
+                    });
+            }
+        });
+    }
+
+    // function updateCredet(total) {
+    //     const montantInput = document.getElementById('montant-input');
+    //     if (!montantInput) return; // Protection si l'élément n'est pas encore chargé
+    //     const montant = parseFloat(montantInput.value);
+    //     const credet = isNaN(montant) ? total : Math.max(0, total - montant); // Empêche un crédit négatif
+    //     document.getElementById('credet-label').textContent = `${credet.toFixed(2)} DA`;
+    // }
+
+</script>
 
 
 
-
-
-
+<!-- function pour annuler la facture  -->
+<script>
+    function annuler(id_facture) {
+        // SweetAlert pour la confirmation
+        Swal.fire({
+            title: 'Êtes-vous sûr ?',
+            text: "Cette action annulera définitivement la facture.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#10A64FFF',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui',
+            cancelButtonText: 'Non'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Redirection vers la route Laravel après confirmation
+                window.location.href = `/annuler-facture/${id_facture}`;
+            }
+        });
+    }
+</script>
 <!-- // Fonction pour charger les données des ventes a l'affichage -->
 <script>
     function loadVentes(id_facture) {
         // Afficher un message de chargement
         const tbody = document.querySelector('table tbody');
         tbody.innerHTML = '<tr><td colspan="6" class="text-center">Chargement...</td></tr>';
-
         // Effectuer une requête AJAX pour obtenir les données avec CSRF token
         fetch(`/list_ventes/${id_facture}`, {
             method: 'GET', // ou 'POST', selon votre type de requête
@@ -318,7 +383,6 @@
             .then(data => {
                 // Vider le message de chargement
                 tbody.innerHTML = '';
-
                 // Si des données sont trouvées
                 if (data.length > 0) {
                     // Remplir le tableau avec les nouvelles données
@@ -331,8 +395,8 @@
                         row.innerHTML = `
                     <td>${item.categorie}</td>
                     <td>${item.produit}</td>
-                    <td>${item.PU} DA</td>
                     <td>${item.Q}</td>
+                    <td>${item.PU} DA</td>
                     <td>${item.total} DA</td>
                     <td>
                         <button onclick="delet_(${item.id})" style="background: none; border: none;">
@@ -346,7 +410,7 @@
                     });
                 } else {
                     // Si aucune donnée, afficher un message
-                    tbody.innerHTML = '<tr><td colspan="6" class="text-center">Aucune vente trouvée</td></tr>';
+                    tbody.innerHTML = '<tr><td colspan="6" class="text-center">Aucune vente </td></tr>';
                 }
             })
             .catch(error => {
@@ -355,19 +419,12 @@
                 alert('Erreur lors du chargement des données.');
             });
     }
-
-
-
-
     // Appeler la fonction avec l'ID de la facture pour charger les données
     window.onload = function () {
         const id_facture = {{$facture->id}}; // Remplacer par l'ID de la facture actuel
         loadVentes(id_facture);
     };
-
 </script>
-
-
 <!-- total facture funciton  -->
 <script>
     function updateTotalFact(id_facture) {
@@ -399,12 +456,9 @@
                 alert('Impossible de mettre à jour le total.');
             });
     }
-
 </script>
 
-
 <!-- function pour ajouter un vente -->
-
 <script>
     function ajouter(button) {
         // Récupérer les valeurs des champs
@@ -412,12 +466,9 @@
         const id_type = document.getElementById('type-s-select').value.trim(); // Correction de l'extraction
         const id_categorie = document.getElementById('categorie-select').value.trim();
         const id_produit = document.getElementById('produit-select').value.trim();
-        const prix = parseFloat(document.getElementById('prix-input').innerText.trim()); // Conversion en nombre
+        const prix = parseFloat(document.getElementById('prix-input').value.trim()); // Conversion en nombre
         const quantite = parseInt(document.getElementById('qantite').value.trim());
         const total = parseFloat(document.getElementById('total').innerText.trim());
-
-
-
         // Vérifier que les champs obligatoires sont remplis
         if (!id_categorie || !id_produit || isNaN(quantite) || quantite <= 0) {
             // Afficher un message d'erreur avec SweetAlert2
@@ -428,10 +479,8 @@
             });
             return;
         }
-
         // Désactiver le bouton pour éviter les clics multiples
         button.disabled = true;
-
         // Préparer les données à envoyer
         const data = {
             id_fact: id_fact,
@@ -461,24 +510,35 @@
             .then(data => {
                 // Réactiver le bouton
                 button.disabled = false;
-
                 // Afficher un message de succès avec SweetAlert2
-                Swal.fire({
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+
+                Toast.fire({
                     icon: 'success',
-                    title: 'Produit ajouté avec succès!',
-                    text: 'Le produit a été ajouté à la vente.',
+                    title: 'Produit ajouté avec succès!'
+
                 });
 
                 // Réinitialiser les champs pour une nouvelle saisie (optionnel)
                 document.getElementById('categorie-select').value = '';
                 document.getElementById('produit-select').value = '';
-                document.getElementById('prix-input').innerText = '0.00 DA';
+                document.getElementById('prix-input').value = '0.00 DA';
                 document.getElementById('qantite').value = '';
                 document.getElementById('total').innerText = '0.00 DA';
 
                 loadVentes(id_fact);
                 updateTotalFact(id_fact)
-
+                total_livr();
             })
             .catch(error => {
                 // Réactiver le bouton en cas d'erreur
@@ -496,11 +556,103 @@
     }
 </script>
 
-
 <!-- function pour supprimer une vente   -->
 <script>
-    // Fonction pour supprimer une vente
-    // Fonction pour supprimer une vente
+    function ajouter(button) {
+        // Récupérer les valeurs des champs
+        const id_fact = {{$facture->id}}; // ID de la facture injecté depuis Blade
+        const id_type = document.getElementById('type-s-select').value.trim(); // Correction de l'extraction
+        const id_categorie = document.getElementById('categorie-select').value.trim();
+        const id_produit = document.getElementById('produit-select').value.trim();
+        const prix = parseFloat(document.getElementById('prix-input').value.trim()); // Conversion en nombre
+        const quantite = parseInt(document.getElementById('qantite').value.trim());
+        const total = parseFloat(document.getElementById('total').innerText.trim());
+        // Vérifier que les champs obligatoires sont remplis
+        if (!id_categorie || !id_produit || isNaN(quantite) || quantite <= 0) {
+            // Afficher un message d'erreur avec SweetAlert2
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Veuillez remplir tous les champs correctement avant d\'ajouter.',
+            });
+            return;
+        }
+        // Désactiver le bouton pour éviter les clics multiples
+        button.disabled = true;
+        // Préparer les données à envoyer
+        const data = {
+            id_fact: id_fact,
+            id_type: id_type,
+            id_categorie: id_categorie,
+            id_produit: id_produit,
+            prix: prix,
+            quantite: quantite,
+            total: total
+        };
+        console.log("Données du produit à ajouter:", data);
+        // Envoi des données via AJAX
+        fetch('/add_vente', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Réactiver le bouton
+                button.disabled = false;
+                // Afficher un message de succès avec SweetAlert2
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Produit ajouté avec succès!',
+                    text: 'Le produit a été ajouté à la vente.'
+                });
+
+                // Réinitialiser les champs pour une nouvelle saisie (optionnel)
+                document.getElementById('categorie-select').value = '';
+                document.getElementById('produit-select').value = '';
+                document.getElementById('prix-input').value = '0.00 DA';
+                document.getElementById('qantite').value = '';
+                document.getElementById('total').innerText = '0.00 DA';
+
+                loadVentes(id_fact);
+                updateTotalFact(id_fact)
+                total_livr();
+            })
+            .catch(error => {
+                // Réactiver le bouton en cas d'erreur
+                button.disabled = false;
+                console.error('Erreur:', error);
+
+                // Afficher un message d'erreur avec SweetAlert2
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Une erreur s\'est produite',
+                    text: 'Impossible d\'ajouter le produit, veuillez réessayer.',
+                });
+            });
+
+    }
+
     function delet_(id_vente) {
         const id_fact = {{$facture->id}}; // ID de la facture injecté depuis Blade
         // Afficher une boîte de confirmation SweetAlert avant de procéder
@@ -528,12 +680,23 @@
                             const row = document.querySelector(`button[onclick="delet_(${id_vente})"]`).closest('tr');
                             row.remove();
                             updateTotalFact(id_fact)
+                            total_livr();
                             // Afficher un message de succès avec SweetAlert
-                            Swal.fire({
-                                icon: 'success',
-                                title: 'Vente supprimée',
-                                text: 'La vente a été supprimée avec succès.',
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 3000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
 
+                            Toast.fire({
+                                icon: 'error',
+                                title: 'Vente supprimée avec succès.'
                             });
                         } else {
                             // Afficher un message d'erreur avec SweetAlert
@@ -547,7 +710,6 @@
                     })
                     .catch(error => {
                         console.error('Erreur AJAX:', error);
-
                         // Afficher un message d'erreur avec SweetAlert en cas d'échec de la requête
                         Swal.fire({
                             icon: 'error',
@@ -561,31 +723,23 @@
                 Swal.fire({
                     icon: 'info',
                     title: 'Annulation',
-                    text: 'La vente n\'a pas été supprimée.',
-
+                    text: 'La vente n\'a pas été supprimée.'
                 });
             }
         });
     }
-
 </script>
-
-
 <!-- reset function  -->
 <script>
     function reset() {
         const typeSelect = document.getElementById('type-select');
         const categorieSelect = document.getElementById('categorie-select');
         const produitSelect = document.getElementById('produit-select');
-
         const prixInput = document.getElementById('prix-input'); // Champ de prix
         const qantite = document.getElementById('qantite'); // Champ de quantité
         const total = document.getElementById('total'); // Affichage total
-
         const ajtButton = document.getElementById('ajt');
-
         ajtButton.disabled = true;
-
         // Réinitialiser les options de typeSelect
         typeSelect.innerHTML = `
             <option value="" disabled selected>Choisissez un Type</option>
@@ -594,37 +748,26 @@
             <option value="Gros">Gros</option>
         `;
         typeSelect.disabled = true;
-
         // Réinitialiser et désactiver categorieSelect
         categorieSelect.innerHTML = `
             <option value="" disabled selected>Choisissez une catégorie</option>
         `;
         categorieSelect.disabled = true;
-
         // Réinitialiser et désactiver produitSelect
         produitSelect.innerHTML = `
             <option value="" disabled selected>Choisissez un produit</option>
         `;
         produitSelect.disabled = true;
-
         // Réinitialiser le champ prix
-        prixInput.innerHTML = '0.00 DA'; // Si c'est un input, utilisez `.value`
-
+        prixInput.value = '0.00 DA'; // Si c'est un lavle, utilisez `.innerHTML`
         // Désactiver et réinitialiser le champ quantité
         qantite.value = '';
         qantite.disabled = true;
-
         // Réinitialiser le total
         total.innerHTML = '0.00 DA'; // Assurez-vous que total est un élément textuel, sinon utilisez `.value`
-
         console.log('Tous les champs ont été réinitialisés et désactivés.');
     }
 </script>
-
-
-
-
-
 <!-- script pour type de vente  -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -635,75 +778,52 @@
         const prixInput = document.getElementById('prix-input');
         const qantite = document.getElementById('qantite');
         const ajtButton = document.getElementById('ajt');
-
         // Désactiver les champs au départ
         categorieSelect.disabled = true;
         produitSelect.disabled = true;
         prixInput.disabled = true;
         qantite.disabled = true;
         ajtButton.disabled = true;
-
         // Écouter le changement du "Type de vente"
         typeSelect.addEventListener('change', function () {
             const selectedValue = this.value; // Récupérer la valeur choisie
-
             // Activer les autres champs
             categorieSelect.disabled = false;
             produitSelect.disabled = false;
-            prixInput.disabled = false;
-            qantite.disabled = false;
+            prixInput.disabled = true;
+            qantite.disabled = true;
             ajtButton.disabled = false;
-
             console.log(`Type de vente sélectionné : ${selectedValue}`);
-
             // Appeler le deuxième script lorsque le type est changé
             $('#produit-select').trigger('change');
-
-
         });
     });
 </script>
-
-
-
-
-
-
-
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const prixInput = document.getElementById('prix-input'); // Élément Prix / Kg (h6)
         const qantiteInput = document.getElementById('qantite'); // Champ Quantité (input)
         const totalElement = document.getElementById('total');   // Élément Total (h6)
-
         // Fonction pour mettre à jour le total
         function updateTotal() {
             // Extraire le prix depuis le texte (en retirant " DA" à la fin)
-            const prix = parseFloat(prixInput.textContent.replace(' DA', '')) || 0;
+            const prix = parseFloat(prixInput.value.replace(' DA', '')) || 0;
             const quantite = parseFloat(qantiteInput.value) || 0; // Récupérer la quantité (valeur numérique)
             const total = prix * quantite;                      // Calculer le total
-
             // Mettre à jour l'affichage du total
             totalElement.textContent = `${total.toFixed(2)} DA`;
         }
-
         // Écouter les changements sur le champ Quantité
         qantiteInput.addEventListener('input', updateTotal);
     });
 </script>
-
-
-
 {{-- script sauvegarder --}}
 <script>
     function sauvegarder(button) {
         // Utilisez le bouton pour obtenir le formulaire parent
         const form = button.closest('.edit-form');
-
         // Vérifiez si le formulaire a été trouvé
         if (form) {
-
             Swal.fire({
                 title: "Voulez- vous sauvegarder le client .. ? ",
                 // text: name,
@@ -724,8 +844,46 @@
     }
 </script>
 <!-- fin -->
-
-
+<!-- function pour recupirer la valeur de livraison  -->
+<script>
+    function total_livr() {
+        // Assurez-vous que `id_fact` est bien défini
+        const id_fact = {{$facture->id ?? 'null'}};
+        const montantInput = $('#montant-input'); // Utilisation de jQuery pour sélectionner l'élément
+        // Vérification avant de continuer
+        if (!id_fact || id_fact === 'null') {
+            console.error('ID de la facture manquant');
+            alert('Impossible de récupérer le total : ID de facture non défini.');
+            return;
+        }
+        // AJAX pour récupérer le total
+        $.ajax({
+            url: `/get-livr/${id_fact}`, // URL de l'API
+            method: 'GET', // Méthode HTTP
+            success: function (data) {
+                // Vérifier si la réponse contient `total`
+                if (data && data.total !== undefined) {
+                    // Convertir `total` en nombre et mettre à jour le champ input
+                    const total = parseFloat(data.total); // Conversion en nombre
+                    const totale = total * 10;
+                    if (!isNaN(totale)) {
+                        montantInput.val(totale); // Afficher avec 2 décimales
+                    } else {
+                        console.error('Valeur de total non valide:', data.total);
+                        alert('Données reçues invalides.');
+                    }
+                } else {
+                    console.error('Données reçues invalides', data);
+                    alert('Réponse invalide reçue du serveur.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Erreur lors de la récupération du total:', error);
+                alert('Impossible de récupérer le total de la livraison.');
+            }
+        });
+    }
+</script>
 <!-- script pour les produit  -->
 <script>
     $(document).ready(function () {
@@ -735,17 +893,13 @@
             const prixInput = $('#prix-input');
             const qantite = $('#qantite');
             const total = $('#total');
-
-
             const atelierId = $('#atelier-select').val();
             const type_sId = $('#type-s-select').val();
             // Vider le select des produits
             produitSelect.empty().append('<option value="" disabled selected>Chargement...</option>');
-
             // Effectuer une requête AJAX
             $.ajax({
                 url: '/get-produits/' + categoryId + '/' + type_sId,
-
                 method: 'GET',
                 success: function (data) {
                     produitSelect.empty().append('<option value="" disabled selected>Choisissez un produit</option>');
@@ -757,8 +911,6 @@
                         qantite.attr('disabled', true);
                         qantite.val('');
                         total.text('0.00 DA');
-
-
                     });
                 },
                 error: function () {
@@ -766,9 +918,7 @@
                 }
             });
         });
-
     });
-
     // script pour prix produit 
     $(document).ready(function () {
         $('#produit-select').on('change', function () {
@@ -777,14 +927,12 @@
             const qantite = $('#qantite');
             const total = $('#total');
             const typeSelect = $('#type-select').val(); // Récupérer le type sélectionné
-
             const atelierID = $('#atelierid');
             const type_s_ID = $('#type_s_id');
             if (produitId) {
                 // Mettre des valeurs de chargement
                 prixInput.val('Chargement...');
                 total.text('Chargement');
-
                 // Appeler l'API avec AJAX
                 $.ajax({
                     url: '/get-prix/' + produitId,
@@ -792,7 +940,6 @@
                     success: function (data) {
                         if (data.prix_vente) {
                             let prixFormate;
-
                             // Vérifier le type sélectionné pour ajuster le prix
                             if (typeSelect === 'Details') {
                                 prixFormate = parseFloat(data.prix_vente).toFixed(2);
@@ -803,15 +950,13 @@
                             } else {
                                 prixFormate = '0.00'; // Valeur par défaut
                             }
-
                             // Mettre à jour le champ Prix
-                            prixInput.text(`${prixFormate} DA`);
-
+                            prixInput.val(`${prixFormate}`);
                             // Activer et réinitialiser le champ Quantité
+                            prixInput.removeAttr('disabled');
                             qantite.removeAttr('disabled');
                             qantite.val('');
                             total.text('0.00 DA'); // Réinitialiser le total
-
                         } else {
                             // Si aucun prix disponible
                             prixInput.val('Prix non disponible');
@@ -829,16 +974,8 @@
             }
         });
     });
-
-
-
-
 </script>
 <!-- fin  -->
-
-
-
-
 <!-- script pour les caisses et type de stock   -->
 <script>
     $(document).ready(function () {
@@ -847,12 +984,9 @@
             const caisseSelect = $('#caisse-select');
             const typeSelect = $('#type-s-select');
             const type_vent = $('#type');
-
-
             // Réinitialiser les listes déroulantes avec un message de chargement
             caisseSelect.empty().append('<option value="" disabled selected>Chargement des caisses...</option>');
             typeSelect.empty().append('<option value="" disabled selected>Chargement des types...</option>');
-
             // Récupérer les caisses
             $.ajax({
                 url: '/get-caisses/' + atelierId, // URL pour récupérer les caisses
@@ -871,7 +1005,6 @@
                     caisseSelect.empty().append('<option value="" disabled>Erreur de chargement</option>');
                 }
             });
-
             // Récupérer les types
             $.ajax({
                 url: '/get-stock-s/' + atelierId, // URL pour récupérer les types
@@ -891,11 +1024,9 @@
                 }
             });
             reset(typeSelect);
-
         });
     });
 </script>
-
 <!-- script pour les categories -->
 <script>
     $(document).ready(function () {
@@ -903,18 +1034,14 @@
             const atelierId = $(this).val(); // Notez l'utilisation correcte de 'atelierId'
             const le_type = $('#type-select');
             const categorieSelect = $('#categorie-select');
-
             const produitSelect = document.getElementById('produit-select');
             const prixInput = document.getElementById('prix-input'); // Champ de prix
             const qantite = document.getElementById('qantite'); // Champ de quantité
             const total = document.getElementById('total'); // Affichage total
             const ajtButton = document.getElementById('ajt');
-
             console.log(atelierId); // Correction ici : 'atelierId' au lieu de 'atelierID'
-
             // Réinitialiser le menu déroulant avec un message de chargement
             categorieSelect.empty().append('<option value="" disabled selected>Chargement...</option>');
-
             // Effectuer une requête AJAX pour récupérer les catégories associées à un stock_id donné
             $.ajax({
                 url: '/get-categories/' + atelierId, // URL Laravel pour récupérer les catégories
@@ -922,62 +1049,30 @@
                 success: function (data) {
                     // Vider le menu déroulant et ajouter une option de sélection
                     categorieSelect.empty().append('<option value="" disabled selected>Sélectionnez une catégorie</option>');
-
                     // Vérifier si des catégories ont été renvoyées
                     if (data.length > 0) {
                         // Ajouter les options de catégories au menu déroulant
                         data.forEach(function (categorie) {
                             categorieSelect.append('<option value="' + categorie.id + '">' + categorie.categorie_nom + '</option>');
                         });
-
                         // Réactiver le menu déroulant
                         le_type.prop('disabled', false);
-
                         // Désactiver le bouton Ajouter
                         ajtButton.disabled = true;
-
                         // Réinitialiser et désactiver categorieSelect
                         categorieSelect.innerHTML = `<option value="" disabled selected>Choisissez une catégorie</option> `;
                         categorieSelect.disabled = true;
-
                         // Réinitialiser et désactiver produitSelect
                         produitSelect.innerHTML = ` <option value="" disabled selected>Choisissez un produit</option>`;
-
-
                         // Réinitialiser le champ prix
                         prixInput.textContent = '0.00 DA';
-
                         // Désactiver et réinitialiser le champ quantité
                         qantite.value = '';
                         qantite.disabled = true;
-
                         // Réinitialiser le total
                         total.textContent = '0.00 DA'; // Assurez-vous que total est un élément textuel
-
                         // Log pour débogage
                         console.log('Tous les champs ont été réinitialisés et désactivés.');
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     } else {
                         // Ajouter un message indiquant qu'il n'y a aucune catégorie
                         categorieSelect.append('<option value="" disabled>Aucune catégorie</option>');
@@ -989,29 +1084,19 @@
                     categorieSelect.empty().append('<option value="" disabled>Erreur lors du chargement</option>');
                     categorieSelect.prop('disabled', true); // Désactiver si erreur
                 }
-
-
             });
-
-
         });
     });
 </script>
-
-
 <!-- fin  -->
-
-
 <!-- credet de client  -->
 <script>
     $(document).ready(function () {
         $('#client-select').on('change', function () {
             const clientId = $(this).val();
             const credetSelect = $('#credet-select');
-
             // Réinitialiser la valeur et la couleur du crédit
             credetSelect.text('Chargement...').css('color', 'gray');
-
             // Effectuer une requête AJAX
             $.ajax({
                 url: '/get-credet/' + clientId,
@@ -1019,7 +1104,6 @@
                 success: function (data) {
                     // Mettre à jour le contenu et la couleur selon la valeur
                     credetSelect.text(data + ' DA');
-
                     if (data == 0) {
                         credetSelect.css('color', 'green');
                     } else if (data < 10000) {
@@ -1036,9 +1120,7 @@
         });
     });
 </script>
-
 <!-- fin  -->
-
 <!-- LIVRISON BOUTON  -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -1046,89 +1128,74 @@
         const montantInput = document.getElementById('montant-input');
         const prixInput = document.getElementById('prix-input');
         const qantite = document.getElementById('qantite');
-
-
         // Activer/Désactiver le champ input basé sur le switch
         toggle.addEventListener('change', function () {
             montantInput.disabled = !toggle.checked;
             if (toggle.checked) {
                 montantInput.focus();  // Si activé, le focus sera sur le champ
+                total_livr();
             } else {
                 montantInput.value = '';
             }
         });
-
         // Permettre uniquement les chiffres et le point pour l'input
         montantInput.addEventListener('input', function () {
             // Remplacer tout ce qui n'est pas un chiffre ou un point
             this.value = this.value.replace(/[^0-9.]/g, '');
         });
-
         // Permettre uniquement les chiffres et le point pour l'input
         prixInput.addEventListener('input', function () {
             // Remplacer tout ce qui n'est pas un chiffre ou un point
             this.value = this.value.replace(/[^0-9.]/g, '');
         });
-
         // Permettre uniquement les chiffres et le point pour l'input
         qantite.addEventListener('input', function () {
             // Remplacer tout ce qui n'est pas un chiffre ou un point
             this.value = this.value.replace(/[^0-9.]/g, '');
         });
     });
-
 </script>
-
 <!-- FIN  -->
-
-
-
-
 <script>
     // Sélectionnez les éléments
     const produitSelect = document.getElementById('produit-select');
     const lePrix = document.getElementById('le_prix');
-
     // Ajoutez un écouteur d'événements pour détecter le changement
     produitSelect.addEventListener('change', function () {
         // Obtenez l'option sélectionnée
         const selectedOption = this.options[this.selectedIndex];
         const prix = selectedOption.getAttribute('data-prix'); // Récupérer l'attribut data-prix
-
         // Mettre à jour le texte dans le champ "Prix / Kg"
         lePrix.textContent = prix ? `${prix} DA` : '0000.00 DA';
     });
 </script>
-
-
-
 <script>
     // Sélectionnez les éléments
     const produitSelect = document.getElementById('produit-select');
     const lePrix = document.getElementById('le_prix');
-
     // Ajoutez un écouteur d'événements
     produitSelect.addEventListener('change', function () {
         // Obtenez l'option sélectionnée
         const selectedOption = this.options[this.selectedIndex];
         const prix = selectedOption.getAttribute('data-prix');
-
         // Mettez à jour le texte du champ "Prix / Kg"
         lePrix.textContent = prix ? `${prix} DA` : '0000.00 DA';
     });
 </script>
-
-
-
-
-
-
-
-
+<!-- STYLE -->
 <style>
     @font-face {
+        /* advanced_dot_digital-7 */
         font-family: 'digital-7';
         src: url('/fonts/digital-7.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    @font-face {
+        /* advanced_dot_digital-7 */
+        font-family: 'advanced_dot_digital-7';
+        src: url('/fonts/advanced_dot_digital-7.ttf') format('truetype');
         font-weight: normal;
         font-style: normal;
     }
@@ -1169,10 +1236,6 @@
         color: green;
     }
 </style>
-
-
-
-
 <style>
     /* From Uiverse.io by gharsh11032000 */
     /* The switch - the box around the slider */
@@ -1239,7 +1302,42 @@
         transform: translateX(-150%);
     }
 </style>
-
-
-
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('success'))
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "{{ session('success') }}"
+            });
+        @endif
+        @if(session('error'))
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('error') }}"
+            });
+        @endif
+    });
+</script>
 @endsection
