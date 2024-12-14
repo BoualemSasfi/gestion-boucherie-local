@@ -14,7 +14,6 @@ use App\Models\Client;
 use App\Models\Caisse;
 use App\Models\Creditclient;
 use App\Models\AtlVent;
-use App\Models\Lestock;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 class VenteController extends Controller
@@ -201,6 +200,7 @@ class VenteController extends Controller
     }
     public function valid_vente(Request $request)
     {
+
         $request->validate([
             'id_fact' => 'required|integer',
             'id_magasin' => 'required|integer',
@@ -230,33 +230,52 @@ class VenteController extends Controller
             $update_fact->type_vente = $request->type_vent;
 
             $update_fact->save();
-            // Récupération des lignes de vente associées à la facture
+      
+
+
+            // Récupérer toutes les lignes liées à la facture
             $listes = AtlVent::where('id_fact', $request->id_fact)->get();
-            $lestocks = Lestock::all(); // Récupération des stocks actuels
+
+            // Vérifier si des lignes existent
+            if ($listes->isEmpty()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Aucune donnée trouvée pour la facture ID {$request->id_fact}.",
+                ], 404);
+            }
 
             foreach ($listes as $liste) {
+                // Trouver le stock correspondant
                 $lestock = Lestock::where('id', $liste->id_lestock)->first();
+
                 if ($lestock) {
                     $newQuantity = $lestock->quantity - $liste->Q;
 
+                    // Vérifier si le stock est suffisant
                     if ($newQuantity < 0) {
                         return response()->json([
                             'success' => false,
-                            'message' => "Stock insuffisant pour l'article  {$liste->produit}.. stck disponible sur votre sotck est {$lestock->quantity}",
+                            'message' => "Stock insuffisant pour l'article {$liste->produit}. Stock disponible : {$lestock->quantity}.",
                         ], 400);
                     }
 
-                    $lestock->update(['quantity' => $newQuantity]);
+                    // Mettre à jour la quantité en stock
+                    $lestock->quantity = $newQuantity;
+                    $lestock->save(); // Sauvegarder la modification dans la base de données
+                } else {
+                    return response()->json([
+                        'success' => false,
+                        'message' => "L'article ID {$liste->id_lestock} n'existe pas dans le stock.",
+                    ], 404);
                 }
             }
-
-
 
             return response()->json([
                 'success' => true,
                 'message' => 'Facture mise à jour avec succès.',
             ]);
         } catch (\Exception $e) {
+            // Gérer les exceptions générales
             return response()->json([
                 'success' => false,
                 'message' => 'Une erreur est survenue : ' . $e->getMessage(),
