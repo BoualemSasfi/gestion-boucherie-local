@@ -295,6 +295,11 @@ Route::controller(VenteController::class)->group(function () {
     Route::get('admin/newfact', 'newfact')->name('newfact');
     Route::get('admin/facture/{id}', 'fact')->name('fact');
 
+    Route::get('/annuler-facture/{id_facteur}', [VenteController::class, 'annuler_fact'])->name('annuler.facture');
+
+    Route::post('/valid_vente', [VenteController::class, 'valid_vente']);
+    
+
     // categorie
     Route::get('/get-categories/{stockId}', [VenteController::class, 'getCategoriesByStock']);
 
@@ -310,13 +315,16 @@ Route::controller(VenteController::class)->group(function () {
     Route::get('/get-prix/{id}', [VenteController::class, 'getPrixById']);
 
     Route::get('/list_ventes/{id_facture}', [VenteController::class, 'list_ventes']);
+    
+    Route::get('/get-livr/{id_facture}', [VenteController::class, 'livr_total']);
+
     // add vent
     Route::post('/add_vente', [VenteController::class, 'add_vente']);
-
+    
     Route::delete('/delet_vente/{id_vente}', [VenteController::class, 'delet_vente']);
-
+    
     Route::get('/facture/{id_facture}/total', [VenteController::class, 'total_fact']);
-
+    
 
 
 });
