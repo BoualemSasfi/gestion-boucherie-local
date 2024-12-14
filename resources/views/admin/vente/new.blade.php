@@ -319,6 +319,7 @@
                             text: 'La vente a été enregistrée.',
                         });
                         // Optionnel : Actualiser la page ou d'autres éléments de l'interface utilisateur
+                        window.location.href = `/admin`;
                     })
                     .catch(error => {
                         console.error('Erreur:', error);
