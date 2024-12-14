@@ -732,6 +732,8 @@
                                 </button>
                             </div>
 
+                            {{-- -------------------------------------------- --}}
+                            @if($btn_enc == '1')
                             <div class="col-6">
                                 {{-- Bouton pour afficher le popup --}}
                                 <button class="btn btn-success bouton-caisse" type="button" data-bs-toggle="modal"
@@ -878,6 +880,8 @@
 
 
                             </div>
+                            @endif
+                            {{-- -------------------------------------------- --}}
 
 
                         </div>

@@ -339,7 +339,7 @@ Route::controller(VenteController::class)->group(function () {
 // -------------------------------------------------------------------------
 Route::controller(CalculsController::class)->group(function () {
     Route::get('admin/calculs', 'index');
-    Route::get('/admin/calculs/{id_calculs_jour}/voir', 'voir');
+    Route::get('/admin/calculs/{id_magasin}/voir', 'voir');
     Route::get('/admin/calculs/{id_calculs_transfert}/list', 'filtrage_calculs_list');
 });
 

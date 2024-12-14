@@ -9,7 +9,7 @@
                         class="btn-description">Acceuil</span></a>
             </div>
             <div class="col-8 text-center">
-                <h2>Chiffres d'affaires</h2>
+                <h2>Liste des Magasins</h2>
             </div>
             <div class="col-2 d-flex align-items-center">
             </div>
@@ -91,28 +91,35 @@
                             <thead>
                                 <tr>
                                     <th>id</th>
-                                    <th>magasin_id</th>
-                                    <th>magasin_nom</th>
-                                    <th>stock_id</th>
-                                    <th>transfert_id</th>
-                                    <th>chiffre_affaire</th>
-                                    <th>description</th>
-                                    <th>created_at</th>
+                                    <th>Magasin</th>
+                                    <th>Adresse</th>
+                                    <th>Nombre de Caisses</th>
+                                    <th>Libelle Des Caisses</th>
                                     <th>Actions</th>
                             </thead>
 
                             <tbody>
-                                @foreach ($calculs as $calcul)
+                                @foreach ($magasins as $magasin)
                                     <tr>
 
-                                        <td class="text-center">{{ $calcul->id }}</td>
-                                        <td class="text-center">{{ $calcul->magasin_id }}</td>
-                                        <td class="text-center">{{ $calcul->magasin_nom }}</td>
-                                        <td class="text-center">{{ $calcul->stock_id }}</td>
-                                        <td class="text-center">{{ $calcul->transfert_id }}</td>
-                                        <td class="text-center">{{ $calcul->chiffre_affaire }}</td>
-                                        <td class="text-center">{{ $calcul->description }}</td>
-                                        <td class="text-center">{{ $calcul->created_at->format('Y-m-d') }}</td>
+                                        <td class="text-center">{{ $magasin->id }}</td>
+                                        <td class="text-center">{{ $magasin->nom }}</td>
+                                        <td class="text-center">{{ $magasin->adresse }}</td>
+                                        <td class="text-center">
+                                            @foreach($nombre_caisses as $nombre_caisse)
+                                            @if($nombre_caisse->id_magasin == $magasin->id)
+                                            {{ $nombre_caisse->count }}
+                                            @endif
+                                            @endforeach
+                                        </td>
+
+                                        <td class="text-left">
+                                            @foreach($caisses as $caisse)
+                                            @if($caisse->id_magasin == $magasin->id)
+                                            {{ $caisse->code_caisse }} <br>
+                                            @endif
+                                            @endforeach
+                                        </td>
 
                                         <td class="text-center" style="width:240px;">
 
@@ -122,7 +129,7 @@
                                                     <div class="col-12">
                                                         {{-- show button    --}}
                                                         <form class="show-form"
-                                                            action="{{ url('/admin/calculs/' . $calcul->id . '/voir') }}"
+                                                            action="{{ url('/admin/calculs/' . $magasin->id . '/voir') }}"
                                                             method="GET">
                                                             @csrf
                                                             <button type="submit"
