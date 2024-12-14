@@ -243,25 +243,13 @@ class VenteController extends Controller
                     'message' => "Aucune donnée trouvée pour la facture ID {$request->id_fact}.",
                 ], 404);
             }
-
             foreach ($listes as $liste) {
-                // Trouver le stock correspondant
-                $lestock = Lestock::where('id', $liste->id_lestock)->first();
-
+                $lestock = Lestock::find($liste->id_lestock);
                 if ($lestock) {
                     $newQuantity = $lestock->quantity - $liste->Q;
 
-                    // Vérifier si le stock est suffisant
-                    if ($newQuantity < 0) {
-                        return response()->json([
-                            'success' => false,
-                            'message' => "Stock insuffisant pour l'article {$liste->produit}. Stock disponible : {$lestock->quantity}.",
-                        ], 400);
-                    }
-
-                    // Mettre à jour la quantité en stock
                     $lestock->quantity = $newQuantity;
-                    $lestock->save(); // Sauvegarder la modification dans la base de données
+                    $lestock->save(); 
                 } else {
                     return response()->json([
                         'success' => false,
@@ -269,17 +257,24 @@ class VenteController extends Controller
                     ], 404);
                 }
             }
-
+            // return redirect()->route('Admin_Home')->with('success', 'Facture valide avec succès.');
             return response()->json([
                 'success' => true,
                 'message' => 'Facture mise à jour avec succès.',
             ]);
-        } catch (\Exception $e) {
-            // Gérer les exceptions générales
+
+        } 
+        
+        catch (\Exception $e) {
+
+            \Log::error('Erreur dans la validation de la vente: '.$e->getMessage());
+            \Log::error($e->getTraceAsString());
+        
             return response()->json([
                 'success' => false,
                 'message' => 'Une erreur est survenue : ' . $e->getMessage(),
             ], 500);
+            
         }
     }
 
