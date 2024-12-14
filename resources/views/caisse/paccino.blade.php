@@ -1599,7 +1599,7 @@
                             else if (vente_type === 'gros') prix = value.prix_gros;
 
                             productsContainer.append(`
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4" data-aos="fade-down">
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4">
                                     <div class="card scat">
                                         <form class="affichage-form"
                                             data-id_lestock="${value.id}"
@@ -2251,13 +2251,13 @@
                         $('#ventes_liste').append(
                             '<tr>' +
                             // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
-                            '<td class="petit_font text-left">' + value.designation_produit +
+                            '<td class="petit_font text-left mini-text">' + value.designation_produit +
                             '</td>' +
-                            '<td class="petit_font text-right">' + quantite + ' ' + value
+                            '<td class="petit_font text-right mini-text">' + quantite + ' ' + value
                             .unite_mesure +
                             '</td>' +
-                            '<td class="petit_font text-right">' + value.prix_unitaire + '</td>' +
-                            '<td class="petit_font text-right">' + value.total_vente + '</td>' +
+                            '<td class="petit_font text-right mini-text">' + value.prix_unitaire + '</td>' +
+                            '<td class="petit_font text-right mini-text">' + value.total_vente + '</td>' +
                             '<td class="">' +
                             '<form class="form-prix-produit" data-id="' + value.id +
                             '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrixProduit(this)">' +
