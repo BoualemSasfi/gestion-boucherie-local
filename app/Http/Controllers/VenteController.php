@@ -228,9 +228,27 @@ class VenteController extends Controller
             $update_fact->versement = $request->montant;
             $update_fact->credit = $request->credet;
             $update_fact->type_vente = $request->type_vent;
+            $update_fact->type_fact = 'a';
 
             $update_fact->save();
-      
+
+            // $total = floatval($request->total); // Convertir en nombre à virgule flottante
+            // $montant = floatval($request->montant); // Convertir en nombre à virgule flottante
+            // $credit = $total - $montant; // Calculer le crédit
+
+            $credit = $request->total - $request->montant;
+
+            if ($credit > 0) { 
+                $nw_credit = new Creditclient();
+                $nw_credit->id_client = $request->id_client;
+                $nw_credit->id_facture = $request->id_fact;
+                $nw_credit->total_facture = $request->total;
+                $nw_credit->versement = $request->montant;
+                $nw_credit->credit = $credit;
+                $nw_credit->etat_credit = 'impayé';
+                $nw_credit->save();
+            }
+
 
 
             // Récupérer toutes les lignes liées à la facture
@@ -249,7 +267,7 @@ class VenteController extends Controller
                     $newQuantity = $lestock->quantity - $liste->Q;
 
                     $lestock->quantity = $newQuantity;
-                    $lestock->save(); 
+                    $lestock->save();
                 } else {
                     return response()->json([
                         'success' => false,
@@ -257,24 +275,25 @@ class VenteController extends Controller
                     ], 404);
                 }
             }
+
+
+
             // return redirect()->route('Admin_Home')->with('success', 'Facture valide avec succès.');
             return response()->json([
                 'success' => true,
                 'message' => 'Facture mise à jour avec succès.',
             ]);
 
-        } 
-        
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
 
-            \Log::error('Erreur dans la validation de la vente: '.$e->getMessage());
+            \Log::error('Erreur dans la validation de la vente: ' . $e->getMessage());
             \Log::error($e->getTraceAsString());
-        
+
             return response()->json([
                 'success' => false,
                 'message' => 'Une erreur est survenue : ' . $e->getMessage(),
             ], 500);
-            
+
         }
     }
 
