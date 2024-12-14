@@ -440,6 +440,18 @@
                                                             <tbody id="historique-factures">
                                                                 {{-- les factures ici  --}}
                                                             </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Client</th>
+                                                                    <th>Date et heure</th>
+                                                                    <th>Etat</th>
+                                                                    <th>Montant</th>
+                                                                    <th>Versement</th>
+                                                                    <th>Crédit</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </tfoot>
                                                             <a href="" id="id_vente" style="display: none;"></a>
                                                         </table>
 
@@ -2251,13 +2263,16 @@
                         $('#ventes_liste').append(
                             '<tr>' +
                             // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
-                            '<td class="petit_font text-left mini-text">' + value.designation_produit +
+                            '<td class="petit_font text-left mini-text">' + value
+                            .designation_produit +
                             '</td>' +
                             '<td class="petit_font text-right mini-text">' + quantite + ' ' + value
                             .unite_mesure +
                             '</td>' +
-                            '<td class="petit_font text-right mini-text">' + value.prix_unitaire + '</td>' +
-                            '<td class="petit_font text-right mini-text">' + value.total_vente + '</td>' +
+                            '<td class="petit_font text-right mini-text">' + value.prix_unitaire +
+                            '</td>' +
+                            '<td class="petit_font text-right mini-text">' + value.total_vente +
+                            '</td>' +
                             '<td class="">' +
                             '<form class="form-prix-produit" data-id="' + value.id +
                             '"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#PrixModal" id="bouton_prix" onclick="ModifierPrixProduit(this)">' +
@@ -2763,10 +2778,15 @@
 
                     // Affiche une alerte SweetAlert après la réussite de l'AJAX
                     await Swal.fire({
-                        title: "Vente En-Attente",
+                        title: "VENTE N° " + response.numero,
+                        text: "A été mise en attente",
                         icon: "success",
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1500,
+                        customClass: {
+                            title: 'swal-title-large',
+                            text: 'swal-text-large'
+                        }
                     });
 
                     // Appelle la fonction Nouvelle_Facture
@@ -2787,6 +2807,19 @@
             }
         }
     </script>
+
+    <style>
+        .swal-title-large {
+            font-size: 3rem;
+            /* Ajustez la taille selon vos besoins */
+            font-weight: bold;
+        }
+        .swal-text-large {
+            font-size: 2rem;
+            /* Ajustez la taille selon vos besoins */
+            font-weight: bold;
+        }
+    </style>
 
     <script>
         function liste_factures_enattente() {
@@ -2914,14 +2947,10 @@
                                             parseFloat(vente.quantite);
                                         $('#produits_facture_' + id_facture).append(
                                             '<tr>' +
-                                            '<td class="">' + vente
-                                            .nom_categorie + ' : ' + vente
-                                            .nom_produit + '</td>' +
-                                            '<td class="">' + quantite +
-                                            ' ' + vente.unite_mesure + '</td>' +
-                                            '<td class="">' + vente
-                                            .prix_produit + '</td>' +
-                                            '<td class="">' + vente.prix_total +
+                                            '<td class="">' + vente.designation_produit + '</td>' +
+                                            '<td class="">' + quantite + ' ' + vente.unite_mesure + '</td>' +
+                                            '<td class="">' + vente.prix_unitaire + '</td>' +
+                                            '<td class="">' + vente.total_vente +
                                             '</td>' +
                                             '</tr>'
                                         );
@@ -3048,11 +3077,12 @@
                     },
                     success: function(response) {
                         $('#historique-factures').empty();
+                        console.log(response.message);
 
                         $.each(response.factures, function(key, facture) {
                             const id_facture = facture.id;
                             console.log('id facture :' + id_facture);
-
+                            // $('#historique-factures').append('<div style="width:100%;height:5px;"><hr></div>');
                             $('#historique-factures').append(
                                 '<tr>' +
                                 '<td>' + facture.id + '</td>' +
@@ -3107,19 +3137,16 @@
                                             parseFloat(vente.quantite);
                                         $('#ventes_facture_' + id_facture).append(
                                             '<tr>' +
-                                            '<td class="">' + vente
-                                            .nom_categorie + ' : ' + vente
-                                            .nom_produit + '</td>' +
-                                            '<td class="">' + quantite +
-                                            ' ' + vente.unite_mesure + '</td>' +
-                                            '<td class="">' + vente
-                                            .prix_produit + '</td>' +
-                                            '<td class="">' + vente.prix_total +
+                                            '<td class="">' + vente.designation_produit + '</td>' +
+                                            '<td class="">' + quantite + ' ' + vente.unite_mesure + '</td>' +
+                                            '<td class="">' + vente.prix_unitaire + '</td>' +
+                                            '<td class="">' + vente.total_vente +
                                             '</td>' +
                                             '</tr>'
                                         );
                                     });
                                 },
+                                
                                 error: function(xhr, status, error) {
                                     console.error('Error fetching ventes:', error);
                                 }
