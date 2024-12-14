@@ -75,6 +75,10 @@ class AfficheController extends Controller
 
             $clients = Client::all();
 
+            $caisse = Caisse::find($id_caisse);
+            $btn_enc = $caisse->btn_enc;
+
+
             return view('caisse.paccino', [
                 'categories' => $categories,
                 'magasin' => $magasin,
@@ -82,7 +86,8 @@ class AfficheController extends Controller
                 'id_magasin' => $IdMagasin,
                 'id_user' => $IdUser,
                 'id_caisse' => $IdCaisse,
-                'clients' => $clients
+                'clients' => $clients,
+                'btn_enc' => $btn_enc
             ]);
         } else {
             return "probleme id_magasin ou id_caisse";

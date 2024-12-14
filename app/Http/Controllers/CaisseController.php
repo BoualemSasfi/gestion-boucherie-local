@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Psy\Readline\Hoa\Console;
 
-
 use Carbon\Carbon;
 
 use Picqer\Barcode\BarcodeGeneratorPNG;
@@ -304,13 +303,13 @@ class CaisseController extends Controller
             $NewVente->id_user = $id_user;
             $NewVente->id_lestock = $id_lestock;
             $NewVente->id_produit = $id_produit;
-            if($id_sousproduit !== '0'){
+            if ($id_sousproduit !== '0') {
                 $NewVente->id_sousproduit = $id_sousproduit;
                 $NewVente->produit = false;
                 $NewVente->sous_produit = true;
-            }else{
+            } else {
                 $NewVente->produit = true;
-                $NewVente->sous_produit = false; 
+                $NewVente->sous_produit = false;
             }
             $NewVente->designation_produit = $nom_produit;
             $NewVente->prix_unitaire = $prix_unitaire;
@@ -319,13 +318,13 @@ class CaisseController extends Controller
 
             // calculer le benefice 
             $benefice = 0;
-                $Produit = Produit::find($id_produit);
-                if ($Produit) {
-                    $prix_achat = $Produit->prix_achat;
-                    $prix_vente = $Produit->prix_vente;
-                    $benefice = ($prix_vente - $prix_achat) * $qte;
-                    $mesure = $Produit->unite_mesure;
-                }
+            $Produit = Produit::find($id_produit);
+            if ($Produit) {
+                $prix_achat = $Produit->prix_achat;
+                $prix_vente = $Produit->prix_vente;
+                $benefice = ($prix_vente - $prix_achat) * $qte;
+                $mesure = $Produit->unite_mesure;
+            }
 
             $NewVente->benefice = $benefice;
             $NewVente->unite_mesure = $mesure;
@@ -349,23 +348,23 @@ class CaisseController extends Controller
                     'unite_mesure'
                 )
                 ->get();
-    
+
             // // Vérification si des ventes existent pour cette facture
             // if ($ventes->isEmpty()) {
             //     return response()->json(['message' => 'Aucune vente trouvée pour cette facture'], 404);
             // }
-    
+
             // Retour des ventes au format JSON
             return response()->json(['ventes' => $ventes], 200);
         } catch (\Exception $e) {
             // Enregistrement de l'erreur dans les logs
             Log::error('Erreur dans Get_Liste_Ventes : ' . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
-    
+
             // Retour d'une réponse JSON avec un message d'erreur
             return response()->json(['error' => 'Une erreur est survenue lors de la récupération des ventes'], 500);
         }
     }
-    
+
 
     public function Total_Facture($id_facture)
     {
@@ -425,9 +424,15 @@ class CaisseController extends Controller
                 $Facture->total_facture = $total;
                 $Facture->versement = $versement;
                 $Facture->credit = $credit;
-                if($type_vente == 'details'){ $Facture->type_vente = 'Vente en détails';}
-                if($type_vente == 'semigros'){ $Facture->type_vente = 'Vente en semi-gros';}
-                if($type_vente == 'gros'){ $Facture->type_vente = 'Vente en gros';}
+                if ($type_vente == 'details') {
+                    $Facture->type_vente = 'Vente en détails';
+                }
+                if ($type_vente == 'semigros') {
+                    $Facture->type_vente = 'Vente en semi-gros';
+                }
+                if ($type_vente == 'gros') {
+                    $Facture->type_vente = 'Vente en gros';
+                }
                 $Facture->save();
 
                 if ($credit > 0) {
@@ -493,12 +498,14 @@ class CaisseController extends Controller
                 $Facture->total_facture = $total;
 
                 $Facture->save(); // Enregistre les modifications
+
             } else {
                 // Gérer le cas où la facture n'existe pas, par exemple, en retournant une erreur
                 return response()->json(['error' => 'Facture non trouvée'], 404);
             }
-
-            return response()->json('success'); // Retourne une réponse de succès
+            $nombre_facture = Facture::where('etat_facture', 'en-attente')->count();
+            return response()->json(['numero' => $nombre_facture]);
+            // return response()->json('success');
         } catch (\Exception $e) {
             Log::error($e); // Log de l'erreur pour le débogage
             return response()->json(['error' => 'Erreur dans la fonction En_Attente_Facture'], 500); // Retourne une erreur générique
@@ -853,6 +860,7 @@ class CaisseController extends Controller
     public function Liste_Factures_Historique($id_magasin)
     {
         try {
+            $date_courante = Carbon::now()->toDateString();  // Formater la date au format 'YYYY-MM-DD'
 
             $Factures = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
                 ->select(
@@ -862,20 +870,37 @@ class CaisseController extends Controller
                     'factures.total_facture as total',
                     'factures.versement as versement',
                     'factures.credit as credit',
-                    'clients.nom_prenom as client',
+                    'clients.nom_prenom as client'
                 )
                 ->where(function ($query) {
+                    // Filtrer les factures dont l'état est soit 'Facture-Payée' soit 'Crédit'
                     $query->where('etat_facture', 'Facture-Payée')
                         ->orWhere('etat_facture', 'Crédit');
                 })
-                ->where('total_facture', '!=', 0)->get();
+                ->where('total_facture', '!=', 0)  // Filtrer les factures dont le total n'est pas égal à 0
+                ->where('factures.id_magasin', $id_magasin)  // Filtrer par magasin
+                ->whereDate('factures.created_at', '=', $date_courante) // Comparer uniquement la date
+                ->orderby('factures.created_at', 'DESC')  // Trier par la date de création (si vous le souhaitez)
+                ->get();
 
-            return response()->json(['factures' => $Factures]);
+
+
+
+
+
+            // return response()->json(['factures' => $Factures]);
+
+            // Retour de la réponse avec le message de succès et les factures
+            return response()->json([
+                'message' => 'Factures récupérées avec succès.', // Message de succès
+                'factures' => $Factures // Les données des factures
+            ]);
         } catch (\Exception $e) {
-            Log::error($e);
-            return response()->json(['error' => 'Internal Server Error'], 500);
+            Log::error($e->getMessage()); // Log plus explicite
+            return response()->json(['error' => 'Une erreur interne est survenue.'], 500);
         }
     }
+
 
 
 

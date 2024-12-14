@@ -7,7 +7,7 @@
                         class="btn-description">Retour</span></a>
             </div>
             <div class="col-8 text-center">
-                <h2>Calculs de transfert</h2>
+                <h2>{{$magasin->nom}}</h2>
             </div>
             <div class="col-2 d-flex align-items-center">
             </div>
@@ -27,7 +27,7 @@
                 // scroller
                 scrollCollapse: true,
                 scroller: true,
-                scrollY: 400 ,
+                scrollY: 400,
                 scrollX: true,
                 // ----------
                 // dom: '<"buttons-container"lBfrtip>', 
@@ -57,7 +57,7 @@
                 },
             });
         });
-    </script>  
+    </script>
 
     {{-- CSS  --}}
 
@@ -89,118 +89,29 @@
                             {{-- <table id="example" class="table cell-border compact hover" style="width:100%;"> --}}
                             <thead>
                                 <tr>
+                                    <th>PRODUIT</th>
+                                    <th>QTE TRANSFEREE</th>
+                                    <th>QTE EN-STOCK</th>
+                                    <th>QTE VENDUE</th>
+                                    <th>QTE DEFFERENCE</th>
+                                </tr>
 
-                                    <th>id</th>
-                                    <th>calculs_par_jour_id</th>
-                                    <th>categorie_id</th>
-                                    <th>categorie_designation</th>
 
-                                    <th>total_ventes</th>
-                                    <th>total_quantite_transfere</th>
-                                    <th>total_quantite_retour</th>
-                                    <th>total_quantite_reste</th>
-
-                                    <th>poids_os</th>
-                                    <th>prix_os</th>
-                                    <th>poids_dechets</th>
-                                    <th>prix_dechets</th>
-
-                                    <th>poids_decalage</th>
-                                    <th>poids_insere</th>
-                                    <th>montant_insere</th>
-                                    
-                                    <th>created_at</th>
-                                    
                             </thead>
 
                             <tbody>
-                                @foreach ($calculs_transferts as $calculs_transfert)
+                                    @foreach($resultats_magasin as $resultat)
                                     <tr>
-                                        <td class="text-center">{{ $calculs_transfert->id }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->calculs_par_jour_id }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->categorie_id }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->categorie_designation }}</td>
-
-                                        <td class="text-center">{{ $calculs_transfert->total_ventes }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->total_quantite_transfere }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->total_quantite_retour }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->total_quantite_reste }}</td>
-
-                                        <td class="text-center">{{ $calculs_transfert->poids_os }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->prix_os }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->poids_dechets }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->prix_dechets }}</td>
-
-                                        <td class="text-center">{{ $calculs_transfert->poids_decalage }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->poids_insere }}</td>
-                                        <td class="text-center">{{ $calculs_transfert->montant_insere }}</td>
-
-                                        <td class="text-center">{{ $calculs_transfert->created_at }}</td>
-
+                                        <td><b>{{ $resultat['produit'] }}</b></td>
+                                        <td>{{ $resultat['quantite_transferee'] }}</td>
+                                        <td>{{ $resultat['stock'] }}</td>
+                                        <td>{{ $resultat['quantite_vendue'] }}</td>
+                                        <td>{{ $resultat['quantite_difference'] }}</td>
                                     </tr>
-
-                                    {{-- produits de la catégorie  --}}
-
-                                    <table id="example2" class="table table-striped table-bordered" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>id</th>
-                                            <th>calculs_transfert_id</th>
-                                            <th>lestock_id</th>
-                                            <th>produit_id</th>
-                                            <th>produit_designation</th>
-                                            <th>quantite_ventes</th>
-                                            <th>quantite_retour</th>
-                                            <th>quantite_reste</th>
-                                            <th>montant_ventes</th>
-                                            <th>created_at</th>
-                                        </tr>
-                                    </thead>
-                                
-                                    <tbody>
-                                        @foreach($calculs_lists as $calculs_list)
-                                        @if( $calculs_list->calculs_transfert_id == $calculs_transfert->id )
-                                        <td class="text-center">{{ $calculs_list->id }}</td>
-                                        <td class="text-center">{{ $calculs_list->calculs_transfert_id }}</td>
-                                        <td class="text-center">{{ $calculs_list->lestock_id }}</td>
-                                        <td class="text-center">{{ $calculs_list->produit_id }}</td>
-                                        <td class="text-center">{{ $calculs_list->produit_designation }}</td>
-                                        <td class="text-center">{{ $calculs_list->quantite_ventes }}</td>
-                                        <td class="text-center">{{ $calculs_list->quantite_retour }}</td>
-                                        <td class="text-center">{{ $calculs_list->quantite_reste }}</td>
-                                        <td class="text-center">{{ $calculs_list->montant_ventes }}</td>
-                                        <td class="text-center">{{ $calculs_list->created_at }}</td>
-                                        @endif
-                                        @endforeach
-                                    </tbody>
-                                    </table>
-
-                                @endforeach
+                                    @endforeach
                             </tbody>
+
                             <tfoot>
-                                {{-- <tr>
-                                    <th>id</th>
-                                    <th>calculs_par_jour_id</th>
-                                    <th>categorie_id</th>
-                                    <th>categorie_designation</th>
-
-                                    <th>total_ventes</th>
-                                    <th>total_quantite_transfere</th>
-                                    <th>total_quantite_retour</th>
-                                    <th>total_quantite_reste</th>
-
-                                    <th>poids_os</th>
-                                    <th>prix_os</th>
-                                    <th>poids_dechets</th>
-                                    <th>prix_dechets</th>
-
-                                    <th>poids_decalage</th>
-                                    <th>poids_insere</th>
-                                    <th>montant_insere</th>
-                                    
-                                    <th>created_at</th>
-                                    <th>Actions</th>
-                                </tr> --}}
                             </tfoot>
                         </table>
                     </div>
