@@ -11,7 +11,7 @@
                     class="btn-description">Retour</span></a>
         </div>
         <div class="col-10 d-flex align-items-center">
-            <h2>Modifer la caisse {{$caisse->code_caisse}} qui ce trouve don le magasin 
+            <h2>Modifer  {{$caisse->code_caisse}} de magasin 
            
             @foreach ($magasins as $magasin)                             
                                                 @if ($magasin->id == $caisse->id_magasin) 
@@ -46,7 +46,19 @@
                                 <h5> Titre </h5>
                                 <input type="text" value=" {{$caisse->code_caisse}} " name="code_caisse" class="form-control" placeholder="Titre">
                             </div>
+                            <div class="form-group col-6">
+                                <h5> Solde </h5>
+                                <input  oninput="filterNumbers(this)" type="text" value=" {{$caisse->solde}} " name="solde" class="form-control" placeholder="solde" >
+                                
+                            </div>
 
+
+                            <script>
+                                function filterNumbers(input) {
+                                        // Supprimer tous les caractères non numériques
+                                        input.value = input.value.replace(/[^0-9]/g, '');
+                                }
+                            </script>
                             <div class="form-group col-6">
                                     <!-- <label for="magasin_id">Intégrer à un magasin</label> -->
                                     <h5 for="magasin_id"> Intégrer à un magasin </h5>
@@ -62,6 +74,35 @@
                                         @endforeach
                                     </select>
                                 </div>
+
+                                <div class="form-group col-6">
+    <h5 for="magasin_id">Bouton encaissement</h5>
+    <select id="btn_enc" name="btn_encaissier" class="form-control" onchange="updateBackgroundColor()">
+        <option value="1" <?php if ($caisse->btn_enc == 1) echo 'selected'; ?>>Afficher</option>
+        <option value="0" <?php if ($caisse->btn_enc == 0) echo 'selected'; ?>>Cacher</option>
+    </select>
+</div>
+
+
+                                <script>
+                                                                        function updateBackgroundColor() {
+                                        const selectElement = document.getElementById('btn_enc');
+
+                                        // Modifier la couleur de fond en fonction de la valeur sélectionnée
+                                        if (selectElement.value === "1") {
+                                            selectElement.style.backgroundColor = "green";
+                                        } else if (selectElement.value === "0") {
+                                            selectElement.style.backgroundColor = "red";
+                                        }
+                                    }
+
+                                    // Initialiser la couleur au chargement de la page
+                                    document.addEventListener('DOMContentLoaded', () => {
+                                        updateBackgroundColor();
+                                    });
+
+                                </script>
+
 
                             <div class="form-group col-12">
                                 <div class="form-group row justify-content-center text-center">

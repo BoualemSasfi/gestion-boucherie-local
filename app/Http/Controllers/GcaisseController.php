@@ -59,6 +59,8 @@ class GcaisseController extends Controller
 
         $caisse->code_caisse = $request->code_caisse;
         $caisse->id_magasin = $request->id_magasin;
+        $caisse->btn_enc = $request->btn_encaissier;
+        $caisse->solde = $request->solde;
 
         $caisse->save();
 
