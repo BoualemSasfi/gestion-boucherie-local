@@ -17,6 +17,7 @@ use App\Http\Controllers\AfficheController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\VenteController;
 
+use App\Http\Controllers\CalculsController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -333,7 +334,17 @@ Route::controller(VenteController::class)->group(function () {
 
 
 
+//--------------------------------------------------------------------------
+// ---------               calculs                                 ----------
+// -------------------------------------------------------------------------
+Route::controller(CalculsController::class)->group(function () {
+    Route::get('admin/calculs', 'index');
+    Route::get('/admin/calculs/{id_calculs_jour}/voir', 'voir');
+    Route::get('/admin/calculs/{id_calculs_transfert}/list', 'filtrage_calculs_list');
+});
 
+
+//--------------------------------------------------------------------------
 
 require __DIR__ . '/auth.php';
 
