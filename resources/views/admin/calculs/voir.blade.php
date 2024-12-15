@@ -93,6 +93,7 @@
                                     <th>QTE TRANSFEREE</th>
                                     <th>QTE EN-STOCK</th>
                                     <th>QTE VENDUE</th>
+                                    <th>QTE RETOUR</th>
                                     <th>QTE DEFFERENCE</th>
                                 </tr>
 
@@ -106,6 +107,7 @@
                                         <td>{{ $resultat['quantite_transferee'] }}</td>
                                         <td>{{ $resultat['stock'] }}</td>
                                         <td>{{ $resultat['quantite_vendue'] }}</td>
+                                        <td>{{ $resultat['quantite_retour'] }}</td>
                                         <td>{{ $resultat['quantite_difference'] }}</td>
                                     </tr>
                                     @endforeach
