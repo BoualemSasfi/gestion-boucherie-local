@@ -7,7 +7,7 @@
                         class="btn-description">Retour</span></a>
             </div>
             <div class="col-8 text-center">
-                <h2>{{$magasin->nom}}</h2>
+                <h2>{{ $magasin->nom }}</h2>
             </div>
             <div class="col-2 d-flex align-items-center">
             </div>
@@ -77,48 +77,80 @@
     {{-- --------------------------------------------------------------------------------------------------------------------------------- --}}
 
 
+    <div class="container mt-5">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="tab1-tab" data-toggle="tab" href="#tab1" role="tab"
+                    aria-controls="tab1" aria-selected="true">Calculs de stock</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tab2-tab" data-toggle="tab" href="#tab2" role="tab" aria-controls="tab2"
+                    aria-selected="false">Calculs des caisses</a>
+            </li>
+        </ul>
 
-    {{-- html  --}}
+        <!-- Tab content -->
+        {{-- ---------------------------------------------------------- --}}
+        <div class="tab-content mt-3" id="myTabContent">
+            <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                <div class="container-fluid" style="padding-top:10px;padding-bottom:80px;">
+                    <div class="row animate__animated animate__backInLeft">
+                        <div class="col-md-12">
+                            <div class="card shadow" style="background-color: #ffff;">
+                                <div class="card-body">
+                                    <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                        {{-- <table id="example" class="table cell-border compact hover" style="width:100%;"> --}}
+                                        <thead>
+                                            <tr>
+                                                <th>PRODUIT</th>
+                                                <th>QTE TRANSFEREE</th>
+                                                <th>QTE EN-STOCK</th>
+                                                <th>QTE VENDUE</th>
+                                                <th>QTE RETOUR</th>
+                                                <th>QTE DEFFERENCE</th>
+                                            </tr>
 
-    <div class="container-fluid" style="padding-top:10px;padding-bottom:80px;">
-        <div class="row animate__animated animate__backInLeft">
-            <div class="col-md-12">
-                <div class="card shadow" style="background-color: #ffff;">
-                    <div class="card-body">
-                        <table id="example" class="table table-striped table-bordered" style="width:100%">
-                            {{-- <table id="example" class="table cell-border compact hover" style="width:100%;"> --}}
-                            <thead>
-                                <tr>
-                                    <th>PRODUIT</th>
-                                    <th>QTE TRANSFEREE</th>
-                                    <th>QTE EN-STOCK</th>
-                                    <th>QTE VENDUE</th>
-                                    <th>QTE DEFFERENCE</th>
-                                </tr>
 
+                                        </thead>
 
-                            </thead>
+                                        <tbody>
+                                            @foreach ($resultats_magasin as $resultat)
+                                                <tr>
+                                                    <td><b>{{ $resultat['produit'] }}</b></td>
+                                                    <td>{{ $resultat['quantite_transferee'] }}</td>
+                                                    <td>{{ $resultat['stock'] }}</td>
+                                                    <td>{{ $resultat['quantite_vendue'] }}</td>
+                                                    <td>{{ $resultat['quantite_retour'] }}</td>
+                                                    <td>{{ $resultat['quantite_difference'] }}</td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
 
-                            <tbody>
-                                    @foreach($resultats_magasin as $resultat)
-                                    <tr>
-                                        <td><b>{{ $resultat['produit'] }}</b></td>
-                                        <td>{{ $resultat['quantite_transferee'] }}</td>
-                                        <td>{{ $resultat['stock'] }}</td>
-                                        <td>{{ $resultat['quantite_vendue'] }}</td>
-                                        <td>{{ $resultat['quantite_difference'] }}</td>
-                                    </tr>
-                                    @endforeach
-                            </tbody>
-
-                            <tfoot>
-                            </tfoot>
-                        </table>
+                                        <tfoot>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {{-- ---------------------------------------------------------- --}}
+            
+            <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                Deuxieme page
+            </div>
+            
+            {{-- ---------------------------------------------------------- --}}
         </div>
     </div>
+
+
+
+
+
 
 
 

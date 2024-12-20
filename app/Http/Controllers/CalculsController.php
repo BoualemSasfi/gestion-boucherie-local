@@ -33,11 +33,11 @@ class CalculsController extends Controller
         $Liste_Magasins = Magasin::all();
         $Liste_Caisses = Caisse::all();
         $Nombre_Caisses_parmagasin = Caisse::groupBy('id_magasin')
-        ->selectRaw('id_magasin, count(*) as count')
-        ->get();
-    
+            ->selectRaw('id_magasin, count(*) as count')
+            ->get();
 
-        return view('admin.calculs.index', [ 'magasins' => $Liste_Magasins , 'caisses' => $Liste_Caisses , 'nombre_caisses' => $Nombre_Caisses_parmagasin ]);
+
+        return view('admin.calculs.index', ['magasins' => $Liste_Magasins, 'caisses' => $Liste_Caisses, 'nombre_caisses' => $Nombre_Caisses_parmagasin]);
     }
 
     public function voir($id_magasin)
@@ -54,11 +54,11 @@ class CalculsController extends Controller
             ->groupBy('produits.nom_pr', 'lestocks.id', 'lestocks.quantity')
             ->orderBy('produits.nom_pr', 'ASC')
             ->get();
-    
+
         // Récupérer le magasin
         $magasin = Magasin::find($id_magasin);
         $nom_magasin = $magasin ? $magasin->nom : null;
-    
+
         // Récupérer les transferts
         $transferts = Transfert::where('mag', '=', $nom_magasin)
             ->join('prod_trans', 'prod_trans.id_trans', '=', 'transfert.id')
@@ -67,10 +67,24 @@ class CalculsController extends Controller
                 'prod_trans.produit',
                 'prod_trans.quantity',
             )
+            ->where('transfert.type','=', 'transfert') // Exclure les retours
             ->groupBy('prod_trans.produit', 'prod_trans.id', 'prod_trans.quantity')
             ->orderBy('prod_trans.produit', 'ASC')
             ->get();
-    
+
+        // Récupérer les retours
+        $retours = Transfert::where('atl', '=', $nom_magasin)
+            ->join('prod_trans', 'prod_trans.id_trans', '=', 'transfert.id')
+            ->select(
+                'prod_trans.id',
+                'prod_trans.produit',
+                'prod_trans.quantity',
+            )
+            ->where('transfert.type','=','retour') // Inclure uniquement les retours
+            ->groupBy('prod_trans.produit', 'prod_trans.id', 'prod_trans.quantity')
+            ->orderBy('prod_trans.produit', 'ASC')
+            ->get();
+
         // Récupérer les ventes
         $ventes = Facture::where('id_magasin', $id_magasin)
             ->join('ventes', 'ventes.id_facture', '=', 'factures.id')
@@ -82,56 +96,66 @@ class CalculsController extends Controller
             ->groupBy('ventes.designation_produit', 'ventes.id', 'ventes.quantite')
             ->orderBy('ventes.designation_produit', 'ASC')
             ->get();
-    
+
         // Initialisation des tableaux
         $resultats_magasin = [];
-    
-        // Lier les stocks, les ventes, et les transferts pour chaque produit
+
+        // Lier les stocks, les ventes, les transferts et les retours pour chaque produit
         foreach ($stocks as $stock) {
             // Trouver les ventes correspondantes pour ce produit
             $ventes_produit = $ventes->filter(function ($vente) use ($stock) {
                 return $vente->designation_produit == $stock->nom_pr;
             });
-    
+
             // Calculer la quantité totale des ventes pour ce produit
             $quantite_vendue = $ventes_produit->sum('quantite');
-    
+
             // Trouver les transferts correspondants pour ce produit
             $transferts_produit = $transferts->filter(function ($transfert) use ($stock) {
                 return $transfert->produit == $stock->nom_pr;
             });
-    
-            // Calculer la quantité totale des transferts pour ce produit
-            $quantite_transferee = $transferts_produit->sum('quantity');
-    
+
+
+            // Trouver les retours correspondants pour ce produit
+            $retours_produit = $retours->filter(function ($retour) use ($stock) {
+                return $retour->produit == $stock->nom_pr;
+            });
+
+            $quantite_retour = $retours_produit->sum('quantity'); // Utilise la somme agrégée
+            $quantite_transferee = $transferts_produit->sum('quantity'); // Quantités transférées
+
+
             // Calculer la différence (quantité transférée - (stock + ventes))
-            $quantite_difference = $quantite_transferee - ($stock->quantity + $quantite_vendue);
-    
+            $quantite_difference = $quantite_transferee - ($stock->quantity + $quantite_vendue + $quantite_retour);
+
             // Ajouter les résultats pour ce produit
             $resultats_magasin[] = [
                 'produit' => $stock->nom_pr,
                 'stock' => $stock->quantity,
                 'quantite_vendue' => $quantite_vendue,
                 'quantite_transferee' => $quantite_transferee,
+                'quantite_retour' => $quantite_retour,
                 'quantite_difference' => $quantite_difference,
             ];
         }
-    
+
         // Retourner la vue avec les données
         return view('admin.calculs.voir', [
             'magasin' => $magasin,
             'stocks' => $stocks,
             'transferts' => $transferts,
+            'retours' => $retours,
             'ventes' => $ventes,
             'resultats_magasin' => $resultats_magasin,
         ]);
     }
-    
 
-    
-    
-    
-    
+
+
+
+
+
+
 
     public function filtrage_calculs_list($id_calculs_transfert)
     {
