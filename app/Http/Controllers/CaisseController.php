@@ -602,6 +602,7 @@ class CaisseController extends Controller
     public function ImprimerTicket($id_facture)
     {
 
+        
         $Facture = Facture::find($id_facture);
 
         $code = $Facture->code_barres; // Assurez-vous que le code est une chaîne de caractères

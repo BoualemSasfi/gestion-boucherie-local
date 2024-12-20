@@ -287,11 +287,14 @@ Route::controller(VendeurController::class)->group(function () {
     Route::get('/admin/vendeur/edit/{id}', 'edit');
 
 });
-//-------------------------------------------------------------------------
-// ---------               vente                            ----------
-// ------------------------------------------------------------------------
+//--------------------------------------------------------------------------
+//---------               vente                                 ----------
+//--------------------------------------------------------------------------
 Route::controller(VenteController::class)->group(function () {
 
+    Route::get('admin/liste_fact', 'liste_fact')->name('liste_fact');
+    Route::get('admin/facture_details/{id}', 'details_fact')->name('details_fact');
+    
     Route::get('admin/newfact', 'newfact')->name('newfact');
     Route::get('admin/facture/{id}', 'fact')->name('fact');
 
@@ -299,6 +302,8 @@ Route::controller(VenteController::class)->group(function () {
 
     Route::post('/valid_vente', [VenteController::class, 'valid_vente']);
     
+// factur de paiement 
+Route::get('/imprimer_facteur/{id_facture}', [VenteController::class, 'imprimer_facteur'])->name('imprimer_facteur');
 
     // categorie
     Route::get('/get-categories/{stockId}', [VenteController::class, 'getCategoriesByStock']);
