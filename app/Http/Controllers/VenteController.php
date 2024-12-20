@@ -14,8 +14,19 @@ use App\Models\Client;
 use App\Models\Caisse;
 use App\Models\Creditclient;
 use App\Models\AtlVent;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+
+use Picqer\Barcode\BarcodeGeneratorPNG;
+use Picqer\Barcode\BarcodeGenerator;
+use Illuminate\Support\Facades\Log;
+
+use Barryvdh\DomPDF\Facade\Pdf;
+
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+
 class VenteController extends Controller
 {
     public function newfact()
@@ -228,9 +239,27 @@ class VenteController extends Controller
             $update_fact->versement = $request->montant;
             $update_fact->credit = $request->credet;
             $update_fact->type_vente = $request->type_vent;
+            $update_fact->type_fact = 'a';
 
             $update_fact->save();
-      
+
+            // $total = floatval($request->total); // Convertir en nombre à virgule flottante
+            // $montant = floatval($request->montant); // Convertir en nombre à virgule flottante
+            // $credit = $total - $montant; // Calculer le crédit
+
+            $credit = $request->total - $request->montant;
+
+            if ($credit > 0) {
+                $nw_credit = new Creditclient();
+                $nw_credit->id_client = $request->id_client;
+                $nw_credit->id_facture = $request->id_fact;
+                $nw_credit->total_facture = $request->total;
+                $nw_credit->versement = $request->montant;
+                $nw_credit->credit = $credit;
+                $nw_credit->etat_credit = 'impayé';
+                $nw_credit->save();
+            }
+
 
 
             // Récupérer toutes les lignes liées à la facture
@@ -249,7 +278,7 @@ class VenteController extends Controller
                     $newQuantity = $lestock->quantity - $liste->Q;
 
                     $lestock->quantity = $newQuantity;
-                    $lestock->save(); 
+                    $lestock->save();
                 } else {
                     return response()->json([
                         'success' => false,
@@ -257,26 +286,107 @@ class VenteController extends Controller
                     ], 404);
                 }
             }
+
+
+
             // return redirect()->route('Admin_Home')->with('success', 'Facture valide avec succès.');
             return response()->json([
                 'success' => true,
                 'message' => 'Facture mise à jour avec succès.',
             ]);
 
-        } 
-        
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
 
-            \Log::error('Erreur dans la validation de la vente: '.$e->getMessage());
+            \Log::error('Erreur dans la validation de la vente: ' . $e->getMessage());
             \Log::error($e->getTraceAsString());
-        
+
             return response()->json([
                 'success' => false,
                 'message' => 'Une erreur est survenue : ' . $e->getMessage(),
             ], 500);
-            
+
         }
     }
+
+    public function liste_fact()
+    {
+        $listes = Facture::where('type_fact', 'a')->get();
+        $clients = Client::all();
+        return view('admin.vente.liste', ['listes' => $listes, 'clients' => $clients]);
+    }
+
+    public function details_fact($id)
+    {
+        $listes = AtlVent::where('id_fact', $id)->get();
+        $facture = Facture::find($id);
+        $magasins = Magasin::all();
+        $clients = Client::all();
+        $credits = Creditclient::all();
+        return view('admin.vente.details', [
+            'listes' => $listes,
+            'facture' => $facture,
+            'magasins' => $magasins,
+            'clients' => $clients,
+            'credits' => $credits
+        ]);
+
+    }
+
+    // Partie de récupération des données conservée
+    public function imprimer_facteur($id)
+    {
+        $user = Auth::user();
+        $date = date('d-m-Y'); // Remplacer les barres obliques par des tirets
+    
+        $facture = Facture::find($id);
+    
+        if (!$facture) {
+            return response()->json(['error' => 'Facture introuvable'], 404);
+        }
+    
+        $listes = AtlVent::where('id_fact', $id)->get();
+        $magasins = Magasin::all();
+        $clients = Client::all();
+        $credits = Creditclient::all();
+        $informations = Information::first(); // Utiliser `first()` au lieu de `all()->first()` pour optimiser
+    
+        $id_client = $facture->id_client;
+        $le_client = Client::find($id_client);
+    
+        if (!$le_client) {
+            return response()->json(['error' => 'Client introuvable'], 404);
+        }
+    
+        $lenom = $le_client->nom_prenom;
+        $code_facture = $facture->code_facture;
+    
+        $data = [
+            'listes' => $listes,
+            'facture' => $facture,
+            'magasins' => $magasins,
+            'clients' => $clients,
+            'credits' => $credits,
+            'informations' => $informations,
+            'date' => $date,
+        ];
+    
+        // Génération du PDF
+        try {
+            $pdf = PDF::loadView('admin.vente.facture', $data)
+                ->setPaper('A4', 'portrait'); // Format A4 et orientation portrait
+    
+            // Réponse avec le PDF pour affichage dans le navigateur
+            return response($pdf->output(), 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="facture_' . $lenom . '_facture_' . $code_facture . '_' . $date . '.pdf"',
+            ]);
+        } catch (\Exception $e) {
+            // Gestion des erreurs
+            Log::error('Erreur lors de la génération du PDF : ' . $e->getMessage());
+            return response()->json(['error' => 'Erreur lors de la génération du PDF : ' . $e->getMessage()], 500);
+        }
+    }
+    
 
     public function annuler_fact($id)
     {
