@@ -60,13 +60,13 @@
 <body id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper">
+    <div id="wrapper" >
 
         <!-- Sidebar -->
-        <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion " id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center " href="/admin">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <!-- <i class="fas fa-laugh-wink"></i> -->
                     <!-- <i class="fa-solid fa-horse-head fa-bounce fa-xl" style="color: #e9ecf1;"></i> -->
@@ -100,9 +100,9 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Paramètres Application:</h6> -->
                         <a class="collapse-item" href="/admin/newfact"><i
-                                class="fa-solid fa-money-bill-1-wave fa-lg"></i> New</a>
-                        <a class="collapse-item" href="utilities-color.html"><i
-                                class="fa-solid fa-file-invoice fa-lg"></i> Facture</a>
+                                class="fa-solid fa-money-bill-1-wave fa-lg"></i>New</a>
+                        <a class="collapse-item" href="/admin/liste_fact"><i
+                                class="fa-solid fa-file-invoice fa-lg"></i>Facture</a>
                     </div>
                 </div>
             </li>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Client;
+use App\Models\Facture;
 use App\Models\Creditclient;
 
 
@@ -98,10 +99,17 @@ class ClienController extends Controller
         $credit =  $facture->credit ;
         $versement = $facture->versement;
         $id = $facture->id_facture;
+
         $facture->credit = 0;
         $facture->versement =  $credit + $versement;
         $facture->etat_credit = 'payé';
         $facture->save();
+
+        $lafacture = Facture::find($id);
+        $lafacture->versement = $credit + $versement;
+        $lafacture->credit = 0;
+        $lafacture->etat_facture = 'payé';
+        $lafacture->save();
 
 
 
