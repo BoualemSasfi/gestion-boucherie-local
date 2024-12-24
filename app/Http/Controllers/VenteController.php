@@ -336,30 +336,62 @@ class VenteController extends Controller
     public function imprimer_facteur($id)
     {
         $user = Auth::user();
+
         $date = date('d-m-Y'); // Remplacer les barres obliques par des tirets
-    
+
         $facture = Facture::find($id);
-    
+
         if (!$facture) {
             return response()->json(['error' => 'Facture introuvable'], 404);
         }
-    
+
         $listes = AtlVent::where('id_fact', $id)->get();
         $magasins = Magasin::all();
         $clients = Client::all();
         $credits = Creditclient::all();
         $informations = Information::first(); // Utiliser `first()` au lieu de `all()->first()` pour optimiser
-    
+
         $id_client = $facture->id_client;
         $le_client = Client::find($id_client);
-    
+
         if (!$le_client) {
             return response()->json(['error' => 'Client introuvable'], 404);
         }
-    
+
         $lenom = $le_client->nom_prenom;
         $code_facture = $facture->code_facture;
-    
+        $code_barre = $facture->code_barres;
+
+        $code = $facture->code_barres; // Assurez-vous que le code est une chaîne de caractères
+
+        // Chemin pour sauvegarder le code-barres
+        $barcodePath = public_path('barcode.png'); // Changez en 'storage/barcode.png' si nécessaire
+
+        // Créer une instance du générateur de code-barres
+        $generator = new BarcodeGeneratorPNG();
+
+        // Configurer les dimensions
+        $widthFactor = 1; // Ajuste le facteur de largeur si nécessaire
+        $height = 50;
+        $type = BarcodeGenerator::TYPE_CODE_39; // Type de code-barres
+
+        // Le code à encoder
+
+        try {
+            // Générer le code-barres et l'enregistrer dans le fichier
+            $barcodeImage = $generator->getBarcode($code, $type, $widthFactor, $height);
+
+            // Écrire l'image dans le fichier
+            file_put_contents($barcodePath, $barcodeImage);
+
+            Log::info('Code-barres généré avec succès à l\'emplacement : ' . $barcodePath);
+
+            // return response()->json(['success' => 'Code-barres généré avec succès', 'path' => $barcodePath], 200);
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de la génération du code-barres : ' . $e->getMessage());
+            return response()->json(['error' => 'Erreur lors de la génération du code-barres : ' . $e->getMessage()], 500);
+        }
+
         $data = [
             'listes' => $listes,
             'facture' => $facture,
@@ -367,14 +399,16 @@ class VenteController extends Controller
             'clients' => $clients,
             'credits' => $credits,
             'informations' => $informations,
+            'code_barre' => $code_barre,
+            'barcodePath' => $barcodePath,
             'date' => $date,
         ];
-    
+
         // Génération du PDF
         try {
             $pdf = PDF::loadView('admin.vente.facture', $data)
                 ->setPaper('A4', 'portrait'); // Format A4 et orientation portrait
-    
+
             // Réponse avec le PDF pour affichage dans le navigateur
             return response($pdf->output(), 200, [
                 'Content-Type' => 'application/pdf',
@@ -386,7 +420,94 @@ class VenteController extends Controller
             return response()->json(['error' => 'Erreur lors de la génération du PDF : ' . $e->getMessage()], 500);
         }
     }
-    
+    public function imprimer_recu($id)
+    {
+        $user = Auth::user();
+
+        $date = date('d-m-Y'); // Remplacer les barres obliques par des tirets
+
+        $facture = Facture::find($id);
+
+        if (!$facture) {
+            return response()->json(['error' => 'Facture introuvable'], 404);
+        }
+
+        $listes = AtlVent::where('id_fact', $id)->get();
+        $magasins = Magasin::all();
+        $clients = Client::all();
+        $credits = Creditclient::all();
+        $informations = Information::first(); // Utiliser `first()` au lieu de `all()->first()` pour optimiser
+
+        $id_client = $facture->id_client;
+        $le_client = Client::find($id_client);
+
+        if (!$le_client) {
+            return response()->json(['error' => 'Client introuvable'], 404);
+        }
+
+        $lenom = $le_client->nom_prenom;
+        $code_facture = $facture->code_facture;
+        $code_barre = $facture->code_barres;
+
+        $code = $facture->code_barres; // Assurez-vous que le code est une chaîne de caractères
+
+        // Chemin pour sauvegarder le code-barres
+        $barcodePath = public_path('barcode.png'); // Changez en 'storage/barcode.png' si nécessaire
+
+        // Créer une instance du générateur de code-barres
+        $generator = new BarcodeGeneratorPNG();
+
+        // Configurer les dimensions
+        $widthFactor = 1; 
+        $height = 30;
+        $type = BarcodeGenerator::TYPE_CODE_39; // Type de code-barres
+
+        // Le code à encoder
+
+        try {
+            // Générer le code-barres et l'enregistrer dans le fichier
+            $barcodeImage = $generator->getBarcode($code, $type, $widthFactor, $height);
+
+            // Écrire l'image dans le fichier
+            file_put_contents($barcodePath, $barcodeImage);
+
+            Log::info('Code-barres généré avec succès à l\'emplacement : ' . $barcodePath);
+
+            // return response()->json(['success' => 'Code-barres généré avec succès', 'path' => $barcodePath], 200);
+        } catch (\Exception $e) {
+            Log::error('Erreur lors de la génération du code-barres : ' . $e->getMessage());
+            return response()->json(['error' => 'Erreur lors de la génération du code-barres : ' . $e->getMessage()], 500);
+        }
+
+        $data = [
+            'listes' => $listes,
+            'facture' => $facture,
+            'magasins' => $magasins,
+            'clients' => $clients,
+            'credits' => $credits,
+            'informations' => $informations,
+            'code_barre' => $code_barre,
+            'barcodePath' => $barcodePath,
+            'date' => $date,
+        ];
+
+        // Génération du PDF
+        try {
+            $pdf = PDF::loadView('admin.vente.recu', $data)
+                ->setPaper('A4', 'portrait'); // Format A4 et orientation portrait
+
+            // Réponse avec le PDF pour affichage dans le navigateur
+            return response($pdf->output(), 200, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="facture_' . $lenom . '_recu_' . $code_facture . '_' . $date . '.pdf"',
+            ]);
+        } catch (\Exception $e) {
+            // Gestion des erreurs
+            Log::error('Erreur lors de la génération du PDF : ' . $e->getMessage());
+            return response()->json(['error' => 'Erreur lors de la génération du PDF : ' . $e->getMessage()], 500);
+        }
+    }
+
 
     public function annuler_fact($id)
     {
