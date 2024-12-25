@@ -299,6 +299,21 @@
             </div>
         </div>
 
+        <script>
+            function FiltrageProduits(form) {
+                const card = form.querySelector('.card'); // Récupère la carte associée au formulaire
+                if (card) {
+                    // Supprime le cadre rouge de toutes les autres cartes
+                    document.querySelectorAll('.card.cat').forEach(otherCard => {
+                        otherCard.style.border = ''; // Réinitialise le cadre
+                    });
+
+                    // Ajoute un cadre rouge à la carte sélectionnée
+                    card.style.border = '2px solid red';
+                }
+            }
+        </script>
+
         <!-- Produits -->
         <div class="container-fluid pl-4 pr-4">
             <div class="row le_centre">
@@ -733,153 +748,166 @@
                             </div>
 
                             {{-- -------------------------------------------- --}}
-                            @if($btn_enc == '1')
-                            <div class="col-6">
-                                {{-- Bouton pour afficher le popup --}}
-                                <button class="btn btn-success bouton-caisse" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#FactureModal" id="bouton_encaisser" onclick="Ouvrir_Encaissement()">
-                                    <i class="fas fa-cash-register fa-lg"></i>
-                                    <br>Encaissement
-                                </button>
+                            @if ($btn_enc == '1')
+                                <div class="col-6">
+                                    {{-- Bouton pour afficher le popup --}}
+                                    <button class="btn btn-success bouton-caisse" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#FactureModal" id="bouton_encaisser"
+                                        onclick="Ouvrir_Encaissement()">
+                                        <i class="fas fa-cash-register fa-lg"></i>
+                                        <br>Encaissement
+                                    </button>
 
-                                <!-- Popup -->
-                                <div class="modal fade" id="FactureModal" tabindex="-1" aria-labelledby=""
-                                    aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                        <div class="modal-content">
-                                            <!-- En-tête du modal -->
-                                            {{-- <div class="modal-header">
+                                    <!-- Popup -->
+                                    <div class="modal fade" id="FactureModal" tabindex="-1" aria-labelledby=""
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <!-- En-tête du modal -->
+                                                {{-- <div class="modal-header">
                                                 <h4 class="modal-title" id="FactureModalLabel">BLABLABLABLABLA :</h4>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div> --}}
-                                            <!-- Corps du modal -->
-                                            <div class="modal-body">
-                                                <h4 class="modal-title" id="">ENCAISSEMENT</h4>
-                                                <div class="mt-3">
-                                                    <div class="row">
-                                                        <div class="col-12 text-left mb-3">
-                                                            <label for="client_select">Client :</label>
-                                                            <select class="form-select" id="client_select"
-                                                                style="width: 100%;">
-                                                                @foreach ($clients as $client)
-                                                                    <option value="{{ $client->id }}">
-                                                                        {{ $client->nom_prenom }}</option>
-                                                                @endforeach
-                                                            </select>
+                                                <!-- Corps du modal -->
+                                                <div class="modal-body">
+                                                    <h4 class="modal-title" id="">ENCAISSEMENT</h4>
+                                                    <div class="mt-3">
+                                                        <div class="row">
+                                                            <div class="col-12 text-left mb-3">
+                                                                <label for="client_select">Client :</label>
+                                                                <select class="form-select" id="client_select"
+                                                                    style="width: 100%;">
+                                                                    @foreach ($clients as $client)
+                                                                        <option value="{{ $client->id }}">
+                                                                            {{ $client->nom_prenom }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-4">
-                                                            <label for="TotalInput">Montant total :</label>
-                                                            <input type="text" id="TotalInput" class="form-control"
-                                                                placeholder="0.00"
-                                                                style="text-align: center; font-size:26px;" readonly>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <label for="TotalInput">Montant total :</label>
+                                                                <input type="text" id="TotalInput"
+                                                                    class="form-control" placeholder="0.00"
+                                                                    style="text-align: center; font-size:26px;" readonly>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <label for="versementInput">Versement :</label>
+                                                                <input type="number" id="VersementInput"
+                                                                    class="form-control" placeholder="0.00"
+                                                                    style="text-align: center; font-size:26px;"
+                                                                    inputmode="decimal" readonly>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <label for="creditInput" id="LabelCredit">Crédit :</label>
+                                                                <input type="text" id="CreditInput"
+                                                                    class="form-control" placeholder="0.00"
+                                                                    style="text-align: center; font-size:26px;" readonly>
+                                                            </div>
                                                         </div>
-                                                        <div class="col-4">
-                                                            <label for="versementInput">Versement :</label>
-                                                            <input type="number" id="VersementInput"
-                                                                class="form-control" placeholder="0.00"
-                                                                style="text-align: center; font-size:26px;"
-                                                                inputmode="decimal" readonly>
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <label for="creditInput" id="LabelCredit">Crédit :</label>
-                                                            <input type="text" id="CreditInput" class="form-control"
-                                                                placeholder="0.00"
-                                                                style="text-align: center; font-size:26px;" readonly>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row mt-3">
-                                                        <div class="col-4 h-100">
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('1')"
-                                                                style="width:100%;">1</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('4')"
-                                                                style="width:100%;">4</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('7')"
-                                                                style="width:100%;">7</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('0')"
-                                                                style="width:100%;">0</button>
-                                                        </div>
-                                                        <div class="col-4 h-100">
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('2')"
-                                                                style="width:100%;">2</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('5')"
-                                                                style="width:100%;">5</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('8')"
-                                                                style="width:100%;">8</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('00')"
-                                                                style="width:100%;">00</button>
-                                                        </div>
-                                                        <div class="col-4 h-100">
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('3')"
-                                                                style="width:100%;">3</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('6')"
-                                                                style="width:100%;">6</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('9')"
-                                                                style="width:100%;">9</button>
-                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                                onclick="FactureAppendValue('000')"
-                                                                style="width:100%;">000</button>
+                                                        <div class="row mt-3">
+                                                            <div class="col-4 h-100">
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('1')"
+                                                                    style="width:100%;">1</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('4')"
+                                                                    style="width:100%;">4</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('7')"
+                                                                    style="width:100%;">7</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('0')"
+                                                                    style="width:100%;">0</button>
+                                                            </div>
+                                                            <div class="col-4 h-100">
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('2')"
+                                                                    style="width:100%;">2</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('5')"
+                                                                    style="width:100%;">5</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('8')"
+                                                                    style="width:100%;">8</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('00')"
+                                                                    style="width:100%;">00</button>
+                                                            </div>
+                                                            <div class="col-4 h-100">
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('3')"
+                                                                    style="width:100%;">3</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('6')"
+                                                                    style="width:100%;">6</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('9')"
+                                                                    style="width:100%;">9</button>
+                                                                <button
+                                                                    class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                    onclick="FactureAppendValue('000')"
+                                                                    style="width:100%;">000</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <!-- Pied du modal -->
-                                            {{-- <div class="modal-footer text-center align-content-center justify-content-center">
+                                                <!-- Pied du modal -->
+                                                {{-- <div class="modal-footer text-center align-content-center justify-content-center">
                                                 <button type="button" class="btn btn-success" onclick="ValiderFacture()"
                                                     style="">Valider</button>
                                                 <button type="button" class="btn btn-danger" onclick="clearTotalInput()">Effacer</button>
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
                                             </div> --}}
 
-                                            <div class="modal-footer m-0 p-2">
-                                                <div class="container pl-0">
-                                                    <div class="row">
-                                                        <div class="col-4">
-                                                            <button type="button" class="btn btn-success"
-                                                                onclick="ValiderFacture()" style="width: 150px;">
-                                                                <i class="bi bi-check-lg"></i><br>Valider
-                                                            </button>
+                                                <div class="modal-footer m-0 p-2">
+                                                    <div class="container pl-0">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <button type="button" class="btn btn-success"
+                                                                    onclick="ValiderFacture()" style="width: 150px;">
+                                                                    <i class="bi bi-check-lg"></i><br>Valider
+                                                                </button>
 
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <button type="button" class="btn btn-danger"
-                                                                onclick="ClearTotalInput()" style="width: 150px;">
-                                                                <i class="bi bi-eraser"></i><br>Effacer
-                                                            </button>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <button type="button" class="btn btn-danger"
+                                                                    onclick="ClearTotalInput()" style="width: 150px;">
+                                                                    <i class="bi bi-eraser"></i><br>Effacer
+                                                                </button>
 
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal" style="width: 150px;">
-                                                                <i class="bi bi-x"></i><br>Fermer
-                                                            </button>
+                                                            </div>
+                                                            <div class="col-4">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal" style="width: 150px;">
+                                                                    <i class="bi bi-x"></i><br>Fermer
+                                                                </button>
 
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
+                                            </div>
                                         </div>
                                     </div>
+                                    <!-- Popup -->
+
+
+
                                 </div>
-                                <!-- Popup -->
-
-
-
-                            </div>
                             @endif
                             {{-- -------------------------------------------- --}}
 
@@ -1615,7 +1643,7 @@
                             else if (vente_type === 'gros') prix = value.prix_gros;
 
                             productsContainer.append(`
-                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4">
+                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 mb-4">
                                     <div class="card scat">
                                         <form class="affichage-form"
                                             data-id_lestock="${value.id}"
@@ -1630,7 +1658,7 @@
                                             <img src="{{ asset('storage/') }}/${value.photo}" class="card-img-top" alt="...">
                                             <div class="card-body p-1 m-0 text-center">
                                                 <h5 class="card-title mini-text">${value.nom}</h5>
-                                                <h5 class="card-text mini-text">${Math.round(parseFloat(prix))} DA / ${value.mesure}</h5>
+                                                <h5 class="card-text mini-text fw-bold">${Math.round(parseFloat(prix))} DA</h5>
                                             </div>
                                         </form>
                                     </div>
@@ -1679,6 +1707,21 @@
             } catch (error) {
                 console.error('Erreur dans la fonction FiltrageProduits :', error);
             }
+
+            // pour le cadre 
+            const card = form.querySelector('.card'); // Récupère la carte associée au formulaire
+            if (card) {
+                // Réinitialise le cadre et l'ombrage de toutes les cartes
+                document.querySelectorAll('.card.cat').forEach(otherCard => {
+                    otherCard.style.border = ''; // Réinitialise le cadre
+                    otherCard.style.boxShadow = ''; // Réinitialise le shadow
+                });
+
+                // Ajoute un cadre rouge et un ombrage à la carte sélectionnée
+                card.style.border = '3px solid #e74a3b';
+                card.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.4)'; // Shadow
+            }
+
         }
     </script>
 
@@ -2818,6 +2861,7 @@
             /* Ajustez la taille selon vos besoins */
             font-weight: bold;
         }
+
         .swal-text-large {
             font-size: 2rem;
             /* Ajustez la taille selon vos besoins */
@@ -2951,10 +2995,14 @@
                                             parseFloat(vente.quantite);
                                         $('#produits_facture_' + id_facture).append(
                                             '<tr>' +
-                                            '<td class="">' + vente.designation_produit + '</td>' +
-                                            '<td class="">' + quantite + ' ' + vente.unite_mesure + '</td>' +
-                                            '<td class="">' + vente.prix_unitaire + '</td>' +
-                                            '<td class="">' + vente.total_vente +
+                                            '<td class="">' + vente
+                                            .designation_produit + '</td>' +
+                                            '<td class="">' + quantite + ' ' +
+                                            vente.unite_mesure + '</td>' +
+                                            '<td class="">' + vente
+                                            .prix_unitaire + '</td>' +
+                                            '<td class="">' + vente
+                                            .total_vente +
                                             '</td>' +
                                             '</tr>'
                                         );
@@ -3141,16 +3189,20 @@
                                             parseFloat(vente.quantite);
                                         $('#ventes_facture_' + id_facture).append(
                                             '<tr>' +
-                                            '<td class="">' + vente.designation_produit + '</td>' +
-                                            '<td class="">' + quantite + ' ' + vente.unite_mesure + '</td>' +
-                                            '<td class="">' + vente.prix_unitaire + '</td>' +
-                                            '<td class="">' + vente.total_vente +
+                                            '<td class="">' + vente
+                                            .designation_produit + '</td>' +
+                                            '<td class="">' + quantite + ' ' +
+                                            vente.unite_mesure + '</td>' +
+                                            '<td class="">' + vente
+                                            .prix_unitaire + '</td>' +
+                                            '<td class="">' + vente
+                                            .total_vente +
                                             '</td>' +
                                             '</tr>'
                                         );
                                     });
                                 },
-                                
+
                                 error: function(xhr, status, error) {
                                     console.error('Error fetching ventes:', error);
                                 }
