@@ -323,12 +323,23 @@
                             @foreach ($categories as $categorie)
                                 <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
                                     onclick="FiltrageProduits(this)" style="cursor: pointer;">
-                                    <div class="card cat"
+
+                                    {{-- <div class="card cat"
                                         style="width: 150px; height: 100px; margin-right:5px; background-image: url('{{ asset('storage/' . $categorie->photo) }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
                                         <p class="mini-text"
                                             style="color:rgb(239, 239, 239); font-weight:bold;padding-left:10px;">
                                             {{ $categorie->nom }}</p>
+                                    </div> --}}
+
+                                    <div class="card cat" style="width: 10rem;">
+                                        <img src="{{ asset('storage/' . $categorie->photo) }}" class="card-img-top"
+                                            alt="..." style="height: 80%;">
+                                        <div class="card-body" style="height: 40px;">
+                                            <h5 class="card-title mini-text text-center fw-bold" style="margin-top:-10px;">{{ $categorie->nom }}</h5>
+                                        </div>
                                     </div>
+
+
                                 </form>
                             @endforeach
                         </div>
@@ -336,8 +347,8 @@
 
                     <hr class="p-0 mb-0 mt-2">
 
-                    <div class="container" style="height: 500px;">
-                        <h6 id="titre-categorie" class="p-0 m-0"></h6>
+                    <div class="container" style="height: 500px;padding-top:20px;">
+                        {{-- <h6 id="titre-categorie" class="p-0 m-0"></h6> --}}
                         <div class="row" id="products" style="height: 100%; max-height: 450px; overflow-y: auto;">
                             <!-- Les produits filtrés apparaîtront ici -->
                         </div>
@@ -1101,11 +1112,11 @@
     <script>
         $(document).ready(function() {
             $('.your-carousel').slick({
-                slidesToShow: 5,
-                slidesToScroll: 5,
-                arrows: true,
-                dots: false,
-                infinite: false,
+                slidesToShow: 4,
+                slidesToScroll: 4,
+                arrows: true, // Active les flèches
+                dots: false, // (Optionnel) désactive les points si non nécessaires
+                infinite: true,
                 responsive: [{
                     breakpoint: 768,
                     settings: {
@@ -1120,11 +1131,30 @@
                     }
                 }]
             });
+            console.log('Carousel exécuté');
         });
-        console.log('Carousel executé');
     </script>
 
+    <style>
+        .slick-prev,
+        .slick-next {
+            display: block !important;
+            /* Force l'affichage */
+            z-index: 1000;
+            /* Assure qu'elles ne sont pas couvertes */
+            background: rgba(0, 0, 0, 0.5);
+            /* Optionnel : ajoute un fond pour les rendre visibles */
+            color: white !important;
+            /* Couleur des flèches */
+            font-size: 30px;
+        }
 
+        .slick-prev:before,
+        .slick-next:before {
+            color: white !important;
+            /* Couleur du contenu des flèches */
+        }
+    </style>
 
 
 
@@ -1657,8 +1687,8 @@
                                             style="cursor: pointer;">
                                             <img src="{{ asset('storage/') }}/${value.photo}" class="card-img-top" alt="...">
                                             <div class="card-body p-1 m-0 text-center">
-                                                <h5 class="card-title mini-text">${value.nom}</h5>
-                                                <h5 class="card-text mini-text fw-bold">${Math.round(parseFloat(prix))} DA</h5>
+                                                <h5 class="card-title mini-text" style="line-height:1.5;">${value.nom}</h5>
+                                                <h5 class="card-text mini-text fw-bold" style="line-height:1;">${Math.round(parseFloat(prix))} DA</h5>
                                             </div>
                                         </form>
                                     </div>

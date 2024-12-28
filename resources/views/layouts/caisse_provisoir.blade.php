@@ -12,7 +12,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    
+
 
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -27,16 +27,21 @@
         rel="stylesheet">
 
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 
 
 
     <!-- Slick CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
     <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+    <!-- Slick JS -->
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
 
     {{-- local  --}}
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
@@ -79,7 +84,7 @@
     <link href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/searchpanes/2.3.3/css/searchPanes.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/staterestore/1.4.1/css/stateRestore.bootstrap5.min.css" rel="stylesheet">
-     
+
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.1.8/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.min.js"></script>
@@ -112,7 +117,8 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow" style="height: 30px;!important">
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow"
+                    style="height: 30px;!important">
 
 
                     {{-- <div class="nav-item" style="">
@@ -263,7 +269,7 @@
             });
         }
     </script>
-    
+
 
 </body>
 
