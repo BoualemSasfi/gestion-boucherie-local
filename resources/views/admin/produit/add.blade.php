@@ -4,9 +4,11 @@
 <div class="container" id="titre-page">
     <div class="row">
         <div class="col-2 d-flex align-items-center">
-            <a href="{{ url('/admin/produit') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
+            <a href="{{ url('/admin/category/'.$categorys->id.'/edit') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                     class="btn-description">Retour</span></a>
         </div>
+
+        
         <div class="col-10 d-flex align-items-center">
             <h2>Ajouter un nouveau produit</h2>
         </div>
@@ -53,10 +55,8 @@
                                     <div class="form-group">
                                         <label for="">Viande :</label>
                                         <select id="category" name="category_id" class="form-control">
-                                            <option value="">Sélectionnez une catégorie</option>
-                                            @foreach ($categorys as $category)
-                                                <option value="{{ $category->id }}">{{ $category->nom }}</option>
-                                            @endforeach
+                                            <option value="{{ $categorys->id }}">{{ $categorys->nom }}</option>
+
                                         </select>
                                     </div>
                                 </form>
@@ -108,7 +108,7 @@
                                             class="btn-description">Enregistrer</span></button>
                                 </div>
                                 <div class="col-6">
-                                    <a class="btn btn-danger p-2" href="{{ '/home' }}"><i
+                                    <a class="btn btn-danger p-2" href="{{ '/admin/category/'.$categorys->id.'/edit' }}"><i
                                             class="fas fa-times fa-lg mr-2"></i><span
                                             class="btn-description">Annuler</span></a>
                                 </div>

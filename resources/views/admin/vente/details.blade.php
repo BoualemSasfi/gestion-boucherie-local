@@ -16,8 +16,11 @@
         </div>
 
         <div class="col-8 text-center">
-            <h2>Details de facture N° {{$facture->code_facture}} <i class="fa-solid fa-right-left fa-flip fa-xl"
-                    style="color: #63E6BE;"></i></h2>
+            <h2>Details de facture N° 00001/2024
+            {{$facture->code_facture}} 
+            <!-- <i class="fa-solid fa-right-left fa-flip fa-xl"
+                    style="color: #63E6BE;"></i> -->
+                </h2>
         </div>
         <div class="col-2 text-right">
             <!-- <a href="{{ url('/admin/vente/liste') }}" class="btn btn-success">
@@ -31,33 +34,40 @@
 </div>
 <!-- script pour facture et recu de paiement -->
 <script>
-document.getElementById('printButton').addEventListener('click', function () {
-    const id_fact = {{$facture->id}};
+    document.getElementById('printButton').addEventListener('click', function () {
+        const id_fact = {{$facture->id}};
 
-    Swal.fire({
-        title: 'Choisissez une option',
-        icon: 'question',
-        showCancelButton: true,
-        showDenyButton: true,
-        confirmButtonText: 'Facture',
-        denyButtonText: 'Bon',
-        cancelButtonText: 'Annuler',
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Ouvrir le PDF dans un nouvel onglet
-            let newTab = window.open(`/imprimer_facteur/${id_fact}`, '_blank');
-            
-            // Attendre que le PDF soit complètement chargé puis lancer l'impression
-            newTab.onload = function() {
-                newTab.print(); // Imprimer le PDF dans le nouvel onglet
-            };
-        } else if (result.isDenied) {
-            Swal.fire('Non implémenté', 'La fonction Bon est encore à implémenter.', 'info');
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-            console.log('Action annulée');
-        }
+        Swal.fire({
+            title: 'Choisissez une option',
+            icon: 'question',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonText: 'Facture',
+            denyButtonText: 'Recu',
+            cancelButtonText: 'Annuler',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Ouvrir le PDF dans un nouvel onglet
+                let newTab = window.open(`/imprimer_facteur/${id_fact}`, '_blank');
+
+                // Attendre que le PDF soit complètement chargé puis lancer l'impression
+                newTab.onload = function () {
+                    newTab.print(); // Imprimer le PDF dans le nouvel onglet
+                };
+            } else if (result.isDenied) {
+                // Swal.fire('Non implémenté', 'La fonction Bon est encore à implémenter.', 'info');
+                // Ouvrir le PDF dans un nouvel onglet
+                let newTab = window.open(`/imprimer_recu/${id_fact}`, '_blank');
+
+                // Attendre que le PDF soit complètement chargé puis lancer l'impression
+                newTab.onload = function () {
+                    newTab.print(); // Imprimer le PDF dans le nouvel onglet
+                };
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                console.log('Action annulée');
+            }
+        });
     });
-});
 
 </script>
 
