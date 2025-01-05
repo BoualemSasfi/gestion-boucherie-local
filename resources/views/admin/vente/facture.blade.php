@@ -394,8 +394,8 @@ facture
 
             <div class="amount-container">
                 <h5>Total  : <span class="amount">{{$facture->total_facture}} DA </span></h5>
-                <!-- <h5>Versement : <span class="amount">{{$facture->versement}} DA </span></h5>
-                <h5>credit : <span class="amount">{{$facture->credit}} DA </span></h5> -->
+                <h5>Versement : <span class="amount">{{$facture->versement}} DA </span></h5>
+                <h5>credit : <span class="amount">{{$facture->credit}} DA </span></h5>
             </div>
 
         </div>

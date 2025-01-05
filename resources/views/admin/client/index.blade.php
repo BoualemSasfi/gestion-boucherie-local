@@ -51,18 +51,21 @@
                                 <th>Nom & Prenom </th>
                                 <th>Details</th>
                                 <th>Tel</th>
+                                <th>Credit</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-
                         <tbody class="text-center">
                             @foreach ($clients as $client)
                                 <tr>
-                                    <td class=" align-middle">{{ $client->code_client}}</td>
+                                    <td class=" align-middle">
+                                    <!-- {{ $client->code_client}} -->
+                                      CL00001
+                                </td>
                                     <td class=" align-middle">{{ $client->nom_prenom}}</td>
                                     <td class=" align-middle">{{ $client->details}}</td>
                                     <td class=" align-middle">{{ $client->fix}}</td>
-
+                                    <td class=" align-middle">{{ $client->credit}}</td>
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-between">
                                             {{-- Voir STOCK --}}
@@ -73,7 +76,6 @@
                                                     <i class="fa-solid fa-xl fa-eye" style="color: #63E6BE;"></i>
                                                 </button>
                                             </form>
-
                                             {{-- edit button --}}
                                             <form class="edit-form" action="" data-id="{{ $client->id }}" method="GET">
                                                 @csrf
@@ -81,7 +83,6 @@
                                                     <i class="fa-solid fa-pen fa-xl" style="color: #74C0FC;"></i>
                                                 </button>
                                             </form>
-
                                             {{-- delete button --}}
                                             <form class="delete-form" action="" data-id="{{ $client->id }}" method="POST">
                                                 @csrf
@@ -92,17 +93,11 @@
                                             </form>
                                         </div>
                                     </td>
-
-
-
                                 </tr>
                             @endforeach
-
                         </tbody>
-
                     </table>
                 </div>
-
             </div>
         </div>
     </div>

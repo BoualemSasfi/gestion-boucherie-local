@@ -23,12 +23,18 @@ class ProduitController extends Controller
         $produits = Produit::all();  // Récupère tous les produits
         $categories = Category::all();
         // Passe les données à la vue
-        return view('admin.produit.index', ['produits' => $produits,'categories'=>$categories]);
+        return view('admin.produit.index', ['produits' => $produits, 'categories' => $categories]);
     }
 
     public function create()
     {
         $categorys = Category::all(); // Récupère toutes les catégories
+        return view('admin.produit.add', ['categorys' => $categorys]);
+    }
+
+    public function add($id)
+    {
+        $categorys = Category::find($id);
         return view('admin.produit.add', ['categorys' => $categorys]);
     }
     public function store(Request $request)
@@ -73,11 +79,14 @@ class ProduitController extends Controller
             $add_prd->save();
         }
 
+        $category_id = $request->input('category_id');
+        // return redirect()->route(' /admin/category/'.$category_id.'/edit')->with('success', 'le nouveau produit a bien été eneregistrier');
+        return redirect()->route('category.edit', ['id' => $category_id])
+        ->with('success', 'Le nouveau produit a bien été enregistré.');
 
         // Message de succès
-        session()->flash('success', 'le nouveau produit a bien été eneregistrier');
-
-        return redirect('/admin/produit');
+        // session()->flash('success', 'le nouveau produit a bien été eneregistrier');
+        // return redirect('/admin/produit');
     }
 
     public function edit($id)
@@ -139,6 +148,44 @@ class ProduitController extends Controller
 
         return redirect('/admin/produit');
     }
+
+
+    public function add_produit(Request $request)
+    {
+        $request->validate([
+            'ProductName' => 'required|string|max:255',
+            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'priceAchat' => 'required|numeric',
+            'priceDetail' => 'required|numeric',
+            'priceSemiGros' => 'required|numeric',
+            'priceGros' => 'required|numeric',
+            'unite_mesure' => 'required|string',
+            'categorie_id' => 'required|integer',
+        ]);
+
+        try {
+            $nv_prod = new Produit();
+            $nv_prod->nom_pr = $request->ProductName;
+            $nv_prod->prix_achat = $request->priceAchat;
+            $nv_prod->prix_vente = $request->priceDetail;
+            $nv_prod->semi_gros = $request->priceSemiGros;
+            $nv_prod->gros = $request->priceGros;
+            $nv_prod->unite_mesure = $request->unite_mesure;
+            $nv_prod->categorie_id = $request->categorie_id;
+
+            if ($request->hasFile('photo')) {
+                $path = $request->file('photo')->store('public/images/produit');
+                $nv_prod->photo_s_pr = str_replace('public/', '', $path);
+            }
+
+            $nv_prod->save();
+
+            return response()->json(['message' => 'Produit ajouté avec succès!'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Erreur lors de l\'ajout du produit.', 'error' => $e->getMessage()], 500);
+        }
+    }
+
 
     public function add_sous_produit(Request $request)
     {

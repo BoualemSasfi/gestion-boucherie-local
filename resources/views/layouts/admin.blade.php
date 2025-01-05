@@ -238,9 +238,9 @@
                         <!-- <h6 class="collapse-header">Catégories viande:</h6> -->
                         <a class="collapse-item" href="/admin/category"><i class="fa-solid fa-horse-head fa-lg"></i>
                             Catétorié</a>
-                        <a class="collapse-item" href="/admin/produit"><i
+                        <!-- <a class="collapse-item" href="/admin/produit"><i
                                 class="fa-solid fa-drumstick-bite fa-lg"></i>
-                            Produits</a>
+                            Produits</a> -->
                     </div>
                 </div>
             </li>

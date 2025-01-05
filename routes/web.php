@@ -117,20 +117,25 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('/admin/category', 'index');
     Route::get('/admin/category/add', 'create');
     Route::post('/admin/category/add/save', 'store');
-    Route::get('/admin/category/{id}/edit', 'edit');
+    Route::get('/admin/category/{id}/edit', 'edit')->name('category.edit');
     Route::put('/admin/category/{id}/update', 'update');
     Route::delete('/admin/category/{id}/delete', 'destroy');
+
+
 });
 //--------------------------------------------------------------------------
 // ---------                Produits                              ----------
 // -------------------------------------------------------------------------
 Route::controller(ProduitController::class)->group(function () {
     Route::get('/admin/produit', 'index');
-    Route::get('/admin/produit/add', 'create');
+    // Route::get('/admin/produit/add', 'create');
+    Route::get('/admin/produit/add/{id}', 'add');
     Route::post('/admin/produit/add/save', 'store');
     Route::get('/admin/produit/{id}/edit', 'edit');
     Route::put('/admin/produit/{id}/update', 'update');
     Route::delete('/admin/produit/{id}/delete', 'destroy');
+
+    Route::post('/admin/produit/add_produit', 'add_produit');
 
     // sous produit 
     Route::post('/admin/produit/add_sous_produit', 'add_sous_produit');
