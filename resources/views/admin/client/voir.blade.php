@@ -11,9 +11,17 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Details de client </h2>
+            <h2>Details de client  {{$client->nom_prenom}} </h2>
         </div>
         <div class="col-2 text-right">
+
+        @if ($credit > 0 )
+        <button class="btn btn-success" style="float: right;">Versement </button>
+        
+        @endif
+
+
+
 
         </div>
     </div>
@@ -50,6 +58,7 @@
                         <h5 style=" margin-top: 10px;">Crédit : <span style="color: red;">{{$credit}}</span> DA</h5>
                     </div>
 
+
                     <div class="col-12">
                         <div class="container mt-4">
 
@@ -78,12 +87,12 @@
                                             <td>{{$liste->credit}} DA</td>
 
                                             <!-- <td >
-                                                                    @if ($liste->etat_credit == 'impayé')
-                                                                        <i class="fa-solid fa-circle-xmark fa-lg" style="color: #f7224c;"></i>
-                                                                    @else
-                                                                        <i class="fa-solid fa-circle-check fa-lg" style="color: #63E6BE;"></i>
-                                                                    @endif
-                                                                </td> -->
+                                                                        @if ($liste->etat_credit == 'impayé')
+                                                                            <i class="fa-solid fa-circle-xmark fa-lg" style="color: #f7224c;"></i>
+                                                                        @else
+                                                                            <i class="fa-solid fa-circle-check fa-lg" style="color: #63E6BE;"></i>
+                                                                        @endif
+                                                                    </td> -->
                                             <td>
                                                 @if ($liste->etat_credit == 'impayé')
                                                     <button
