@@ -132,7 +132,9 @@ Route::controller(ProduitController::class)->group(function () {
     Route::get('/admin/produit/add/{id}', 'add');
     Route::post('/admin/produit/add/save', 'store');
     Route::get('/admin/produit/{id}/edit', 'edit');
+    Route::get('/admin/produit/{id}/{id_cat}/mdf', 'mdf');
     Route::put('/admin/produit/{id}/update', 'update');
+    Route::put('/admin/produit/{id}/{id_cat}/modifier', 'modifier');
     Route::delete('/admin/produit/{id}/delete', 'destroy');
 
     Route::post('/admin/produit/add_produit', 'add_produit');

@@ -5,11 +5,12 @@
     <div class="row justify-content-between align-items-center">
 
         <div class="col-2">
-            <a href="{{ url('/admin/produit') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
+            <a href="{{ url('/admin/category/'.$categorie->id.'/edit') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                     class="btn-description">Retour</span></a>
         </div>
         <div class="col-8 text-center">
             <h2>Modifier Le Produit </h2>
+            <h2>Categorie {{$categorie->id}} </h2>
         </div>
         <div class="col-2 text-right">
 
@@ -36,7 +37,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mx-auto">
             <div class="card shadow m-1">
 
-                <form class="edit-form" action="{{ url('/admin/produit/' . $produit->id . '/update') }}" method="post"
+                <form class="edit-form" action="{{ url('/admin/produit/' . $produit->id . '/'.$categorie->id.'/modifier') }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
@@ -284,7 +285,7 @@
             showCancelButton: true,
             confirmButtonColor: '#28a745',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Oui, enregistrer',
+            confirmButtonText: 'enregistrer',
             cancelButtonText: 'Annuler'
         });
 
@@ -293,11 +294,11 @@
             // Récupère et soumet le formulaire parent du bouton
             button.closest('.edit-form').submit();
             // Affiche une alerte de succès après la soumission
-            Swal.fire(
-                'Enregistré!',
-                'Les modifications ont été enregistrées avec succès.',
-                'success'
-            );
+            // Swal.fire(
+            //     'Enregistré!',
+            //     'Les modifications ont été enregistrées avec succès.',
+            //     'success'
+            // );
         }
     }
 </script>

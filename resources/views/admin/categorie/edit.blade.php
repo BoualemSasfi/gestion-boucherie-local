@@ -148,7 +148,7 @@
                                 <div class="d-flex justify-content-between">
 
                                     <!-- Edit button -->
-                                    <form class="edit-form" action="/admin/produit/{{ $produit->id }}/edit"
+                                    <form class="edit-form" action="/admin/produit/{{ $produit->id }}/{{$category->id}}/mdf"
                                         data-id="{{ $produit->id }}" method="GET">
                                         @csrf
                                         <button type="button" onclick="edit_confirmation(this)">
@@ -183,7 +183,7 @@
 
 
 
-
+<!--  ajouter produit ajax  -->
 <script>
     async function ajtsousproduit() {
         // Demander à l'utilisateur de sélectionner une image
@@ -310,7 +310,7 @@
             text: `Vous êtes sur le point d'éditer le produit ID: ${produitId}.`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Oui, éditer',
+            confirmButtonText: 'Oui, Modifier',
             cancelButtonText: 'Annuler',
         }).then((result) => {
             if (result.isConfirmed) {
