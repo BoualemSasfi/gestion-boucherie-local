@@ -379,8 +379,8 @@
                 </a>
                 <div id="collapse8" class="collapse" aria-labelledby="heading8" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Chiffre d'affaire:</h6>
-                        <a class="collapse-item" href="/admin/calculs">Voir la liste</a>
+                        <h6 class="collapse-header">Calculs</h6>
+                        <a class="collapse-item" href="/admin/calculs">Par Magasin</a>
                     </div>
                 </div>
             </li>
