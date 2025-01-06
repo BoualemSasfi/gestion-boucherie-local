@@ -75,7 +75,7 @@ Route::controller(CaisseController::class)->group(function () {
     Route::get('/Get_SubProducts/{id_produit}/user/{id_user}/magasin/{id_magasin}', 'filtrage_des_sous_produits_libre')->name('Filtrage_Des_Sous_Produits_Libre');
 
     Route::post('/calculer-ventes/{id_facture}/{type_vente}', 'Calculer_Ventes')->name('calculer_ventes');
-    
+
     Route::post('/vente/{id_facture}/{id_user}/{id_lestock}/{id_produit}/{id_sousproduit}/{nom_produit}/valeurs/{prix_unitaire}/{qte}/{prix_total}', 'Nouvelle_Vente')->name('nouvelle_vente');
     Route::get('/ventes/{id_facture}', 'Get_Liste_Ventes')->name('liste_ventes');
     Route::get('/supprimer-vente/{id_vente}', 'Supprimer_Vente')->name('supprimer_vente');
@@ -117,20 +117,27 @@ Route::controller(CategoryController::class)->group(function () {
     Route::get('/admin/category', 'index');
     Route::get('/admin/category/add', 'create');
     Route::post('/admin/category/add/save', 'store');
-    Route::get('/admin/category/{id}/edit', 'edit');
+    Route::get('/admin/category/{id}/edit', 'edit')->name('category.edit');
     Route::put('/admin/category/{id}/update', 'update');
     Route::delete('/admin/category/{id}/delete', 'destroy');
+
+
 });
 //--------------------------------------------------------------------------
 // ---------                Produits                              ----------
 // -------------------------------------------------------------------------
 Route::controller(ProduitController::class)->group(function () {
     Route::get('/admin/produit', 'index');
-    Route::get('/admin/produit/add', 'create');
+    // Route::get('/admin/produit/add', 'create');
+    Route::get('/admin/produit/add/{id}', 'add');
     Route::post('/admin/produit/add/save', 'store');
     Route::get('/admin/produit/{id}/edit', 'edit');
+    Route::get('/admin/produit/{id}/{id_cat}/mdf', 'mdf');
     Route::put('/admin/produit/{id}/update', 'update');
+    Route::put('/admin/produit/{id}/{id_cat}/modifier', 'modifier');
     Route::delete('/admin/produit/{id}/delete', 'destroy');
+
+    Route::post('/admin/produit/add_produit', 'add_produit');
 
     // sous produit 
     Route::post('/admin/produit/add_sous_produit', 'add_sous_produit');
@@ -294,16 +301,18 @@ Route::controller(VenteController::class)->group(function () {
 
     Route::get('admin/liste_fact', 'liste_fact')->name('liste_fact');
     Route::get('admin/facture_details/{id}', 'details_fact')->name('details_fact');
-    
+
     Route::get('admin/newfact', 'newfact')->name('newfact');
     Route::get('admin/facture/{id}', 'fact')->name('fact');
 
     Route::get('/annuler-facture/{id_facteur}', [VenteController::class, 'annuler_fact'])->name('annuler.facture');
 
     Route::post('/valid_vente', [VenteController::class, 'valid_vente']);
-    
-// factur de paiement 
-Route::get('/imprimer_facteur/{id_facture}', [VenteController::class, 'imprimer_facteur'])->name('imprimer_facteur');
+
+    // factur de paiement 
+    Route::get('/imprimer_facteur/{id_facture}', [VenteController::class, 'imprimer_facteur'])->name('imprimer_facteur');
+    // recu de paiement 
+    Route::get('/imprimer_recu/{id_facture}', [VenteController::class, 'imprimer_recu'])->name('imprimer_recu');
 
     // categorie
     Route::get('/get-categories/{stockId}', [VenteController::class, 'getCategoriesByStock']);
@@ -320,16 +329,16 @@ Route::get('/imprimer_facteur/{id_facture}', [VenteController::class, 'imprimer_
     Route::get('/get-prix/{id}', [VenteController::class, 'getPrixById']);
 
     Route::get('/list_ventes/{id_facture}', [VenteController::class, 'list_ventes']);
-    
+
     Route::get('/get-livr/{id_facture}', [VenteController::class, 'livr_total']);
 
     // add vent
     Route::post('/add_vente', [VenteController::class, 'add_vente']);
-    
+
     Route::delete('/delet_vente/{id_vente}', [VenteController::class, 'delet_vente']);
-    
+
     Route::get('/facture/{id_facture}/total', [VenteController::class, 'total_fact']);
-    
+
 
 
 });

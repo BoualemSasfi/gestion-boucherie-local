@@ -31,7 +31,7 @@ class InformationController extends Controller
         return view('admin.information.index', ['information' => $information]);
     }
 
-    public function update(InformationRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $information = information::find($id);
 
@@ -59,7 +59,7 @@ class InformationController extends Controller
         $information->save();
 
         // Message de succès
-        Alert::success('Les informations ont été modifiées avec succès !')->position('center')->autoClose(2000);
+        Alert::success('Les informations ont été modifiées avec succèsdfdf !')->position('center')->autoClose(2000);
 
         return redirect('/admin/information');
     }

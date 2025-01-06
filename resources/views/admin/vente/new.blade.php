@@ -119,10 +119,10 @@
             <div class="card shadow m-1" style="background-color: #000000;">
                 <div class="card-body  text-center">
                     <div class="row">
-                        <div class="col-2">
+                        <!-- <div class="col-2">
                             <h2 class="digital3">TOTAL</h2>
-                        </div>
-                        <div class="col-10">
+                        </div> -->
+                        <div class="col-12">
                             <h2 class="digital2" id="total_fact">0.00 <span class="digital3">DA</span> </h2>
                         </div>
                     </div>
@@ -168,7 +168,7 @@
                         </div>
                         <div class="col-2">
                             <h6 class="text-center "> Total </h6>
-                            <h6 class="text-center digital " id="total"> 0.00 DA </h6>
+                            <h6 class="text-center digital " id="total"> 0.<span class="digital3">00 DA</span> </h6>
                         </div>
                         <div class="col-1">
                             <h6 class="text-center">Action</h6>
@@ -289,9 +289,9 @@
                     id_type_s: id_type_s,
                     total: total,
                     montant: montant,
-                    credet : credet,
-                    type_vent : type_vent,
-                    id_user : id_user,
+                    credet: credet,
+                    type_vent: type_vent,
+                    id_user: id_user,
                     livaison: document.getElementById('montant-input').value.trim()
                 };
                 // Afficher les données dans la console
@@ -319,7 +319,10 @@
                             text: 'La vente a été enregistrée.',
                         });
                         // Optionnel : Actualiser la page ou d'autres éléments de l'interface utilisateur
-                        window.location.href = `/admin`;
+                        // window.location.href = `/admin`;
+
+                        impression();
+                        // une facture
                     })
                     .catch(error => {
                         console.error('Erreur:', error);
@@ -341,6 +344,38 @@
     //     document.getElementById('credet-label').textContent = `${credet.toFixed(2)} DA`;
     // }
 
+</script>
+
+<script>
+    function impression() {
+        const id_fact = {{$facture->id}};
+
+        Swal.fire({
+            title: 'Choisissez une option',
+            icon: 'question',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonText: 'Facture',
+            denyButtonText: 'Reçu',
+            cancelButtonText: 'Annuler',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Ouvrir le PDF de la facture dans un nouvel onglet
+                const newTab = window.open(`/imprimer_facteur/${id_fact}`, '_blank');
+                newTab.focus();
+                // window.location.href = `/admin`;
+                window.location.href = `/admin/facture_details/${id_fact}`;
+            } else if (result.isDenied) {
+                // Ouvrir le PDF du reçu dans un nouvel onglet
+                const newTab = window.open(`/imprimer_recu/${id_fact}`, '_blank');
+                newTab.focus();
+                window.location.href = `/admin/facture_details/${id_fact}`;
+                
+            } else if (result.dismiss === Swal.DismissReason.cancel) {
+                console.log('Action annulée');
+            }
+        });
+    }
 </script>
 
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Produit;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Storage;
@@ -19,13 +20,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categorys = Category::all();
-
         return view('admin.categorie.index', ['categorys' => $categorys]);
 
         // return response()->json(['catgory'=>$category]);
-
-
-
     }
 
     /**
@@ -79,7 +76,8 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        return view('admin.categorie.edit',['category'=>$category]);
+        $produits = Produit::where('categorie_id',$id)->get();
+        return view('admin.categorie.edit',['category'=>$category,'produits'=>$produits]);
     }
 
     /**
