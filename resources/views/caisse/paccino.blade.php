@@ -335,7 +335,8 @@
                                         <img src="{{ asset('storage/' . $categorie->photo) }}" class="card-img-top"
                                             alt="..." style="height: 80%;">
                                         <div class="card-body" style="height: 40px;">
-                                            <h5 class="card-title mini-text text-center fw-bold" style="margin-top:-10px;">{{ $categorie->nom }}</h5>
+                                            <h5 class="card-title mini-text text-center fw-bold"
+                                                style="margin-top:-10px;">{{ $categorie->nom }}</h5>
                                         </div>
                                     </div>
 
@@ -1738,19 +1739,21 @@
                 console.error('Erreur dans la fonction FiltrageProduits :', error);
             }
 
-            // pour le cadre 
-            const card = form.querySelector('.card'); // Récupère la carte associée au formulaire
+            // Pour la catégorie
+            const card = form.querySelector('.card.cat'); // Récupère la carte associée au formulaire
             if (card) {
-                // Réinitialise le cadre et l'ombrage de toutes les cartes
+                // Réinitialise le cadre, l'ombrage et la couleur de texte de toutes les cartes
                 document.querySelectorAll('.card.cat').forEach(otherCard => {
-                    otherCard.style.border = ''; // Réinitialise le cadre
-                    otherCard.style.boxShadow = ''; // Réinitialise le shadow
+                    otherCard.classList.remove('bg-danger', 'text-white');
+                    otherCard.classList.add('bg-white', 'text-gray');
                 });
 
-                // Ajoute un cadre rouge et un ombrage à la carte sélectionnée
-                card.style.border = '3px solid #e74a3b';
-                card.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.4)'; // Shadow
+                // Applique les styles à la carte sélectionnée
+                card.classList.add('bg-danger', 'text-white');
+                card.classList.remove('bg-white', 'text-gray');
             }
+
+
 
         }
     </script>
