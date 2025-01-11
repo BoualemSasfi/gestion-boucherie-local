@@ -348,9 +348,9 @@
 
                     <hr class="p-0 mb-0 mt-2">
 
-                    <div class="container" style="height: 500px;padding-top:20px;">
+                    <div class="container" style="height: 100%;padding-top:20px;">
                         {{-- <h6 id="titre-categorie" class="p-0 m-0"></h6> --}}
-                        <div class="row" id="products" style="height: 100%; max-height: 450px; overflow-y: auto;">
+                        <div class="row" id="products" style="height: 100vh;">
                             <!-- Les produits filtrés apparaîtront ici -->
                         </div>
                     </div>
@@ -374,7 +374,7 @@
                     {{-- -------------------------------------------- --}}
                     {{-- stockage variable  --}}
 
-                    <div class="card shadow m-2" style="height:500px;" data-aos="flip-left">
+                    <div class="card shadow m-2" style="height:66%;" data-aos="flip-left">
                         <div class="card-header py-1">
                             <div class="row afficheur text-center" style="height: 110px;" id="facture_afficheur">
 
