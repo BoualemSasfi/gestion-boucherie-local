@@ -13,7 +13,7 @@
         </div>
         <div class="col-12 col-md-2 text-md-right mb-2 mb-md-0">
             <a href="{{ url('/admin/category/add') }}" class="btn btn-success w-100"><span
-                    class="btn-description">Ajouter</span><i class="fas fa-plus fa-xl pr-1"></i></a>
+                    class="btn-description">Ajouter  </span><i class="fas fa-plus fa-xl pr-1"></i></a>
         </div>
     </div>
 </div>
@@ -25,10 +25,10 @@
             <div class="table-responsive">
                 <table id="produitsTable" class="table table-striped table-bordered w-100">
                     <thead>
-                        <tr class="text-center">
-                            <th>Photo</th>
-                            <th>Titre</th>
-                            <th>Actions</th>
+                        <tr>
+                            <th class="text-center" >Photo</th>
+                            <th class="text-center">Titre</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
@@ -41,7 +41,7 @@
                                 </td>
 
                                 <!-- Colonne Titre -->
-                                <td class="align-middle">{{ $category->nom }}</td>
+                                <td class="align-middle" style="font-size: 20px;" >{{ $category->nom }}</td>
 
                                 <!-- Colonne Actions -->
                                 <td class="align-middle">
@@ -65,6 +65,7 @@
                                                 onclick="supprimer_confirmation(this)">
                                                 <i class="fa-solid fa-trash-can fa-xl text-danger"></i>
                                             </button>
+                                            
                                         </form>
                                     </div>
 
