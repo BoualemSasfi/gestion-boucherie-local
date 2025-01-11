@@ -39,8 +39,8 @@
             <div class="card-body">
 
 
-                <div class="card-body">
-                    <table id="example" class="table-striped table-bordered" style="width:100%">
+                <div class="table-responsive">
+                    <table id="produitsTable" class="table table-striped table-bordered w-100">
                         <thead>
                             <tr>
                                 <th>Code</th>
@@ -71,8 +71,7 @@
                                             <div class="col-1">
                                                 {{-- edit VOIR STOCK --}}
                                                 <form class="show-form"
-                                                    action="{{ url('/admin/facture_details/' . $liste->id) }}"
-                                                    method="GET">
+                                                    action="{{ url('/admin/facture_details/' . $liste->id) }}" method="GET">
                                                     @csrf
                                                     <button type="submit" class="btn btn-outline-info alpa shadow"><i
                                                             class="bi bi-pen"></i>Details</button>
@@ -122,6 +121,21 @@
     </script>
 @endif
 
+
+<script>
+    $(document).ready(function () {
+        $('#produitsTable').DataTable({
+            "pageLength": 10,
+            "lengthMenu": [[10, 20, 50], [10, 20, 50]],
+            "scrollY": "400px",
+            "scrollCollapse": true,
+            "searching": true,
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+            }
+        });
+    });
+</script>
 
 
 @endsection

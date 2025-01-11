@@ -50,7 +50,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12 text-center">
-                        <H1>état des payements </H1>
+                        <H1>état de Credit</H1>
                     </div>
                     <div>
                         <h5>Total achat: <span style="color: green;">{{$totalfacture}}</span> DA</h5>
