@@ -219,6 +219,7 @@ Route::controller(ClienController::class)->group(function () {
 
     Route::get('admin/client', 'index');
     Route::get('admin/client/{id}/voir', 'voir');
+    Route::get('admin/client/{id}/credit', 'credit');
     Route::get('admin/client/add', 'create');
     Route::post('/admin/client/add/save', 'stor');
     Route::get('/admin/client/edit/{id}', 'edit');
@@ -226,6 +227,8 @@ Route::controller(ClienController::class)->group(function () {
     Route::delete('/admin/client/delete/{id}', 'destroy');
 
     Route::get('/admin/client/valider_paiement/{id}', 'valider_p');
+    Route::get('/admin/client/valider_versement/{montant}/{id}', 'valider_v');
+    Route::get('/admin/client/print_recu/{id_versement}', 'imprim_recu');
 
 });
 
