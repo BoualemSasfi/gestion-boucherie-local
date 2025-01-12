@@ -65,17 +65,25 @@
                                     <td class=" align-middle">{{ $client->nom_prenom}}</td>
                                     <td class=" align-middle">{{ $client->details}}</td>
                                     <td class=" align-middle">{{ $client->fix}}</td>
-                                    <td class=" align-middle">{{ $client->credit}}</td>
+                                    <td class=" align-middle">{{ $client->credit}} DA</td>
                                     <td class="align-middle">
                                         <div class="d-flex justify-content-between">
-                                            {{-- Voir STOCK --}}
+                                            {{-- credit --}}
                                             <form class="show-form"
-                                                action="{{ url('/admin/client/' . $client->id . '/voir') }}" method="GET">
+                                                action="{{ url('/admin/client/' . $client->id . '/credit') }}" method="GET">
                                                 @csrf
                                                 <button type="submit">
                                                     <i class="fa-solid fa-xl fa-eye" style="color: #63E6BE;"></i>
                                                 </button>
                                             </form>
+                                            <!-- voir -->
+                                            <!-- <form class="show-form"
+                                                action="{{ url('/admin/client/' . $client->id . '/voir') }}" method="GET">
+                                                @csrf
+                                                <button type="submit">
+                                                    <i class="fa-solid fa-xl fa-eye" style="color: #63E6BE;"></i>
+                                                </button>
+                                            </form> -->
                                             {{-- edit button --}}
                                             <form class="edit-form" action="" data-id="{{ $client->id }}" method="GET">
                                                 @csrf
