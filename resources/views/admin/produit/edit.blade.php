@@ -5,12 +5,12 @@
     <div class="row justify-content-between align-items-center">
 
         <div class="col-2">
-            <a href="{{ url('/admin/category/'.$categorie->id.'/edit') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
-                    class="btn-description">Retour</span></a>
+            <a href="{{ url('/admin/category/' . $categorie->id . '/edit') }}" class="btn btn-dark"><i
+                    class="fas fa-arrow-left pr-1"></i><span class="btn-description">Retour</span></a>
         </div>
         <div class="col-8 text-center">
-            <h2>Modifier Le Produit </h2>
-            <h2>Categorie {{$categorie->id}} </h2>
+            <h2>Modifier Produit </h2>
+            <!-- <h2>Categorie {{$categorie->id}} </h2> -->
         </div>
         <div class="col-2 text-right">
 
@@ -37,8 +37,9 @@
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mx-auto">
             <div class="card shadow m-1">
 
-                <form class="edit-form" action="{{ url('/admin/produit/' . $produit->id . '/'.$categorie->id.'/modifier') }}" method="post"
-                    enctype="multipart/form-data">
+                <form class="edit-form"
+                    action="{{ url('/admin/produit/' . $produit->id . '/' . $categorie->id . '/modifier') }}"
+                    method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -47,8 +48,12 @@
                         <div class="row">
 
 
+
                             <div class="form-group col-4">
-                                <h2 class="text-center"> information : </h2>
+                                <h4 class="text-center"> Informations : </h4>
+                                <label for="">Order :</label>
+                                <input type="number" name="nombre" class="form-control" placeholder="Ordre d'affichage"
+                                    value="{{ $produit->nombre }}"></input>
                                 <label for="">Titre :</label>
                                 <input type="text" name="nom_pr" class="form-control" placeholder="nom de produit"
                                     value="{{ $produit->nom_pr }}"></input>
@@ -82,13 +87,32 @@
 
                             </div>
 
-                            <div class="col-4">
 
-                                <h2 class="text-center"> Prix d'achat : </h2>
+                            <div class="form-group col-4">
+                                <h4 class="text-center"> les prix </h4>
 
+                                <label for="">prix d'achat :</label>
                                 <input type="text" name="prix_achat" class="form-control" placeholder="Prix d'achat"
                                     value="{{ $produit->prix_achat }}"></input>
+                                <label for="">détail :</label>
+                                <input type="text" name="prix_vente" class="form-control" placeholder="Prix de vent"
+                                    value="{{ $produit->prix_vente }}"></input>
 
+                                <label for="">Semi gros :</label>
+                                <input type="text" name="semi_gros" class="form-control" placeholder="Prix de semi gors"
+                                    value="{{ $produit->semi_gros}}"></input>
+
+                                <label for="">Gros :</label>
+                                <input type="text" name="gros" class="form-control" placeholder="Prix de gros"
+                                    value="{{ $produit->gros }}"></input>
+                            </div>
+
+                            <div class="col-4">
+
+
+                                <!-- <input type="text" name="prix_achat" class="form-control" placeholder="Prix d'achat"
+value="{{ $produit->prix_achat }}"></input> -->
+                                <h4 class="text-center">Photo de produit</h4>
                                 <input type="file" name="photo_pr" id="validationLogoCouleurs" accept="image/*"
                                     style="display: none;" onchange="previewImage2();">
 
@@ -105,21 +129,7 @@
                                     </div>
                                 @endif
 
-                            </div>
 
-                            <div class="form-group col-4">
-                                <h2 class="text-center"> Prix de vente : </h2>
-                                <label for="">détail :</label>
-                                <input type="text" name="prix_vente" class="form-control" placeholder="Prix de vent"
-                                    value="{{ $produit->prix_vente }}"></input>
-
-                                <label for="">Semi gros :</label>
-                                <input type="text" name="semi_gros" class="form-control" placeholder="Prix de semi gors"
-                                    value="{{ $produit->semi_gros}}"></input>
-
-                                <label for="">Gros :</label>
-                                <input type="text" name="gros" class="form-control" placeholder="Prix de gros"
-                                    value="{{ $produit->gros }}"></input>
                             </div>
 
                             <div class="form-group col-12">
@@ -192,6 +202,7 @@
                                 <tbody class="text-center">
                                     @foreach ($sproduits as $sproduit)
                                         <tr>
+
                                             <td class=" align-middle">{{ $sproduit->id}}</td>
                                             <td class=" align-middle">
                                                 <img src="{{ asset('storage/' . $sproduit->photo_s_pr) }}"

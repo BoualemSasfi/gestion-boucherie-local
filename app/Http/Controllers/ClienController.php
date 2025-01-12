@@ -33,11 +33,18 @@ class ClienController extends Controller
     public function stor(Request $request)
     {
 
+        $code = strtoupper(uniqid('CL'));
+        $code1 =  'CL' . strtoupper(substr(bin2hex(random_bytes(4)), 0, 8));
         $new_client = new Client();
 
+        $new_client->code_client =  $code1 ;
         $new_client->nom_prenom = $request->input('nom_prenom');
         $new_client->fix = $request->input('fix');
         $new_client->details = $request->input('details');
+        $new_client->adresse = $request->input('adresse');
+        $new_client->n_rc = $request->input('n_rc');
+        $new_client->NIF = $request->input('NIF');
+        $new_client->NIS = $request->input('NIS');
         $new_client->save();
         $nom = $new_client->nom_prenom;
         session()->flash('success', 'Le client ' . $nom . ' a été ajouté avec succès! ');
@@ -59,6 +66,10 @@ class ClienController extends Controller
         $up_client->nom_prenom = $request->nom_prenom;
         $up_client->fix = $request->fix;
         $up_client->details = $request->details;
+        $up_client->adresse = $request->adresse;
+        $up_client->n_rc = $request->n_rc;
+        $up_client->NIF = $request->NIF;
+        $up_client->NIS = $request->NIS;
         $up_client->save();
         session()->flash('success', 'le client a bien ete modifier  ');
         return redirect('/admin/client');

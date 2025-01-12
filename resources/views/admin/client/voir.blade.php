@@ -11,14 +11,14 @@
             </a>
         </div>
         <div class="col-8 text-center">
-            <h2>Details de client  {{$client->nom_prenom}} </h2>
+            <h2>Details de client {{$client->nom_prenom}} </h2>
         </div>
         <div class="col-2 text-right">
 
-        @if ($credit > 0 )
-        <button class="btn btn-success" style="float: right;">Versement </button>
-        
-        @endif
+            @if ($credit > 0)
+                <button class="btn btn-success" style="float: right;">Versement </button>
+
+            @endif
 
 
 
@@ -63,7 +63,7 @@
                         <div class="container mt-4">
 
                             <!-- Table of products -->
-                            <table class="table-striped table-bordered col-12">
+                            <table id="produitsTable" class="table-striped table-bordered col-12">
                                 <thead class="text-center">
                                     <tr>
 
@@ -87,12 +87,12 @@
                                             <td>{{$liste->credit}} DA</td>
 
                                             <!-- <td >
-                                                                        @if ($liste->etat_credit == 'impayé')
-                                                                            <i class="fa-solid fa-circle-xmark fa-lg" style="color: #f7224c;"></i>
-                                                                        @else
-                                                                            <i class="fa-solid fa-circle-check fa-lg" style="color: #63E6BE;"></i>
-                                                                        @endif
-                                                                    </td> -->
+                                                                            @if ($liste->etat_credit == 'impayé')
+                                                                                <i class="fa-solid fa-circle-xmark fa-lg" style="color: #f7224c;"></i>
+                                                                            @else
+                                                                                <i class="fa-solid fa-circle-check fa-lg" style="color: #63E6BE;"></i>
+                                                                            @endif
+                                                                        </td> -->
                                             <td>
                                                 @if ($liste->etat_credit == 'impayé')
                                                     <button
@@ -111,15 +111,22 @@
                                 </tbody>
                             </table>
                         </div>
-
-
-
-
-
-
-
                     </div>
                 </div>
+
+                <!-- data table -->
+                <script>
+                    $(document).ready(function () {
+                        $('#produitsTable').DataTable({
+                            "pageLength": 10,
+                            "lengthMenu": [[10, 20, 50], [10, 20, 50]],
+                            "scrollY": "400px",
+                            "scrollCollapse": true,
+                            "searching": true,
+
+                        });
+                    });
+                </script>
 
                 <script>
                     function afficherSweetAlert(id_facture, credit) {
