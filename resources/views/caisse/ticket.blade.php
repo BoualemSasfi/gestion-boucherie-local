@@ -42,10 +42,12 @@
         </div>
 
         <div class="resume part" style="padding-right: 10px;">
-            <h5 id="nombre">NBRE ARTICLE : {{ $nombre }}</h5>
+            <h5 id="nombre">NBRE ARTICLE : 0{{ $nombre }}</h5>
             <h5 id="total">TTC A PAYER : {{ $total }}</h5>
             <h5 id="versement">VERSEMENT : {{ $versement }}</h5>
             <h5 id="credit">CREDIT : {{ $credit }}</h5>
+            <hr class="dashed-hr">
+            <h5 id="credit">TOTAL CREDIT : {{ $credit_client }}</h5>
         </div>
 
         <div class="facture part">

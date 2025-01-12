@@ -3,6 +3,7 @@
 
 
 @section('content')
+
     <style>
         .mini-text {
             white-space: nowrap;
@@ -150,20 +151,31 @@
             font-size: 14px;
         }
     </style>
+
+    {{-- <style>
+        #ventes_liste{
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style> --}}
+
     {{-- ---------------------------------------------------------------------------------------------------- --}}
     <!-- AFFICHEUR -->
-    <div class="container-fluid m-0 p-0">
+    <div class="container-fluid m-0 p-0" style="height:100vh;">
+        {{-- COM port --}}
+        {{-- <input type="text" id="port" value="COM1" style="display:none;"> --}}
+
         {{-- <div class="container">
             <div class="row">
                 <div class="col-12 mb-6"></div>
                 <!-- Input pour le port COM -->
-                <input type="text" id="port" value="COM4" style="display:none;">
             
             
                 <!-- Bouton de connexion -->
                 <button id="connectButton" >Connecter au Port Série</button>
             </div>
         </div> --}}
+
         <div class="container-fluid">
             <div class="row afficheur text-center pt-1 pb-1 pr-0 pl-0 mt-1 mb-1">
                 <div class="col-2 align-content-center">
@@ -300,18 +312,18 @@
         </div>
 
         <script>
-            function FiltrageProduits(form) {
-                const card = form.querySelector('.card'); // Récupère la carte associée au formulaire
-                if (card) {
-                    // Supprime le cadre rouge de toutes les autres cartes
-                    document.querySelectorAll('.card.cat').forEach(otherCard => {
-                        otherCard.style.border = ''; // Réinitialise le cadre
-                    });
+            // function FiltrageProduits(form) {
+            //     const card = form.querySelector('.card'); // Récupère la carte associée au formulaire
+            //     if (card) {
+            //         // Supprime le cadre rouge de toutes les autres cartes
+            //         document.querySelectorAll('.card.cat').forEach(otherCard => {
+            //             otherCard.style.border = ''; // Réinitialise le cadre
+            //         });
 
-                    // Ajoute un cadre rouge à la carte sélectionnée
-                    card.style.border = '2px solid red';
-                }
-            }
+            //         // Ajoute un cadre rouge à la carte sélectionnée
+            //         card.style.border = '2px solid red';
+            //     }
+            // }
         </script>
 
         <!-- Produits -->
@@ -348,9 +360,9 @@
 
                     <hr class="p-0 mb-0 mt-2">
 
-                    <div class="container" style="height: 100%;padding-top:20px;">
+                    <div class="container" style="height: 70%;padding-top:20px;">
                         {{-- <h6 id="titre-categorie" class="p-0 m-0"></h6> --}}
-                        <div class="row" id="products" style="height: 100vh;">
+                        <div class="row" id="products" style="">
                             <!-- Les produits filtrés apparaîtront ici -->
                         </div>
                     </div>
@@ -374,7 +386,7 @@
                     {{-- -------------------------------------------- --}}
                     {{-- stockage variable  --}}
 
-                    <div class="card shadow m-2" style="height:66%;" data-aos="flip-left">
+                    <div class="card shadow m-2" style="height:80vh;" data-aos="flip-left">
                         <div class="card-header py-1">
                             <div class="row afficheur text-center" style="height: 110px;" id="facture_afficheur">
 
@@ -396,8 +408,8 @@
 
                             </div>
                         </div>
-                        <div class="card-body m-0 p-1" style="max-height: 500px; overflow-y: auto;">
-                            <table id="affichage-produits-facture" class="text-left" style="width:100%">
+                        <div class="card-body m-0 p-1" style="height:100%; overflow-y: auto; max-height: 90%;">
+                            <table id="affichage-produits-facture" class="text-left"   style="width:100%;">
                                 <thead>
                                     <tr>
                                         <th class="text-left">LIBELLE:</th>
@@ -412,7 +424,7 @@
                                     <!-- Les lignes de ventes -->
                                 </tbody>
                             </table>
-                            {{-- <div class="col-12 zyada" style="height: 500px;">CAISSE ESPACE</div> --}}
+                            {{-- <div class="col-12 zyada" style="height: 100px;">CAISSE ESPACE</div> --}}
                         </div>
                     </div>
                 </div>
@@ -790,8 +802,12 @@
                                                                 <select class="form-select" id="client_select"
                                                                     style="width: 100%;">
                                                                     @foreach ($clients as $client)
-                                                                        <option value="{{ $client->id }}">
+                                                                        <option class="bg-dark text-white"
+                                                                            value="{{ $client->id }}"
+                                                                            @if ($client->id == 0) selected @endif
+                                                                            style="margin-bottom:5px !important;">
                                                                             {{ $client->nom_prenom }}</option>
+                                                                        <hr>
                                                                     @endforeach
                                                                 </select>
                                                             </div>
@@ -1577,7 +1593,7 @@
                         });
 
                         $('#products').append(
-                            '<div class="col-12 zyada" style="height: 200px;"></div>'
+                            '<div class="col-12 zyada" style="height: 100px;"></div>'
                         );
 
                         // Gestion des classes pour les cartes
@@ -1628,6 +1644,9 @@
                 const id = form.getAttribute('data-id');
                 const nom = form.getAttribute('data-nom');
 
+                console.log('le titre de la catégorie est : ' + nom);
+
+
                 const text_id_categorie = document.getElementById('text-id-categorie');
                 if (text_id_categorie) {
                     text_id_categorie.textContent = id;
@@ -1674,7 +1693,7 @@
                             else if (vente_type === 'gros') prix = value.prix_gros;
 
                             productsContainer.append(`
-                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 mb-4">
+                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6   mt-2 mb-2 pr-2 pl-2">
                                     <div class="card scat">
                                         <form class="affichage-form"
                                             data-id_lestock="${value.id}"
@@ -1688,7 +1707,7 @@
                                             style="cursor: pointer;">
                                             <img src="{{ asset('storage/') }}/${value.photo}" class="card-img-top" alt="...">
                                             <div class="card-body p-1 m-0 text-center">
-                                                <h5 class="card-title mini-text" style="line-height:1.5;">${value.nom}</h5>
+                                                <h6 class="card-title mini-text" style="line-height:1.5;">${value.nom}</h6>
                                                 <h5 class="card-text mini-text fw-bold" style="line-height:1;">${Math.round(parseFloat(prix))} DA</h5>
                                             </div>
                                         </form>
@@ -1698,7 +1717,7 @@
                         });
 
                         // Ajout d'un espace supplémentaire
-                        productsContainer.append('<div class="col-12 zyada" style="height: 200px;"></div>');
+                        productsContainer.append('<div class="col-12 zyada" style="height: 100px;"></div>');
 
                         // Gestion des classes pour les cartes
                         document.querySelectorAll('.card.scat').forEach(card => {
@@ -1723,9 +1742,9 @@
                     const afficheur_produit = document.getElementById('produit_text');
                     const afficheur_prix = document.getElementById('prix_unitaire');
                     const afficheur_prix_total = document.getElementById('prix_total');
-                    const titre_categorie = document.getElementById('titre-categorie');
+                    // const titre_categorie = document.getElementById('titre-categorie');
 
-                    titre_categorie.textContent = nom;
+                    // titre_categorie.textContent = nom;
                     afficheur_cat.textContent = nom;
                     afficheur_produit.textContent = '----';
                     afficheur_prix.textContent = '0.00';
@@ -1976,7 +1995,7 @@
                             style="cursor: pointer;">
                             <img src="{{ asset('storage/') }}/${produit.photo}" class="card-img-top" alt="Image produit" style="height: 120px;">
                             <div class="card-body p-1 m-0 text-center">
-                                <h5 class="card-title mini-text">${produit.nom}</h5>
+                                <h6 class="card-title mini-text">${produit.nom}</h6>
                                 <h5 class="card-text mini-text">${Math.round(parseFloat(prix))} DA / ${produit.mesure}</h5>
                             </div>
                         </form>
@@ -2140,7 +2159,7 @@
                 if (card) {
                     document.querySelectorAll('.card.scat').forEach(otherCard => {
                         otherCard.classList.remove('bg-danger', 'text-white');
-                        otherCard.classList.add('bg-white');
+                        otherCard.classList.add('bg-white', 'text-gray');
                     });
 
                     card.classList.add('bg-danger', 'text-white');
@@ -2341,7 +2360,7 @@
                             .prix_unitaire + '/ total=' + value.total_vente);
 
                         $('#ventes_liste').append(
-                            '<tr>' +
+                            '<tr class="bg-warning ligne">' +
                             // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
                             '<td class="petit_font text-left mini-text">' + value
                             .designation_produit +
@@ -2362,7 +2381,8 @@
                             '<form class="form-supprimer-produit" data-id="' + value.id +
                             '"><button class="btn btn-danger" type="button" onclick="SupprimerProduit(this)"><i class="fas fa-trash-alt"></i></button></form>' +
                             '</td>' +
-                            '</tr>'
+                            '</tr>' +
+                            '<hr>'
                         );
                     });
                     console.log('Réccuperation Liste des Ventes executé');
@@ -2572,6 +2592,9 @@
 
                         ListeVentes(id_facture);
                         // Calculer_Total_Facture(id_facture);
+
+
+
                         zero();
 
 
@@ -2588,6 +2611,15 @@
 
         function zero() {
 
+
+            // enlever les classes bg-danger et mètre les classes bg-white
+            document.querySelectorAll('.cat,.scat').forEach(card => {
+                card.classList.remove('bg-danger', 'text-white'); // Supprime la classe 'bg-danger'
+                card.classList.add('bg-white', 'text-gray'); // Ajoute la classe 'bg-white'
+                console.log('changement des classes');
+
+            });
+
             const AffichageQte = document.getElementById('balance');
             const AffichagePrixUnitaire = document.getElementById('prix_unitaire');
             const AffichagePrixTotal = document.getElementById('prix_total');
@@ -2603,13 +2635,17 @@
             AffichageFactureTotal.textContent = "0.00";
             AffichageNomCategorie.textContent = "----";
             AffichageNomProduit.textContent = "----";
-            AffichageTitreCategorie.textContent = "";
+            // AffichageTitreCategorie.textContent = "";
             $('#products').empty();
 
             const TextIdCategorie = document.getElementById('text-id-categorie');
             TextIdCategorie.textContent = '0';
 
+
+
+
             prix_details()
+
             document.getElementById('selected_option').textContent = 'Vente-Détails';
 
 
@@ -2617,16 +2653,46 @@
         }
 
 
-        async function Ouvrir_Encaissement() {
+        // async function Ouvrir_Encaissement() {
 
+        //     const AffichageTotalCaisse = document.getElementById('text_total_facture');
+        //     const AffichageTotalPoppup = document.getElementById('TotalInput');
+        //     const AffichageVersPoppup = document.getElementById('VersementInput');
+        //     const AffichageCreditPoppup = document.getElementById('CreditInput');
+
+        //     if (AffichageTotalCaisse.textContent === '0.00') {
+
+
+        //         await Swal.fire({
+        //             title: "Facture Vide",
+        //             icon: "warning",
+        //             showConfirmButton: false,
+        //             timer: 1500
+        //         });
+
+        //         // Ferme le popup encaissement
+        //         await $('#FactureModal').modal('hide');
+
+        //     } else {
+        //         const TotalCaisse = AffichageTotalCaisse.textContent;
+        //         AffichageTotalPoppup.value = TotalCaisse;
+        //         AffichageVersPoppup.placeholder = TotalCaisse;
+        //         AffichageVersPoppup.value = '';
+        //         AffichageCreditPoppup.value = '0.00';
+        //         console.log('total : ' + TotalCaisse);
+        //     }
+
+        //     console.log('Ouverture encaissement executé');
+        // }
+
+        async function Ouvrir_Encaissement() {
             const AffichageTotalCaisse = document.getElementById('text_total_facture');
             const AffichageTotalPoppup = document.getElementById('TotalInput');
             const AffichageVersPoppup = document.getElementById('VersementInput');
             const AffichageCreditPoppup = document.getElementById('CreditInput');
+            const clientSelect = document.getElementById('client_select');
 
             if (AffichageTotalCaisse.textContent === '0.00') {
-
-
                 await Swal.fire({
                     title: "Facture Vide",
                     icon: "warning",
@@ -2636,18 +2702,25 @@
 
                 // Ferme le popup encaissement
                 await $('#FactureModal').modal('hide');
-
             } else {
                 const TotalCaisse = AffichageTotalCaisse.textContent;
                 AffichageTotalPoppup.value = TotalCaisse;
                 AffichageVersPoppup.placeholder = TotalCaisse;
                 AffichageVersPoppup.value = '';
                 AffichageCreditPoppup.value = '0.00';
+
                 console.log('total : ' + TotalCaisse);
             }
 
-            console.log('Ouverture encaissement executé');
+            // Réinitialiser la liste des clients et sélectionner l'option par défaut
+            if (clientSelect) {
+                clientSelect.value = "0"; // Sélectionne l'option avec id="0"
+                console.log("Liste des clients réinitialisée avec id=0 sélectionné par défaut");
+            }
+
+            console.log('Ouverture encaissement exécuté');
         }
+
 
         function FactureAppendValue(value) {
             const input = document.getElementById('VersementInput');
@@ -3764,7 +3837,25 @@
         });
     </script>
 
+    <style>
+        #ventes_liste .ligne td {
+            padding: 5px !important;
+            /* margin-bottom: 5px !important; */
+            border-bottom: 5px solid #ffffff;
+        }
+    </style>
 
+    {{-- ------------------------------------------------------------------------------------------------------   --}}
+    {{-- ------------------------------------------------------------------------------------------------------   --}}
+    {{-- affichage en 80% --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.style.zoom = "85%";
+            document.body.style.margin = "0";
+            document.body.style.width = "100%"; // Ajustez pour compenser le zoom
+        });
+    </script>
 
+    {{-- ------------------------------------------------------------------------------------------------------   --}}
     {{-- ------------------------------------------------------------------------------------------------------   --}}
 @endsection
