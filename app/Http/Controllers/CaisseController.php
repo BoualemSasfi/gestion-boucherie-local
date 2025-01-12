@@ -609,7 +609,7 @@ class CaisseController extends Controller
     public function ImprimerTicket($id_facture)
     {
 
-        
+
         $Facture = Facture::find($id_facture);
 
         $code = $Facture->code_barres; // Assurez-vous que le code est une chaîne de caractères
@@ -659,9 +659,19 @@ class CaisseController extends Controller
 
 
         $Client = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
-            ->select('clients.nom_prenom as nom',)
+            ->select('clients.nom_prenom as nom', 'clients.id as id_client') // Sélectionnez aussi l'ID
             ->where('factures.id', $Facture->id)
             ->first();
+
+        if ($Client) {
+            $id_client = $Client->id_client;
+
+            // Calculer la somme des crédits pour le client
+            $credit_client = Creditclient::where('id_client', $id_client)->sum('credit');
+        } else {
+            $credit_client = 0; // Aucun client trouvé, donc crédit = 0
+        }
+
 
         $Vendeur = Facture::join('users', 'users.id', '=', 'factures.id_user')
             ->select('users.name as nom')
@@ -682,6 +692,7 @@ class CaisseController extends Controller
             'total' => $Facture->total_facture,
             'versement' => $Facture->versement,
             'credit' => $Facture->credit,
+            'credit_client' => $credit_client,
             'type_vente' => $Facture->type_vente,
             'ventes' => $Ventes,
             'nombre' => $nombreDeLignes,
@@ -760,9 +771,18 @@ class CaisseController extends Controller
         $nombreDeLignes = $Ventes->count();
 
         $Client = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
-            ->select('clients.nom_prenom as nom')
-            ->where('factures.id', $id_facture)
+            ->select('clients.nom_prenom as nom', 'clients.id as id_client') // Sélectionnez aussi l'ID
+            ->where('factures.id', $Facture->id)
             ->first();
+
+        if ($Client) {
+            $id_client = $Client->id_client;
+
+            // Calculer la somme des crédits pour le client
+            $credit_client = Creditclient::where('id_client', $id_client)->sum('credit');
+        } else {
+            $credit_client = 0; // Aucun client trouvé, donc crédit = 0
+        }
 
         $Vendeur = Facture::join('users', 'users.id', '=', 'factures.id_user')
             ->select('users.name as nom')
@@ -783,6 +803,7 @@ class CaisseController extends Controller
             'total' => $Facture->total_facture,
             'versement' => $Facture->versement,
             'credit' => $Facture->credit,
+            'credit_client' => $credit_client,
             'type_vente' => $Facture->type_vente,
             'ventes' => $Ventes,
             'nombre' => $nombreDeLignes,
