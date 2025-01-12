@@ -38,6 +38,9 @@
                                 <label for="">Titre :</label>
                                 <input type="text" name="nom" class="form-control"
                                     placeholder="Titre de catégorie"></input>
+                                <label for="">Ordre :</label>
+                                <input type="number" name="nombre" class="form-control"
+                                    placeholder="Ordre d'affichage "></input>
 
 <br>
                                 <div class="form-group col-12">

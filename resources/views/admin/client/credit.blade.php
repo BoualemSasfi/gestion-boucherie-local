@@ -40,9 +40,9 @@
                     </div>
                     <div class="col-12 col-md-6">
 
-                        <h5>Nom : {{$client->nom_prenom}} </h5>
-                        <h5>N° telephone : {{$client->fix}} </h5>
-                        <h5>Details : {{$client->details}} </h5>
+                        <h5>NRC : {{$client->n_rc}} </h5>
+                        <h5>NIF : {{$client->NIF}} </h5>
+                        <h5>NIS : {{$client->NIS}} </h5>
 
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                         <div class="container mt-4">
 
                             <!-- Table of products -->
-                            <table class="table-striped table-bordered col-12">
+                            <table id="produitsTable" class="table table-striped table-bordered w-100">
                                 <thead class="text-center">
                                     <tr>
                                         <th>Date</th>
@@ -91,6 +91,21 @@
                         </div>
                     </div>
                 </div>
+
+
+                <!-- data table -->
+                <script>
+                    $(document).ready(function () {
+                        $('#produitsTable').DataTable({
+                            "pageLength": 10,
+                            "lengthMenu": [[10, 20, 50], [10, 20, 50]],
+                            "scrollY": "400px",
+                            "scrollCollapse": true,
+                            "searching": true,
+
+                        });
+                    });
+                </script>
 
                 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                 <script>

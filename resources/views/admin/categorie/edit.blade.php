@@ -58,6 +58,9 @@
                                 <label for="">Titre :</label>
                                 <input type="text" name="nom" class="form-control" placeholder="Titre de catégorie"
                                     value="{{ $category->nom }}"></input>
+                                <label for="">Ordre :</label>
+                                <input type="number" name="nombre" class="form-control" placeholder="Ordre d'affichage "
+                                    value="{{ $category->nombre }}"></input>
                             </div>
 
                             <div class="form-group col-12">
@@ -123,9 +126,9 @@
             <table id="produitsTable" class="table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr class="text-center">
-                        <!-- <th>ID</th> -->
+                        <th>Ordre</th>
                         <th>Photo</th>
-                        <th>Sous Produit</th>
+                        <th>Produit</th>
                         <th>Prix Detail</th>
                         <th>Prix Semi Gros</th>
                         <th>Prix Gros</th>
@@ -136,7 +139,7 @@
                 <tbody class="text-center">
                     @foreach ($produits as $produit)
                         <tr>
-                            <!-- <td class="align-middle">{{ $produit->id }}</td> -->
+                            <td class="align-middle">{{ $produit->nombre }}</td>
                             <td class="align-middle">
                                 <img src="{{ asset('storage/' . $produit->photo_pr) }}" style="height: 80px;" alt="">
                             </td>
@@ -375,9 +378,7 @@
             "scrollY": "400px", // Hauteur de défilement vertical
             "scrollCollapse": true, // Active le défilement vertical
             "searching": true, // Barre de recherche
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json" // Traduction française
-            }
+
         });
     });
 </script>

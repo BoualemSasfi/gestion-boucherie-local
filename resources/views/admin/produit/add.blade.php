@@ -44,16 +44,24 @@
                         </div>
 
 
-                        <div class="form-group col-12">
-                            <label for="">Titre :</label>
-                            <input type="text" name="nom_pr" class="form-control" placeholder="Nom de produit"></input>
+                        <div class="form-group row">
+                            <div class="col-6" >
+
+                                <label for="">Titre :</label>
+                                <input type="text" name="nom_pr" class="form-control" placeholder="Nom de produit"></input>
+                            </div>
+                            <div class="col-6" >
+
+                                <label for="">Ordre :</label>
+                                <input type="number" name="nombre" class="form-control" placeholder="Ordre d'affichage "></input>
+                            </div>
                         </div>
                         <div class="row ">
 
                             <div class="form-group col-6">
                                 <form>
                                     <div class="form-group">
-                                        <label for="">Viande :</label>
+                                        <label for="">Type de Viande :</label>
                                         <select id="category" name="category_id" class="form-control">
                                             <option value="{{ $categorys->id }}">{{ $categorys->nom }}</option>
 
@@ -72,7 +80,7 @@
                                 </select>
                             </div>
                         </div>
-                        <h2 class="text-center"> Prix Acaht : </h2>
+                        <h3 class="text-center"> Prix Acaht : </h3>
                         <div class="form-group col-12">
 
                             <input type="number" name="prix_achat" class="form-control" placeholder="Prix achat"
@@ -80,7 +88,7 @@
                         </div>
 
 
-                        <h2 class="text-center"> Prix de vente : </h2>
+                        <h3 class="text-center"> Prix de vente : </h3>
 
                         <div class="form-group col-12">
                             <label for="">Détail :</label>

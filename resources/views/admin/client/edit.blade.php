@@ -8,7 +8,7 @@
                     class="btn-description">Retour</span></a>
         </div>
         <div class="col-10 d-flex align-items-center">
-            <h2  >modifier le client {{$client->nom_prenom}}</h2>
+            <h2>modifier le client {{$client->nom_prenom}}</h2>
         </div>
 
     </div>
@@ -26,54 +26,79 @@
 
         <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 mx-auto">
             <div class="card shadow m-1">
-                <form class="edit-form" action="{{ url('/admin/client/edit/save/'.$client->id) }}" method="post"
+                <form class="edit-form" action="{{ url('/admin/client/edit/save/' . $client->id) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     <div class="card-body">
 
-                 
 
 
-                        <div class="form-group col-12">
-                        <h5 class="text-center"> Nom & Prenom  </h5>
-                            <input type="text" name="nom_prenom" class="form-control" placeholder="nom & prenom " value="{{$client->nom_prenom}}" ></input>
-                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <h5 class="text-center"> Nom & Prenom </h5>
+                                <input type="text" name="nom_prenom" class="form-control" placeholder="nom & prenom "
+                                    value="{{$client->nom_prenom}}"></input>
 
-                        <div class="form-group col-12">
-                        <h5 class="text-center"> N° Tel  </h5>
-                            <input type="text" name="fix" class="form-control" placeholder="Numéro de telephone " value="{{$client->fix}}" ></input>
-                        </div>
+                                <h5 class="text-center"> N° Tel </h5>
+                                <input type="text" name="fix" class="form-control" placeholder="Numéro de telephone "
+                                    value="{{$client->fix}}"></input>
 
-                        <div class="form-group col-12">
-                        <h5 class="text-center"> Details </h5>
-                            <input type="text" name="details" class="form-control" placeholder="Details " value=" {{$client->details}} " ></input>
-                        </div>
+                                <h5 class="text-center"> Adresse </h5>
+                                <input type="text" name="adresse" class="form-control" placeholder="Adresse"
+                                    value="{{$client->adresse}}"></input>
+                            </div>
+                            <div class="col-6">
+                                <h5 class="text-center"> NIC </h5>
+                                <input type="text" name="n_rc" class="form-control"
+                                    placeholder="Numéro de Registre de comerce" value="{{$client->n_rc}}"></input>
+                                <h5 class="text-center"> NIF </h5>
+                                <input type="number" name="NIF" class="form-control"
+                                    placeholder="Numéro d'identification fiscal " value="{{$client->NIF}}"></input>
+                                <h5 class="text-center"> NIS </h5>
+                                <input type="number" name="NIS" class="form-control"
+                                    placeholder="Numéro d'identification statistique" value="{{$client->n_rc}}"></input>
 
-
-
-
-                        <div class="form-group col-12">
-                            <div class="form-group row justify-content-center text-center">
-                                <div class="col-6">
-                                    <button type="button" onclick="sauvegarder(this)" class="btn btn-success p-2"><i
-                                            class="fas fa-check fa-lg mr-2"></i><span
-                                            class="btn-description">Modifier</span></button>
-                                </div>
-                                <div class="col-6">
-                                    <a class="btn btn-danger p-2" href="{{ '/admin/client' }}"><i
-                                            class="fas fa-times fa-lg mr-2"></i><span
-                                            class="btn-description">Annuler</span></a>
-                                </div>
+                            </div>
+                            <div class="col-12">
+                                <h5 class="text-center"> Details </h5>
+                                <input type="text" name="details" class="form-control" placeholder="Details "
+                                    value=" {{$client->details}} "></input>
                             </div>
                         </div>
                     </div>
+
+
+                    <div class="form-group col-12">
+                        <div class="form-group row justify-content-center text-center">
+                            <div class="col-6">
+                                <button type="button" onclick="sauvegarder(this)" class="btn btn-success p-2"><i
+                                        class="fas fa-check fa-lg mr-2"></i><span
+                                        class="btn-description">Modifier</span></button>
+                            </div>
+                            <div class="col-6">
+                                <a class="btn btn-danger p-2" href="{{ '/admin/client' }}"><i
+                                        class="fas fa-times fa-lg mr-2"></i><span
+                                        class="btn-description">Annuler</span></a>
+                            </div>
+                        </div>
+                    </div>
+
             </div>
-            </form>
         </div>
 
-        <!-- fin -->
+
+
+
+
+
     </div>
+</div>
+</form>
+</div>
+
+<!-- fin -->
+</div>
 </div>
 
 

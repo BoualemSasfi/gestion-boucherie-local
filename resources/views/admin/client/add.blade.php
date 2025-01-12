@@ -40,19 +40,30 @@
                                 <h5 class="text-center"> Nom & Prenom </h5>
                                 <input type="text" name="nom_prenom" class="form-control"
                                     placeholder="nom & prenom "></input>
-                            </div>
-
-                            <div class="col-6">
                                 <h5 class="text-center"> N° Tel </h5>
                                 <input type="number" name="fix" class="form-control"
                                     placeholder="Numéro de telephone "></input>
+                                <h5 class="text-center"> Adresse </h5>
+                                <input type="text" name="adresse" class="form-control" placeholder="Adresse"></input>
+                            </div>
+
+                            <div class="col-6">
+                                <h5 class="text-center"> NRC </h5>
+                                <input type="text" name="n_rc" class="form-control"
+                                    placeholder="Numéro de Registre de comerce"></input>
+                                <h5 class="text-center"> NIF </h5>
+                                <input type="number" name="NIF" class="form-control"
+                                    placeholder="Numéro d'identification fiscal "></input>
+                                <h5 class="text-center"> NIS</h5>
+                                <input type="number" name="NIS" class="form-control"
+                                    placeholder="Numéro d'identification statistique"></input>
                             </div>
                             <div class="col-12">
                                 <h5 class="text-center"> Details </h5>
                                 <input type="text" name="details" class="form-control" placeholder="Details "></input>
                             </div>
 
-                            
+
 
 
                         </div>

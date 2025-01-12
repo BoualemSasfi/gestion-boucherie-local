@@ -41,6 +41,7 @@ class ProduitController extends Controller
     {
         $produit = new Produit();
         $produit->nom_pr = $request->input('nom_pr');
+        $produit->nombre = $request->input('nombre');
         $produit->prix_achat = $request->input('prix_achat');
         $produit->unite_mesure = $request->input('unite_mesure');
         $produit->prix_vente = $request->input('prix_vente');
@@ -158,6 +159,7 @@ class ProduitController extends Controller
     {
         $produit = Produit::find($id);
         $produit->nom_pr = $request->input('nom_pr');
+        $produit->nombre = $request->input('nombre');
         $produit->prix_achat = $request->input('prix_achat');
         $produit->unite_mesure = $request->input('unite_mesure');
         $produit->prix_vente = $request->input('prix_vente');

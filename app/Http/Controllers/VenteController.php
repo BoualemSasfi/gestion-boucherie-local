@@ -243,6 +243,7 @@ class VenteController extends Controller
 
             $update_fact->save();
 
+
             // $total = floatval($request->total); // Convertir en nombre à virgule flottante
             // $montant = floatval($request->montant); // Convertir en nombre à virgule flottante
             // $credit = $total - $montant; // Calculer le crédit
@@ -258,9 +259,12 @@ class VenteController extends Controller
                 $nw_credit->credit = $credit;
                 $nw_credit->etat_credit = 'impayé';
                 $nw_credit->save();
+
+
+                $client = Client::find($request->id_client);
+                $client->credit +=  $credit;
+                $client->save();
             }
-
-
 
             // Récupérer toutes les lignes liées à la facture
             $listes = AtlVent::where('id_fact', $request->id_fact)->get();
@@ -458,7 +462,7 @@ class VenteController extends Controller
         $generator = new BarcodeGeneratorPNG();
 
         // Configurer les dimensions
-        $widthFactor = 1; 
+        $widthFactor = 1;
         $height = 30;
         $type = BarcodeGenerator::TYPE_CODE_39; // Type de code-barres
 
