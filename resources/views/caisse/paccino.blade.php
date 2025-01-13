@@ -209,7 +209,7 @@
                                 <div class="modal-body">
                                     <h4 class="modal-title" id="">QUANTITE</h4>
                                     <input type="text" id="kgInput" class="form-control" placeholder="0.000"
-                                        style="text-align: center; font-size:26px;">
+                                        style="text-align: center; font-size:26px;" readonly>
                                     <div class="mt-3">
                                         <div class="row">
                                             <div class="col-4">
@@ -409,7 +409,7 @@
                             </div>
                         </div>
                         <div class="card-body m-0 p-1" style="height:100%; overflow-y: auto; max-height: 90%;">
-                            <table id="affichage-produits-facture" class="text-left"   style="width:100%;">
+                            <table id="affichage-produits-facture" class="text-left" style="width:100%;">
                                 <thead>
                                     <tr>
                                         <th class="text-left">LIBELLE:</th>
@@ -445,6 +445,15 @@
                                     <br>Calculatrice
                                 </button>
                             </div>
+
+                            <div class="col-3">
+                                <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#ListeClientsModal" onclick="liste_clients()">
+                                    <i class="fas fa-user fa-lg"></i>
+                                    <br>Clients
+                                </button>
+                            </div>
+
                             <div class="col-3">
                                 {{-- Bouton pour afficher le popup --}}
                                 <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
@@ -463,7 +472,7 @@
                                                 <h4 class="modal-title" id="">Liste des ventes</h4>
                                                 <div class="container bg-light mt-2 mb-2" style="height:450px;">
                                                     <div class="row">
-                                                        <table id="example" class="display" style="width:100%">
+                                                        <table id="example1" class="display" style="width:100%">
                                                             <thead>
                                                                 <tr>
                                                                     <th>ID</th>
@@ -520,47 +529,198 @@
                                 <!-- Popup -->
 
 
+                                {{-- ---------------------------------------------------------------------------------------------- --}}
+                                {{-- ---------------------------------------------------------------------------------------------- --}}
+                                {{-- clients  --}}
+                                {{-- ---------------------------------------------------------------------------------------------- --}}
+                                {{-- ---------------------------------------------------------------------------------------------- --}}
+
+                                <!-- Popup -->
+                                <div class="modal fade" id="ListeClientsModal" tabindex="-1" aria-labelledby=""
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
+                                        <div class="modal-content">
+                                            <!-- Corps du modal -->
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" id="">Liste des clients</h4>
+                                                <div class="container bg-light mt-2 mb-2" style="height:450px;">
+                                                    <div class="row">
+                                                        <table id="example2" class="display " style="width:100%">
+                                                            <thead>
+                                                                <tr style="border-bottom: 5px solid #252525;">
+                                                                    <th>ID</th>
+                                                                    <th>Client (Nom et Prénom)</th>
+                                                                    <th>Adresse</th>
+                                                                    <th>Détails</th>
+                                                                    <th>N° Tél</th>
+                                                                    {{-- <th>Tél ooredoo</th>
+                                                                    <th>Tél mobilis</th>
+                                                                    <th>Tél djezzy</th> --}}
+                                                                    <th>Total Crédit</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="liste-clients">
+                                                                {{-- les clients ici  --}}
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <tr>
+                                                                    <th>ID</th>
+                                                                    <th>Client (Nom et Prénom)</th>
+                                                                    <th>Adresse</th>
+                                                                    <th>Détails</th>
+                                                                    <th>N° Tél</th>
+                                                                    {{-- <th>Tél ooredoo</th>
+                                                                    <th>Tél mobilis</th>
+                                                                    <th>Tél djezzy</th> --}}
+                                                                    <th>Total Crédit</th>
+                                                                    <th>Actions</th>
+                                                                </tr>
+                                                            </tfoot>
+
+                                                        </table>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="modal-footer m-0 p-2">
+                                                <div class="container pl-0">
+                                                    <div class="row">
+                                                        <div class="col-12">
+
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal" style="width: 150px;">
+                                                                <i class="bi bi-x"></i><br>Fermer
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Popup -->
+                                <!-- Popup -->
+                                <div class="modal fade" id="CreditModal" tabindex="-1" aria-labelledby=""
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <!-- En-tête du modal -->
+                                            {{-- <div class="modal-header">
+                                        <h4 class="modal-title" id="FactureModalLabel">BLABLABLABLABLA :</h4>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div> --}}
+                                            <!-- Corps du modal -->
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" id="">VERSEMENT-CREDIT-PAR</h4>
+
+                                                <h5 class="modal-title text-primary" id="credit_nom_client"></h5>
+                                                <a id="montant_credit_client" style="display: none;"></a>
+                                                <a id="credit_id_client" style="display: none;"></a>
+
+                                                <div class="mt-3">
+
+                                                    <div class="row">
+
+                                                        <div class="col-12">
+
+                                                            <label for="MontantVersementInput">Montant Versé :</label>
+                                                            <input type="text" id="MontantVersementInput"
+                                                                class="form-control" placeholder="0.00"
+                                                                style="text-align: center; font-size:26px;" readonly>
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="row mt-3">
+                                                        <div class="col-4 h-100">
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('1')"
+                                                                style="width:100%;">1</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('4')"
+                                                                style="width:100%;">4</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('7')"
+                                                                style="width:100%;">7</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('0')"
+                                                                style="width:100%;">0</button>
+                                                        </div>
+                                                        <div class="col-4 h-100">
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('2')"
+                                                                style="width:100%;">2</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('5')"
+                                                                style="width:100%;">5</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('8')"
+                                                                style="width:100%;">8</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('00')"
+                                                                style="width:100%;">00</button>
+                                                        </div>
+                                                        <div class="col-4 h-100">
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('3')"
+                                                                style="width:100%;">3</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('6')"
+                                                                style="width:100%;">6</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('9')"
+                                                                style="width:100%;">9</button>
+                                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
+                                                                onclick="VersementAppendValue('000')"
+                                                                style="width:100%;">000</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="modal-footer m-0 p-2">
+                                                <div class="container pl-0">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <button type="button" class="btn btn-success"
+                                                                onclick="ValiderVersementCredit()" style="width: 150px;">
+                                                                <i class="bi bi-check-lg"></i><br>Valider
+                                                            </button>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <button type="button" class="btn btn-danger"
+                                                                onclick="ClearVersementInput()" style="width: 150px;">
+                                                                <i class="bi bi-eraser"></i><br>Effacer
+                                                            </button>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal" style="width: 150px;">
+                                                                <i class="bi bi-x"></i><br>Fermer
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Popup -->
+
+
                             </div>
 
-                            {{-- <div class="col-3">
-                                <button class="btn btn-danger bouton-caisse" type="button" style="display: none;">
-                                    <i class="fas fa-store-alt fa-lg"></i>
-                                    <br> Retour
-                                </button>
-                            </div> --}}
-
-
-                            {{-- <div class="col-3">
-                                <select class="form-select bouton-caisse" id="type_vente">
-                                    <option value="details">Détails</option>
-                                    <option value="semi_gros">Semi-Gros</option>
-                                    <option value="gros">Gros</option>
-                                </select>
-                            </div> --}}
-
-                            {{-- <div class="col-3">
-                                <div class="dropdown">
-                                    <button class="btn btn-danger dropdown-toggle bouton-caisse" type="button"
-                                        id="type_vente" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fas fa-store fa-lg"></i>
-                                        <br><span id="selected_option">Vente-Détails</span>
-                                    </button>
-                                    <ul class="dropdown-menu" aria-labelledby="type_vente">
-                                        <li><a class="dropdown-item btn btn-primary" href="#" data-value="details"
-                                                id="vente_details" onclick="prix_details();">
-                                                <br> <i class="fas fa-user-tag fa-lg"></i> <br>
-                                                Vente-Détails</a></li>
-                                        <li><a class="dropdown-item btn btn-primary" href="#"
-                                                data-value="semi_gros" id="vente_semi" onclick="prix_semigros();">
-                                                <br> <i class="fas fa-boxes fa-lg"></i> <br>
-                                                Vente-Semi-Gros</a></li>
-                                        <li><a class="dropdown-item btn btn-primary" href="#" data-value="gros"
-                                                id="vente_gros" onclick="prix_gros();">
-                                                <br> <i class="fas fa-truck-moving fa-lg"></i> <br>
-                                                Vente-Gros</a></li>
-                                    </ul>
-                                </div>
-                            </div> --}}
 
                             <div class="col-3">
                                 <div class="dropdown">
@@ -597,17 +757,6 @@
 
 
                             <script>
-                                // document.querySelectorAll('.dropdown-item').forEach(item => {
-                                //     item.addEventListener('click', function(e) {
-                                //         e.preventDefault(); // Empêche le rechargement
-                                //         const selectedValue = this.getAttribute('data-value'); // Récupère la valeur
-                                //         const selectedText = this.textContent.trim(); // Récupère le texte
-                                //         document.getElementById('selected_option').textContent =
-                                //             selectedText; // Affiche le texte sélectionné
-                                //         document.getElementById('type_vente').setAttribute('data-selected-value',
-                                //             selectedValue); // Ajoute une valeur sélectionnée au bouton
-                                //     });
-                                // });
                                 document.querySelectorAll('.dropdown-item').forEach(item => {
                                     item.addEventListener('click', function(e) {
                                         e.preventDefault(); // Empêche le comportement par défaut du lien
@@ -686,6 +835,17 @@
                             </style>
 
 
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+
+                        <div class="row bouton-action">
+
+
+
                             <div class="col-3">
                                 {{-- Bouton pour afficher le popup --}}
                                 <button class="btn btn-warning bouton-caisse" type="button" data-bs-toggle="modal"
@@ -756,14 +916,9 @@
                                 <!-- Popup -->
 
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="row bouton-action">
 
 
-                            <div class="col-6">
+                            <div class="col-3">
                                 <button class="btn btn-primary bouton-caisse" type="button"
                                     onclick="FactureEnAttente()">
                                     <i class="fa fa-pause-circle fa-lg"></i>
@@ -2734,6 +2889,18 @@
             CalculerCredit()
         }
 
+        function VersementAppendValue(value) {
+            const input = document.getElementById('MontantVersementInput');
+            input.value += value;
+            CalculerCredit()
+        }
+
+        function ClearVersementInput() {
+            const input = document.getElementById('MontantVersementInput');
+            input.value = '';
+            CalculerCredit()
+        }
+
 
 
 
@@ -3221,6 +3388,76 @@
     {{-- ------------------------------------------------------------------------------------------------------ --}}
 
     <script>
+        function liste_clients() {
+            $.ajax({
+                url: '/liste-clients',
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content') // Assurez-vous que ce meta tag existe dans votre page HTML
+                },
+                success: function(response) {
+                    // Vérification si la réponse contient bien les données attendues
+                    if (response && response.clients && Array.isArray(response.clients)) {
+                        $('#liste-clients').empty(); // Nettoie le tableau avant d'insérer les nouvelles données
+                        console.log('Liste des clients récupérée avec succès.');
+
+                        // Parcourir les clients
+                        $.each(response.clients, function(key, client) {
+                            // Déterminer la classe CSS pour le crédit
+                            let creditClass = client.total_credit > 0 ? 'bg-danger text-white' :
+                                'bg-success text-white';
+
+                            // Ajouter une nouvelle ligne pour chaque client
+                            let clientRow =
+                                '<tr class="bg-white" style="border-bottom: 5px solid #252525;">' +
+                                '<td>' + (client.id || '') + '</td>' +
+                                '<td>' + (client.nom || '') + '</td>' +
+                                '<td>' + (client.adresse || '') + '</td>' +
+                                '<td>' + (client.details || '') + '</td>' +
+                                '<td>' + (client.tel_fix || '') + '</td>' +
+                                // '<td>' + (client.tel_ooredoo || '') + '</td>' +
+                                // '<td>' + (client.tel_mobilis || '') + '</td>' +
+                                // '<td>' + (client.tel_djezzy || '') + '</td>' +
+                                '<td class="' + creditClass + '">' + (client.total_credit || '0') +
+                                '</td>';
+
+                            // Vérifier si le crédit est supérieur à 0 pour afficher le bouton
+                            if (client.total_credit > 0) {
+                                clientRow += '<td>' +
+                                    '<form class="form-verser-credit" data-id="' + client.id +
+                                    '" data-nom="' + client.nom + '" data-credit="' + client
+                                    .total_credit + '">' +
+                                    '<button type="button" class="btn btn-success" onclick="Aller_Vers_Versement_Credit(this)" style="padding-left:10px;padding-right:10px;">' +
+                                    '<i class="fas fa-cash-register fa-lg"></i><br>Versement' +
+                                    '</button>' +
+                                    '</form>' +
+                                    '</td>';
+                            } else {
+                                clientRow +=
+                                '<td></td>'; // Si le crédit est <= 0, ne pas afficher le bouton
+                            }
+
+                            clientRow += '</tr>';
+
+                            // Ajouter la ligne au tableau
+                            $('#liste-clients').append(clientRow);
+                        });
+
+                    } else {
+                        console.error('Réponse inattendue du serveur:', response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Erreur lors de la récupération des clients:', error);
+                    console.error('Détails:', xhr.responseText);
+                }
+            });
+        }
+    </script>
+
+
+    <script>
         function liste_factures_historique() {
             const IdMagasin = document.getElementById('text-id-magasin').textContent.trim();
             console.log('--------------------------------------------');
@@ -3242,7 +3479,7 @@
                             console.log('id facture :' + id_facture);
                             // $('#historique-factures').append('<div style="width:100%;height:5px;"><hr></div>');
                             $('#historique-factures').append(
-                                '<tr>' +
+                                '<tr class="bg-primary text-white">' +
                                 '<td>' + facture.id + '</td>' +
                                 '<td>' + facture.client + '</td>' +
                                 '<td>' + facture.date + '</td>' +
@@ -3257,6 +3494,8 @@
                                 '</form>' +
                                 '</td>' +
                                 '</tr>' +
+
+
                                 '<tr>' +
                                 '<td colspan="8">' +
                                 '<div class="container">' +
@@ -3304,7 +3543,10 @@
                                             '<td class="">' + vente
                                             .total_vente +
                                             '</td>' +
-                                            '</tr>'
+                                            '</tr>' +
+
+                                            '<tr style="height:20px;"></tr>'
+
                                         );
                                     });
                                 },
@@ -3796,6 +4038,102 @@
 
 
     {{-- ------------------------------------------------------------------------------------------------------   --}}
+    {{-- ------------------------------------------------------------------------------------------------------   --}}
+    {{-- credit client  --}}
+    <script>
+        function Aller_Vers_Versement_Credit(button) {
+            // Récupérer l'ID et le nom du client à partir des attributs data-id et data-nom
+            const form = button.closest('.form-verser-credit');
+            const id = form.getAttribute('data-id');
+            const nom = form.getAttribute('data-nom');
+            const credit = form.getAttribute('data-credit');
+
+            console.log(id);
+            console.log(nom);
+            console.log(credit);
+
+
+            // Vérifier si les éléments avec les IDs 'credit_id_client' et 'credit_nom_client' existent
+            const text_id_client = document.getElementById('credit_id_client');
+            const text_nom_client = document.getElementById('credit_nom_client');
+            const text_credit_client = document.getElementById('montant_credit_client');
+            const input_montant = document.getElementById('MontantVersementInput');
+
+            if (text_id_client && text_nom_client) {
+                // Affecter l'ID du client et le nom du client au contenu des éléments respectifs
+                text_id_client.textContent = id;
+                text_nom_client.textContent = nom;
+                text_credit_client.textContent = credit;
+                input_montant.value = "";
+
+                // Initialiser le modal Bootstrap et l'afficher
+                const CreditModal = new bootstrap.Modal(document.getElementById('CreditModal'));
+                CreditModal.show();
+            } else {
+                // Message d'erreur si les éléments sont introuvables
+                console.error("L'élément avec l'ID 'credit_id_client' ou 'credit_nom_client' est introuvable.");
+            }
+        }
+    </script>
+
+    <script>
+        async function ValiderVersementCredit() {
+
+            const montant_verse = document.getElementById('MontantVersementInput').value;
+            const id_client = document.getElementById('credit_id_client').textContent;
+            const nom_client = document.getElementById('credit_nom_client').textContent;
+            const montant_credit_client = document.getElementById('montant_credit_client').textContent;
+
+            if (parseFloat(montant_verse) > 0 && parseFloat(montant_verse) <= parseFloat(montant_credit_client)) {
+                try {
+
+                    await $.ajax({
+                        url: '/valider-versement-credit/' + id_client + '/' + nom_client + '/' + montant_verse,
+                        type: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function(response) {
+                            Swal.fire({
+                                title: "Versement Validé",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+                } catch (error) {
+                    console.error("Erreur lors de la validation de versement :", error);
+                }
+
+
+                let iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = '/imprimer-bon-versement/' + id_client;
+                document.body.appendChild(iframe);
+
+                iframe.onload = function() {
+                    iframe.contentWindow.print();
+                };
+
+                // Close the modal and create a new invoice
+                await $('#CreditModal').modal('hide');
+                await $('#ListeClientsModal').modal('hide');
+            } else {
+                Swal.fire({
+                    title: "Veuillez saisir un montant valide",
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+            }
+
+        }
+    </script>
+
+
+    {{-- ------------------------------------------------------------------------------------------------------   --}}
+    {{-- ------------------------------------------------------------------------------------------------------   --}}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -3810,8 +4148,38 @@
 
     <script>
         $(document).ready(function() {
-            $('#example').DataTable({
-                processing: true,
+            $('#example1').DataTable({
+                // processing: true, // Indique que le traitement est en cours
+                serverSide: true, // Active le chargement des données côté serveur
+                lengthMenu: [
+                    [10, 25, 50, -1],
+                    [10, 25, 50, "Tous"]
+                ],
+                buttons: [], // Ajoutez ici les boutons souhaités
+                language: {
+                    "lengthMenu": "Afficher _MENU_ éléments par page",
+                    "zeroRecords": "Aucun enregistrement trouvé",
+                    "info": "Page _PAGE_ sur _PAGES_",
+                    "infoEmpty": "Aucun enregistrement disponible",
+                    "infoFiltered": "(filtré de _MAX_ total des enregistrements)",
+                    "search": "Rechercher :",
+                    "paginate": {
+                        "first": "Premier",
+                        "last": "Dernier",
+                        "next": "Suivant",
+                        "previous": "Précédent"
+                    }
+                },
+                responsive: true,
+
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#example2').DataTable({
+                // processing: true, // Indique que le traitement est en cours
+                serverSide: true, // Active le chargement des données côté serveur
                 lengthMenu: [
                     [10, 25, 50, -1],
                     [10, 25, 50, "Tous"]

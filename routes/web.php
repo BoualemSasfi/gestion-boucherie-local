@@ -92,14 +92,18 @@ Route::controller(CaisseController::class)->group(function () {
 
     Route::get('/historique-factures/{id_magasin}', 'Liste_Factures_Historique')->name('liste_factures_historique');
     Route::get('/chercher-facture/{id_facture}', 'Chercher_Facture')->name('chercher_facture');
-
+    
+    Route::get('/liste-clients', 'Liste_Clients')->name('liste_clients');
 
     Route::get('/imprimer-ticket/{id_facture}', 'ImprimerTicket')->name('caisse_ticket');
     Route::get('/imprimer-ticket-credit/{id_facture}', 'ImprimerTicket')->name('caisse_ticket_credit');
     Route::get('/test_pdf', 'test_pdf')->name('caisse_teste_ticket');
-
+    
+    // credit client 
+    Route::post('/valider-versement-credit/{id_client}/{nom_client}/{montant_verse}', 'ValiderVersementCredit');
+    Route::get('/imprimer-bon-versement/{id_client}', 'ImprimerBonVersementCredit');
+    
     Route::get('/open-cash-drawer', 'OpenCashDrawer')->name('open_cash_drawer');
-
 });
 
 //--------------------------------------------------------------------------
