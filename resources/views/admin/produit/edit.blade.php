@@ -353,6 +353,7 @@ value="{{ $produit->prix_achat }}"></input> -->
                 }).then(async (result) => {
                     if (result.isConfirmed) {
                         // Collecter les informations
+
                         const subProductName = document.getElementById('subProductName').value;
                         const priceDetail = document.getElementById('priceDetail').value;
                         const priceSemiGros = document.getElementById('priceSemiGros').value;
@@ -383,7 +384,7 @@ value="{{ $produit->prix_achat }}"></input> -->
 
                             if (response) {
                                 Swal.fire('Enregistré!', 'Le sous-produit a été ajouté.', 'success');
-                                window.location.href = '/admin/produit/{{ $produit->id }}/edit'; // Redirige vers la page de modification du produit
+                                window.location.href = '/admin/produit/{{ $produit->id }}/{{$defaultCategoryId}}/mdf'; // Redirige vers la page de modification du produit
                             } else {
                                 Swal.fire('Erreur!', 'Une erreur est survenue lors de l\'enregistrement.', 'error');
                             }
@@ -461,6 +462,48 @@ value="{{ $produit->prix_achat }}"></input> -->
         }
     }
 </script>
+
+<!-- message dialoge  -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        @if(session('success'))
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "success",
+                title: "{{ session('success') }}"
+            });
+        @endif
+
+        @if(session('error'))
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('error') }}"
+            });
+        @endif
+    });
+</script>
+
 
 
 

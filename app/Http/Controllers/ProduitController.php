@@ -245,9 +245,13 @@ class ProduitController extends Controller
             $nv_prod->save();
 
             return response()->json(['message' => 'Produit ajouté avec succès!'], 201);
+            
         } catch (\Exception $e) {
             return response()->json(['message' => 'Erreur lors de l\'ajout du produit.', 'error' => $e->getMessage()], 500);
         }
+
+
+
     }
 
 
