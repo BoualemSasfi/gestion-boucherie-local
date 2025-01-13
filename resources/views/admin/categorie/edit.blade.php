@@ -2,13 +2,17 @@
 @section('content')
 {{-- retour en arrière --}}
 <div class="container" id="titre-page">
-    <div class="row">
-        <div class="col-2 d-flex align-items-center">
+
+    <div class="row justify-content-between align-items-center">
+        <div class="col-2 align-items-center">
             <a href="{{ url('/admin/category') }}" class="btn btn-dark"><i class="fas fa-arrow-left pr-1"></i><span
                     class="btn-description">Retour</span></a>
         </div>
-        <div class="col-10 d-flex align-items-center">
+        <div class="col-8 text-center">
             <h2>Modifier la viande {{$category->id}} </h2>
+        </div>
+        <div class="col-2 text-md-right">
+ 
         </div>
 
     </div>
@@ -472,4 +476,39 @@
         @endif
     });
 </script>
+
+<style>
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 18px;
+            /* Réduit la taille du titre */
+        }
+
+        .btn-description {
+            display: none;
+            /* Cache le texte des boutons */
+        }
+
+        .btn {
+            font-size: 12px;
+            /* Réduit la taille des boutons */
+        }
+
+    }
+
+    @media (max-width: 576px) {
+        .h2 {
+            font-size: 16px;
+            /* Réduit davantage la taille du titre */
+        }
+
+        .btn {
+            font-size: 10px;
+            padding: 6px 8px;
+            /* Réduit l'espace autour des icônes */
+        }
+
+
+    }
+</style>
 @endsection

@@ -146,9 +146,8 @@ Route::controller(ProduitController::class)->group(function () {
     // sous produit 
     Route::post('/admin/produit/add_sous_produit', 'add_sous_produit');
     Route::delete('/admin/produit/{id}/delete_sous_produit', 'delete_sous_produit');
-
-
 });
+
 //--------------------------------------------------------------------------------
 // ---------                       magasin                              ----------
 // -------------------------------------------------------------------------------

@@ -13,21 +13,22 @@
         </div>
         <div class="col-12 col-md-2 text-md-right mb-2 mb-md-0">
             <a href="{{ url('/admin/category/add') }}" class="btn btn-success w-100"><span
-                    class="btn-description">Ajouter  </span><i class="fas fa-plus fa-xl pr-1"></i></a>
+                    class="btn-description">Ajouter </span><i class="fas fa-plus fa-xl pr-1"></i></a>
         </div>
     </div>
 </div>
 
 {{-- Contenu principal --}}
-<div class="container mt-3">
+<div class="container mt-3 justify-content-center align-items-center">
     <div class="d-flex justify-content-center align-items-center flex-wrap">
         <div class="row w-100 animate__animated animate__backInLeft shadow-gray-500">
-            <div class="table-responsive">
+            <div class="table-responsive col-10">
+
                 <table id="produitsTable" class="table table-striped table-bordered w-100">
                     <thead>
                         <tr>
-                            <th class="text-center" >Ordre</th>
-                            <th class="text-center" >Photo</th>
+                            <th class="text-center">Ordre</th>
+                            <th class="text-center">Photo</th>
                             <th class="text-center">Titre</th>
                             <th class="text-center">Actions</th>
                         </tr>
@@ -36,7 +37,7 @@
                         @foreach ($categorys as $category)
                             <tr>
                                 <!-- Colonne ordre d'affichage -->
-                                <td class="align-middle" style="font-size: 20px;" >{{ $category->nombre }}</td>
+                                <td class="align-middle" style="font-size: 20px;">{{ $category->nombre }}</td>
                                 <!-- Colonne Photo -->
                                 <td class="align-middle">
                                     <img src="{{ asset('storage/' . $category->photo) }}" class="img-fluid"
@@ -45,7 +46,7 @@
 
 
                                 <!-- Colonne Titre -->
-                                <td class="align-middle" style="font-size: 20px;" >{{ $category->nom }}</td>
+                                <td class="align-middle" style="font-size: 20px;">{{ $category->nom }}</td>
 
                                 <!-- Colonne Actions -->
                                 <td class="align-middle">
@@ -69,7 +70,7 @@
                                                 onclick="supprimer_confirmation(this)">
                                                 <i class="fa-solid fa-trash-can fa-xl text-danger"></i>
                                             </button>
-                                            
+
                                         </form>
                                     </div>
 
@@ -82,6 +83,43 @@
         </div>
     </div>
 </div>
+
+
+
+<style>
+    @media (max-width: 768px) {
+     h2 {
+            font-size: 18px;
+            /* Réduit la taille du titre */
+        }
+
+        .btn-description {
+            display: none;
+            /* Cache le texte des boutons */
+        }
+
+        .btn {
+            font-size: 12px;
+            /* Réduit la taille des boutons */
+        }
+
+    }
+
+    @media (max-width: 576px) {
+        .h2 {
+            font-size: 16px;
+            /* Réduit davantage la taille du titre */
+        }
+
+        .btn {
+            font-size: 10px;
+            padding: 6px 8px;
+            /* Réduit l'espace autour des icônes */
+        }
+
+
+    }
+</style>
 
 {{-- Scripts pour les fonctionnalités --}}
 <script>
