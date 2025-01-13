@@ -15,6 +15,7 @@ use App\Models\Vendeur;
 use App\Models\Client;
 use App\Models\Caisse;
 use App\Models\Creditclient;
+use App\Models\Versement;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -667,7 +668,23 @@ class CaisseController extends Controller
             $id_client = $Client->id_client;
 
             // Calculer la somme des crédits pour le client
-            $credit_client = Creditclient::where('id_client', $id_client)->sum('credit');
+            // $credit_client = Creditclient::where('id_client', $id_client)->sum('credit');
+            // Récupérer les crédits et versements pour le client
+            $credit_client = Client::leftJoin('creditclients', 'clients.id', '=', 'creditclients.id_client')
+                ->leftJoin('versements', 'clients.id', '=', 'versements.id_client')
+                ->select(
+                    'clients.id as id',
+                    'clients.nom_prenom as nom',
+                    'clients.adresse as adresse',
+                    'clients.details as details',
+                    'clients.fix as tel_fix',
+                    'clients.ooredoo as tel_ooredoo',
+                    'clients.mobilis as tel_mobilis',
+                    'clients.djezzy as tel_djezzy',
+                    DB::raw('(SELECT IFNULL(SUM(credit), 0) FROM creditclients WHERE creditclients.id_client = clients.id) - (SELECT IFNULL(SUM(montant), 0) FROM versements WHERE versements.id_client = clients.id) as total_credit')
+                )
+                ->where('clients.id', $id_client)
+                ->first();
         } else {
             $credit_client = 0; // Aucun client trouvé, donc crédit = 0
         }
@@ -692,7 +709,7 @@ class CaisseController extends Controller
             'total' => $Facture->total_facture,
             'versement' => $Facture->versement,
             'credit' => $Facture->credit,
-            'credit_client' => $credit_client,
+            'credit_client' => $credit_client->total_credit,
             'type_vente' => $Facture->type_vente,
             'ventes' => $Ventes,
             'nombre' => $nombreDeLignes,
@@ -779,7 +796,23 @@ class CaisseController extends Controller
             $id_client = $Client->id_client;
 
             // Calculer la somme des crédits pour le client
-            $credit_client = Creditclient::where('id_client', $id_client)->sum('credit');
+            // $credit_client = Creditclient::where('id_client', $id_client)->sum('credit');
+            // Récupérer les crédits et versements pour le client
+            $credit_client = Client::leftJoin('creditclients', 'clients.id', '=', 'creditclients.id_client')
+                ->leftJoin('versements', 'clients.id', '=', 'versements.id_client')
+                ->select(
+                    'clients.id as id',
+                    'clients.nom_prenom as nom',
+                    'clients.adresse as adresse',
+                    'clients.details as details',
+                    'clients.fix as tel_fix',
+                    'clients.ooredoo as tel_ooredoo',
+                    'clients.mobilis as tel_mobilis',
+                    'clients.djezzy as tel_djezzy',
+                    DB::raw('(SELECT IFNULL(SUM(credit), 0) FROM creditclients WHERE creditclients.id_client = clients.id) - (SELECT IFNULL(SUM(montant), 0) FROM versements WHERE versements.id_client = clients.id) as total_credit')
+                )
+                ->where('clients.id', $id_client)
+                ->first();
         } else {
             $credit_client = 0; // Aucun client trouvé, donc crédit = 0
         }
@@ -803,7 +836,7 @@ class CaisseController extends Controller
             'total' => $Facture->total_facture,
             'versement' => $Facture->versement,
             'credit' => $Facture->credit,
-            'credit_client' => $credit_client,
+            'credit_client' => $credit_client->total_credit,
             'type_vente' => $Facture->type_vente,
             'ventes' => $Ventes,
             'nombre' => $nombreDeLignes,
@@ -924,6 +957,51 @@ class CaisseController extends Controller
     }
 
 
+    public function Liste_Clients()
+    {
+
+        try {
+
+
+            $Clients = Client::leftJoin('creditclients', 'clients.id', '=', 'creditclients.id_client')
+                ->leftJoin('versements', 'clients.id', '=', 'versements.id_client')
+                ->select(
+                    'clients.id as id',
+                    'clients.nom_prenom as nom',
+                    'clients.adresse as adresse',
+                    'clients.details as details',
+                    'clients.fix as tel_fix',
+                    'clients.ooredoo as tel_ooredoo',
+                    'clients.mobilis as tel_mobilis',
+                    'clients.djezzy as tel_djezzy',
+                    DB::raw('(SELECT IFNULL(SUM(credit), 0) FROM creditclients WHERE creditclients.id_client = clients.id) - (SELECT IFNULL(SUM(montant), 0) FROM versements WHERE versements.id_client = clients.id) as total_credit')
+                )
+                ->groupBy(
+                    'clients.id',
+                    'clients.nom_prenom',
+                    'clients.adresse',
+                    'clients.details',
+                    'clients.fix',
+                    'clients.ooredoo',
+                    'clients.mobilis',
+                    'clients.djezzy'
+                )
+                ->orderBy('clients.created_at', 'DESC')
+                ->get();
+
+
+
+
+            // Retour de la réponse avec le message de succès et les clients
+            return response()->json([
+                'message' => 'liste clients récupérées avec succès.', // Message de succès
+                'clients' => $Clients // Les données des clients
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage()); // Log plus explicite
+            return response()->json(['error' => 'Une erreur interne est survenue.'], 500);
+        }
+    }
 
 
     public function Chercher_Facture($id_facture)
@@ -995,6 +1073,88 @@ class CaisseController extends Controller
         } catch (\Exception $e) {
             Log::error($e);
             return response()->json(['error' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function ValiderVersementCredit($id_client, $nom_client, $montant_verse)
+    {
+
+        $versement_credit = new Versement();
+        $versement_credit->id_client = $id_client;
+        $versement_credit->montant = $montant_verse;
+        $versement_credit->save();
+    }
+
+    public function ImprimerBonVersementCredit($id_client)
+    {
+        // Récupérer le dernier versement du client
+        $Versement = Versement::where('id_client', $id_client)
+            ->latest('created_at')  // Trier par la colonne 'created_at' (ou une autre colonne)
+            ->first();  // Récupérer le dernier enregistrement
+
+        // Vérifier si le versement existe
+        if (!$Versement) {
+            return response()->json(['error' => 'Aucun versement trouvé pour ce client'], 404);
+        }
+
+        // Récupérer les informations générales
+        $Informations = Information::first();
+
+        // Récupérer les informations du client
+        $Client = Client::find($id_client);
+
+        // Vérifier si le client existe
+        if (!$Client) {
+            return response()->json(['error' => 'Client non trouvé'], 404);
+        }
+
+        // Récupérer les crédits et versements pour le client
+        $Credit = Client::leftJoin('creditclients', 'clients.id', '=', 'creditclients.id_client')
+            ->leftJoin('versements', 'clients.id', '=', 'versements.id_client')
+            ->select(
+                'clients.id as id',
+                'clients.nom_prenom as nom',
+                'clients.adresse as adresse',
+                'clients.details as details',
+                'clients.fix as tel_fix',
+                'clients.ooredoo as tel_ooredoo',
+                'clients.mobilis as tel_mobilis',
+                'clients.djezzy as tel_djezzy',
+                DB::raw('(SELECT IFNULL(SUM(credit), 0) FROM creditclients WHERE creditclients.id_client = clients.id) - (SELECT IFNULL(SUM(montant), 0) FROM versements WHERE versements.id_client = clients.id) as total_credit')
+            )
+            ->where('clients.id', $id_client)
+            ->first();
+
+        // Vérifier si les données de crédit existent
+        if (!$Credit) {
+            return response()->json(['error' => 'Données de crédit non trouvées pour ce client'], 404);
+        }
+
+        // Obtenir la date courante
+        $date_courante = Carbon::now()->toDateString();
+
+        // Organiser les données à passer à la vue PDF
+        $data = [
+            'informations' => $Informations,
+            'versement' => $Versement,
+            'client' => $Client,
+            'credit' => $Credit,
+            'date' => $date_courante,
+        ];
+
+        try {
+            // Titre du fichier PDF
+            $titre = 'bon_versement_credit_' . $Versement->id;
+
+            // Générer le PDF avec les dimensions du ticket de caisse (80 mm de large et 200 mm de haut)
+            $pdf = Pdf::loadView('caisse.bon', $data)->setPaper([0, 0, 226.77, 566.93], 'portrait'); // 80 mm x 200 mm en points (1 mm = 2.83 points)
+
+            // Retourner le PDF en streaming sans le télécharger
+            return $pdf->stream($titre . '.pdf', ['Attachment' => false]);
+        } catch (\Exception $e) {
+            // Gérer les erreurs dans la génération du PDF
+            Log::error('Erreur lors de la génération du PDF : ' . $e->getMessage());
+            return response()->json(['error' => 'Erreur lors de la génération du PDF'], 500);
         }
     }
 
