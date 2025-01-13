@@ -26,6 +26,7 @@
                 <table id="produitsTable" class="table table-striped table-bordered w-100">
                     <thead>
                         <tr>
+                            <th class="text-center" >Ordre</th>
                             <th class="text-center" >Photo</th>
                             <th class="text-center">Titre</th>
                             <th class="text-center">Actions</th>
@@ -34,11 +35,14 @@
                     <tbody class="text-center">
                         @foreach ($categorys as $category)
                             <tr>
+                                <!-- Colonne ordre d'affichage -->
+                                <td class="align-middle" style="font-size: 20px;" >{{ $category->nombre }}</td>
                                 <!-- Colonne Photo -->
                                 <td class="align-middle">
                                     <img src="{{ asset('storage/' . $category->photo) }}" class="img-fluid"
                                         style="height: 80px;" alt="Photo de la catégorie">
                                 </td>
+
 
                                 <!-- Colonne Titre -->
                                 <td class="align-middle" style="font-size: 20px;" >{{ $category->nom }}</td>
@@ -88,9 +92,9 @@
             "scrollY": "400px",
             "scrollCollapse": true,
             "searching": true,
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
-            }
+            // "language": {
+            //     "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
+            // }
         });
     });
 

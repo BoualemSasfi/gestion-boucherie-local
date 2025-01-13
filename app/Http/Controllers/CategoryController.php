@@ -40,6 +40,7 @@ class CategoryController extends Controller
     {
         $category = new Category();
         $category->nom = $request->input('nom');
+        $category->nombre = $request->input('nombre');
 
         // Gestion du logo
         if ($request->hasFile('photo')) {
@@ -87,6 +88,7 @@ class CategoryController extends Controller
     {
             $category = Category::find($id);
             $category->nom  = $request->input('nom');
+            $category->nombre = $request->input('nombre');
 
              // Gestion du logo
         if ($request->hasFile('photo')) {

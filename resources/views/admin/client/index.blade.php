@@ -49,7 +49,7 @@
                             <tr>
                                 <th>Code </th>
                                 <th>Nom & Prenom </th>
-                                <th>Details</th>
+                                <!-- <th>Details</th> -->
                                 <th>Tel</th>
                                 <th>Credit</th>
                                 <th>Action</th>
@@ -59,11 +59,11 @@
                             @foreach ($clients as $client)
                                 <tr>
                                     <td class=" align-middle">
-                                    <!-- {{ $client->code_client}} -->
-                                      CL00001
+                                    {{ $client->code_client}}
+                                      <!-- CL00001 -->
                                 </td>
                                     <td class=" align-middle">{{ $client->nom_prenom}}</td>
-                                    <td class=" align-middle">{{ $client->details}}</td>
+                                    <!-- <td class=" align-middle">{{ $client->details}}</td> -->
                                     <td class=" align-middle">{{ $client->fix}}</td>
                                     <td class=" align-middle">{{ $client->credit}} DA</td>
                                     <td class="align-middle">
@@ -120,9 +120,7 @@
             "scrollY": "400px",
             "scrollCollapse": true,
             "searching": true,
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.13.6/i18n/fr-FR.json"
-            }
+
         });
     });
 </script>
