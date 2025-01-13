@@ -504,8 +504,10 @@ class CaisseController extends Controller
                 // Gérer le cas où la facture n'existe pas, par exemple, en retournant une erreur
                 return response()->json(['error' => 'Facture non trouvée'], 404);
             }
-            $nombre_facture = Facture::where('etat_facture', 'en-attente')->count();
+            
+            $nombre_facture = Facture::where('etat_facture', '=' ,'en-attente')->where('total_facture', '!=', 0)->count();
             return response()->json(['numero' => $nombre_facture]);
+            
             // return response()->json('success');
         } catch (\Exception $e) {
             Log::error($e); // Log de l'erreur pour le débogage
