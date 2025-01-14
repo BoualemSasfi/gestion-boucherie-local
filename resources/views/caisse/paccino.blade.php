@@ -343,10 +343,10 @@
                                             {{ $categorie->nom }}</p>
                                     </div> --}}
 
-                                    <div class="card cat" style="width: 10rem;">
+                                    <div class="card cat" style="width: 180px; height: 180px;">
                                         <img src="{{ asset('storage/' . $categorie->photo) }}" class="card-img-top"
-                                            alt="..." style="height: 80%;">
-                                        <div class="card-body" style="height: 40px;">
+                                            alt="..." style="width: 180px; height: 130px;">
+                                        <div class="card-body" style="width: 180px; height: 40px;">
                                             <h5 class="card-title mini-text text-center fw-bold"
                                                 style="margin-top:-10px;">{{ $categorie->nom }}</h5>
                                         </div>
@@ -1285,7 +1285,7 @@
         $(document).ready(function() {
             $('.your-carousel').slick({
                 slidesToShow: 4,
-                slidesToScroll: 4,
+                slidesToScroll: 1,
                 arrows: true, // Active les flèches
                 dots: false, // (Optionnel) désactive les points si non nécessaires
                 infinite: true,
@@ -1293,7 +1293,7 @@
                     breakpoint: 768,
                     settings: {
                         slidesToShow: 2,
-                        slidesToScroll: 2
+                        slidesToScroll: 1
                     }
                 }, {
                     breakpoint: 1024,
