@@ -118,8 +118,20 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow"
-                    style="height: 30px;!important">
+                    style="height: 44px !important;">
 
+
+                    <div class="nav-item" style="">
+                        <button class="btn btn-primary" onclick="ActualiserPage()"
+                            style="height: 100%;margin-left:20px;"><i class="bi bi-arrow-clockwise mr-2"></i>Refresh</button>
+                    </div>
+
+                    <script>
+                        function ActualiserPage() {
+                            // Actualise la page actuelle
+                            location.reload();
+                        }
+                    </script>
 
                     {{-- <div class="nav-item" style="">
                         <button class="btn btn-success" onclick="OpenCashDrawer()"
@@ -141,19 +153,19 @@
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span
                                     class="me-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                
-                                <a class="dropdown-item" href="#" data-bs-toggle="modal"
-                                    data-bs-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                                    Déconnecter
-                                </a>
-                            </div>
-                        </li>
+                    <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                    </a>
+                    <!-- Dropdown - User Information -->
+                    <div class="dropdown-menu dropdown-menu-end shadow animated--grow-in"
+                        aria-labelledby="userDropdown">
+
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                            data-bs-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
+                            Déconnecter
+                        </a>
+                    </div>
+                    </li>
                     </ul> --}}
 
 
@@ -198,13 +210,13 @@
                     <button class="btn btn-success" type="button" data-bs-dismiss="modal">Annuler</button>
 
                     <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <a class="btn btn-danger" href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); this.closest('form').submit();">Quitter</a>
-                    </form>
-                </div>
-            </div>
-        </div>
+    @csrf
+    <a class="btn btn-danger" href="{{ route('logout') }}"
+        onclick="event.preventDefault(); this.closest('form').submit();">Quitter</a>
+    </form>
+    </div>
+    </div>
+    </div>
     </div> --}}
 
     {{-- ---------------------------------------------------------- --}}
