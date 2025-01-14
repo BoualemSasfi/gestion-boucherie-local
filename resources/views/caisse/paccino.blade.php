@@ -372,7 +372,7 @@
                         /* Aligne verticalement au centre */
                         transform: translateY(-50%);
                         /* Centre parfaitement */
-                        z-index: 10;
+                        /* z-index: 10; */
                         /* Assure que les boutons restent au-dessus */
                     }
 
@@ -1745,109 +1745,6 @@
 {{-- ---------------------------------------------------------------------------------------------------- --}}
 
 
-
-{{-- <script>
-        function FiltrageProduits(form) {
-            const id = form.getAttribute('data-id');
-            const nom = form.getAttribute('data-nom');
-
-            const text_id_categorie = document.getElementById('text-id-categorie');
-            text_id_categorie.textContent = id;
-
-            const vente_type = document.getElementById('text-type-vente').textContent;
-
-            if (id !== undefined) {
-                // Ajouté pour exécuter la fonction sans authentification
-                const id_user = document.getElementById('text-id-user').textContent;
-                const id_magasin = document.getElementById('text-id-magasin').textContent;
-                $.ajax({
-                    url: '/caisse/category/' + id + '/user/' + id_user + '/magasin/' + id_magasin,
-                    type: 'GET',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        console.log('PRODUCTS FILTER SUCCESS');
-                        $('#products').empty();
-
-                        // Ajout des produits retournés par l'API
-                        $.each(response.produits, function(key, value) {
-
-                            let prix = 0;
-                            if (vente_type === 'details') prix = value.prix_detail;
-                            else if (vente_type === 'semigros') prix = value.prix_semigros;
-                            else if (vente_type === 'gros') prix = value.prix_gros;
-
-                            $('#products').append(
-                                '<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6 mb-4" data-aos="fade-down">' +
-                                '<div class="card scat">' +
-                                '<form class="affichage-form" data-id_lestock="' + value.id +
-                                '" data-id_produit="' + value.id_produit +
-                                '" data-id_sousproduit="0' +
-                                '" data-nom="' + value.nom + '" data-prix-detail="' + value
-                                .prix_detail + '" data-prix-semigros="' + value.prix_semigros +
-                                '" data-prix-gros="' + value.prix_gros +
-                                '" onclick="Tester_SousProduits(this)" style="cursor: pointer;">' +
-                                '<img src="{{ asset('storage/') }}/' + value.photo +
-'" class="card-img-top" alt="...">' +
-'<div class="card-body p-1 m-0 text-center">' +
-    '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-    '<h5 class="card-text mini-text">' + Math.round(parseFloat(prix)) +
-        ' DA / ' + value.mesure +
-        '</h5>' +
-    '</div>' +
-'</form>' +
-'</div>' +
-'</div>'
-);
-});
-
-$('#products').append(
-'<div class="col-12 zyada" style="height: 100px;"></div>'
-);
-
-// Gestion des classes pour les cartes
-// Supprime "bg-danger" de toutes les cartes et ajoute "bg-white"
-document.querySelectorAll('.card.scat').forEach(card => {
-card.classList.remove('bg-danger');
-card.classList.add('bg-white');
-});
-
-// Ajoute "bg-danger" à la carte contenant le formulaire cliqué
-const card = form.closest('.card');
-if (card) {
-card.classList.add('bg-danger');
-card.classList.remove('bg-white');
-}
-},
-error: function(xhr, status, error) {
-console.error(error);
-}
-});
-} else {
-console.error('ERREUR ID');
-}
-
-if (nom !== undefined) {
-const afficheur_cat = document.getElementById('categorie_text');
-const afficheur_produit = document.getElementById('produit_text');
-const afficheur_prix = document.getElementById('prix_unitaire');
-const afficheur_prix_total = document.getElementById('prix_total');
-const titre_categorie = document.getElementById('titre-categorie');
-
-titre_categorie.textContent = nom;
-afficheur_cat.textContent = nom;
-afficheur_produit.textContent = '----';
-afficheur_prix.textContent = '0.00';
-afficheur_prix_total.textContent = '0.00';
-} else {
-console.error('ERREUR NOM');
-}
-
-console.log('Filtrage Produits exécuté sans authentification');
-}
-</script> --}}
-
 <script>
     function FiltrageProduits(form) {
         try {
@@ -2823,7 +2720,15 @@ console.log('Sub-product test executed');
 
 
         // enlever les classes bg-danger et mètre les classes bg-white
-        document.querySelectorAll('.cat,.scat').forEach(card => {
+        // document.querySelectorAll('.cat,.scat').forEach(card => {
+        //     card.classList.remove('bg-danger', 'text-white'); // Supprime la classe 'bg-danger'
+        //     card.classList.add('bg-white', 'text-gray'); // Ajoute la classe 'bg-white'
+        //     console.log('changement des classes');
+
+        // });
+
+        // enlever les classes bg-danger et mètre les classes bg-white
+        document.querySelectorAll('.scat').forEach(card => {
             card.classList.remove('bg-danger', 'text-white'); // Supprime la classe 'bg-danger'
             card.classList.add('bg-white', 'text-gray'); // Ajoute la classe 'bg-white'
             console.log('changement des classes');
@@ -2843,13 +2748,13 @@ console.log('Sub-product test executed');
         AffichagePrixUnitaire.textContent = "0.00";
         AffichagePrixTotal.textContent = "0.00";
         AffichageFactureTotal.textContent = "0.00";
-        AffichageNomCategorie.textContent = "----";
-        AffichageNomProduit.textContent = "----";
+        // AffichageNomCategorie.textContent = "----";
+        // AffichageNomProduit.textContent = "----";
         // AffichageTitreCategorie.textContent = "";
-        $('#products').empty();
+        // $('#products').empty();
 
-        const TextIdCategorie = document.getElementById('text-id-categorie');
-        TextIdCategorie.textContent = '0';
+        // const TextIdCategorie = document.getElementById('text-id-categorie');
+        // TextIdCategorie.textContent = '0';
 
 
 
@@ -3665,6 +3570,7 @@ console.log('Sub-product test executed');
     // background-color: #09a760;
     // background-color: #ffd500;
     // background-color: #ff2926;
+
     function prix_details() {
         const type_de_vente_variable = document.getElementById('text-type-vente');
         const afficheur_facture = document.querySelector('#facture_afficheur');
@@ -3713,20 +3619,20 @@ console.log('Sub-product test executed');
             affect_type_vente.textContent = 'Vente En Détails';
         }
 
-        $('#products').empty();
+        // $('#products').empty();
 
-        const id = document.getElementById('text-id-categorie').textContent;
-        const formName = 'filter-form';
+        // const id = document.getElementById('text-id-categorie').textContent;
+        // const formName = 'filter-form';
 
-        // Sélection du formulaire avec la classe 'filter-form' et l'attribut data-id égal à id
-        const form = document.querySelector(`.${formName}[data-id="${id}"]`);
+        // // Sélection du formulaire avec la classe 'filter-form' et l'attribut data-id égal à id
+        // const form = document.querySelector(`.${formName}[data-id="${id}"]`);
 
-        if (form) {
-            FiltrageProduits(form);
-            console.log('nouveaux prix affichés');
-        } else {
-            console.error(`Aucun formulaire trouvé avec la classe '${formName}' et data-id='${id}'`);
-        }
+        // if (form && id) {
+        //     FiltrageProduits(form);
+        //     console.log('nouveaux prix affichés');
+        // } else {
+        //     console.error(`Aucun formulaire trouvé avec la classe '${formName}' et data-id='${id}'`);
+        // }
 
         // calculer les ventes avec le nouveau type de vente 
         const IdFacture = document.getElementById('text-id-facture').textContent;
@@ -3742,8 +3648,9 @@ console.log('Sub-product test executed');
                     'content')
             },
             success: function() {
+
                 // Swal.fire({
-                //     title: "Calculs éffectués",
+                //     title: "Nouveaux Prix",
                 //     icon: "success",
                 //     showConfirmButton: false,
                 //     timer: 1500

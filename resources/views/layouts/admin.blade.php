@@ -84,7 +84,7 @@
                 <div class="sidebar-brand-text mx-3">
 
 
-                    Gestion Boucherier</div>
+                    Gestion Boucherie</div>
             </a>
 
             <!-- Divider -->
@@ -237,7 +237,7 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Catégories viande:</h6> -->
                         <a class="collapse-item" href="/admin/category"><i class="fa-solid fa-horse-head fa-lg"></i>
-                            Catétorié</a>
+                            Catégories</a>
                         <a class="collapse-item" href="/admin/produit"><i
                                 class="fa-solid fa-drumstick-bite fa-lg"></i>
                             Produits</a>
