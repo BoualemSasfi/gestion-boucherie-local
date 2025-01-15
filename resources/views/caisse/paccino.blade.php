@@ -330,11 +330,11 @@
     <div class="container-fluid pl-4 pr-4">
         <div class="row le_centre">
             <div class="col-8 pb-4">
-                <div class="container mt-2">
-
-                    <div class="your-carousel-container">
-                        <button id="prev-btn" class="custom-btn">←</button> <!-- Bouton gauche -->
-                        <div class="your-carousel" data-aos="fade-right">
+                <div class="container-fluid mt-2" style="height: 200px;">
+                    <div class="row">
+                        <div class="col-1"><button id="prev-btn" class="custom-btn">←</button> <!-- Bouton gauche --></div>
+                        <div class="col-10" style="padding-left: 10px; padding-right: 10px;">
+                        <div class="your-carousel">
                             @foreach ($categories as $categorie)
                             <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
                                 onclick="FiltrageProduits(this)" style="cursor: pointer;">
@@ -349,40 +349,48 @@
                             </form>
                             @endforeach
                         </div>
-                        <button id="next-btn" class="custom-btn">→</button> <!-- Bouton droit -->
+                        </div>
+                        <div class="col-1"><button id="next-btn" class="custom-btn">→</button> <!-- Bouton droit --></div>
                     </div>
+                    
 
                 </div>
 
 
                 <style>
                     .custom-btn {
-                        background-color: rgba(0, 0, 0, 0.44);
+                        background-color: rgba(1, 1, 1, 0.57);
                         /* Couleur sombre translucide */
                         color: #fff;
                         /* Couleur du texte */
                         border: none;
-                        padding: 10px 15px;
+                        /* padding: 10px 35px; */
                         border-radius: 5px;
-                        font-size: 30px;
+                        font-size: 40px;
                         font-weight: bold;
                         cursor: pointer;
                         position: absolute;
-                        top: 50%;
+                        /* top: 50%; */
+                        height: 180px;
+                        width: 100%;
+                        text-align: center;
+                        align-content: center;
+                        justify-content: center;
                         /* Aligne verticalement au centre */
-                        transform: translateY(-50%);
+                        /* transform: translateY(-50%); */
                         /* Centre parfaitement */
-                        /* z-index: 10; */
+                        /* z-index: 1; */
                         /* Assure que les boutons restent au-dessus */
                     }
 
                     #prev-btn {
-                        left: -50px;
+                        left: 5px;
                         /* Fixe le bouton à gauche du carousel */
+                        /* z-index: 1; */
                     }
 
                     #next-btn {
-                        right: -50px;
+                        right: 5px;
                         /* Fixe le bouton à droite du carousel */
                     }
 
@@ -518,6 +526,7 @@
                                                         <thead>
                                                             <tr>
                                                                 <th>ID</th>
+                                                                <th>Code Barres</th>
                                                                 <th>Client</th>
                                                                 <th>Date et heure</th>
                                                                 <th>Etat</th>
@@ -533,6 +542,7 @@
                                                         <tfoot>
                                                             <tr>
                                                                 <th>ID</th>
+                                                                <th>Code Barres</th>
                                                                 <th>Client</th>
                                                                 <th>Date et heure</th>
                                                                 <th>Etat</th>
@@ -1329,7 +1339,7 @@
     $(document).ready(function() {
         $('.your-carousel').slick({
             slidesToShow: 4,
-            slidesToScroll: 1,
+            slidesToScroll: 4,
             arrows: false, // Désactive les flèches par défaut de Slick.js
             dots: false,
             infinite: true,
@@ -1344,7 +1354,7 @@
                     breakpoint: 1024,
                     settings: {
                         slidesToShow: 4,
-                        slidesToScroll: 1,
+                        slidesToScroll: 4,
                     }
                 }
             ]
@@ -1362,7 +1372,7 @@
 </script>
 
 
-<style>
+<!-- <style>
     .slick-prev,
     .slick-next {
         display: block !important;
@@ -1381,7 +1391,7 @@
         color: white !important;
         /* Couleur du contenu des flèches */
     }
-</style>
+</style> -->
 
 
 
@@ -3441,6 +3451,7 @@ console.log('Sub-product test executed');
                         $('#historique-factures').append(
                             '<tr class="bg-primary text-white">' +
                             '<td>' + facture.id + '</td>' +
+                            '<td>' + facture.code + '</td>' +
                             '<td>' + facture.client + '</td>' +
                             '<td>' + facture.date + '</td>' +
                             '<td>' + facture.etat + '</td>' +
@@ -4110,9 +4121,17 @@ console.log('Sub-product test executed');
 
 <script>
     $(document).ready(function() {
+        const IdMagasin = document.getElementById('text-id-magasin').textContent.trim();
         $('#example1').DataTable({
             // processing: true, // Indique que le traitement est en cours
             serverSide: true, // Active le chargement des données côté serveur
+            ajax: {
+                url: '/historique-factures/' + IdMagasin,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            },
             lengthMenu: [
                 [10, 25, 50, -1],
                 [10, 25, 50, "Tous"]
@@ -4142,6 +4161,15 @@ console.log('Sub-product test executed');
         $('#example2').DataTable({
             // processing: true, // Indique que le traitement est en cours
             serverSide: true, // Active le chargement des données côté serveur
+            ajax: {
+                url: '/liste-clients',
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                        'content') // Assurez-vous que ce meta tag existe dans votre page HTML
+                },
+            },
+
             lengthMenu: [
                 [10, 25, 50, -1],
                 [10, 25, 50, "Tous"]
