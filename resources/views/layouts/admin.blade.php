@@ -22,6 +22,8 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
 
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Inclure SweetAlert2 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
@@ -29,7 +31,7 @@
     <!-- Inclure SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
 
     <!-- Custom styles for this template-->
@@ -37,8 +39,13 @@
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <!-- Lien vers Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Lien vers Bootstrap CSS et JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
     {{-- data tables  --}}
     <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
@@ -47,7 +54,7 @@
     <link href="https://cdn.datatables.net/searchpanes/2.3.3/css/searchPanes.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/staterestore/1.4.1/css/stateRestore.bootstrap5.min.css" rel="stylesheet">
 
-    <!-- Lien vers Bootstrap JS -->
+    <!-- Liens data tables -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -68,7 +75,7 @@
 <body id="page-top">
 
     <!-- Page Wrapper -->
-    <div id="wrapper" >
+    <div id="wrapper">
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-danger sidebar sidebar-dark accordion " id="accordionSidebar">
@@ -1045,9 +1052,9 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    {{--
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- <script src="vendor/jquery/jquery.min.js"></script> -->
+    <!-- <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -1061,18 +1068,12 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
-    ---------------------------------------------------------- --}}
-
-
-
-    {{-- <!-- <script src="{{ asset('js/jquery.js') }}"></script> --> --}}
-
-    {{-- <!-- <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script> --> --}}
 
 
 
 
-    {{-- <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
+
+    <!-- <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script> -->
 
     <!-- Core plugin JavaScript-->
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
