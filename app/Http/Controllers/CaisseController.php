@@ -922,12 +922,13 @@ class CaisseController extends Controller
             $Factures = Facture::join('clients', 'clients.id', '=', 'factures.id_client')
                 ->select(
                     'factures.id as id',
+                    'factures.code_barres as code',
+                    'clients.nom_prenom as client',
                     'factures.created_at as date',
                     'factures.etat_facture as etat',
                     'factures.total_facture as total',
                     'factures.versement as versement',
                     'factures.credit as credit',
-                    'clients.nom_prenom as client'
                 )
                 ->where(function ($query) {
                     // Filtrer les factures dont l'état est soit 'Facture-Payée' soit 'Crédit'
@@ -936,7 +937,7 @@ class CaisseController extends Controller
                 })
                 ->where('total_facture', '!=', 0)  // Filtrer les factures dont le total n'est pas égal à 0
                 ->where('factures.id_magasin', $id_magasin)  // Filtrer par magasin
-                ->whereDate('factures.created_at', '=', $date_courante) // Comparer uniquement la date
+                // ->whereDate('factures.created_at', '=', $date_courante) // Comparer uniquement la date
                 ->orderby('factures.created_at', 'DESC')  // Trier par la date de création (si vous le souhaitez)
                 ->get();
 
