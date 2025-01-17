@@ -5,6 +5,20 @@
 @section('content')
 
 <style>
+    .big-font {
+        font-size: 40px;
+    }
+
+    .medium-font {
+        font-size: 25px;
+    }
+    .boutons-saisie div button{
+        height: 100px;
+        width: 100%;
+    }
+</style>
+
+<style>
     .mini-text {
         white-space: nowrap;
         /* Empêche le retour à la ligne */
@@ -202,6 +216,7 @@
                         saisir le poids
                     </button> --}}
                 <!-- Bouton pour ouvrir le popup -->
+
                 <!-- Popup -->
                 <div class="modal fade" id="kgModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -209,68 +224,65 @@
                             <div class="modal-body">
                                 <h4 class="modal-title" id="">QUANTITE</h4>
                                 <input type="text" id="kgInput" class="form-control" placeholder="0.000"
-                                    style="text-align: center; font-size:26px;" readonly>
-                                <div class="mt-3">
-                                    <div class="row">
+                                    style="text-align: center; font-size:40px;" readonly>
+                                <div class="mt-3" style="font-size: 40px;">
+                                    <div class="row boutons-saisie">
                                         <div class="col-4">
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('1')" style="width:100%;">1</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('4')" style="width:100%;">4</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('7')" style="width:100%;">7</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('0')" style="width:100%;">0</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('1')">1</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('4')">4</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('7')">7</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('0')">0</button>
                                         </div>
                                         <div class="col-4">
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('2')" style="width:100%;">2</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('5')" style="width:100%;">5</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('8')" style="width:100%;">8</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('.')" style="width:100%;">.</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('2')">2</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('5')">5</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('8')">8</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('.')">.</button>
                                         </div>
                                         <div class="col-4">
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('3')" style="width:100%;">3</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('6')" style="width:100%;">6</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('9')" style="width:100%;">9</button>
-                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                onclick="appendValue('00')" style="width:100%;">00</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('3')">3</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('6')">6</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('9')">9</button>
+                                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                onclick="appendValue('00')">00</button>
                                         </div>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="modal-footer m-0 p-2">
-                                {{-- <button type="button" class="btn btn-success" onclick="ValiderQte()"
-                                        style="width:150px;"><i class="bi bi-check-lg"></i><br>Valider</button>
-                                    <button type="button" class="btn btn-danger" onclick="clearInput()"><i class="bi bi-eraser"></i><br>Effacer</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x"></i><br>Fermer</button> --}}
+
                                 <div class="container pl-0">
                                     <div class="row">
                                         <div class="col-4">
-                                            <button type="button" class="btn btn-success" onclick="ValiderQte()"
+                                            <button type="button" class="btn btn-success medium-font" onclick="ValiderQte()"
                                                 style="width: 150px;">
-                                                <i class="bi bi-check-lg"></i><br>Valider
+                                                <i class="fas fa-check fa-lg"></i><br>Valider
                                             </button>
 
                                         </div>
                                         <div class="col-4">
-                                            <button type="button" class="btn btn-danger" onclick="clearInput()"
+                                            <button type="button" class="btn btn-danger medium-font" onclick="clearInput()"
                                                 style="width: 150px;">
-                                                <i class="bi bi-eraser"></i><br>Effacer
+                                                <i class="fas fa-eraser fa-lg"></i><br>Effacer
                                             </button>
 
                                         </div>
                                         <div class="col-4">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                            <button type="button" class="btn btn-secondary medium-font" data-bs-dismiss="modal"
                                                 style="width: 150px;">
-                                                <i class="bi bi-x"></i><br>Fermer
+                                                <i class="fas fa-times fa-lg"></i><br>Fermer
                                             </button>
 
                                         </div>
@@ -333,8 +345,8 @@
                 <div class="container-fluid mt-2" style="height: 200px;">
                     <div class="row">
                         <div class="col-1"><button id="prev-btn" class="custom-btn">←</button> <!-- Bouton gauche --></div>
-                        <div class="col-10" style="padding-left: 10px; padding-right: 10px;">
-                        <div class="your-carousel">
+                        <div class="col-10 your-carousel">
+                            <!-- <div class=""> -->
                             @foreach ($categories as $categorie)
                             <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
                                 onclick="FiltrageProduits(this)" style="cursor: pointer;">
@@ -348,11 +360,11 @@
                                 </div>
                             </form>
                             @endforeach
-                        </div>
+                            <!-- </div> -->
                         </div>
                         <div class="col-1"><button id="next-btn" class="custom-btn">→</button> <!-- Bouton droit --></div>
                     </div>
-                    
+
 
                 </div>
 
@@ -398,11 +410,6 @@
                         background-color: #0056b3;
                         /* Couleur au survol */
                     }
-
-                    .your-carousel-container {
-                        position: relative;
-                        /* Nécessaire pour positionner les boutons relativement au carousel */
-                    }
                 </style>
 
 
@@ -410,9 +417,9 @@
 
                 <hr class="p-0 mb-0 mt-2">
 
-                <div class="container" style="height: 70%;padding-top:20px;">
+                <div class="container-fluid" style="height: 80%;padding-top:20px;">
                     {{-- <h6 id="titre-categorie" class="p-0 m-0"></h6> --}}
-                    <div class="row" id="products" style="">
+                    <div class="row" id="products" style="max-height: 600px; overflow-y: scroll;">
                         <!-- Les produits filtrés apparaîtront ici -->
                     </div>
                 </div>
@@ -421,7 +428,7 @@
             </div>
 
             <!-- Facture -->
-            <div class="col-4 bg-dark p-0 m-0">
+            <div class="col-4 bg-dark p-0 m-0" style="position: absolute; height:100vh; right:0;">
 
                 {{-- stockage variable  --}}
                 <a href="" style="color: aliceblue; display: none;">USER / FACTURE / MAGASIN / CAISSE</a>
@@ -436,7 +443,7 @@
                 {{-- -------------------------------------------- --}}
                 {{-- stockage variable  --}}
 
-                <div class="card shadow m-2" style="height:80vh;" data-aos="flip-left">
+                <div class="card shadow m-2" style="height: 85%" data-aos="flip-left">
                     <div class="card-header py-1">
                         <div class="row afficheur text-center" style="height: 110px;" id="facture_afficheur">
 
@@ -487,6 +494,23 @@
             <div class="row align-content-center m-0 p-0">
                 <div class="col-6">
                     <div class="row bouton-action">
+
+
+
+
+                        <div class="col-3">
+                            <button class="btn btn-dark bouton-caisse" type="button" onclick="ActualiserPage()">
+                                <i class="fas fa-sync-alt fa-lg"></i>
+                                <br>Refresh
+                            </button>
+                        </div>
+
+                        <script>
+                            function ActualiserPage() {
+                                // Actualise la page actuelle
+                                location.reload();
+                            }
+                        </script>
 
                         <div class="col-3">
                             <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
@@ -642,9 +666,9 @@
                                                 <div class="row">
                                                     <div class="col-12">
 
-                                                        <button type="button" class="btn btn-secondary"
+                                                        <button type="button" class="btn btn-secondary  medium-font"
                                                             data-bs-dismiss="modal" style="width: 150px;">
-                                                            <i class="bi bi-x"></i><br>Fermer
+                                                            <i class="fas fa-times fa-lg"></i><br>Fermer
                                                         </button>
 
                                                     </div>
@@ -663,8 +687,8 @@
                                     <div class="modal-content">
                                         <!-- En-tête du modal -->
                                         {{-- <div class="modal-header">
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         <h4 class="modal-title" id="FactureModalLabel">BLABLABLABLABLA :</h4>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div> --}}
                                         <!-- Corps du modal -->
                                         <div class="modal-body">
@@ -683,53 +707,41 @@
                                                         <label for="MontantVersementInput">Montant Versé :</label>
                                                         <input type="text" id="MontantVersementInput"
                                                             class="form-control" placeholder="0.00"
-                                                            style="text-align: center; font-size:26px;" readonly>
+                                                            style="text-align: center; font-size:40px;" readonly>
 
                                                     </div>
 
                                                 </div>
-                                                <div class="row mt-3">
+                                                <div class="row mt-3 boutons-saisie">
                                                     <div class="col-4 h-100">
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('1')"
-                                                            style="width:100%;">1</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('4')"
-                                                            style="width:100%;">4</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('7')"
-                                                            style="width:100%;">7</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('0')"
-                                                            style="width:100%;">0</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('1')">1</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('4')">4</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('7')">7</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('0')">0</button>
                                                     </div>
                                                     <div class="col-4 h-100">
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('2')"
-                                                            style="width:100%;">2</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('5')"
-                                                            style="width:100%;">5</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('8')"
-                                                            style="width:100%;">8</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('00')"
-                                                            style="width:100%;">00</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('2')">2</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('5')">5</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('8')">8</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('00')">00</button>
                                                     </div>
                                                     <div class="col-4 h-100">
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('3')"
-                                                            style="width:100%;">3</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('6')"
-                                                            style="width:100%;">6</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('9')"
-                                                            style="width:100%;">9</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="VersementAppendValue('000')"
-                                                            style="width:100%;">000</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('3')">3</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('6')">6</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('9')">9</button>
+                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="VersementAppendValue('000')">000</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -741,26 +753,37 @@
                                             <div class="container pl-0">
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <button type="button" class="btn btn-success"
+                                                        <button type="button" class="btn btn-success medium-font"
                                                             onclick="ValiderVersementCredit()" style="width: 150px;">
-                                                            <i class="bi bi-check-lg"></i><br>Valider
+                                                            <i class="fas fa-check fa-lg"></i><br>Valider
                                                         </button>
 
                                                     </div>
                                                     <div class="col-4">
-                                                        <button type="button" class="btn btn-danger"
+                                                        <button type="button" class="btn btn-danger medium-font"
                                                             onclick="ClearVersementInput()" style="width: 150px;">
-                                                            <i class="bi bi-eraser"></i><br>Effacer
+                                                            <i class="fas fa-eraser fa-lg"></i><br>Effacer
                                                         </button>
 
                                                     </div>
-                                                    <div class="col-4">
-                                                        <button type="button" class="btn btn-secondary"
-                                                            data-bs-dismiss="modal" style="width: 150px;">
+                                                    <!-- <div class="col-4">
+                                                        <button type="button" class="btn btn-secondary" style="width: 150px;" onclick="fermerDeuxiemePopup()">
                                                             <i class="bi bi-x"></i><br>Fermer
                                                         </button>
-
+                                                        <script>
+                                                            function fermerDeuxiemePopup() {
+                                                                // Ferme le modal en utilisant jQuery
+                                                                $('#CreditModal').modal('hide');
+                                                            }
+                                                        </script>
+                                                    </div> -->
+                                                    <div class="col-4">
+                                                        <button type="button" class="btn btn-secondary medium-font" data-bs-dismiss="modal" style="width: 150px;">
+                                                        <i class="fas fa-times fa-lg"></i><br>Fermer
+                                                        </button>
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -773,6 +796,14 @@
 
                         </div>
 
+
+
+                    </div>
+                </div>
+
+                <div class="col-6">
+
+                    <div class="row bouton-action">
 
                         <div class="col-3">
                             <div class="dropdown">
@@ -806,6 +837,7 @@
                                 </ul>
                             </div>
                         </div>
+
 
 
                         <script>
@@ -889,12 +921,7 @@
 
 
 
-                    </div>
-                </div>
 
-                <div class="col-6">
-
-                    <div class="row bouton-action">
 
 
 
@@ -980,7 +1007,7 @@
 
                         {{-- -------------------------------------------- --}}
                         @if ($btn_enc == '1')
-                        <div class="col-6">
+                        <div class="col-3">
                             {{-- Bouton pour afficher le popup --}}
                             <button class="btn btn-success bouton-caisse" type="button" data-bs-toggle="modal"
                                 data-bs-target="#FactureModal" id="bouton_encaisser"
@@ -1041,94 +1068,77 @@
                                                             style="text-align: center; font-size:26px;" readonly>
                                                     </div>
                                                 </div>
-                                                <div class="row mt-3">
+                                                <div class="row mt-3 boutons-saisie">
                                                     <div class="col-4 h-100">
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('1')"
-                                                            style="width:100%;">1</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('1')">1</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('4')"
-                                                            style="width:100%;">4</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('4')">4</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('7')"
-                                                            style="width:100%;">7</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('7')">7</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('0')"
-                                                            style="width:100%;">0</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('0')">0</button>
                                                     </div>
                                                     <div class="col-4 h-100">
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('2')"
-                                                            style="width:100%;">2</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('2')">2</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('5')"
-                                                            style="width:100%;">5</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('5')">5</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('8')"
-                                                            style="width:100%;">8</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('8')">8</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('00')"
-                                                            style="width:100%;">00</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('00')">00</button>
                                                     </div>
                                                     <div class="col-4 h-100">
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('3')"
-                                                            style="width:100%;">3</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('3')">3</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('6')"
-                                                            style="width:100%;">6</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('6')">6</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('9')"
-                                                            style="width:100%;">9</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('9')">9</button>
                                                         <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                                            onclick="FactureAppendValue('000')"
-                                                            style="width:100%;">000</button>
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                            onclick="FactureAppendValue('000')">000</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <!-- Pied du modal -->
-                                        {{-- <div class="modal-footer text-center align-content-center justify-content-center">
-                                                <button type="button" class="btn btn-success" onclick="ValiderFacture()"
-                                                    style="">Valider</button>
-                                                <button type="button" class="btn btn-danger" onclick="clearTotalInput()">Effacer</button>
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                            </div> --}}
+                                        
 
                                         <div class="modal-footer m-0 p-2">
                                             <div class="container pl-0">
                                                 <div class="row">
                                                     <div class="col-4">
-                                                        <button type="button" class="btn btn-success"
+                                                        <button type="button" class="btn btn-success medium-font"
                                                             onclick="ValiderFacture()" style="width: 150px;">
-                                                            <i class="bi bi-check-lg"></i><br>Valider
+                                                            <i class="fas fa-check fa-lg"></i><br>Valider
                                                         </button>
 
                                                     </div>
                                                     <div class="col-4">
-                                                        <button type="button" class="btn btn-danger"
+                                                        <button type="button" class="btn btn-danger medium-font"
                                                             onclick="ClearTotalInput()" style="width: 150px;">
-                                                            <i class="bi bi-eraser"></i><br>Effacer
+                                                            <i class="fas fa-eraser fa-lg"></i><br>Effacer
                                                         </button>
 
                                                     </div>
                                                     <div class="col-4">
-                                                        <button type="button" class="btn btn-secondary"
+                                                        <button type="button" class="btn btn-secondary medium-font"
                                                             data-bs-dismiss="modal" style="width: 150px;">
-                                                            <i class="bi bi-x"></i><br>Fermer
+                                                            <i class="fas fa-times fa-lg"></i><br>Fermer
                                                         </button>
 
                                                     </div>
@@ -1209,44 +1219,44 @@
                             <div class="input-group mb-3 mt-3">
                                 <span class="input-group-text" id="inputGroup-sizing-lg">Prix Total :</span>
                                 <input type="number" id="PriceInput" class="form-control" placeholder="0.00"
-                                    style="text-align: center; font-size:26px;" inputmode="decimal" aria-label=""
+                                    style="text-align: center; font-size:40px;" inputmode="decimal" aria-label=""
                                     value="" aria-describedby="inputGroup-sizing-lg" readonly>
                             </div>
                             {{-- <label for="versementInput">Prix Total :</label>
                                 <input type="number" id="TotalInput" class="form-control" placeholder="0.00"
-                                    style="text-align: center; font-size:26px;" inputmode="decimal" readonly> --}}
+                                    style="text-align: center; font-size:40px;" inputmode="decimal" readonly> --}}
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    <div class="row mt-3 boutons-saisie">
                         <div class="col-4 h-100">
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('1')" style="width:100%;">1</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('4')" style="width:100%;">4</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('7')" style="width:100%;">7</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('0')" style="width:100%;">0</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('1')">1</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('4')">4</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('7')">7</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('0')">0</button>
                         </div>
                         <div class="col-4 h-100">
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('2')" style="width:100%;">2</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('5')" style="width:100%;">5</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('8')" style="width:100%;">8</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('00')" style="width:100%;">00</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('2')">2</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('5')">5</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('8')">8</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('00')">00</button>
                         </div>
                         <div class="col-4 h-100">
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('3')" style="width:100%;">3</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('6')" style="width:100%;">6</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('9')" style="width:100%;">9</button>
-                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold"
-                                onclick="PrixAppendValue('000')" style="width:100%;">000</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('3')">3</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('6')">6</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('9')">9</button>
+                            <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                onclick="PrixAppendValue('000')">000</button>
                         </div>
                     </div>
                 </div>
@@ -1259,23 +1269,23 @@
 
                         <div class="col-4">
                             <form class="" data-id=""></form>
-                            <button type="button" class="btn btn-success" onclick="ValiderPrixProduit()"
+                            <button type="button" class="btn btn-success medium-font" onclick="ValiderPrixProduit()"
                                 style="width: 150px;">
-                                <i class="bi bi-check-lg"></i><br>Valider
+                                <i class="fas fa-check fa-lg"></i><br>Valider
                             </button>
 
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-danger" onclick="ClearPrixInput()"
+                            <button type="button" class="btn btn-danger medium-font" onclick="ClearPrixInput()"
                                 style="width: 150px;">
-                                <i class="bi bi-eraser"></i><br>Effacer
+                                <i class="fas fa-eraser fa-lg"></i><br>Effacer
                             </button>
 
                         </div>
                         <div class="col-4">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                            <button type="button" class="btn btn-secondary medium-font" data-bs-dismiss="modal"
                                 style="width: 150px;">
-                                <i class="bi bi-x"></i><br>Fermer
+                                <i class="fas fa-times fa-lg"></i><br>Fermer
                             </button>
 
                         </div>
@@ -1338,27 +1348,40 @@
 <script>
     $(document).ready(function() {
         $('.your-carousel').slick({
-            slidesToShow: 4,
-            slidesToScroll: 4,
-            arrows: false, // Désactive les flèches par défaut de Slick.js
-            dots: false,
-            infinite: true,
+            slidesToShow: 4, // Affiche 4 diapositives à la fois sur les grands écrans
+            slidesToScroll: 1, // Défile 1 diapositive à la fois
+            arrows: false, // Ajoute des flèches de navigation
+            dots: true, // Ajoute des points de pagination
+            infinite: false, // Permet une navigation infinie
+            speed: 300, // Durée de la transition
             responsive: [{
-                    breakpoint: 768,
+                    breakpoint: 1024, // Pour les tablettes et les petits ordinateurs
                     settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 1,
+                        slidesToShow: 3, // Affiche 3 diapositives à la fois
+                        slidesToScroll: 1, // Défile 1 diapositive à la fois
+                        dots: true, // Points de pagination
                     }
                 },
                 {
-                    breakpoint: 1024,
+                    breakpoint: 768, // Pour les tablettes et les petits appareils
                     settings: {
-                        slidesToShow: 4,
-                        slidesToScroll: 4,
+                        slidesToShow: 2, // Affiche 2 diapositives à la fois
+                        slidesToScroll: 1, // Défile 1 diapositive à la fois
+                        dots: true, // Points de pagination
+                    }
+                },
+                {
+                    breakpoint: 480, // Pour les mobiles
+                    settings: {
+                        slidesToShow: 1, // Affiche 1 diapositive à la fois
+                        slidesToScroll: 1, // Défile 1 diapositive à la fois
+                        dots: true, // Points de pagination
                     }
                 }
             ]
         });
+
+
 
         // Gestion des boutons personnalisés
         $('#prev-btn').on('click', function() {
@@ -1810,7 +1833,7 @@
                         else if (vente_type === 'gros') prix = value.prix_gros;
 
                         productsContainer.append(`
-                                <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6   mt-2 mb-2 pr-2 pl-2">
+                                <div class="col-lg-3 col-md-3 col-sm-4 col-xs-6   mt-2 mb-2 pr-2 pl-2">
                                     <div class="card scat">
                                         <form class="affichage-form"
                                             data-id_lestock="${value.id}"
@@ -3380,7 +3403,7 @@ console.log('Sub-product test executed');
 
                         // Ajouter une nouvelle ligne pour chaque client
                         let clientRow =
-                            '<tr class="bg-white" style="border-bottom: 5px solid #252525;">' +
+                            '<tr class="bg-white" style="border-bottom: 5px solid #252525; height:75px;">' +
                             '<td>' + (client.id || '') + '</td>' +
                             '<td>' + (client.nom || '') + '</td>' +
                             '<td>' + (client.adresse || '') + '</td>' +
@@ -4040,8 +4063,12 @@ console.log('Sub-product test executed');
             input_montant.value = "";
 
             // Initialiser le modal Bootstrap et l'afficher
-            const CreditModal = new bootstrap.Modal(document.getElementById('CreditModal'));
-            CreditModal.show();
+            // const CreditModal = new bootstrap.Modal(document.getElementById('CreditModal'));
+            // CreditModal.show();
+
+            $('#CreditModal').modal('show');
+
+
         } else {
             // Message d'erreur si les éléments sont introuvables
             console.error("L'élément avec l'ID 'credit_id_client' ou 'credit_nom_client' est introuvable.");

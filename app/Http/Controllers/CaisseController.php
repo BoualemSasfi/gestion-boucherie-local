@@ -70,9 +70,11 @@ class CaisseController extends Controller
                     DB::raw('MIN(lestocks.id) as id_lestock'),  // Obtenir la valeur minimum de id_lestock
                     'lestocks.categorie_id as id',               // Grouper par categorie_id (alias id)
                     DB::raw('MIN(categories.nom) as nom'),       // Utiliser MIN() ou MAX() pour les autres colonnes
-                    DB::raw('MIN(categories.photo) as photo')
+                    DB::raw('MIN(categories.photo) as photo'),
+                    'categories.nombre as nombre'
                 )
                 ->groupBy('id')  // Grouper par categorie_id (alias id)
+                ->orderBy('categories.nombre','ASC')
                 ->get();
 
             $NouvelleFacture = $this->Nouvelle_Facture_Vide($IdMagasin, $IdUser, $IdCaisse);
@@ -129,9 +131,11 @@ class CaisseController extends Controller
                     'produits.nom_pr as nom',
                     'produits.photo_pr as photo',
                     'produits.prix_vente as prix',
-                    'produits.unite_mesure as mesure'
+                    'produits.unite_mesure as mesure',
+                    'produits.nombre as nombre'
                 )
                 ->where('lestocks.stock_id', $IdStock)->where('lestocks.categorie_id', $CategoryId)
+                ->orderby('nombre','ASC')
                 ->get();
 
             if ($produits->isEmpty()) {
@@ -172,10 +176,12 @@ class CaisseController extends Controller
                     'produits.prix_vente as prix_detail',
                     'produits.semi_gros as prix_semigros',
                     'produits.gros as prix_gros',
-                    'produits.unite_mesure as mesure'
+                    'produits.unite_mesure as mesure',
+                    'produits.nombre as nombre'
                 )
                 ->where('lestocks.stock_id', $IdStock)
                 ->where('lestocks.categorie_id', $id_categorie)
+                ->orderby('nombre','ASC')
                 ->get();
 
             if ($produits->isEmpty()) {
