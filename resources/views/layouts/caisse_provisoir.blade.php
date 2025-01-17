@@ -123,10 +123,10 @@
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-1 static-top shadow"
-                    style="height: 44px !important;">
+                    style="height: 30px !important;">
 
 
-                    <div class="nav-item" style="">
+                    <!-- <div class="nav-item" style="">
                         <button class="btn btn-primary" onclick="ActualiserPage()"
                             style="height: 100%;margin-left:20px;"><i class="bi bi-arrow-clockwise mr-2"></i>Refresh</button>
                     </div>
@@ -136,7 +136,7 @@
                             // Actualise la page actuelle
                             location.reload();
                         }
-                    </script>
+                    </script> -->
 
                     {{-- <div class="nav-item" style="">
                         <button class="btn btn-success" onclick="OpenCashDrawer()"
