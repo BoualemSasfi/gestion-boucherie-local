@@ -290,7 +290,7 @@
 
         </div>
         <br>
-        Encaisé par : {{$user->name}}
+        Encaissé par : {{$user->name}}
     </div>
 
 
