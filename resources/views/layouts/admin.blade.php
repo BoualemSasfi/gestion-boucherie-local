@@ -47,7 +47,7 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 
-    {{-- data tables  --}}
+    {{-- data tables --}}
     <link href="https://cdn.datatables.net/2.1.8/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/responsive/3.0.3/css/responsive.bootstrap5.min.css" rel="stylesheet">
@@ -211,8 +211,7 @@
                     <i class="fa-solid fa-cash-register fa-lg"></i>
                     <span>Caisses</span>
                 </a>
-                <div id="collapse19" class="collapse" aria-labelledby="heading19    "
-                    data-parent="#accordionSidebar">
+                <div id="collapse19" class="collapse" aria-labelledby="heading19    " data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Gestion des Caisses</h6> -->
                         <a class="collapse-item" href="/admin/caisse"><i class="fa-solid fa-rectangle-list fa-lg"
@@ -245,9 +244,8 @@
                         <!-- <h6 class="collapse-header">Catégories viande:</h6> -->
                         <a class="collapse-item" href="/admin/category"><i class="fa-solid fa-horse-head fa-lg"></i>
                             Catégories</a>
-                        <a class="collapse-item" href="/admin/produit"><i
-                                class="fa-solid fa-drumstick-bite fa-lg"></i>
-                            Produits</a>
+                        <!-- <a class="collapse-item" href="/admin/produit"><i class="fa-solid fa-drumstick-bite fa-lg"></i>
+                            Produits</a> -->
                     </div>
                 </div>
             </li>
@@ -493,8 +491,8 @@
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Recherche..." aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Recherche..."
+                                aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
                                 <button class="btn btn-danger" type="button">
                                     <i class="fas fa-search fa-sm"></i>
@@ -667,8 +665,7 @@
                                     Activity Log
                                 </a> --}}
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="" data-toggle="modal"
-                                    data-target="#logoutModal">
+                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Déconnecter
                                 </a>
@@ -682,9 +679,9 @@
                     <!-- Page Heading -->
                     {{-- <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Dashboard</h1> --}}
-                    {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        {{-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generate Report</a> --}}
-                    {{--
+                        {{--
                     </div> --}}
                     <div class="row">
                         {{-- Contenu de la page --}}
