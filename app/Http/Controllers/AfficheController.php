@@ -79,7 +79,8 @@ class AfficheController extends Controller
             $btn_enc = $caisse->btn_enc;
 
 
-            return view('caisse.paccino', [
+            // return view('caisse.paccino', [
+            return view('caisse.copie.paccino', [
                 'categories' => $categories,
                 'magasin' => $magasin,
                 'produits' => $LesStocks,
