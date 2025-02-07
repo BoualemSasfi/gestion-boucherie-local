@@ -304,7 +304,7 @@
                 <h6 class="afficheur-titre">PRIX TOTAL:</h6>
                 <p class="digital" id="prix_total" style="margin-top:-20px;">0.00</p>
             </div>
-            <div class="col-1 mt-3 pl-0">
+            <div class="col-1 mt-3 p-0">
 
                 {{-- pour le produit selectionné --}}
                 <a id="text-id-lestock" href="" style="display: none;"></a>

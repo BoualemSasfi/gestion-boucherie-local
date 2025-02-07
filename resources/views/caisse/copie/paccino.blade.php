@@ -313,7 +313,7 @@
                 {{-- pour le produit selectionné --}}
 
                 <form class="valider-vente-form" data-id_facture="{{ $LastFacture->id }}" data-id_user={{ $id_user }}>
-                    <button class="btn btn-success pt-3 pb-3" style="color: white;" onclick="ValiderVente(this)"
+                    <button class="btn btn-success pt-3 pb-3" style="color: white;width:100%;height:100%;" onclick="ValiderVente(this)"
                         type="button">
                         <i class="fas fa-check-circle fa-lg"></i>
                         <br>Valider
