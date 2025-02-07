@@ -358,9 +358,13 @@ Route::controller(VenteController::class)->group(function () {
 // ---------               calculs                                 ----------
 // -------------------------------------------------------------------------
 Route::controller(CalculsController::class)->group(function () {
-    Route::get('admin/calculs', 'index');
-    Route::get('/admin/calculs/{id_magasin}/voir', 'voir');
-    Route::get('/admin/calculs/{id_calculs_transfert}/list', 'filtrage_calculs_list');
+    //stock
+    Route::get('admin/calculs/stock', 'ListeMag1');
+    Route::get('/admin/calculs/{id_magasin}/stock/voir', 'VoirStock');
+    Route::get('/admin/calculs/stock/{magasin_id}/{date1}/{date2}/{filterCase}', 'VoirStockFiltre');
+    
+    Route::get('/admin/calculs/categories', 'VoirCategories');
+    Route::get('/admin/calculs/categories/{date1}/{date2}/{filterCase}', 'VoirCategoriesFiltre');
 });
 
 

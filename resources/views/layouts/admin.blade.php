@@ -30,6 +30,7 @@
 
     <!-- Inclure SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @include('sweetalert::alert')
 
 
 
@@ -385,7 +386,10 @@
                 <div id="collapse8" class="collapse" aria-labelledby="heading8" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Calculs</h6>
-                        <a class="collapse-item" href="/admin/calculs">Par Magasin</a>
+                        <a class="collapse-item" href="#"><small>Statistiques</small></a>
+                        <a class="collapse-item" href="/admin/calculs/categories"><small>Calculs des Ventes Par Catégories</small></a>
+                        <a class="collapse-item" href="#"><small>Calculs des Ventes Par Magasin</small></a>
+                        <a class="collapse-item" href="/admin/calculs/stock"><small>Calculs de Stock Par Magasin</small></a>
                     </div>
                 </div>
             </li>
