@@ -5,7 +5,7 @@
     <div class="container" id="titre-page">
         <div class="row">
             <div class="col-2 d-flex align-items-center">
-                <a href="{{ url('/admin/') }}" class="btn btn-dark"><i class="bi bi-house"></i><span
+                <a href="{{ url('/admin/') }}" class="btn btn-dark"><i class="bi bi-house pr-2"></i><span
                         class="btn-description">Acceuil</span></a>
             </div>
             <div class="col-8 text-center">
@@ -129,7 +129,7 @@
                                                     <div class="col-12">
                                                         {{-- show button    --}}
                                                         <form class="show-form"
-                                                            action="{{ url('/admin/calculs/' . $magasin->id . '/voir') }}"
+                                                            action="{{ url('/admin/calculs/' . $magasin->id . '/stock/voir') }}"
                                                             method="GET">
                                                             @csrf
                                                             <button type="submit"

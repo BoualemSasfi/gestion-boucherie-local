@@ -51,5 +51,18 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('LastFacture', $LastFacture);
         });
+
+        View::composer('caisse.copie.paccino', function ($view) {
+            // Récupérer id_magasin depuis l'URL
+            $id_magasin = Request::route('id_magasin');
+            $id_caisse = Request::route('id_caisse');
+
+            $IdUser = 0;
+            $IdMagasin = $id_magasin;
+            $IdCaisse = $id_caisse;
+            $LastFacture = app('App\Http\Controllers\AfficheController')->Get_Last_Facture($IdMagasin, $IdUser, $IdCaisse);
+
+            $view->with('LastFacture', $LastFacture);
+        });
     }
 }
