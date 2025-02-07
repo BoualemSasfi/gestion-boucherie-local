@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="col-3 align-content-center">
-                    <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
+                    <h6 class="afficheur-titre">PRIX UNITAIRE: </h6>
                     <p class="digital" id="prix_unitaire">0.00</p>
                 </div>
                 <div class="col-3 align-content-center">

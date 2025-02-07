@@ -12,7 +12,8 @@
     .medium-font {
         font-size: 25px;
     }
-    .boutons-saisie div button{
+
+    .boutons-saisie div button {
         height: 100px;
         width: 100%;
     }
@@ -37,7 +38,7 @@
         height: 90px;
     }
 </style>
-{{-- css pour les poppup  --}}
+{{-- css pour les poppup --}}
 <style>
     .modal {
         z-index: 1050 !important;
@@ -167,11 +168,11 @@
 </style>
 
 {{-- <style>
-        #ventes_liste{
-            max-height: 300px;
-            overflow-y: auto;
-        }
-    </style> --}}
+    #ventes_liste {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+</style> --}}
 
 {{-- ---------------------------------------------------------------------------------------------------- --}}
 <!-- AFFICHEUR -->
@@ -180,15 +181,15 @@
     {{-- <input type="text" id="port" value="COM1" style="display:none;"> --}}
 
     {{-- <div class="container">
-            <div class="row">
-                <div class="col-12 mb-6"></div>
-                <!-- Input pour le port COM -->
-            
-            
-                <!-- Bouton de connexion -->
-                <button id="connectButton" >Connecter au Port Série</button>
-            </div>
-        </div> --}}
+        <div class="row">
+            <div class="col-12 mb-6"></div>
+            <!-- Input pour le port COM -->
+
+
+            <!-- Bouton de connexion -->
+            <button id="connectButton">Connecter au Port Série</button>
+        </div>
+    </div> --}}
 
     <div class="container-fluid">
         <div class="row afficheur text-center pt-1 pb-1 pr-0 pl-0 mt-1 mb-1">
@@ -212,9 +213,9 @@
 
                 <!-- Bouton pour ouvrir le popup -->
                 {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kgModal"
-                        id="bouton_quantite" style="margin-top:-60px; display:block;">
-                        saisir le poids
-                    </button> --}}
+                    id="bouton_quantite" style="margin-top:-60px; display:block;">
+                    saisir le poids
+                </button> --}}
                 <!-- Bouton pour ouvrir le popup -->
 
                 <!-- Popup -->
@@ -266,22 +267,22 @@
                                 <div class="container pl-0">
                                     <div class="row">
                                         <div class="col-4">
-                                            <button type="button" class="btn btn-success medium-font" onclick="ValiderQte()"
-                                                style="width: 150px;">
+                                            <button type="button" class="btn btn-success medium-font"
+                                                onclick="ValiderQte()" style="width: 150px;">
                                                 <i class="fas fa-check fa-lg"></i><br>Valider
                                             </button>
 
                                         </div>
                                         <div class="col-4">
-                                            <button type="button" class="btn btn-danger medium-font" onclick="clearInput()"
-                                                style="width: 150px;">
+                                            <button type="button" class="btn btn-danger medium-font"
+                                                onclick="clearInput()" style="width: 150px;">
                                                 <i class="fas fa-eraser fa-lg"></i><br>Effacer
                                             </button>
 
                                         </div>
                                         <div class="col-4">
-                                            <button type="button" class="btn btn-secondary medium-font" data-bs-dismiss="modal"
-                                                style="width: 150px;">
+                                            <button type="button" class="btn btn-secondary medium-font"
+                                                data-bs-dismiss="modal" style="width: 150px;">
                                                 <i class="fas fa-times fa-lg"></i><br>Fermer
                                             </button>
 
@@ -296,7 +297,7 @@
 
             </div>
             <div class="col-3 align-content-center">
-                <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
+                <h6 class="afficheur-titre">PRIX UNITAIRE: </h6>
                 <p class="digital" id="prix_unitaire" style="margin-top:-20px;">0.00</p>
             </div>
             <div class="col-3 align-content-center">
@@ -305,14 +306,13 @@
             </div>
             <div class="col-1 mt-3 pl-0">
 
-                {{-- pour le produit selectionné  --}}
+                {{-- pour le produit selectionné --}}
                 <a id="text-id-lestock" href="" style="display: none;"></a>
                 <a id="text-id-produit" href="" style="display: none;"></a>
                 <a id="text-id-sousproduit" href="" style="display: none;"></a>
-                {{-- pour le produit selectionné  --}}
+                {{-- pour le produit selectionné --}}
 
-                <form class="valider-vente-form" data-id_facture="{{ $LastFacture->id }}"
-                    data-id_user={{ $id_user }}>
+                <form class="valider-vente-form" data-id_facture="{{ $LastFacture->id }}" data-id_user={{ $id_user }}>
                     <button class="btn btn-success pt-3 pb-3" style="color: white;" onclick="ValiderVente(this)"
                         type="button">
                         <i class="fas fa-check-circle fa-lg"></i>
@@ -344,25 +344,28 @@
             <div class="col-8 pb-4">
                 <div class="container-fluid mt-2" style="height: 200px;">
                     <div class="row">
-                        <div class="col-1"><button id="prev-btn" class="custom-btn">←</button> <!-- Bouton gauche --></div>
+                        <div class="col-1"><button id="prev-btn" class="custom-btn">←</button> <!-- Bouton gauche -->
+                        </div>
                         <div class="col-10 your-carousel">
                             <!-- <div class=""> -->
                             @foreach ($categories as $categorie)
-                            <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
-                                onclick="FiltrageProduits(this)" style="cursor: pointer;">
-                                <div class="card cat" style="width: 180px; height: 180px;">
-                                    <img src="{{ asset('storage/' . $categorie->photo) }}" class="card-img-top"
-                                        alt="..." style="width: 180px; height: 130px;">
-                                    <div class="card-body" style="width: 180px; height: 40px;">
-                                        <h5 class="card-title mini-text text-center fw-bold"
-                                            style="margin-top:-10px;">{{ $categorie->nom }}</h5>
+                                <form class="filter-form" data-id="{{ $categorie->id }}" data-nom="{{ $categorie->nom }}"
+                                    onclick="FiltrageProduits(this)" style="cursor: pointer;">
+                                    <div class="card cat" style="width: 180px; height: 180px;">
+                                        <img src="{{ asset('storage/' . $categorie->photo) }}" class="card-img-top"
+                                            alt="..." style="width: 180px; height: 130px;">
+                                        <div class="card-body" style="width: 180px; height: 40px;">
+                                            <h5 class="card-title mini-text text-center fw-bold" style="margin-top:-10px;">
+                                                {{ $categorie->nom }}
+                                            </h5>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
                             @endforeach
                             <!-- </div> -->
                         </div>
-                        <div class="col-1"><button id="next-btn" class="custom-btn">→</button> <!-- Bouton droit --></div>
+                        <div class="col-1"><button id="next-btn" class="custom-btn">→</button> <!-- Bouton droit -->
+                        </div>
                     </div>
 
 
@@ -430,7 +433,7 @@
             <!-- Facture -->
             <div class="col-4 bg-dark p-0 m-0" style="position: absolute; height:100vh; right:0;">
 
-                {{-- stockage variable  --}}
+                {{-- stockage variable --}}
                 <a href="" style="color: aliceblue; display: none;">USER / FACTURE / MAGASIN / CAISSE</a>
                 <a id="text-id-user" href="" style="display: none;">{{ $id_user }}</a>
                 <a id="text-id-facture" href="" style="display: none;">{{ $LastFacture->id }}</a>
@@ -441,7 +444,7 @@
                 <a id="text-id-categorie" href="" style="display: none;">0</a>
                 <a id="text-type-vente" href="" style="display: none;">details</a>
                 {{-- -------------------------------------------- --}}
-                {{-- stockage variable  --}}
+                {{-- stockage variable --}}
 
                 <div class="card shadow m-2" style="height: 85%" data-aos="flip-left">
                     <div class="card-header py-1">
@@ -499,18 +502,60 @@
 
 
                         <div class="col-3">
-                            <button class="btn btn-dark bouton-caisse" type="button" onclick="ActualiserPage()">
+                            <!-- <button class="btn btn-danger bouton-caisse" id="sync-button" type="button"
+                                onclick="ActualiserPage()">
                                 <i class="fas fa-sync-alt fa-lg"></i>
-                                <br>Refresh
+                            </button> -->
+                            <button class="btn btn-danger bouton-caisse" type="button"
+                                onclick="ok()">
+                                <i class="fas fa-sync-alt fa-lg"></i>
                             </button>
+
                         </div>
+                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+                        <script>
+                            function ok(){
+                            location.reload();
+                        }
+                        </script>
 
                         <script>
                             function ActualiserPage() {
-                                // Actualise la page actuelle
-                                location.reload();
+                                // Ajouter un gestionnaire d'événements pour le bouton de synchronisation
+                                document.getElementById("sync-button").addEventListener("click", function () {
+                                    // Afficher l'alerte de confirmation
+                                    Swal.fire({
+                                        title: 'Êtes-vous sûr ?',
+                                        text: "Cette action actualisera la page.",
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#3085d6',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Actualiser',
+                                        cancelButtonText: 'Annuler'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            // Si l'utilisateur confirme, on enregistre les données hors ligne
+                                            saveOfflineData({ produit: "Viande", quantité: 2, prix: 1500 })
+                                                .then(() => {
+                                                    // Actualiser la page après l'enregistrement des données
+                                                    location.reload();
+                                                })
+                                                .catch((error) => {
+                                                    console.error('Erreur lors de l\'enregistrement des données:', error);
+                                                });
+                                        }
+                                    });
+                                });
                             }
+
+                            // Appel de la fonction pour initialiser l'événement
+                            ActualiserPage();
                         </script>
+
+
+
 
                         <div class="col-3">
                             <button class="btn btn-dark bouton-caisse" type="button" data-bs-toggle="modal"
@@ -561,7 +606,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody id="historique-factures">
-                                                            {{-- les factures ici  --}}
+                                                            {{-- les factures ici --}}
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
@@ -605,11 +650,19 @@
                             <!-- Popup -->
 
 
-                            {{-- ---------------------------------------------------------------------------------------------- --}}
-                            {{-- ---------------------------------------------------------------------------------------------- --}}
-                            {{-- clients  --}}
-                            {{-- ---------------------------------------------------------------------------------------------- --}}
-                            {{-- ---------------------------------------------------------------------------------------------- --}}
+                            {{--
+                            ----------------------------------------------------------------------------------------------
+                            --}}
+                            {{--
+                            ----------------------------------------------------------------------------------------------
+                            --}}
+                            {{-- clients --}}
+                            {{--
+                            ----------------------------------------------------------------------------------------------
+                            --}}
+                            {{--
+                            ----------------------------------------------------------------------------------------------
+                            --}}
 
                             <!-- Popup -->
                             <div class="modal fade" id="ListeClientsModal" tabindex="-1" aria-labelledby=""
@@ -630,14 +683,14 @@
                                                                 <th>Détails</th>
                                                                 <th>N° Tél</th>
                                                                 {{-- <th>Tél ooredoo</th>
-                                                                    <th>Tél mobilis</th>
-                                                                    <th>Tél djezzy</th> --}}
+                                                                <th>Tél mobilis</th>
+                                                                <th>Tél djezzy</th> --}}
                                                                 <th>Total Crédit</th>
                                                                 <th>Actions</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody id="liste-clients">
-                                                            {{-- les clients ici  --}}
+                                                            {{-- les clients ici --}}
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
@@ -647,8 +700,8 @@
                                                                 <th>Détails</th>
                                                                 <th>N° Tél</th>
                                                                 {{-- <th>Tél ooredoo</th>
-                                                                    <th>Tél mobilis</th>
-                                                                    <th>Tél djezzy</th> --}}
+                                                                <th>Tél mobilis</th>
+                                                                <th>Tél djezzy</th> --}}
                                                                 <th>Total Crédit</th>
                                                                 <th>Actions</th>
                                                             </tr>
@@ -687,9 +740,10 @@
                                     <div class="modal-content">
                                         <!-- En-tête du modal -->
                                         {{-- <div class="modal-header">
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        <h4 class="modal-title" id="FactureModalLabel">BLABLABLABLABLA :</h4>
-                                    </div> --}}
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                            <h4 class="modal-title" id="FactureModalLabel">BLABLABLABLABLA :</h4>
+                                        </div> --}}
                                         <!-- Corps du modal -->
                                         <div class="modal-body">
                                             <h4 class="modal-title" id="">VERSEMENT-CREDIT-PAR</h4>
@@ -714,33 +768,45 @@
                                                 </div>
                                                 <div class="row mt-3 boutons-saisie">
                                                     <div class="col-4 h-100">
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('1')">1</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('4')">4</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('7')">7</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('0')">0</button>
                                                     </div>
                                                     <div class="col-4 h-100">
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('2')">2</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('5')">5</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('8')">8</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('00')">00</button>
                                                     </div>
                                                     <div class="col-4 h-100">
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('3')">3</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('6')">6</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('9')">9</button>
-                                                        <button class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                        <button
+                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
                                                             onclick="VersementAppendValue('000')">000</button>
                                                     </div>
                                                 </div>
@@ -778,8 +844,9 @@
                                                         </script>
                                                     </div> -->
                                                     <div class="col-4">
-                                                        <button type="button" class="btn btn-secondary medium-font" data-bs-dismiss="modal" style="width: 150px;">
-                                                        <i class="fas fa-times fa-lg"></i><br>Fermer
+                                                        <button type="button" class="btn btn-secondary medium-font"
+                                                            data-bs-dismiss="modal" style="width: 150px;">
+                                                            <i class="fas fa-times fa-lg"></i><br>Fermer
                                                         </button>
                                                     </div>
 
@@ -821,8 +888,8 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item btn btn-primary" href="#"
-                                            data-value="semi_gros" id="vente_semi">
+                                        <a class="dropdown-item btn btn-primary" href="#" data-value="semi_gros"
+                                            id="vente_semi">
                                             <br> <i class="fas fa-boxes fa-lg"></i> <br>
                                             Vente-Semi-Gros
                                         </a>
@@ -842,7 +909,7 @@
 
                         <script>
                             document.querySelectorAll('.dropdown-item').forEach(item => {
-                                item.addEventListener('click', function(e) {
+                                item.addEventListener('click', function (e) {
                                     e.preventDefault(); // Empêche le comportement par défaut du lien
                                     const selectedValue = this.getAttribute('data-value'); // Récupère la valeur sélectionnée
                                     const selectedText = this.textContent.trim(); // Récupère le texte sélectionné
@@ -942,14 +1009,14 @@
                                         <!-- Corps du modal -->
                                         <div class="modal-body">
                                             <h4 class="modal-title" id="">Liste des ventes en attente</h4>
-                                            {{-- les factures s'affichent ici  --}}
+                                            {{-- les factures s'affichent ici --}}
                                             {{-- <div class="mt-3" id="liste-factures">
-                                                </div> --}}
+                                            </div> --}}
                                             <div id="carouselExample1" class="carousel slide mt-3 mb-3 bg-dark"
                                                 data-bs-interval="false" style="height:470px;">
 
                                                 <div class="carousel-inner" id="CarouselFacturesEnAttente">
-                                                    {{-- les factures s'affichent ici  --}}
+                                                    {{-- les factures s'affichent ici --}}
                                                 </div>
 
                                                 <!-- Indicateurs de progression -->
@@ -960,14 +1027,12 @@
 
                                                 <button class="carousel-control-prev bg-dark" type="button"
                                                     data-bs-target="#carouselExample1" data-bs-slide="prev">
-                                                    <span class="carousel-control-prev-icon"
-                                                        aria-hidden="true"></span>
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                                     <span class="visually-hidden">Previous</span>
                                                 </button>
                                                 <button class="carousel-control-next bg-dark" type="button"
                                                     data-bs-target="#carouselExample1" data-bs-slide="next">
-                                                    <span class="carousel-control-next-icon"
-                                                        aria-hidden="true"></span>
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                                     <span class="visually-hidden">Next</span>
                                                 </button>
 
@@ -998,8 +1063,7 @@
 
 
                         <div class="col-3">
-                            <button class="btn btn-primary bouton-caisse" type="button"
-                                onclick="FactureEnAttente()">
+                            <button class="btn btn-primary bouton-caisse" type="button" onclick="FactureEnAttente()">
                                 <i class="fa fa-pause-circle fa-lg"></i>
                                 <br>Vente En Attente
                             </button>
@@ -1007,153 +1071,152 @@
 
                         {{-- -------------------------------------------- --}}
                         @if ($btn_enc == '1')
-                        <div class="col-3">
-                            {{-- Bouton pour afficher le popup --}}
-                            <button class="btn btn-success bouton-caisse" type="button" data-bs-toggle="modal"
-                                data-bs-target="#FactureModal" id="bouton_encaisser"
-                                onclick="Ouvrir_Encaissement()">
-                                <i class="fas fa-cash-register fa-lg"></i>
-                                <br>Encaissement
-                            </button>
+                            <div class="col-3">
+                                {{-- Bouton pour afficher le popup --}}
+                                <button class="btn btn-success bouton-caisse" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#FactureModal" id="bouton_encaisser" onclick="Ouvrir_Encaissement()">
+                                    <i class="fas fa-cash-register fa-lg"></i>
+                                    <br>Encaissement
+                                </button>
 
-                            <!-- Popup -->
-                            <div class="modal fade" id="FactureModal" tabindex="-1" aria-labelledby=""
-                                aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                    <div class="modal-content">
-                                        <!-- En-tête du modal -->
-                                        {{-- <div class="modal-header">
+                                <!-- Popup -->
+                                <div class="modal fade" id="FactureModal" tabindex="-1" aria-labelledby=""
+                                    aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                            <!-- En-tête du modal -->
+                                            {{-- <div class="modal-header">
                                                 <h4 class="modal-title" id="FactureModalLabel">BLABLABLABLABLA :</h4>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div> --}}
-                                        <!-- Corps du modal -->
-                                        <div class="modal-body">
-                                            <h4 class="modal-title" id="">ENCAISSEMENT</h4>
-                                            <div class="mt-3">
-                                                <div class="row">
-                                                    <div class="col-12 text-left mb-3">
-                                                        <label for="client_select">Client :</label>
-                                                        <select class="form-select" id="client_select"
-                                                            style="width: 100%;">
-                                                            @foreach ($clients as $client)
-                                                            <option class="bg-dark text-white"
-                                                                value="{{ $client->id }}"
-                                                                @if ($client->id == 0) selected @endif
-                                                                style="margin-bottom:5px !important;">
-                                                                {{ $client->nom_prenom }}
-                                                            </option>
-                                                            <hr>
-                                                            @endforeach
-                                                        </select>
+                                            <!-- Corps du modal -->
+                                            <div class="modal-body">
+                                                <h4 class="modal-title" id="">ENCAISSEMENT</h4>
+                                                <div class="mt-3">
+                                                    <div class="row">
+                                                        <div class="col-12 text-left mb-3">
+                                                            <label for="client_select">Client :</label>
+                                                            <select class="form-select" id="client_select"
+                                                                style="width: 100%;">
+                                                                @foreach ($clients as $client)
+                                                                    <option class="bg-dark text-white" value="{{ $client->id }}"
+                                                                        @if ($client->id == 0) selected @endif
+                                                                        style="margin-bottom:5px !important;">
+                                                                        {{ $client->nom_prenom }}
+                                                                    </option>
+                                                                    <hr>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <label for="TotalInput">Montant total :</label>
-                                                        <input type="text" id="TotalInput"
-                                                            class="form-control" placeholder="0.00"
-                                                            style="text-align: center; font-size:26px;" readonly>
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <label for="TotalInput">Montant total :</label>
+                                                            <input type="text" id="TotalInput" class="form-control"
+                                                                placeholder="0.00"
+                                                                style="text-align: center; font-size:26px;" readonly>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <label for="versementInput">Versement :</label>
+                                                            <input type="number" id="VersementInput" class="form-control"
+                                                                placeholder="0.00"
+                                                                style="text-align: center; font-size:26px;"
+                                                                inputmode="decimal" readonly>
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <label for="creditInput" id="LabelCredit">Crédit :</label>
+                                                            <input type="text" id="CreditInput" class="form-control"
+                                                                placeholder="0.00"
+                                                                style="text-align: center; font-size:26px;" readonly>
+                                                        </div>
                                                     </div>
-                                                    <div class="col-4">
-                                                        <label for="versementInput">Versement :</label>
-                                                        <input type="number" id="VersementInput"
-                                                            class="form-control" placeholder="0.00"
-                                                            style="text-align: center; font-size:26px;"
-                                                            inputmode="decimal" readonly>
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <label for="creditInput" id="LabelCredit">Crédit :</label>
-                                                        <input type="text" id="CreditInput"
-                                                            class="form-control" placeholder="0.00"
-                                                            style="text-align: center; font-size:26px;" readonly>
-                                                    </div>
-                                                </div>
-                                                <div class="row mt-3 boutons-saisie">
-                                                    <div class="col-4 h-100">
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('1')">1</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('4')">4</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('7')">7</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('0')">0</button>
-                                                    </div>
-                                                    <div class="col-4 h-100">
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('2')">2</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('5')">5</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('8')">8</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('00')">00</button>
-                                                    </div>
-                                                    <div class="col-4 h-100">
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('3')">3</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('6')">6</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('9')">9</button>
-                                                        <button
-                                                            class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
-                                                            onclick="FactureAppendValue('000')">000</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Pied du modal -->
-                                        
-
-                                        <div class="modal-footer m-0 p-2">
-                                            <div class="container pl-0">
-                                                <div class="row">
-                                                    <div class="col-4">
-                                                        <button type="button" class="btn btn-success medium-font"
-                                                            onclick="ValiderFacture()" style="width: 150px;">
-                                                            <i class="fas fa-check fa-lg"></i><br>Valider
-                                                        </button>
-
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <button type="button" class="btn btn-danger medium-font"
-                                                            onclick="ClearTotalInput()" style="width: 150px;">
-                                                            <i class="fas fa-eraser fa-lg"></i><br>Effacer
-                                                        </button>
-
-                                                    </div>
-                                                    <div class="col-4">
-                                                        <button type="button" class="btn btn-secondary medium-font"
-                                                            data-bs-dismiss="modal" style="width: 150px;">
-                                                            <i class="fas fa-times fa-lg"></i><br>Fermer
-                                                        </button>
-
+                                                    <div class="row mt-3 boutons-saisie">
+                                                        <div class="col-4 h-100">
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('1')">1</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('4')">4</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('7')">7</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('0')">0</button>
+                                                        </div>
+                                                        <div class="col-4 h-100">
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('2')">2</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('5')">5</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('8')">8</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('00')">00</button>
+                                                        </div>
+                                                        <div class="col-4 h-100">
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('3')">3</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('6')">6</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('9')">9</button>
+                                                            <button
+                                                                class="btn btn-dark mb-2 pt-3 pb-3 font-weight-bold big-font"
+                                                                onclick="FactureAppendValue('000')">000</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
+                                            <!-- Pied du modal -->
+
+
+                                            <div class="modal-footer m-0 p-2">
+                                                <div class="container pl-0">
+                                                    <div class="row">
+                                                        <div class="col-4">
+                                                            <button type="button" class="btn btn-success medium-font"
+                                                                onclick="ValiderFacture()" style="width: 150px;">
+                                                                <i class="fas fa-check fa-lg"></i><br>Valider
+                                                            </button>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <button type="button" class="btn btn-danger medium-font"
+                                                                onclick="ClearTotalInput()" style="width: 150px;">
+                                                                <i class="fas fa-eraser fa-lg"></i><br>Effacer
+                                                            </button>
+
+                                                        </div>
+                                                        <div class="col-4">
+                                                            <button type="button" class="btn btn-secondary medium-font"
+                                                                data-bs-dismiss="modal" style="width: 150px;">
+                                                                <i class="fas fa-times fa-lg"></i><br>Fermer
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
+                                <!-- Popup -->
+
+
+
                             </div>
-                            <!-- Popup -->
-
-
-
-                        </div>
                         @endif
                         {{-- -------------------------------------------- --}}
 
@@ -1162,34 +1225,34 @@
                 </div>
 
                 {{-- <div class="col-4">
-                        <div class="row bouton-action">
-                            
-                            <div class="col-3">
-                                <button class="btn btn-danger" type="button">
-                                    <i class="fas fa-trash-alt fa-lg"></i>
-                                    <br>Supprimer Selection
-                                </button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-dark" type="button">
-                                    <i class="fas fa-coins fa-lg"></i>
-                                    <br>Modifier PRIX
-                                </button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-dark" type="button">
-                                    <i class="fas fa-chevron-up fa-lg"></i>
-                                    <br>Vers<br>le Haut
-                                </button>
-                            </div>
-                            <div class="col-3">
-                                <button class="btn btn-dark" type="button">
-                                    <i class="fas fa-chevron-down fa-lg"></i>
-                                    <br>Vers<br>le Bas
-                                </button>
-                            </div>
+                    <div class="row bouton-action">
+
+                        <div class="col-3">
+                            <button class="btn btn-danger" type="button">
+                                <i class="fas fa-trash-alt fa-lg"></i>
+                                <br>Supprimer Selection
+                            </button>
                         </div>
-                    </div> --}}
+                        <div class="col-3">
+                            <button class="btn btn-dark" type="button">
+                                <i class="fas fa-coins fa-lg"></i>
+                                <br>Modifier PRIX
+                            </button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-dark" type="button">
+                                <i class="fas fa-chevron-up fa-lg"></i>
+                                <br>Vers<br>le Haut
+                            </button>
+                        </div>
+                        <div class="col-3">
+                            <button class="btn btn-dark" type="button">
+                                <i class="fas fa-chevron-down fa-lg"></i>
+                                <br>Vers<br>le Bas
+                            </button>
+                        </div>
+                    </div>
+                </div> --}}
 
 
             </div>
@@ -1223,8 +1286,8 @@
                                     value="" aria-describedby="inputGroup-sizing-lg" readonly>
                             </div>
                             {{-- <label for="versementInput">Prix Total :</label>
-                                <input type="number" id="TotalInput" class="form-control" placeholder="0.00"
-                                    style="text-align: center; font-size:40px;" inputmode="decimal" readonly> --}}
+                            <input type="number" id="TotalInput" class="form-control" placeholder="0.00"
+                                style="text-align: center; font-size:40px;" inputmode="decimal" readonly> --}}
                         </div>
                     </div>
                     <div class="row mt-3 boutons-saisie">
@@ -1299,10 +1362,16 @@
 <!-- Popup -->
 
 
-{{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
-{{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
-{{-- SOUS PRODUITS  --}}
-{{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
+{{--
+-------------------------------------------------------------------------------------------------------------------------------
+--}}
+{{--
+-------------------------------------------------------------------------------------------------------------------------------
+--}}
+{{-- SOUS PRODUITS --}}
+{{--
+-------------------------------------------------------------------------------------------------------------------------------
+--}}
 
 {{-- Bouton pour afficher le popup --}}
 <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#SousProduitsModal"
@@ -1334,19 +1403,25 @@
 <!-- Popup -->
 
 
-{{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
-{{-- SOUS PRODUITS  --}}
-{{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
-{{-- ------------------------------------------------------------------------------------------------------------------------------- --}}
+{{--
+-------------------------------------------------------------------------------------------------------------------------------
+--}}
+{{-- SOUS PRODUITS --}}
+{{--
+-------------------------------------------------------------------------------------------------------------------------------
+--}}
+{{--
+-------------------------------------------------------------------------------------------------------------------------------
+--}}
 
 
 {{-- ------------------------------------------------------------------------------------------------------- --}}
-{{-- javascript  --}}
+{{-- javascript --}}
 {{-- ------------------------------------------------------------------------------------------------------- --}}
 <!-- Slick JS -->
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.your-carousel').slick({
             slidesToShow: 4, // Affiche 4 diapositives à la fois sur les grands écrans
             slidesToScroll: 1, // Défile 1 diapositive à la fois
@@ -1355,40 +1430,40 @@
             infinite: false, // Permet une navigation infinie
             speed: 300, // Durée de la transition
             responsive: [{
-                    breakpoint: 1024, // Pour les tablettes et les petits ordinateurs
-                    settings: {
-                        slidesToShow: 3, // Affiche 3 diapositives à la fois
-                        slidesToScroll: 1, // Défile 1 diapositive à la fois
-                        dots: true, // Points de pagination
-                    }
-                },
-                {
-                    breakpoint: 768, // Pour les tablettes et les petits appareils
-                    settings: {
-                        slidesToShow: 2, // Affiche 2 diapositives à la fois
-                        slidesToScroll: 1, // Défile 1 diapositive à la fois
-                        dots: true, // Points de pagination
-                    }
-                },
-                {
-                    breakpoint: 480, // Pour les mobiles
-                    settings: {
-                        slidesToShow: 1, // Affiche 1 diapositive à la fois
-                        slidesToScroll: 1, // Défile 1 diapositive à la fois
-                        dots: true, // Points de pagination
-                    }
+                breakpoint: 1024, // Pour les tablettes et les petits ordinateurs
+                settings: {
+                    slidesToShow: 3, // Affiche 3 diapositives à la fois
+                    slidesToScroll: 1, // Défile 1 diapositive à la fois
+                    dots: true, // Points de pagination
                 }
+            },
+            {
+                breakpoint: 768, // Pour les tablettes et les petits appareils
+                settings: {
+                    slidesToShow: 2, // Affiche 2 diapositives à la fois
+                    slidesToScroll: 1, // Défile 1 diapositive à la fois
+                    dots: true, // Points de pagination
+                }
+            },
+            {
+                breakpoint: 480, // Pour les mobiles
+                settings: {
+                    slidesToShow: 1, // Affiche 1 diapositive à la fois
+                    slidesToScroll: 1, // Défile 1 diapositive à la fois
+                    dots: true, // Points de pagination
+                }
+            }
             ]
         });
 
 
 
         // Gestion des boutons personnalisés
-        $('#prev-btn').on('click', function() {
+        $('#prev-btn').on('click', function () {
             $('.your-carousel').slick('slickPrev'); // Navigue vers la gauche
         });
 
-        $('#next-btn').on('click', function() {
+        $('#next-btn').on('click', function () {
             $('.your-carousel').slick('slickNext'); // Navigue vers la droite
         });
     });
@@ -1419,7 +1494,7 @@
 
 
 
-{{-- script pour les poppup  --}}
+{{-- script pour les poppup --}}
 <script>
     $('body').css('overflow', 'auto');
 </script>
@@ -1427,94 +1502,95 @@
 
 {{-- ---------------------------------------------------------------------------------------------- --}}
 
-{{-- script pour la balance  --}}
+{{-- script pour la balance --}}
 
-{{-- <script>
-        const balanceElement = document.getElementById('balance');
-        const prixUnitaireElement = document.getElementById('prix_unitaire');
-        const prixTotalElement = document.getElementById('prix_total');
-        const toggleBalance = document.getElementById('toggleBalance');
-        let port;
-        let reader; // Variable pour stocker le lecteur
+{{--
+<script>
+    const balanceElement = document.getElementById('balance');
+    const prixUnitaireElement = document.getElementById('prix_unitaire');
+    const prixTotalElement = document.getElementById('prix_total');
+    const toggleBalance = document.getElementById('toggleBalance');
+    let port;
+    let reader; // Variable pour stocker le lecteur
 
-        // Fonction pour se connecter ou se déconnecter de la balance
-        async function toggleConnection() {
-            if (toggleBalance.checked) {
-                await connectToSerialPort(); // Connecter à la balance si la case est cochée
-            } else {
-                if (port) {
-                    // Relâcher le verrou du lecteur avant de fermer le port
-                    if (reader) {
-                        await reader.releaseLock();
-                        reader = null; // Réinitialiser la variable reader
-                    }
-                    await port.close(); // Fermer le port si ouvert
-                    port = null; // Réinitialiser la variable port
+    // Fonction pour se connecter ou se déconnecter de la balance
+    async function toggleConnection() {
+        if (toggleBalance.checked) {
+            await connectToSerialPort(); // Connecter à la balance si la case est cochée
+        } else {
+            if (port) {
+                // Relâcher le verrou du lecteur avant de fermer le port
+                if (reader) {
+                    await reader.releaseLock();
+                    reader = null; // Réinitialiser la variable reader
                 }
-                balanceElement.textContent = '0.000'; // Réinitialiser l'affichage du poids
-                prixTotalElement.textContent = '0.00'; // Réinitialiser le prix total
+                await port.close(); // Fermer le port si ouvert
+                port = null; // Réinitialiser la variable port
             }
+            balanceElement.textContent = '0.000'; // Réinitialiser l'affichage du poids
+            prixTotalElement.textContent = '0.00'; // Réinitialiser le prix total
         }
+    }
 
-        // Fonction pour se connecter au port série (COM4) et lire les données en temps réel
-        async function connectToSerialPort() {
-            try {
-                port = await navigator.serial.requestPort();
-                await port.open({
-                    baudRate: 9600
-                });
+    // Fonction pour se connecter au port série (COM4) et lire les données en temps réel
+    async function connectToSerialPort() {
+        try {
+            port = await navigator.serial.requestPort();
+            await port.open({
+                baudRate: 9600
+            });
 
-                reader = port.readable.getReader(); // Stocker le lecteur dans la variable
+            reader = port.readable.getReader(); // Stocker le lecteur dans la variable
 
-                while (true) {
-                    const {
-                        value,
-                        done
-                    } = await reader.read();
-                    if (done) {
-                        reader.releaseLock(); // Relâcher le verrou si la lecture est terminée
-                        break;
-                    }
-
-                    // Convertir les données lues en chaîne de caractères
-                    const textDecoder = new TextDecoder();
-                    const data = textDecoder.decode(value);
-
-                    // Extraire uniquement la partie numérique (poids) des données reçues
-                    const match = data.match(/-?\d+(\.\d+)?/);
-                    if (match) {
-                        const weight = parseFloat(match[0]);
-                        balanceElement.textContent = weight.toFixed(3); // Mettre à jour la balance
-
-                        // Appeler la fonction pour calculer le prix total
-                        calculer_total_vente(weight);
-                    }
+            while (true) {
+                const {
+                    value,
+                    done
+                } = await reader.read();
+                if (done) {
+                    reader.releaseLock(); // Relâcher le verrou si la lecture est terminée
+                    break;
                 }
-            } catch (error) {
-                console.error('Erreur de connexion au port série :', error);
+
+                // Convertir les données lues en chaîne de caractères
+                const textDecoder = new TextDecoder();
+                const data = textDecoder.decode(value);
+
+                // Extraire uniquement la partie numérique (poids) des données reçues
+                const match = data.match(/-?\d+(\.\d+)?/);
+                if (match) {
+                    const weight = parseFloat(match[0]);
+                    balanceElement.textContent = weight.toFixed(3); // Mettre à jour la balance
+
+                    // Appeler la fonction pour calculer le prix total
+                    calculer_total_vente(weight);
+                }
             }
+        } catch (error) {
+            console.error('Erreur de connexion au port série :', error);
         }
+    }
 
-        // Fonction pour calculer le prix total en temps réel
-        function calculer_total_vente(weight) {
-            const PrixUnitaire = parseFloat(prixUnitaireElement.textContent);
-            if (!isNaN(weight) && !isNaN(PrixUnitaire)) {
-                const Total = (PrixUnitaire * weight).toFixed(2);
-                prixTotalElement.textContent = Total;
-            }
+    // Fonction pour calculer le prix total en temps réel
+    function calculer_total_vente(weight) {
+        const PrixUnitaire = parseFloat(prixUnitaireElement.textContent);
+        if (!isNaN(weight) && !isNaN(PrixUnitaire)) {
+            const Total = (PrixUnitaire * weight).toFixed(2);
+            prixTotalElement.textContent = Total;
         }
+    }
 
-        // Écouter les changements de la case à cocher
-        toggleBalance.addEventListener('change', toggleConnection);
+    // Écouter les changements de la case à cocher
+    toggleBalance.addEventListener('change', toggleConnection);
 
-        // Initialiser l'état de la saisie
-        function init() {
-            toggleConnection(); // Appeler la fonction pour établir la connexion initiale
-        }
+    // Initialiser l'état de la saisie
+    function init() {
+        toggleConnection(); // Appeler la fonction pour établir la connexion initiale
+    }
 
-        // Appeler la fonction d'initialisation
-        init();
-    </script> --}}
+    // Appeler la fonction d'initialisation
+    init();
+</script> --}}
 
 
 <script>
@@ -1613,166 +1689,169 @@
 
 
 
-{{-- <script>
-            const balanceElement = document.getElementById('balance');
-            const prixUnitaireElement = document.getElementById('prix_unitaire');
-            const prixTotalElement = document.getElementById('prix_total');
-            let port;
+{{--
+<script>
+    const balanceElement = document.getElementById('balance');
+    const prixUnitaireElement = document.getElementById('prix_unitaire');
+    const prixTotalElement = document.getElementById('prix_total');
+    let port;
 
-            // Fonction pour se connecter au port série (COM4) et lire les données en temps réel
-            async function connectToSerialPort() {
-                try {
-                    port = await navigator.serial.requestPort();
-                    await port.open({
-                        baudRate: 9600
-                    });
+    // Fonction pour se connecter au port série (COM4) et lire les données en temps réel
+    async function connectToSerialPort() {
+        try {
+            port = await navigator.serial.requestPort();
+            await port.open({
+                baudRate: 9600
+            });
 
-                    const reader = port.readable.getReader();
+            const reader = port.readable.getReader();
 
-                    while (true) {
-                        const {
-                            value,
-                            done
-                        } = await reader.read();
-                        if (done) {
-                            reader.releaseLock();
-                            break;
-                        }
-
-                        // Convertir les données lues en chaîne de caractères
-                        const textDecoder = new TextDecoder();
-                        const data = textDecoder.decode(value);
-                        //   console.log("Données brutes reçues : ", data);
-
-                        // Extraire uniquement la partie numérique (poids) des données reçues
-                        const match = data.match(/-?\d+(\.\d+)?/);
-
-                        if (match) {
-                            const weight = parseFloat(match[0]);
-                            balanceElement.textContent = weight.toFixed(3); // Mettre à jour la balance
-
-                            // Appeler la fonction pour calculer le prix total
-                            calculer_total_vente(weight);
-                        } else {
-                            // console.error("Les données ne sont pas un nombre valide : ", data);
-                        }
-                    }
-                } catch (error) {
-                    console.error('Erreur de connexion au port série :', error);
+            while (true) {
+                const {
+                    value,
+                    done
+                } = await reader.read();
+                if (done) {
+                    reader.releaseLock();
+                    break;
                 }
-            }
 
-            // Fonction pour calculer le prix total en temps réel
-            function calculer_total_vente(weight) {
-                const PrixUnitaire = parseFloat(prixUnitaireElement.textContent); // Récupérer le prix unitaire
+                // Convertir les données lues en chaîne de caractères
+                const textDecoder = new TextDecoder();
+                const data = textDecoder.decode(value);
+                //   console.log("Données brutes reçues : ", data);
 
-                // Vérifier que les valeurs sont bien des nombres
-                if (!isNaN(weight) && !isNaN(PrixUnitaire)) {
-                    const Total = (PrixUnitaire * weight).toFixed(2); // Calcul du total avec 2 décimales
-                    prixTotalElement.textContent = Total; // Mettre à jour le prix total
+                // Extraire uniquement la partie numérique (poids) des données reçues
+                const match = data.match(/-?\d+(\.\d+)?/);
+
+                if (match) {
+                    const weight = parseFloat(match[0]);
+                    balanceElement.textContent = weight.toFixed(3); // Mettre à jour la balance
+
+                    // Appeler la fonction pour calculer le prix total
+                    calculer_total_vente(weight);
                 } else {
-                    console.error('Poids ou prix unitaire invalide');
+                    // console.error("Les données ne sont pas un nombre valide : ", data);
                 }
-
-                console.log('Calcul Total Vente exécuté : ', weight, PrixUnitaire);
             }
+        } catch (error) {
+            console.error('Erreur de connexion au port série :', error);
+        }
+    }
 
-            // Ajouter un événement de clic au bouton pour déclencher la connexion à la balance
-            const connectButton = document.getElementById('connectButton');
-            connectButton.addEventListener('click', connectToSerialPort);
+    // Fonction pour calculer le prix total en temps réel
+    function calculer_total_vente(weight) {
+        const PrixUnitaire = parseFloat(prixUnitaireElement.textContent); // Récupérer le prix unitaire
 
-    </script> --}}
+        // Vérifier que les valeurs sont bien des nombres
+        if (!isNaN(weight) && !isNaN(PrixUnitaire)) {
+            const Total = (PrixUnitaire * weight).toFixed(2); // Calcul du total avec 2 décimales
+            prixTotalElement.textContent = Total; // Mettre à jour le prix total
+        } else {
+            console.error('Poids ou prix unitaire invalide');
+        }
+
+        console.log('Calcul Total Vente exécuté : ', weight, PrixUnitaire);
+    }
+
+    // Ajouter un événement de clic au bouton pour déclencher la connexion à la balance
+    const connectButton = document.getElementById('connectButton');
+    connectButton.addEventListener('click', connectToSerialPort);
+
+</script> --}}
 
 
 
-{{-- <script>
-        const balanceElement = document.getElementById('balance');
-        const connectButton = document.getElementById('connectButton');
-        let port;
-    
-        // Fonction pour se connecter au port série (COM4)
-        async function connectToSerialPort() {
-          try {
+{{--
+<script>
+    const balanceElement = document.getElementById('balance');
+    const connectButton = document.getElementById('connectButton');
+    let port;
+
+    // Fonction pour se connecter au port série (COM4)
+    async function connectToSerialPort() {
+        try {
             // Demande à l'utilisateur de choisir un port série
             port = await navigator.serial.requestPort();
             // Ouvrir le port avec des paramètres de communication spécifiques
             await port.open({ baudRate: 9600 });  // Ajuster selon votre appareil
-    
+
             const reader = port.readable.getReader();
-    
+
             // Boucle pour lire les données
             while (true) {
-              const { value, done } = await reader.read();
-              if (done) {
-                // Fermer le port si terminé
-                reader.releaseLock();
-                break;
-              }
-    
-              // Convertir les données lues en chaîne de caractères
-              const textDecoder = new TextDecoder();
-              const data = textDecoder.decode(value);
-    
-              // Journaliser les données pour voir ce qui est reçu
-            //   console.log("Données brutes reçues : ", data);
-    
-              // Extraire uniquement la partie numérique (y compris les signes négatifs et décimales)
-              const match = data.match(/-?\d+(\.\d+)?/);
-              
-              if (match) {
-                // Convertir la partie numérique en float et afficher avec 3 décimales
-                const weight = parseFloat(match[0]);
-                balanceElement.textContent = weight.toFixed(3);
-              } else {
-                // console.error("Les données ne sont pas un nombre valide : ", data);
-              }
+                const { value, done } = await reader.read();
+                if (done) {
+                    // Fermer le port si terminé
+                    reader.releaseLock();
+                    break;
+                }
+
+                // Convertir les données lues en chaîne de caractères
+                const textDecoder = new TextDecoder();
+                const data = textDecoder.decode(value);
+
+                // Journaliser les données pour voir ce qui est reçu
+                //   console.log("Données brutes reçues : ", data);
+
+                // Extraire uniquement la partie numérique (y compris les signes négatifs et décimales)
+                const match = data.match(/-?\d+(\.\d+)?/);
+
+                if (match) {
+                    // Convertir la partie numérique en float et afficher avec 3 décimales
+                    const weight = parseFloat(match[0]);
+                    balanceElement.textContent = weight.toFixed(3);
+                } else {
+                    // console.error("Les données ne sont pas un nombre valide : ", data);
+                }
             }
-          } catch (error) {
+        } catch (error) {
             console.error('Erreur de connexion au port série :', error);
-          }
         }
-    
-        // Ajouter un événement de clic au bouton pour déclencher la connexion
-        connectButton.addEventListener('click', connectToSerialPort);
+    }
 
-      </script> --}}
+    // Ajouter un événement de clic au bouton pour déclencher la connexion
+    connectButton.addEventListener('click', connectToSerialPort);
+
+</script> --}}
 
 
-{{-- script pour la balance  --}}
+{{-- script pour la balance --}}
 
-{{-- <script>
-        // Fonction de calcul du total de la vente
-        function calculer_total_vente() {
-          // Récupération des éléments du DOM
-          const Qte = parseFloat(document.getElementById('balance').textContent);
-          const PrixUnitaire = parseFloat(document.getElementById('prix_unitaire').textContent);
-          const PrixTotal = document.getElementById('prix_total');
-      
-          // Vérification si les deux valeurs sont bien des nombres
-          if (!isNaN(Qte) && !isNaN(PrixUnitaire)) {
+{{--
+<script>
+    // Fonction de calcul du total de la vente
+    function calculer_total_vente() {
+        // Récupération des éléments du DOM
+        const Qte = parseFloat(document.getElementById('balance').textContent);
+        const PrixUnitaire = parseFloat(document.getElementById('prix_unitaire').textContent);
+        const PrixTotal = document.getElementById('prix_total');
+
+        // Vérification si les deux valeurs sont bien des nombres
+        if (!isNaN(Qte) && !isNaN(PrixUnitaire)) {
             // Calcul du total
             const Total = (PrixUnitaire * Qte).toFixed(2); // 2 décimales pour le total
-      
+
             // Affectation du résultat dans l'élément du prix total
             PrixTotal.textContent = Total;
-          } else {
+        } else {
             console.error('Quantité ou prix unitaire invalide');
-          }
-      
-          console.log('Calcul Total Vente exécuté');
         }
-      
-        // Surveiller les changements de la balance
-        const balanceElement = document.getElementById('balance');
-        
-        // Déclencher le calcul à chaque fois que le contenu de l'élément balance est mis à jour
-        const observer = new MutationObserver(() => {
-          calculer_total_vente();
-        });
-      
-        // Observer les changements dans le contenu de l'élément balance
-        observer.observe(balanceElement, { childList: true });
-      </script> --}}
+
+        console.log('Calcul Total Vente exécuté');
+    }
+
+    // Surveiller les changements de la balance
+    const balanceElement = document.getElementById('balance');
+
+    // Déclencher le calcul à chaque fois que le contenu de l'élément balance est mis à jour
+    const observer = new MutationObserver(() => {
+        calculer_total_vente();
+    });
+
+    // Observer les changements dans le contenu de l'élément balance
+    observer.observe(balanceElement, { childList: true });
+</script> --}}
 
 
 {{-- ---------------------------------------------------------------------------------------------------- --}}
@@ -1814,7 +1893,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log('PRODUCTS FILTER SUCCESS');
                     const productsContainer = $('#products');
                     productsContainer.empty();
@@ -1872,7 +1951,7 @@
                         card.classList.remove('bg-white');
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('Erreur AJAX :', error);
                 }
             });
@@ -1919,35 +1998,70 @@
 
 
 
-{{-- <script>
-        function Tester_SousProduits(form) {
-            const id_produit = form.getAttribute('data-id_produit');
-            const nom = form.getAttribute('data-nom');
+{{--
+<script>
+    function Tester_SousProduits(form) {
+        const id_produit = form.getAttribute('data-id_produit');
+        const nom = form.getAttribute('data-nom');
 
-            // added to execute the function without auth
-            const id_user = document.getElementById('text-id-user').textContent;
-            const id_magasin = document.getElementById('text-id-magasin').textContent;
+        // added to execute the function without auth
+        const id_user = document.getElementById('text-id-user').textContent;
+        const id_magasin = document.getElementById('text-id-magasin').textContent;
 
-            const bouton_sousproduits = document.getElementById('bouton_liste_sousproduits');
+        const bouton_sousproduits = document.getElementById('bouton_liste_sousproduits');
 
-            const vente_type = document.getElementById('text-type-vente').textContent;
+        const vente_type = document.getElementById('text-type-vente').textContent;
 
-            if (id_produit !== undefined) {
-                // test the sub-products
-                $.ajax({
-                    url: '/Get_SubProducts/' + id_produit + '/user/' + id_user + '/magasin/' + id_magasin,
-                    type: 'GET',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    success: function(response) {
-                        console.log('LIST OF SUB-PRODUCTS RETRIEVED');
-                        $('#SousProduits').empty();
+        if (id_produit !== undefined) {
+            // test the sub-products
+            $.ajax({
+                url: '/Get_SubProducts/' + id_produit + '/user/' + id_user + '/magasin/' + id_magasin,
+                type: 'GET',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+                    console.log('LIST OF SUB-PRODUCTS RETRIEVED');
+                    $('#SousProduits').empty();
 
-                        // Check the number of records in the response
-                        if (response.sousproduits.length > 0) {
+                    // Check the number of records in the response
+                    if (response.sousproduits.length > 0) {
 
-                            const value = response.produit;
+                        const value = response.produit;
+                        let prix = 0;
+                        if (vente_type === 'details') prix = value.prix_detail;
+                        else if (vente_type === 'semigros') prix = value.prix_semigros;
+                        else if (vente_type === 'gros') prix = value.prix_gros;
+
+                        $('#SousProduits').append(
+                            '<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 mb-4">' +
+                            '<div class="card scat">' +
+                            '<form class="affichage-form" data-id_lestock="' + value.id +
+                            '" data-id_produit="' + value.id_produit +
+                            '" data-id_sousproduit="0' +
+                            '" data-nom="' + value.nom + '" data-prix-detail="' + value.prix_detail +
+                            '" data-prix-semigros="' + value.prix_semigros + '" data-prix-gros="' +
+                            value.prix_gros +
+                            '" onclick="affichage(this)" style="cursor: pointer;">' +
+                            '<img src="{{ asset('storage / ') }}/' + value.photo +
+                            '" class="card-img-top" alt="Product image">' +
+                            '<div class="card-body p-1 m-0 text-center">' +
+                            '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
+                            '<h5 class="card-text mini-text">'
+
+                            +
+                            Math.round(parseFloat(prix)) +
+
+                            ' DA / ' + value.mesure +
+                            '</h5>' +
+                            '</div>' +
+                            '</form>' +
+                            '</div>' +
+                        '</div>'
+                        );
+
+                        $.each(response.sousproduits, function (key, value) {
+
                             let prix = 0;
                             if (vente_type === 'details') prix = value.prix_detail;
                             else if (vente_type === 'semigros') prix = value.prix_semigros;
@@ -1958,87 +2072,53 @@
                                 '<div class="card scat">' +
                                 '<form class="affichage-form" data-id_lestock="' + value.id +
                                 '" data-id_produit="' + value.id_produit +
-                                '" data-id_sousproduit="0' +
-                                '" data-nom="' + value.nom + '" data-prix-detail="' + value.prix_detail +
-                                '" data-prix-semigros="' + value.prix_semigros + '" data-prix-gros="' +
-                                value.prix_gros +
-                                '" onclick="affichage(this)" style="cursor: pointer;">' +
-                                '<img src="{{ asset('storage/') }}/' + value.photo +
-'" class="card-img-top" alt="Product image">' +
-'<div class="card-body p-1 m-0 text-center">' +
-    '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-    '<h5 class="card-text mini-text">'
-
-        +
-        Math.round(parseFloat(prix)) +
-
-        ' DA / ' + value.mesure +
-        '</h5>' +
-    '</div>' +
-'</form>' +
-'</div>' +
-'</div>'
-);
-
-$.each(response.sousproduits, function(key, value) {
-
-let prix = 0;
-if (vente_type === 'details') prix = value.prix_detail;
-else if (vente_type === 'semigros') prix = value.prix_semigros;
-else if (vente_type === 'gros') prix = value.prix_gros;
-
-$('#SousProduits').append(
-'<div class="col-lg-4 col-md-4 col-sm-4 col-xs-6 mb-4">' +
-    '<div class="card scat">' +
-        '<form class="affichage-form" data-id_lestock="' + value.id +
-                                    '" data-id_produit="' + value.id_produit +
-                                    '" data-id_sousproduit="' + value.id +
-                                    '" data-nom="' + value.nom + '" data-prix-detail="' + value
+                                '" data-id_sousproduit="' + value.id +
+                                '" data-nom="' + value.nom + '" data-prix-detail="' + value
                                     .prix_detail + '" data-prix-semigros="' + value.prix_semigros +
-                                    '" data-prix-gros="' + value.prix_gros +
-                                    '" onclick="affichage(this)" style="cursor: pointer;">' +
-            '<img src="{{ asset('storage/') }}/' + value.photo +
-                                    '" class="card-img-top" alt="Product image">' +
-            '<div class="card-body p-1 m-0 text-center">' +
-                '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
-                '<h5 class="card-text mini-text">'
+                                '" data-prix-gros="' + value.prix_gros +
+                                '" onclick="affichage(this)" style="cursor: pointer;">' +
+                                '<img src="{{ asset('storage / ') }}/' + value.photo +
+                                '" class="card-img-top" alt="Product image">' +
+                                '<div class="card-body p-1 m-0 text-center">' +
+                                '<h5 class="card-title mini-text">' + value.nom + '</h5>' +
+                                '<h5 class="card-text mini-text">'
 
-                    +
-                    Math.round(parseFloat(prix)) +
+                                +
+                                Math.round(parseFloat(prix)) +
 
-                    ' DA / ' + value.mesure +
-                    '</h5>' +
-                '</div>' +
-            '</form>' +
-        '</div>' +
-    '</div>'
-);
-});
+                                ' DA / ' + value.mesure +
+                                '</h5>' +
+                                '</div>' +
+                                '</form>' +
+                                '</div>' +
+                            '</div>'
+                            );
+                        });
 
-bouton_sousproduits.click();
+                        bouton_sousproduits.click();
 
-} else {
-// If there are no records, display a message
-$('#SousProduits').append(
-'<div class="alert alert-warning text-center" role="alert">' +
-    'Aucun sous-produit disponible.' +
-    '</div>'
-);
-}
-},
-error: function(xhr, status, error) {
-console.error(error);
-affichage(form);
-}
-});
+                    } else {
+                        // If there are no records, display a message
+                        $('#SousProduits').append(
+                            '<div class="alert alert-warning text-center" role="alert">' +
+                            'Aucun sous-produit disponible.' +
+                            '</div>'
+                        );
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(error);
+                    affichage(form);
+                }
+            });
 
 
-} else {
-console.error('ERROR: PRODUCT ID MISSING');
-}
+        } else {
+            console.error('ERROR: PRODUCT ID MISSING');
+        }
 
-console.log('Sub-product test executed');
-}
+        console.log('Sub-product test executed');
+    }
 </script> --}}
 
 <script>
@@ -2068,7 +2148,7 @@ console.log('Sub-product test executed');
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     console.log('LISTE DES SOUS-PRODUITS RETOURNÉE');
                     const sousProduitsContainer = $('#SousProduits');
                     sousProduitsContainer.empty();
@@ -2094,7 +2174,7 @@ console.log('Sub-product test executed');
                             `);
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('Erreur AJAX :', error);
                     affichage(form); // Si erreur, effectuer une action alternative
                 }
@@ -2147,93 +2227,94 @@ console.log('Sub-product test executed');
 
 
 {{-- script filtrage produits --}}
-{{-- <script>
-        function affichage(form) {
-            const id_lestock = form.getAttribute('data-id_lestock');
-            const id_produit = form.getAttribute('data-id_produit');
-            const id_sousproduit = form.getAttribute('data-id_sousproduit') || '0';
-            const nom = form.getAttribute('data-nom');
-            let prix = 0;
-            // type prix
-            const vente_type = document.getElementById('text-type-vente').textContent;
+{{--
+<script>
+    function affichage(form) {
+        const id_lestock = form.getAttribute('data-id_lestock');
+        const id_produit = form.getAttribute('data-id_produit');
+        const id_sousproduit = form.getAttribute('data-id_sousproduit') || '0';
+        const nom = form.getAttribute('data-nom');
+        let prix = 0;
+        // type prix
+        const vente_type = document.getElementById('text-type-vente').textContent;
 
-            console.log('id_lestock=' + id_lestock);
-            console.log('id_produit=' + id_produit);
-            console.log('id_sousproduit=' + id_sousproduit);
-            console.log('nom=' + nom);
-            console.log('vente_type=' + vente_type);
+        console.log('id_lestock=' + id_lestock);
+        console.log('id_produit=' + id_produit);
+        console.log('id_sousproduit=' + id_sousproduit);
+        console.log('nom=' + nom);
+        console.log('vente_type=' + vente_type);
 
-            console.log('varisables ok');
+        console.log('varisables ok');
 
-            if (vente_type == 'details') {
-                prix = form.getAttribute('data-prix-detail');
-            }
-            if (vente_type == 'semigros') {
-                prix = form.getAttribute('data-prix-semigros');
-            }
-            if (vente_type == 'gros') {
-                prix = form.getAttribute('data-prix-gros');
-            }
-
-            prix = parseFloat(prix);
-
-            // Mise à jour des informations du produit sélectionné
-            if (nom !== undefined) {
-                const nom_produit = document.getElementById('produit_text');
-                nom_produit.textContent = nom;
-            } else {
-                console.error('ERREUR NOM');
-            }
-
-            if (prix !== undefined) {
-                const prix_produit = document.getElementById('prix_unitaire');
-                const prix_total = document.getElementById('prix_total');
-                const qte = parseFloat(document.getElementById('balance').textContent);
-                prix_produit.textContent = prix;
-                let LeTotal = prix * qte;
-                LeTotal = LeTotal.toFixed(0);
-                prix_total.textContent = LeTotal;
-            } else {
-                console.error('ERREUR PRIX');
-            }
-
-            if (id_sousproduit) {
-                const affectation_id_sousproduit = document.getElementById('text-id-sousproduit');
-
-                affectation_id_sousproduit.textContent = id_sousproduit;
-            }
-
-            if (id_lestock !== undefined && id_produit !== undefined) {
-                const affectation_id_lestock = document.getElementById('text-id-lestock');
-                const affectation_id_lestock = document.getElementById('text-id-produit');
-
-                affectation_id_lestock.textContent = id_lestock;
-                affectation_id_produit.textContent = id_produit;
-            } else {
-                console.error('ERREUR ID');
-            }
-
-            $('#SousProduitsModal').modal('hide');
-
-            // Ajout de la classe "bg-danger" à la carte contenant le formulaire cliqué
-            const card = form.closest('.card');
-            if (card) {
-                // Réinitialise toutes les cartes pour retirer la classe "bg-danger"
-                document.querySelectorAll('.card.scat').forEach(otherCard => {
-                    otherCard.classList.remove('bg-danger');
-                    otherCard.classList.remove('text-white');
-                    otherCard.classList.add('bg-white');
-                });
-
-                // Ajoute "bg-danger" à la carte actuellement sélectionnée
-                card.classList.add('bg-danger');
-                card.classList.add('text-white');
-                card.classList.remove('bg-white');
-            }
-
-            console.log('Calcul Total Produit*Quantité exécuté');
+        if (vente_type == 'details') {
+            prix = form.getAttribute('data-prix-detail');
         }
-    </script> --}}
+        if (vente_type == 'semigros') {
+            prix = form.getAttribute('data-prix-semigros');
+        }
+        if (vente_type == 'gros') {
+            prix = form.getAttribute('data-prix-gros');
+        }
+
+        prix = parseFloat(prix);
+
+        // Mise à jour des informations du produit sélectionné
+        if (nom !== undefined) {
+            const nom_produit = document.getElementById('produit_text');
+            nom_produit.textContent = nom;
+        } else {
+            console.error('ERREUR NOM');
+        }
+
+        if (prix !== undefined) {
+            const prix_produit = document.getElementById('prix_unitaire');
+            const prix_total = document.getElementById('prix_total');
+            const qte = parseFloat(document.getElementById('balance').textContent);
+            prix_produit.textContent = prix;
+            let LeTotal = prix * qte;
+            LeTotal = LeTotal.toFixed(0);
+            prix_total.textContent = LeTotal;
+        } else {
+            console.error('ERREUR PRIX');
+        }
+
+        if (id_sousproduit) {
+            const affectation_id_sousproduit = document.getElementById('text-id-sousproduit');
+
+            affectation_id_sousproduit.textContent = id_sousproduit;
+        }
+
+        if (id_lestock !== undefined && id_produit !== undefined) {
+            const affectation_id_lestock = document.getElementById('text-id-lestock');
+            const affectation_id_lestock = document.getElementById('text-id-produit');
+
+            affectation_id_lestock.textContent = id_lestock;
+            affectation_id_produit.textContent = id_produit;
+        } else {
+            console.error('ERREUR ID');
+        }
+
+        $('#SousProduitsModal').modal('hide');
+
+        // Ajout de la classe "bg-danger" à la carte contenant le formulaire cliqué
+        const card = form.closest('.card');
+        if (card) {
+            // Réinitialise toutes les cartes pour retirer la classe "bg-danger"
+            document.querySelectorAll('.card.scat').forEach(otherCard => {
+                otherCard.classList.remove('bg-danger');
+                otherCard.classList.remove('text-white');
+                otherCard.classList.add('bg-white');
+            });
+
+            // Ajoute "bg-danger" à la carte actuellement sélectionnée
+            card.classList.add('bg-danger');
+            card.classList.add('text-white');
+            card.classList.remove('bg-white');
+        }
+
+        console.log('Calcul Total Produit*Quantité exécuté');
+    }
+</script> --}}
 
 <script>
     function affichage(form) {
@@ -2259,9 +2340,9 @@ console.log('Sub-product test executed');
             // Détermination du prix en fonction du type de vente
             let prix = parseFloat(
                 vente_type === 'details' ? form.getAttribute('data-prix-detail') :
-                vente_type === 'semigros' ? form.getAttribute('data-prix-semigros') :
-                vente_type === 'gros' ? form.getAttribute('data-prix-gros') :
-                0
+                    vente_type === 'semigros' ? form.getAttribute('data-prix-semigros') :
+                        vente_type === 'gros' ? form.getAttribute('data-prix-gros') :
+                            0
             );
 
             if (isNaN(prix)) {
@@ -2314,7 +2395,7 @@ console.log('Sub-product test executed');
 </script>
 
 
-{{-- script poppup quantite  --}}
+{{-- script poppup quantite --}}
 <script>
     function appendValue(value) {
         const input = document.getElementById('kgInput');
@@ -2415,63 +2496,63 @@ console.log('Sub-product test executed');
                 });
             } else
 
-            if (qte <= 0 && PrixUnitaire > 0) {
-                Swal.fire({
-                    title: "Veuillez saisir la Quantité",
-                    icon: "warning",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            } else
+                if (qte <= 0 && PrixUnitaire > 0) {
+                    Swal.fire({
+                        title: "Veuillez saisir la Quantité",
+                        icon: "warning",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                } else
 
-            if (PrixUnitaire <= 0 && qte > 0) {
-                Swal.fire({
-                    title: "Veuillez selectionner un Produit",
-                    icon: "warning",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-            } else
-
-            if (id_facture && id_user && id_lestock && id_produit && qte > 0 && PrixUnitaire > 0 && PrixTotal > 0 &&
-                nom_produit && IdSousProduit) {
-                console.log('ROUTE = /vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit + '/' +
-                    IdSousProduit + '/' + nom_produit +
-                    '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal, );
-                $.ajax({
-                    url: '/vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit + '/' +
-                        IdSousProduit + '/' + nom_produit +
-                        '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal,
-                    type: 'post',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
-                            'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
-                    },
-                    success: function() {
+                    if (PrixUnitaire <= 0 && qte > 0) {
                         Swal.fire({
-                            title: "Validé",
-                            icon: "success",
+                            title: "Veuillez selectionner un Produit",
+                            icon: "warning",
                             showConfirmButton: false,
                             timer: 1500
                         });
+                    } else
 
-                        ListeVentes(id_facture);
+                        if (id_facture && id_user && id_lestock && id_produit && qte > 0 && PrixUnitaire > 0 && PrixTotal > 0 &&
+                            nom_produit && IdSousProduit) {
+                            console.log('ROUTE = /vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit + '/' +
+                                IdSousProduit + '/' + nom_produit +
+                                '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal,);
+                            $.ajax({
+                                url: '/vente/' + id_facture + '/' + id_user + '/' + id_lestock + '/' + id_produit + '/' +
+                                    IdSousProduit + '/' + nom_produit +
+                                    '/valeurs/' + PrixUnitaire + '/' + qte + '/' + PrixTotal,
+                                type: 'post',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                        'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
+                                },
+                                success: function () {
+                                    Swal.fire({
+                                        title: "Validé",
+                                        icon: "success",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
 
-                        Calculer_Total_Facture(id_facture);
+                                    ListeVentes(id_facture);
 
-                        // Réinitialiser les affichages
-                        AffichageQte.textContent = "0.000";
-                        AffichagePrixUnitaire.textContent = "0.00";
-                        AffichagePrixTotal.textContent = "0.00";
-                        AffichageNomProduit.textContent = "----";
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(error);
-                    }
-                });
-            } else {
-                console.error('Conditions non remplies pour la validation.');
-            }
+                                    Calculer_Total_Facture(id_facture);
+
+                                    // Réinitialiser les affichages
+                                    AffichageQte.textContent = "0.000";
+                                    AffichagePrixUnitaire.textContent = "0.00";
+                                    AffichagePrixTotal.textContent = "0.00";
+                                    AffichageNomProduit.textContent = "----";
+                                },
+                                error: function (xhr, status, error) {
+                                    console.error(error);
+                                }
+                            });
+                        } else {
+                            console.error('Conditions non remplies pour la validation.');
+                        }
         } else {
             console.error('Formulaire vente non trouvé.'); // Message d'erreur si le formulaire parent n'est pas trouvé
         }
@@ -2488,25 +2569,25 @@ console.log('Sub-product test executed');
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                     'content')
             },
-            success: function(response) {
+            success: function (response) {
                 $('#ventes_liste').empty();
-                $.each(response.ventes, function(key, value) {
+                $.each(response.ventes, function (key, value) {
                     // let quantite = Number.isInteger(value.quantite) ? parseInt(value.quantite) : value.quantite;
                     let quantite = Number.isInteger(value.quantite) ? value.quantite : parseFloat(
                         value.quantite);
 
                     console.log('id=' + value.id + '/ nom=' + value.designation_produit +
                         '/ quantite=' + quantite + value.unite_mesure + '/ prix=' + value
-                        .prix_unitaire + '/ total=' + value.total_vente);
+                            .prix_unitaire + '/ total=' + value.total_vente);
 
                     $('#ventes_liste').append(
                         '<tr class="bg-warning ligne">' +
                         // '<td class="petit_font">' + value.nom_categorie + ' : ' + value.nom_produit +
                         '<td class="petit_font text-left mini-text">' + value
-                        .designation_produit +
+                            .designation_produit +
                         '</td>' +
                         '<td class="petit_font text-right mini-text">' + quantite + ' ' + value
-                        .unite_mesure +
+                            .unite_mesure +
                         '</td>' +
                         '<td class="petit_font text-right mini-text">' + value.prix_unitaire +
                         '</td>' +
@@ -2527,7 +2608,7 @@ console.log('Sub-product test executed');
                 });
                 console.log('Réccuperation Liste des Ventes executé');
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.log('Réccuperation Liste des Ventes echoué');
                 console.error(error);
             }
@@ -2544,14 +2625,14 @@ console.log('Sub-product test executed');
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                     'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
             },
-            success: function(response) {
+            success: function (response) {
                 let AffichageTotal = document.getElementById('text_total_facture');
                 AffichageTotal.textContent = response.total;
                 if (response.total == 0) AffichageTotal.textContent = '0.00';
                 console.log('Calcul Total Facture executé');
                 console.log('Total Facture = ' + response.total);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error(error);
             }
         });
@@ -2590,7 +2671,7 @@ console.log('Sub-product test executed');
                                 'content'
                             ) // Assurez-vous que cette balise meta est incluse dans votre HTML
                         },
-                        success: function(response) {
+                        success: function (response) {
                             Swal.fire({
                                 title: "Supprimée",
                                 icon: "error",
@@ -2602,7 +2683,7 @@ console.log('Sub-product test executed');
 
                             Calculer_Total_Facture(id_facture);
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error) {
                             console.error(error);
                         }
                     });
@@ -2629,7 +2710,7 @@ console.log('Sub-product test executed');
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     if (response.vente && response.vente.total_vente) {
                         total_input.placeholder = response.vente.total_vente;
                         total_input.value = '';
@@ -2639,7 +2720,7 @@ console.log('Sub-product test executed');
                         console.error('Vente ou total_vente introuvable');
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(error);
                 }
             });
@@ -2659,7 +2740,7 @@ console.log('Sub-product test executed');
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     Swal.fire({
                         title: "Validé",
                         icon: "success",
@@ -2673,7 +2754,7 @@ console.log('Sub-product test executed');
 
                     Calculer_Total_Facture(id_facture);
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(error);
                 }
             });
@@ -2699,9 +2780,9 @@ console.log('Sub-product test executed');
 </script>
 
 
-{{-- ----------------------------------------------------------------------------------------------  --}}
+{{-- ---------------------------------------------------------------------------------------------- --}}
 
-{{-- facture  --}}
+{{-- facture --}}
 <script>
     function Nouvelle_Facture() {
         const id_user = document.getElementById('text-id-user').textContent;
@@ -2717,7 +2798,7 @@ console.log('Sub-product test executed');
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                         'content') // Assurez-vous que cette balise meta est incluse dans votre HTML
                 },
-                success: function(response) {
+                success: function (response) {
 
                     Swal.fire({
                         title: "Nouvelle Vente",
@@ -2740,7 +2821,7 @@ console.log('Sub-product test executed');
 
 
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(error);
                 }
             });
@@ -2944,7 +3025,7 @@ console.log('Sub-product test executed');
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     Swal.fire({
                         title: "Facture Validée",
                         icon: "success",
@@ -2965,18 +3046,18 @@ console.log('Sub-product test executed');
             iframeClient.src = '/imprimer-ticket/' + IdFacture;
             document.body.appendChild(iframeClient);
 
-            iframeClient.onload = function() {
+            iframeClient.onload = function () {
                 iframeClient.contentWindow.print();
 
                 // After printing the client copy, print the archive copy
-                setTimeout(function() {
+                setTimeout(function () {
                     let iframeArchive = document.createElement('iframe');
                     iframeArchive.style.display = 'none';
                     iframeArchive.src = '/imprimer-ticket-credit/' +
                         IdFacture; // Make sure to create a route for archive copy
                     document.body.appendChild(iframeArchive);
 
-                    iframeArchive.onload = function() {
+                    iframeArchive.onload = function () {
                         iframeArchive.contentWindow.print();
                     };
                 }, 1000); // Adjust delay if needed
@@ -2988,7 +3069,7 @@ console.log('Sub-product test executed');
             iframe.src = '/imprimer-ticket/' + IdFacture;
             document.body.appendChild(iframe);
 
-            iframe.onload = function() {
+            iframe.onload = function () {
                 iframe.contentWindow.print();
             };
         }
@@ -3021,7 +3102,7 @@ console.log('Sub-product test executed');
     }
 
 
-    document.getElementById('TotalInput').addEventListener('focus', function() {
+    document.getElementById('TotalInput').addEventListener('focus', function () {
         TotalClick();
     });
 
@@ -3147,7 +3228,7 @@ console.log('Sub-product test executed');
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     let counter = 1; // Initialisation du compteur
                     $('#CarouselFacturesEnAttente').empty();
                     $('#CarouselFacturesEnAttente_indicateurs').empty();
@@ -3165,7 +3246,7 @@ console.log('Sub-product test executed');
                         );
 
                     }
-                    $.each(response.factures, function(key, facture) {
+                    $.each(response.factures, function (key, facture) {
 
                         const id_facture = facture.id;
                         // const ActiveClass = 'active';
@@ -3254,27 +3335,27 @@ console.log('Sub-product test executed');
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            success: function(response) {
-                                $.each(response.ventes, function(key, vente) {
+                            success: function (response) {
+                                $.each(response.ventes, function (key, vente) {
                                     let quantite = Number.isInteger(vente
-                                            .quantite) ? vente.quantite :
+                                        .quantite) ? vente.quantite :
                                         parseFloat(vente.quantite);
                                     $('#produits_facture_' + id_facture).append(
                                         '<tr>' +
                                         '<td class="">' + vente
-                                        .designation_produit + '</td>' +
+                                            .designation_produit + '</td>' +
                                         '<td class="">' + quantite + ' ' +
                                         vente.unite_mesure + '</td>' +
                                         '<td class="">' + vente
-                                        .prix_unitaire + '</td>' +
+                                            .prix_unitaire + '</td>' +
                                         '<td class="">' + vente
-                                        .total_vente +
+                                            .total_vente +
                                         '</td>' +
                                         '</tr>'
                                     );
                                 });
                             },
-                            error: function(xhr, status, error) {
+                            error: function (xhr, status, error) {
                                 console.error(error);
                             }
                         });
@@ -3282,7 +3363,7 @@ console.log('Sub-product test executed');
                         counter++; // Déplacer l'incrémentation ici
                     });
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(error);
                 } // Retirer le point-virgule ici
             });
@@ -3306,7 +3387,7 @@ console.log('Sub-product test executed');
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 // Récupérer l'objet 'facture' depuis la réponse JSON
                 const facture = response.facture;
 
@@ -3364,7 +3445,7 @@ console.log('Sub-product test executed');
                     console.error('Facture non trouvée');
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Erreur AJAX:', error);
             }
         });
@@ -3373,7 +3454,7 @@ console.log('Sub-product test executed');
 
 
 <script>
-    document.getElementById('kgModal').addEventListener('show.bs.modal', function() {
+    document.getElementById('kgModal').addEventListener('show.bs.modal', function () {
         clearInput();
     });
 </script>
@@ -3389,14 +3470,14 @@ console.log('Sub-product test executed');
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                     'content') // Assurez-vous que ce meta tag existe dans votre page HTML
             },
-            success: function(response) {
+            success: function (response) {
                 // Vérification si la réponse contient bien les données attendues
                 if (response && response.clients && Array.isArray(response.clients)) {
                     $('#liste-clients').empty(); // Nettoie le tableau avant d'insérer les nouvelles données
                     console.log('Liste des clients récupérée avec succès.');
 
                     // Parcourir les clients
-                    $.each(response.clients, function(key, client) {
+                    $.each(response.clients, function (key, client) {
                         // Déterminer la classe CSS pour le crédit
                         let creditClass = client.total_credit > 0 ? 'bg-danger text-white' :
                             'bg-success text-white';
@@ -3420,7 +3501,7 @@ console.log('Sub-product test executed');
                             clientRow += '<td>' +
                                 '<form class="form-verser-credit" data-id="' + client.id +
                                 '" data-nom="' + client.nom + '" data-credit="' + client
-                                .total_credit + '">' +
+                                    .total_credit + '">' +
                                 '<button type="button" class="btn btn-success" onclick="Aller_Vers_Versement_Credit(this)" style="padding-left:10px;padding-right:10px;">' +
                                 '<i class="fas fa-cash-register fa-lg"></i><br>Versement' +
                                 '</button>' +
@@ -3441,7 +3522,7 @@ console.log('Sub-product test executed');
                     console.error('Réponse inattendue du serveur:', response);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Erreur lors de la récupération des clients:', error);
                 console.error('Détails:', xhr.responseText);
             }
@@ -3463,11 +3544,11 @@ console.log('Sub-product test executed');
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                success: function(response) {
+                success: function (response) {
                     $('#historique-factures').empty();
                     console.log(response.message);
 
-                    $.each(response.factures, function(key, facture) {
+                    $.each(response.factures, function (key, facture) {
                         const id_facture = facture.id;
                         console.log('id facture :' + id_facture);
                         // $('#historique-factures').append('<div style="width:100%;height:5px;"><hr></div>');
@@ -3521,21 +3602,21 @@ console.log('Sub-product test executed');
                             headers: {
                                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                             },
-                            success: function(response) {
-                                $.each(response.ventes, function(key, vente) {
+                            success: function (response) {
+                                $.each(response.ventes, function (key, vente) {
                                     let quantite = Number.isInteger(vente
-                                            .quantite) ? vente.quantite :
+                                        .quantite) ? vente.quantite :
                                         parseFloat(vente.quantite);
                                     $('#ventes_facture_' + id_facture).append(
                                         '<tr>' +
                                         '<td class="">' + vente
-                                        .designation_produit + '</td>' +
+                                            .designation_produit + '</td>' +
                                         '<td class="">' + quantite + ' ' +
                                         vente.unite_mesure + '</td>' +
                                         '<td class="">' + vente
-                                        .prix_unitaire + '</td>' +
+                                            .prix_unitaire + '</td>' +
                                         '<td class="">' + vente
-                                        .total_vente +
+                                            .total_vente +
                                         '</td>' +
                                         '</tr>' +
 
@@ -3545,13 +3626,13 @@ console.log('Sub-product test executed');
                                 });
                             },
 
-                            error: function(xhr, status, error) {
+                            error: function (xhr, status, error) {
                                 console.error('Error fetching ventes:', error);
                             }
                         });
                     });
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error('Error fetching historique factures:', error);
                 }
             });
@@ -3574,7 +3655,7 @@ console.log('Sub-product test executed');
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            success: function(response) {
+            success: function (response) {
                 // Récupérer l'objet 'facture' depuis la réponse JSON
                 const facture = response.facture;
 
@@ -3585,14 +3666,14 @@ console.log('Sub-product test executed');
                     iframe.src = '/imprimer-ticket/' + IdFacture;
                     document.body.appendChild(iframe);
 
-                    iframe.onload = function() {
+                    iframe.onload = function () {
                         iframe.contentWindow.print();
                     };
                 } else {
                     console.error('Facture non trouvée');
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Erreur AJAX:', error);
             }
         });
@@ -3681,7 +3762,7 @@ console.log('Sub-product test executed');
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                     'content')
             },
-            success: function() {
+            success: function () {
 
                 // Swal.fire({
                 //     title: "Nouveaux Prix",
@@ -3694,7 +3775,7 @@ console.log('Sub-product test executed');
 
                 Calculer_Total_Facture(IdFacture);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Erreur AJAX:', error);
             }
         });
@@ -3778,7 +3859,7 @@ console.log('Sub-product test executed');
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                     'content')
             },
-            success: function() {
+            success: function () {
                 // Swal.fire({
                 //     title: "Calculs éffectués",
                 //     icon: "success",
@@ -3790,7 +3871,7 @@ console.log('Sub-product test executed');
 
                 Calculer_Total_Facture(IdFacture);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Erreur AJAX:', error);
             }
         });
@@ -3872,7 +3953,7 @@ console.log('Sub-product test executed');
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
                     'content')
             },
-            success: function() {
+            success: function () {
                 // Swal.fire({
                 //     title: "Calculs éffectués",
                 //     icon: "success",
@@ -3884,7 +3965,7 @@ console.log('Sub-product test executed');
 
                 Calculer_Total_Facture(IdFacture);
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error('Erreur AJAX:', error);
             }
         });
@@ -3896,7 +3977,7 @@ console.log('Sub-product test executed');
 
 
 
-{{-- calculatrice  --}}
+{{-- calculatrice --}}
 
 
 <style>
@@ -3933,14 +4014,12 @@ console.log('Sub-product test executed');
 
 
 <!-- Modal -->
-<div class="modal fade" id="calculatorModal" tabindex="-1" aria-labelledby="calculatorModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="calculatorModal" tabindex="-1" aria-labelledby="calculatorModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content bg-dark">
             <div class="modal-header">
                 <h5 class="modal-title text-primary" id="calculatorModalLabel">Calculatrice</h5>
-                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
+                <button type="button" class="btn-close btn-danger" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div id="calculator">
@@ -3953,44 +4032,44 @@ console.log('Sub-product test executed');
                         </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('7')">7</button></div>
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('8')">8</button></div>
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('9')">9</button></div>
-                        <div class="col"><button class="btn btn-primary w-100"
-                                onclick="appendNumber('/')">/</button></div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('7')">7</button>
+                        </div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('8')">8</button>
+                        </div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('9')">9</button>
+                        </div>
+                        <div class="col"><button class="btn btn-primary w-100" onclick="appendNumber('/')">/</button>
+                        </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('4')">4</button></div>
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('5')">5</button></div>
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('6')">6</button></div>
-                        <div class="col"><button class="btn btn-primary w-100"
-                                onclick="appendNumber('*')">*</button></div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('4')">4</button>
+                        </div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('5')">5</button>
+                        </div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('6')">6</button>
+                        </div>
+                        <div class="col"><button class="btn btn-primary w-100" onclick="appendNumber('*')">*</button>
+                        </div>
                     </div>
                     <div class="row mt-2">
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('1')">1</button></div>
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('2')">2</button></div>
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('3')">3</button></div>
-                        <div class="col"><button class="btn btn-primary w-100"
-                                onclick="appendNumber('-')">-</button></div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('1')">1</button>
+                        </div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('2')">2</button>
+                        </div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('3')">3</button>
+                        </div>
+                        <div class="col"><button class="btn btn-primary w-100" onclick="appendNumber('-')">-</button>
+                        </div>
                     </div>
                     <div class="row mt-2">
                         <div class="col"><button class="btn btn-success w-100" onclick="calculate()">=</button>
                         </div>
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('0')">0</button></div>
-                        <div class="col"><button class="btn btn-secondary w-100"
-                                onclick="appendNumber('.')">.</button></div>
-                        <div class="col"><button class="btn btn-primary w-100"
-                                onclick="appendNumber('+')">+</button></div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('0')">0</button>
+                        </div>
+                        <div class="col"><button class="btn btn-secondary w-100" onclick="appendNumber('.')">.</button>
+                        </div>
+                        <div class="col"><button class="btn btn-primary w-100" onclick="appendNumber('+')">+</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -4001,7 +4080,8 @@ console.log('Sub-product test executed');
 
 
 
-{{-- --------------------------------------------------------------------------------------------------------------- --}}
+{{-- ---------------------------------------------------------------------------------------------------------------
+--}}
 
 <script>
     function appendNumber(number) {
@@ -4033,9 +4113,9 @@ console.log('Sub-product test executed');
 
 
 
-{{-- ------------------------------------------------------------------------------------------------------   --}}
-{{-- ------------------------------------------------------------------------------------------------------   --}}
-{{-- credit client  --}}
+{{-- ------------------------------------------------------------------------------------------------------ --}}
+{{-- ------------------------------------------------------------------------------------------------------ --}}
+{{-- credit client --}}
 <script>
     function Aller_Vers_Versement_Credit(button) {
         // Récupérer l'ID et le nom du client à partir des attributs data-id et data-nom
@@ -4093,7 +4173,7 @@ console.log('Sub-product test executed');
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    success: function(response) {
+                    success: function (response) {
                         Swal.fire({
                             title: "Versement Validé",
                             icon: "success",
@@ -4112,7 +4192,7 @@ console.log('Sub-product test executed');
             iframe.src = '/imprimer-bon-versement/' + id_client;
             document.body.appendChild(iframe);
 
-            iframe.onload = function() {
+            iframe.onload = function () {
                 iframe.contentWindow.print();
             };
 
@@ -4132,11 +4212,11 @@ console.log('Sub-product test executed');
 </script>
 
 
-{{-- ------------------------------------------------------------------------------------------------------   --}}
-{{-- ------------------------------------------------------------------------------------------------------   --}}
+{{-- ------------------------------------------------------------------------------------------------------ --}}
+{{-- ------------------------------------------------------------------------------------------------------ --}}
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const carousel = document.querySelector('#carouselExample1');
         const carouselInstance = new bootstrap.Carousel(carousel, {
             wrap: false // Empêche le carrousel de se répéter
@@ -4147,7 +4227,7 @@ console.log('Sub-product test executed');
 
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         const IdMagasin = document.getElementById('text-id-magasin').textContent.trim();
         $('#example1').DataTable({
             // processing: true, // Indique que le traitement est en cours
@@ -4184,7 +4264,7 @@ console.log('Sub-product test executed');
     });
 </script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#example2').DataTable({
             // processing: true, // Indique que le traitement est en cours
             serverSide: true, // Active le chargement des données côté serveur
@@ -4230,17 +4310,19 @@ console.log('Sub-product test executed');
     }
 </style>
 
-{{-- ------------------------------------------------------------------------------------------------------   --}}
-{{-- ------------------------------------------------------------------------------------------------------   --}}
+{{-- ------------------------------------------------------------------------------------------------------ --}}
+{{-- ------------------------------------------------------------------------------------------------------ --}}
 {{-- affichage en 80% --}}
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         document.body.style.zoom = "85%";
         document.body.style.margin = "0";
         document.body.style.width = "100%"; // Ajustez pour compenser le zoom
     });
 </script>
 
-{{-- ------------------------------------------------------------------------------------------------------   --}}
-{{-- ------------------------------------------------------------------------------------------------------   --}}
+
+
+{{-- ------------------------------------------------------------------------------------------------------ --}}
+{{-- ------------------------------------------------------------------------------------------------------ --}}
 @endsection

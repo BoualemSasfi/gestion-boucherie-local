@@ -253,7 +253,7 @@
                 </div>
                 <div class="col-3 align-content-center">
                     <h6 class="afficheur-titre">PRIX UNITAIRE:</h6>
-                    <p class="digital" id="prix_unitaire" style="margin-top:-20px;">0.00</p>
+                    <p class="digital" id="prix_unitaire" style="margin-top:-20px;">0.009</p>
                 </div>
                 <div class="col-3 align-content-center">
                     <h6 class="afficheur-titre">PRIX TOTAL:</h6>
