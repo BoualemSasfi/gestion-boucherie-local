@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import '../vendor/fontawesome-free/css/all.min.css';
+@import '../css/sb-admin-2.min.css';
+@import '../css/headers.css';
+
+/* css caisse */
+@import '../css/caisse.css';
+@import '../css/caisse.min.css';
+
+@font-face {
+    font-family: 'digital-7';
+    src: url('/fonts/digital-7.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
